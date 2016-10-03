@@ -1,9 +1,6 @@
 package Util;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.Random;
 
 import javax.mail.MessagingException;
 
@@ -45,21 +42,7 @@ public class ServiceTools {
 		}
 		return j;
 	}
-	public static String generate() {
-		String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"; 
-		StringBuilder pass = new StringBuilder(10);
-		Random r=new Random();
-		for (int x = 0; x < 10; x++) {
-			int i=r.nextInt(chars.length());
-			pass.append(chars.charAt(i));
-		}
-		return pass.toString();
-	}
-	public static Timestamp updateKeytime(){
-		Date now=new Date();
-		long timeofkey=30*60*1000;
-		return new Timestamp(now.getTime()+timeofkey);
-	}
+
 	public static JSONObject GestionDesErreur(Exception e){
 		JSONObject jb=null;
 		if(e instanceof MessagingException){
@@ -75,19 +58,5 @@ public class ServiceTools {
 		}	
 		jb=ServiceTools.serviceRefused(""+e.toString(),100);
 		return jb;
-	}
-	public static String cleanString(String s){
-		int size=s.length();
-		for(int i=0;i<size;i++){
-			if(s.charAt(i)==' ' || s.charAt(i)=='\\' ||s.charAt(i)=='"' || s.charAt(i)=='\''){
-				String[] split=s.split(""+s.charAt(i));
-				s="";
-				for(String x : split){
-					s=s.concat(x);
-				}
-				size=s.length();
-			}
-		}
-		return s;
 	}
 }
