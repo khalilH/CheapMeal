@@ -24,24 +24,23 @@ public class Connexion extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Récupération des identifiants
-		String id=request.getParameter("id");
-		String mdp=request.getParameter("mdp");
 		
-		//Traitement
-		
-		
-		//Reponse
-		response.setContentType("text/html");
-		Writer writer = response.getWriter();
-		writer.append("L'utilisateur  ").append(id+" et "+mdp);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
+		//Récupération des identifiants
+				String id=request.getParameter("id");
+				String mdp=request.getParameter("mdp");
+				
+				//Traitement
+				
+				
+				//Reponse
+				response.setContentType("text/html");
+				Writer writer = response.getWriter();
+				writer.append("L'utilisateur  ").append(id+" et "+mdp);	}
 
 }
