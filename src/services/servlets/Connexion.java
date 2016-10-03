@@ -1,6 +1,7 @@
 package services.servlets;
 
 import java.io.IOException;
+import java.io.Writer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,9 +29,12 @@ public class Connexion extends HttpServlet {
 		String mdp=request.getParameter("mdp");
 		
 		//Traitement
-		response.setContentType("text/html");
-		response.getWriter().append("L'utilisateur  ").append(id+" et "+mdp);
 		
+		
+		//Reponse
+		response.setContentType("text/html");
+		Writer writer = response.getWriter();
+		writer.append("L'utilisateur  ").append(id+" et "+mdp);
 	}
 
 	/**
