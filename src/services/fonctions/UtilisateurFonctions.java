@@ -43,7 +43,7 @@ public class UtilisateurFonctions {
 	private static void ajoutUtilisateurBD(String login, String mdp, String nom, String prenom, String email) throws SQLException{
 		Connection c = DBStatic.getSQLConnection();
 		Statement stmt = c.createStatement();
-		stmt.executeQuery("insert into `UTILISATEURS` (login, mdp, prenom, nom, mail) values ('"+login+"','"+mdp+"','"+nom+"','"+prenom+"','"+email+"');");
+		stmt.executeUpdate("insert into `UTILISATEURS` (login, mdp, prenom, nom, mail) values ('"+login+"','"+mdp+"','"+prenom+"','"+nom+"','"+email+"');");
 		stmt.close();
 		c.close();
 	}
