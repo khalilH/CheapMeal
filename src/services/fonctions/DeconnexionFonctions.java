@@ -1,21 +1,25 @@
 package services.fonctions;
 
 import java.security.KeyException;
+import java.sql.SQLException;
+
+import Util.AuthenticationTools;
+import exceptions.SessionExpireeException;
 
 public class DeconnexionFonctions {
 
 	
 	/* Ajouter les Exception throws par la fonction */
-	public static void deconnexion(String key) throws NullPointerException, KeyException {
+	public static void deconnexion(String cle) throws NullPointerException, KeyException, SQLException, SessionExpireeException {
 		
-		if (key == null) throw new NullPointerException("Arguments manquants");
+		if (cle == null) throw new NullPointerException("Arguments manquants");
 		
-		if(key.length() != 32) throw new KeyException("cle invalide");
+		if(cle.length() != 32) throw new KeyException("Cle invalide");
 		
-//		if (!AuthenticationTools.onGoingSessionKey(key)) throw new ExpiredSessionException("Your session has timed out");
+		if (!AuthenticationTools.cleActive(cle)) throw new SessionExpireeException("Votre session a expiree");
 		
-//		 Fermeture session
-//		AuthentificationTools.destroyKey(key);	
+		/* Fermeture session */
+		AuthenticationTools.detruireCleSession(cle);
 	}
 
 }
