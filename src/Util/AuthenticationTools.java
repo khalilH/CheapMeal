@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 
 public class AuthenticationTools {
 
@@ -48,6 +49,39 @@ public class AuthenticationTools {
 		c.close();
 		return id;
 	}
+	
+	/** Supprime une cle de session de la base de donnee
+	 * @param cle la cle a supprimer
+	 * @throws SQLException
+	 */
+	public static void detruireCleSession(String cle) throws SQLException {
+		Connection c = DBStatic.getSQLConnection();
+		Statement st = c.createStatement();
+		RequeteStatic.deleteFromSessions(st, cle);
+		st.close();
+		c.close();
+	}
+	
+	public static boolean cleActive(String cle) throws SQLException {
+		boolean res = false;
+		Connection c = DBStatic.getSQLConnection();
+		Statement st = c.createStatement();
+		ResultSet cursor = RequeteStatic.selectDateExpirationFromSessions(st, cle);
+		if (cursor.next()) {
+			Timestamp dateExpiration = cursor.getTimestamp("dateExpiration");
+			Timestamp curTime = new Timestamp(System.currentTimeMillis());
+			if(curTime.before(dateExpiration)) {
+				res = true;
+				/* raffraichir la cle */
+				// rafraichirCle(cle)
+			}
+		}
+		cursor.close();
+		st.close();
+		c.close();
+		return res;
+	}
+	
 	
 	
 }
