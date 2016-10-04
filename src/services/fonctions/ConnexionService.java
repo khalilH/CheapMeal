@@ -16,7 +16,7 @@ public class ConnexionService {
 				// Utilisation de BD
 			}
 		}catch ( JSONException e) {
-			jb = ServiceTools.GestionDesErreur(e);
+			//jb = ServiceTools.GestionDesErreur(e);
 		}
 		return jb;
 	}
