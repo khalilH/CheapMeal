@@ -13,7 +13,7 @@ public class AuthenticationTools {
 		Connection c;
 		c = DBStatic.getSQLConnection();
 		Statement stmt = c.createStatement();
-		ResultSet rs = stmt.executeQuery("select u from UTILISATEURS where u.login='"+login+"';");
+		ResultSet rs = stmt.executeQuery("select u.login from UTILISATEURS u where u.login='"+login+"';");
 		if(rs.next())
 			res = false;
 		rs.close();
@@ -27,7 +27,7 @@ public class AuthenticationTools {
 		Connection c;
 		c = DBStatic.getSQLConnection();
 		Statement stmt = c.createStatement();
-		ResultSet rs = stmt.executeQuery("select u from UTILISATEURS where u.mail='"+email+"';");
+		ResultSet rs = stmt.executeQuery("select u.mail from UTILISATEURS u where u.mail='"+email+"';");
 		if(rs.next())
 			res = false;
 		rs.close();

@@ -13,7 +13,7 @@ import com.mongodb.client.MongoDatabase;
 public class DBStatic {
 	
 	public static boolean mysql_pooling = false;
-	public static final String mysql_host = "http://vps197081.ovh.net/phpmyadmin/index.php";
+	public static final String mysql_host = "vps197081.ovh.net";
 	public static final String mysql_db = "ladi";
 	public static final String mysql_username = "ladi";
 	public static final String mysql_password = "atoz";

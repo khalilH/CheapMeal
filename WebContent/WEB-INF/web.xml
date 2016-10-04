@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:web="http://xmlns.jcp.org/xml/ns/javaee">
 	<display-name>CheapMeal</display-name>
+	
+	<servlet>
+		<servlet-name>Inscription</servlet-name>
+		<servlet-class>services.servlets.Inscription</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Inscription</servlet-name>
+		<url-pattern>/inscription</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>Connexion</servlet-name>
 		<servlet-class>services.servlets.Connexion</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>Connexion</servlet-name>
 		<url-pattern>/connexion</url-pattern>

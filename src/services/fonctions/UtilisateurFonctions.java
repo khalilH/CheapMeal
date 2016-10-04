@@ -11,7 +11,7 @@ import exceptions.InformationUtilisateurException;
 
 public class UtilisateurFonctions {
 
-	public void inscription(String login, String mdp, String prenom, String nom, String email) throws InformationUtilisateurException, IDException, SQLException{
+	public static void inscription(String login, String mdp, String prenom, String nom, String email) throws InformationUtilisateurException, IDException, SQLException{
 
 		/* Verification des parametres */
 		if(login == null || mdp == null || prenom == null || nom == null || email == null)
@@ -40,10 +40,10 @@ public class UtilisateurFonctions {
 		
 	}
 	
-	private void ajoutUtilisateurBD(String login, String mdp, String nom, String prenom, String email) throws SQLException{
+	private static void ajoutUtilisateurBD(String login, String mdp, String nom, String prenom, String email) throws SQLException{
 		Connection c = DBStatic.getSQLConnection();
 		Statement stmt = c.createStatement();
-		stmt.executeQuery("insert into `UTILISATEURS` (login, mdp, prenom, nom, mail) values ('"+login+"','"+mdp+"','"+nom+"','"+prenom+"','"+email+"');");
+		stmt.executeUpdate("insert into `UTILISATEURS` (login, mdp, prenom, nom, mail) values ('"+login+"','"+mdp+"','"+prenom+"','"+nom+"','"+email+"');");
 		stmt.close();
 		c.close();
 	}
