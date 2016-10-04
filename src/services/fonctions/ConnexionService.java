@@ -9,14 +9,14 @@ import Util.ServiceTools;
 public class ConnexionService {
 	public static JSONObject Connexion(String id, String mdp){
 		JSONObject jb= new JSONObject();
-		try{
-			if(id == null || mdp == null){
-				jb.put("Refuse", "Identifiants non fournis");
-			}else{
-				// Utilisation de BD
-			}
-		}catch ( JSONException e) {
-			jb = ServiceTools.GestionDesErreur(e);
+		
+		//Verification parametre invalides
+		if(id == null || mdp == null){
+			jb.put("Refuse", "Identifiants non fournis");
+			return jb;
+		}
+		if(id="" || mdp = "" || mdp.length() == 0){
+			jb.put("Refuse", "Identifiants incorrects");
 		}
 		return jb;
 	}
