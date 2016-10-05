@@ -38,5 +38,9 @@ public class RequeteStatic {
 	public static void createSessionFromLogin(Statement st, String id, Timestamp time, String key) throws SQLException {
 		st.executeUpdate("insert into SESSIONS values ('"+id+"','"+key+"','"+time+"');");
 	}
+
+	public static void updateDateExpirationInSession(Statement statement, String cle) throws SQLException {
+		statement.executeUpdate("update SESSIONS set dateExpiration=date_add(now(), INTERVAL 30 MINUTE) where cleSession='"+cle+"';");
+	}
 	
 }

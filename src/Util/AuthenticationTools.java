@@ -63,6 +63,12 @@ public class AuthenticationTools {
 		c.close();
 	}
 	
+	/**
+	 * Verifie si une cle de session est active (qu'elle n'a pas expiree)
+	 * @param cle la cle d'une session
+	 * @return si la cle est utilisable, false sinon
+	 * @throws SQLException
+	 */
 	public static boolean cleActive(String cle) throws SQLException {
 		boolean res = false;
 		Connection c = DBStatic.getSQLConnection();
@@ -73,8 +79,8 @@ public class AuthenticationTools {
 			Timestamp curTime = new Timestamp(System.currentTimeMillis());
 			if(curTime.before(dateExpiration)) {
 				res = true;
-				/* raffraichir la cle */
-				// rafraichirCle(cle)
+				/* On refresh la cle a chaque fois qu'elle est utilisee */
+				rafraichirCle(cle);
 			}
 		}
 		cursor.close();
@@ -113,6 +119,12 @@ public class AuthenticationTools {
 		return res;
 	}
 
+	/**
+	 * Verifie si un utilisateur est connecte sur le site
+	 * @param login le login de l'utilisateur 
+	 * @return true si son id est present dans la table SESSION, false sinon
+	 * @throws SQLException
+	 */
 	public static boolean isSessionOpen(String login) throws SQLException {
 		Connection c = DBStatic.getSQLConnection();
 		Statement st = c.createStatement();
@@ -123,7 +135,6 @@ public class AuthenticationTools {
 		cursor.close();
 		st.close();
 		c.close();
-		
 		return res;
 	}
 
@@ -150,7 +161,8 @@ public class AuthenticationTools {
 		Statement st = c.createStatement();
 		long timetoAdd=30*60*1000; // 30 minutes in milliseconds
 		Timestamp time = new Timestamp(new Date().getTime() + timetoAdd);
-		String key = "ABCD"; //TODO Generate proper unique authentication token 
+		String key = AuthenticationTools.createKey(); 
+		//TODO peut etre check si la cle genere n'existe pas deja meme si peu probable 
 		String idofUser="";
 		
 		ResultSet user = RequeteStatic.checkUserExist(st, login);
@@ -165,6 +177,54 @@ public class AuthenticationTools {
 		return key;
 	}
 	
+	/**
+	 * Reactive une cle, en mettant dateExpiration a la date courante + 30 minutes 
+	 * @param cle la cle de session
+	 * @throws SQLException
+	 */
+	public static void rafraichirCle(String cle) throws SQLException {
+		Connection c = DBStatic.getSQLConnection();
+		Statement st = c.createStatement();
+		RequeteStatic.updateDateExpirationInSession(st, cle);
+		st.close();
+		c.close();
+	}
+	
+	/**
+	 * Code de generation aleatoire d'une cle de session de 32 caracteres
+	 * @return une cle aleatoire
+	 */
+	public static String createKey(){
+		double aux1, aux2;
+		int sc;
+		int codeAscii;
+		String res = "";
+		for(int i=0; i<32; i++){
+			aux1 = Math.random()*3;
+			sc = (int) aux1;
+			switch(sc){
+			case 0: 
+				//Chiffre (code Ascii entre 48 et 57)
+				aux2 = Math.random()*10+48;
+				codeAscii = (int) aux2;
+				res += (char)codeAscii;
+				break;
+			case 1:
+				//Lettre majuscule (code Ascii entre 65 et 90)
+				aux2 = Math.random()*26+65;
+				codeAscii = (int) aux2;
+				res += (char)codeAscii;
+				break;
+			case 2:
+				//Lettre minuscule (code ascii entre 97 et 122)
+				aux2 = Math.random()*26+97;
+				codeAscii = (int) aux2;
+				res += (char)codeAscii;
+				break;
+			}			
+		}
+		return res;
+	}
 	
 	
 }
