@@ -14,7 +14,8 @@ public class AuthenticationTools {
 		Connection c;
 		c = DBStatic.getSQLConnection();
 		Statement stmt = c.createStatement();
-		ResultSet rs = stmt.executeQuery("select u.login from UTILISATEURS u where u.login='"+login+"';");
+		//TODO renommer checkUserExist en français
+		ResultSet rs = RequeteStatic.checkUserExist(stmt, login);
 		if(rs.next())
 			res = false;
 		rs.close();
@@ -28,7 +29,7 @@ public class AuthenticationTools {
 		Connection c;
 		c = DBStatic.getSQLConnection();
 		Statement stmt = c.createStatement();
-		ResultSet rs = stmt.executeQuery("select u.mail from UTILISATEURS u where u.mail='"+email+"';");
+		ResultSet rs = RequeteStatic.verifierEmail(stmt, email);
 		if(rs.next())
 			res = false;
 		rs.close();
@@ -37,12 +38,12 @@ public class AuthenticationTools {
 		return res;
 	}
 	
-	public static int getIdAvecLogin(String login) throws SQLException{
+	public static int obtenirIdAvecLogin(String login) throws SQLException{
 		int id = 0;
 		Connection c;
 		c = DBStatic.getSQLConnection();
 		Statement stmt = c.createStatement();
-		ResultSet cur = stmt.executeQuery("select id from UTILISATEURS where login='"+login+"';");
+		ResultSet cur = RequeteStatic.obtenirIdAvecLogin(stmt, login);
 		if(cur.next())
 			id = cur.getInt("id");
 		cur.close();
@@ -165,6 +166,17 @@ public class AuthenticationTools {
 		return key;
 	}
 	
-	
+	public static int obtenirIdAvecCle(String cle) throws SQLException{
+		int res = 0;
+		Connection c = DBStatic.getSQLConnection();
+		Statement st = c.createStatement();
+		ResultSet rs = RequeteStatic.obtenirIdAvecCle(st, cle);
+		if(rs.next())
+			res = rs.getInt("idSession");
+		rs.close();
+		st.close();
+		c.close();
+		return res;
+	}
 	
 }

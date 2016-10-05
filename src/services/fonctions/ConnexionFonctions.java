@@ -38,7 +38,7 @@ public class ConnexionFonctions {
 			if(AuthenticationTools.userExists(login)){
 				jb.put("Error", "Votre mot de passe est incorrect");
 			}else{
-				jb.put("Error", "Votre compte n'est pas repertorié dans notre base");
+				jb.put("Error", "Votre compte n'est pas repertoriï¿½ dans notre base");
 			}
 		}
 		
