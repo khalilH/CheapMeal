@@ -18,9 +18,7 @@ public class DeconnexionServices {
 	public static JSONObject deconnexion(String key) throws JSONException {
 		try {
 			DeconnexionFonctions.deconnexion(key);
-			JSONObject result = new JSONObject();
-			result.put("message", "Deconnexion !");
-			return result;
+			return ServiceTools.serviceAccepted("Deconnexion");
 		} catch (NullPointerException npe) {
 			return ServiceTools.serviceRefused(npe.getMessage(), -1);
 		} catch (KeyException ke) {
