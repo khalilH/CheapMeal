@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class AuthenticationTools {
 
@@ -80,6 +81,88 @@ public class AuthenticationTools {
 		st.close();
 		c.close();
 		return res;
+	}
+
+	public static boolean userExists(String id) throws SQLException {
+		Connection c = DBStatic.getSQLConnection();
+		Statement st = c.createStatement();
+		boolean res = false;
+		
+		ResultSet cursor = RequeteStatic.checkUserExist(st,id);
+		if(cursor.first())
+			res = true;
+		
+		cursor.close();
+		st.close();
+		c.close();
+		return res;
+	}
+	
+	public static boolean credentialsAreValid(String id,String mdp) throws SQLException {
+		Connection c = DBStatic.getSQLConnection();
+		Statement st = c.createStatement();
+		boolean res = false;
+		
+		ResultSet cursor = RequeteStatic.checkCredentialsValid(st, id, mdp);
+		if(cursor.first())
+			res = true;
+		
+		cursor.close();
+		st.close();
+		c.close();
+		return res;
+	}
+
+	public static boolean isSessionOpen(String login) throws SQLException {
+		Connection c = DBStatic.getSQLConnection();
+		Statement st = c.createStatement();
+		boolean res = false;
+		ResultSet cursor = RequeteStatic.checkSessionOpen(st, login);
+		if(cursor.first())
+			res = true;
+		cursor.close();
+		st.close();
+		c.close();
+		
+		return res;
+	}
+
+	public static String updateAndRetrieveTokenTime(String login) throws SQLException {
+		Connection c = DBStatic.getSQLConnection();
+		Statement st = c.createStatement();
+		long timetoAdd=30*60*1000; // 30 minutes in milliseconds
+		Timestamp time = new Timestamp(new Date().getTime() + timetoAdd);
+		String s = "";
+		RequeteStatic.updateTokenTime(st,login, time);
+		ResultSet cursor = RequeteStatic.retrieveTokenFromLogin(st, login);
+		if(cursor.first())
+			 s = cursor.getString("cleSession");
+		else	
+			throw new SQLException("Should retrieve the token but is not");
+		cursor.close();
+		st.close();
+		c.close();
+		return s;
+	}
+
+	public static String addSessionFromLogin(String login) throws SQLException {
+		Connection c = DBStatic.getSQLConnection();
+		Statement st = c.createStatement();
+		long timetoAdd=30*60*1000; // 30 minutes in milliseconds
+		Timestamp time = new Timestamp(new Date().getTime() + timetoAdd);
+		String key = "ABCD"; //TODO Generate proper unique authentication token 
+		String idofUser="";
+		
+		ResultSet user = RequeteStatic.checkUserExist(st, login);
+		if(user.first())
+			idofUser = user.getString("id");
+		else
+			throw new SQLException("Should retrieve the idOfuser but is not");
+		RequeteStatic.createSessionFromLogin(st,idofUser,time,key);
+		
+		st.close();
+		c.close();
+		return key;
 	}
 	
 	

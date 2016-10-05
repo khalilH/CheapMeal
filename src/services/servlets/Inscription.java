@@ -14,6 +14,11 @@ import services.UtilisateurServices;
 
 public class Inscription extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response){
 		
 		/* Lecture des parametres */
@@ -34,10 +39,8 @@ public class Inscription extends HttpServlet {
 			writer.println(res.toString());
 			
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
