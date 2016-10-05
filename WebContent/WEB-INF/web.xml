@@ -37,4 +37,13 @@
 		<servlet-name>Deconnexion</servlet-name>
 		<url-pattern>/deconnexion</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+        <servlet-name>ChangerMdp</servlet-name>
+        <servlet-class>services.servlets.ChangerMdp</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangerMdp</servlet-name>
+        <url-pattern>/changermdp</url-pattern>
+    </servlet-mapping>
 </web-app>
