@@ -50,8 +50,11 @@ public class UtilisateurFonctions {
 
 	}
 
-	public static void changerMotDePasse(String key, String newMdp, String oldMdp) throws SQLException, InformationUtilisateurException, SessionExpireeException, IDException{
+	public static void changerMotDePasse(String key, String oldMdp, String newMdp) throws SQLException, InformationUtilisateurException, SessionExpireeException, IDException{
 
+		Connection c = DBStatic.getSQLConnection();
+		Statement stmt = c.createStatement();
+		
 		/* Verifier les parametres */
 		if(key == null)
 			throw new NullPointerException("Clé session manquante");
@@ -67,23 +70,29 @@ public class UtilisateurFonctions {
 		if(!AuthenticationTools.cleActive(key))
 			throw new SessionExpireeException("Votre session a expirée");
 
+		/* Verifier si l'ancien mot de passe correspond avec celui qui a ete entre */
+		String mdpBd = "";
+		ResultSet rs = RequeteStatic.obtenirMpdAvecCle(stmt, key);
+		if(rs.next())
+			mdpBd = rs.getString("mdp");
+		if(!mdpBd.equals(oldMdp))
+			throw new InformationUtilisateurException("Le mot de passe courant n'est pas correct");
+		
 		/* Verifier si le mot de passe contient au moins 6 caracteres */
 		if(newMdp.length() < 6)
 			throw new InformationUtilisateurException("Le mot de passe doit contenir au moins 6 caractères");
 		
-
 		/* Verifier si le mot de passe est different de l'ancien */
 		if(oldMdp.equals(newMdp))
 			throw new InformationUtilisateurException("Le mot de passe doit être différent de l'ancien");
 		
 
+
 		/* Changement du mdp */
 		int id = AuthenticationTools.obtenirIdAvecCle(key);
 		if(id == 0)
 			throw new IDException("Utilisateur inconnu");
-		
-		Connection c = DBStatic.getSQLConnection();
-		Statement stmt = c.createStatement();
+
 		RequeteStatic.changerMdpAvecId(stmt, id, newMdp);
 		
 		stmt.close();

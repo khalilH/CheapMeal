@@ -29,7 +29,7 @@ public class RequeteStatic {
 	}
 
 	public static void updateTokenTime(Statement st, String login, Timestamp time) throws SQLException {
-		st.executeUpdate("update from SESSIONS s, UTILISATEURS u set s.dateExpiration = "+time+" where idSession = u.id and u.login = '"+login+"' ;");
+		st.executeUpdate("update from SESSIONS s, UTILISATEURS u set s.dateExpiration = '"+time+"' where idSession = u.id and u.login = '"+login+"' ;");
 	}
 	public static ResultSet retrieveTokenFromLogin(Statement st, String login) throws SQLException {
 		return st.executeQuery("select cleSession from SESSIONS s, UTILISATEURS u where idSession = u.id and u.login = '"+login+"' ;");
@@ -60,10 +60,14 @@ public class RequeteStatic {
 	}
 	
 	public static void changerMdpAvecId(Statement st, int id, String mdp) throws SQLException{
-		st.executeUpdate("update UTILISATEURS set u.mdp='"+mdp+"' where u.id='"+id+"';");
+		st.executeUpdate("update UTILISATEURS set mdp='"+mdp+"' where id='"+id+"';");
 	}
 	
 	public static ResultSet obtenirIdAvecCle(Statement st, String cle) throws SQLException{
-		return st.executeQuery("select idSession from SESSIONS s where s.cleSession'"+cle+"';");
+		return st.executeQuery("select idSession from SESSIONS s where s.cleSession='"+cle+"';");
+	}
+	
+	public static ResultSet obtenirMpdAvecCle(Statement st, String cle) throws SQLException{
+		return st.executeQuery("select u.mdp from UTILISATEURS u, SESSIONS s where s.cleSession='"+cle+"' and s.idSession=u.id;");
 	}
 }
