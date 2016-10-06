@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import Util.ServiceTools;
 import exceptions.IDException;
 import exceptions.InformationUtilisateurException;
+import exceptions.SessionExpireeException;
 import services.fonctions.UtilisateurFonctions;
 
 public class UtilisateurServices {
@@ -24,6 +25,21 @@ public class UtilisateurServices {
 			return ServiceTools.serviceRefused(ide.getMessage(), 0);
 		}catch (InformationUtilisateurException iue){
 			return ServiceTools.serviceRefused(iue.getMessage(), 0);
+		}
+	}
+	
+	public static JSONObject changerMotDePasse(String cle, String oldMdp, String newMdp) throws JSONException{
+		try {
+			UtilisateurFonctions.changerMotDePasse(cle, oldMdp, newMdp);
+			return ServiceTools.serviceAccepted();
+		} catch (SQLException sqle) {
+			return ServiceTools.serviceRefused(sqle.getMessage(), 0);
+		} catch (InformationUtilisateurException iue) {
+			return ServiceTools.serviceRefused(iue.getMessage(), 0);
+		} catch (SessionExpireeException see) {
+			return ServiceTools.serviceRefused(see.getMessage(), 0);
+		} catch (IDException ide){
+			return ServiceTools.serviceRefused(ide.getMessage(), 0);
 		}
 	}
 
