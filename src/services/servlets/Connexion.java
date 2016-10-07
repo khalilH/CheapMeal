@@ -8,9 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.Session;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import Util.Hibernate.HibernateUtil;
+import Util.Hibernate.Model.Utilisateurs;
 import services.ConnexionServices;
 
 /**
@@ -41,7 +44,7 @@ public class Connexion extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		String login = request.getParameter("login");
 		String mdp = request.getParameter("mdp");
-
+		
 		try {
 			JSONObject jb = ConnexionServices.connexion(login, mdp);
 

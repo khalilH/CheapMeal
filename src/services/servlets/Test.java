@@ -12,7 +12,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import Util.DBStatic;
+import Util.BDTools.DBStatic;
 
 /**
  * Servlet implementation class Test
