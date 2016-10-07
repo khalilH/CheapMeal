@@ -13,6 +13,9 @@ public class ConnexionServices {
 	public static JSONObject connexion(String login, String mdp) throws JSONException {
 		try {
 			JSONObject result = ConnexionFonctions.Connexion(login,mdp);
+			
+
+			
 			return result;
 		} catch (NullPointerException npe) {
 			return ServiceTools.serviceRefused(npe.getMessage(), -1);

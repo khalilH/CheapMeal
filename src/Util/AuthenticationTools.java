@@ -7,6 +7,9 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import Util.BDTools.DBStatic;
+import Util.BDTools.RequeteStatic;
+
 public class AuthenticationTools {
 
 	public static boolean loginLibre(String login) throws SQLException{

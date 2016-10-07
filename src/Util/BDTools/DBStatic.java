@@ -1,4 +1,4 @@
-package Util;
+package Util.BDTools;
 
 import java.net.UnknownHostException;
 import java.sql.Connection;

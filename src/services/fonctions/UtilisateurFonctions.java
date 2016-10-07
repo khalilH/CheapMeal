@@ -9,8 +9,8 @@ import java.sql.Statement;
 import javax.security.sasl.AuthenticationException;
 
 import Util.AuthenticationTools;
-import Util.DBStatic;
-import Util.RequeteStatic;
+import Util.BDTools.DBStatic;
+import Util.BDTools.RequeteStatic;
 import exceptions.IDException;
 import exceptions.InformationUtilisateurException;
 import exceptions.SessionExpireeException;

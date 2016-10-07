@@ -1,4 +1,4 @@
-package Util;
+package Util.BDTools;
 
 import java.sql.Connection;
 import java.sql.SQLException;

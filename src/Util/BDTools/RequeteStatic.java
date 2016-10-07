@@ -1,4 +1,4 @@
-package Util;
+package Util.BDTools;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +29,7 @@ public class RequeteStatic {
 	}
 
 	public static void updateTokenTime(Statement st, String login, Timestamp time) throws SQLException {
-		st.executeUpdate("update from SESSIONS s, UTILISATEURS u set s.dateExpiration = "+time+" where idSession = u.id and u.login = '"+login+"' ;");
+		st.executeUpdate("update SESSIONS s, UTILISATEURS u set s.dateExpiration = '"+time+"' where idSession = u.id and u.login = '"+login+"' ;");
 	}
 	public static ResultSet retrieveTokenFromLogin(Statement st, String login) throws SQLException {
 		return st.executeQuery("select cleSession from SESSIONS s, UTILISATEURS u where idSession = u.id and u.login = '"+login+"' ;");
@@ -66,4 +66,5 @@ public class RequeteStatic {
 	public static ResultSet obtenirIdAvecCle(Statement st, String cle) throws SQLException{
 		return st.executeQuery("select idSession from SESSIONS s where s.cleSession'"+cle+"';");
 	}
+// Comment
 }
