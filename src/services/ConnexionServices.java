@@ -2,13 +2,10 @@ package services;
 
 import java.sql.SQLException;
 
-import org.hibernate.Session;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import Util.ServiceTools;
-import Util.Hibernate.HibernateUtil;
-import Util.Hibernate.Model.Sessions;
 import exceptions.InformationUtilisateurException;
 import services.fonctions.ConnexionFonctions;
 

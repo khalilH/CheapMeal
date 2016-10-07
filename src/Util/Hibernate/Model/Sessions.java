@@ -2,17 +2,19 @@ package Util.Hibernate.Model;
 
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "SESSIONS")
 public class Sessions {
-//	@OneToOne(cascade = CascadeType.ALL)
-//    @PrimaryKeyJoinColumn()
 	@Id
+	@OneToOne(cascade = CascadeType.ALL,mappedBy="UTILISATEURS")
+//  @PrimaryKeyJoinColumn()
 	int idSession;
 	@Column(name = "cleSession")
 	String cleSession;
