@@ -66,4 +66,5 @@ public class RequeteStatic {
 	public static ResultSet obtenirIdAvecCle(Statement st, String cle) throws SQLException{
 		return st.executeQuery("select idSession from SESSIONS s where s.cleSession'"+cle+"';");
 	}
+// Comment
 }
