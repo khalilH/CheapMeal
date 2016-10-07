@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?> 
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://vps197081.ovh.net/ladi</property>
+		<property name="hibernate.connection.username">ladi</property>
+		<property name="hibernate.connection.password">atoz</property>
+		<property name="show_sql">true</property>
+        <!-- Pretty format le SQL généré -->
+        <property name="hibernate.format_sql">true</property>
+        
+		<!-- JDBC connection pool (use the built-in) -->
+		<property name="connection.pool_size">1</property>
+		<!-- SQL dialect -->
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+         <!-- fait en sorte qu'Hibernate gere automatiquement la session -->
+         <!-- Celle-ci est liée au thread local. -->
+        <property name="current_session_context_class">thread</property> 
+        
+		<!-- Drop and re-create the database schema on startup -->
+		<property name="hbm2ddl.auto">update</property>
+
+		<mapping resource="Util/Hibernate/Model/Utilisateurs.hbm.xml" />
+		<mapping resource="Util/Hibernate/Model/Sessions.hbm.xml" />
+		<mapping resource="Util/Hibernate/Model/Profils.hbm.xml" />
+	</session-factory>
+</hibernate-configuration>
