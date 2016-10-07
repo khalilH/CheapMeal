@@ -25,7 +25,6 @@
 		<property name="hbm2ddl.auto">update</property>
 
 		<mapping resource="Util/Hibernate/Model/Utilisateurs.hbm.xml" />
-		<mapping resource="Util/Hibernate/Model/Sessions.hbm.xml" />
 		<mapping resource="Util/Hibernate/Model/Profils.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

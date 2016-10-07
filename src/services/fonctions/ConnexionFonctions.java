@@ -2,11 +2,15 @@ package services.fonctions;
 
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
+import org.hibernate.Session;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import Util.AuthenticationTools;
+import Util.Hibernate.HibernateUtil;
+import Util.Hibernate.Model.Sessions;
 import exceptions.InformationUtilisateurException;
 
 
@@ -28,9 +32,14 @@ public class ConnexionFonctions {
 				jb.put("Succes", "User's token has been replenished");
 				jb.put("Token", authToken);
 			}else{
-				String authToken = AuthenticationTools.addSessionFromLogin(login);
+//				String authToken = AuthenticationTools.addSessionFromLogin(login);
+				Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+				s.beginTransaction();
+				s.save(new Sessions(1,"Toz",new Timestamp(0)));
+				s.getTransaction().commit();
+				
 				jb.put("Succes", "User is properly connected");
-				jb.put("Token", authToken);
+				jb.put("Token", "abcd");
 			}
 		}
 		else{ 			// Identifiants invalide
