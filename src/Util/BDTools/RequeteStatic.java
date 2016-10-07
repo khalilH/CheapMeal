@@ -66,5 +66,9 @@ public class RequeteStatic {
 	public static ResultSet obtenirIdAvecCle(Statement st, String cle) throws SQLException{
 		return st.executeQuery("select idSession from SESSIONS s where s.cleSession'"+cle+"';");
 	}
+	
+	public static ResultSet obtenirMpdAvecCle(Statement st, String cle) throws SQLException{
+		return st.executeQuery("select u.mdp from UTILISATEURS u, SESSIONS s where s.cleSession='"+cle+"' and s.idSession=u.id;");
+	}
 // Comment
 }
