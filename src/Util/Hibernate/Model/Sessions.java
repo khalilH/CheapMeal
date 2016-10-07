@@ -10,6 +10,9 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "SESSIONS")
 public class Sessions {
@@ -27,6 +30,9 @@ public class Sessions {
     @JoinColumn(name="idSession")
 	Utilisateurs u;
 	
+	public Sessions() {
+	}
+
 	public Sessions(int idSession, String cleSession, Timestamp dateExpiration) {
 		super();
 		this.idSession = idSession;

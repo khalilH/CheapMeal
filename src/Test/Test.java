@@ -18,7 +18,10 @@ public class Test {
 		
 		s = HibernateUtil.getSessionFactory().getCurrentSession();
 		s.beginTransaction();
-		s.save(new Sessions(1, "ABCDETOZ", new Timestamp(0)));
+		Sessions s1 = new Sessions(1, "ABCDETOZ", new Timestamp(0));
+		Utilisateurs user=(Utilisateurs) s.load(Utilisateurs.class, 1);
+		s1.setU(user);
+		s.save(s1);
 		s.getTransaction().commit();
 	}
 

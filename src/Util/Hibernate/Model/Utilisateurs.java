@@ -7,11 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
-import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 @Entity
@@ -31,9 +30,12 @@ public class Utilisateurs {
 	@Column(name="mail", unique = true)
 	String mail;
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "u")
+	@OneToOne(cascade=CascadeType.ALL, mappedBy = "u")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	Sessions s;
 	
+	public Utilisateurs() {
+	}
 	public Utilisateurs(String login, String mdp, String prenom, String nom, String mail) {
 		super();
 		this.login = login;
@@ -78,6 +80,8 @@ public class Utilisateurs {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
+	
+	
 	public Sessions getS() {
 		return s;
 	}
