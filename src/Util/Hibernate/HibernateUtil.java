@@ -7,6 +7,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import Util.Hibernate.Model.Sessions;
+import Util.Hibernate.Model.Utilisateurs;
 
 public class HibernateUtil {
 
@@ -18,6 +19,7 @@ public class HibernateUtil {
         	// Create the SessionFactory from hibernate.cfg.xml
         	Configuration configuration = new Configuration()
         			.addAnnotatedClass(Sessions.class)
+        			.addAnnotatedClass(Utilisateurs.class)
         			.configure();
      
             serviceRegistry = new StandardServiceRegistryBuilder().applySettings(

@@ -2,10 +2,11 @@ package Util.Hibernate.Model;
 
 import java.sql.Timestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -13,15 +14,18 @@ import javax.persistence.Table;
 @Table(name = "SESSIONS")
 public class Sessions {
 	@Id
-	@OneToOne(cascade = CascadeType.ALL,mappedBy="UTILISATEURS")
-//  @PrimaryKeyJoinColumn()
 	int idSession;
+	
 	@Column(name = "cleSession")
 	String cleSession;
+	
 	@Column(name = "dateExpiration")
 	Timestamp dateExpiration;
-	
-	
+
+	@MapsId
+    @OneToOne
+    @JoinColumn(name="idSession")
+	Utilisateurs u;
 	
 	public Sessions(int idSession, String cleSession, Timestamp dateExpiration) {
 		super();
@@ -52,6 +56,14 @@ public class Sessions {
 
 	public void setDateExpiration(Timestamp dateExpiration) {
 		this.dateExpiration = dateExpiration;
+	}
+
+	public Utilisateurs getU() {
+		return u;
+	}
+
+	public void setU(Utilisateurs u) {
+		this.u = u;
 	}
 
 }
