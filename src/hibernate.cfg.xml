@@ -15,7 +15,7 @@
 		<!-- JDBC connection pool (use the built-in) -->
 		<property name="connection.pool_size">1</property>
 		<!-- SQL dialect -->
-		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
 
          <!-- fait en sorte qu'Hibernate gere automatiquement la session -->
          <!-- Celle-ci est liée au thread local. -->
