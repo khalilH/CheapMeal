@@ -25,26 +25,22 @@ public class ConnexionFonctions {
 			throw new InformationUtilisateurException("Login ou mot de passe  non valide");
 		}
 		//Verifier si lutilisateur existe
-		if(AuthenticationTools.credentialsAreValid(login, mdp)){
+		if(AuthenticationTools.isIdentifiantsValide(login, mdp)){
 			
-			if(AuthenticationTools.isSessionOpen(login)){ 			// Si Lutilisateur est connecte
+			if(AuthenticationTools.isUtilisateurConnecte(login)){ 			// Si Lutilisateur est connecte
 				String authToken = AuthenticationTools.updateAndRetrieveTokenTime(login);
 				jb.put("Succes", "User's token has been replenished");
 				jb.put("Token", authToken);
 			}else{
 //				String authToken = AuthenticationTools.addSessionFromLogin(login);
 				Session s = HibernateUtil.getSessionFactory().getCurrentSession();
-				s.beginTransaction();
-				s.save(new Sessions(1,"Toz",new Timestamp(0)));
-				s.getTransaction().commit();
-				
 				jb.put("Succes", "User is properly connected");
 				jb.put("Token", "abcd");
 			}
 		}
 		else{ 			// Identifiants invalide
 
-			if(AuthenticationTools.userExists(login)){
+			if(AuthenticationTools.isUserInDatabase(login)){
 				jb.put("Error", "Votre mot de passe est incorrect");
 			}else{
 				jb.put("Error", "Votre compte n'est pas repertori� dans notre base");

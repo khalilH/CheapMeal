@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import org.hibernate.Session;
 
-import Util.HibernateUtil;
+import Util.Hibernate.HibernateUtil;
 import Util.Hibernate.Model.Sessions;
 import Util.Hibernate.Model.Utilisateurs;
 public class Test {

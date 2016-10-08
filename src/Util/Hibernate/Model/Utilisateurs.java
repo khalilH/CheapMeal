@@ -30,8 +30,7 @@ public class Utilisateurs {
 	@Column(name="mail", unique = true)
 	String mail;
 	
-	@OneToOne(cascade=CascadeType.ALL, mappedBy = "u")
-	@OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToOne(cascade=CascadeType.REMOVE, mappedBy = "u")
 	Sessions s;
 	
 	public Utilisateurs() {

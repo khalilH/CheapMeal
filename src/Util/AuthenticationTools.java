@@ -14,16 +14,9 @@ public class AuthenticationTools {
 
 	public static boolean loginLibre(String login) throws SQLException{
 		boolean res = true;
-		Connection c;
-		c = DBStatic.getSQLConnection();
-		Statement stmt = c.createStatement();
-		//TODO renommer checkUserExist en français
-		ResultSet rs = RequeteStatic.checkUserExist(stmt, login);
-		if(rs.next())
-			res = false;
-		rs.close();
-		stmt.close();
-		c.close();
+//		ResultSet rs = RequeteStatic.verifierUtilisateurExiste(login);
+//		if(rs.next())
+//			res = false;
 		return res;
 	}
 	
@@ -62,7 +55,7 @@ public class AuthenticationTools {
 	public static void detruireCleSession(String cle) throws SQLException {
 		Connection c = DBStatic.getSQLConnection();
 		Statement st = c.createStatement();
-		RequeteStatic.deleteFromSessions(st, cle);
+		RequeteStatic.supprimerSessionAvecCle(st, cle);
 		st.close();
 		c.close();
 	}
@@ -77,7 +70,7 @@ public class AuthenticationTools {
 		boolean res = false;
 		Connection c = DBStatic.getSQLConnection();
 		Statement st = c.createStatement();
-		ResultSet cursor = RequeteStatic.selectDateExpirationFromSessions(st, cle);
+		ResultSet cursor = RequeteStatic.getDateExpirationAvecCle(st, cle);
 		if (cursor.next()) {
 			Timestamp dateExpiration = cursor.getTimestamp("dateExpiration");
 			Timestamp curTime = new Timestamp(System.currentTimeMillis());
@@ -93,12 +86,12 @@ public class AuthenticationTools {
 		return res;
 	}
 
-	public static boolean userExists(String id) throws SQLException {
+	public static boolean isUserInDatabase(String id) throws SQLException {
 		Connection c = DBStatic.getSQLConnection();
 		Statement st = c.createStatement();
 		boolean res = false;
 		
-		ResultSet cursor = RequeteStatic.checkUserExist(st,id);
+		ResultSet cursor = RequeteStatic.verifierUtilisateurExiste(st,id);
 		if(cursor.first())
 			res = true;
 		
@@ -108,12 +101,12 @@ public class AuthenticationTools {
 		return res;
 	}
 	
-	public static boolean credentialsAreValid(String id,String mdp) throws SQLException {
+	public static boolean isIdentifiantsValide(String id,String mdp) throws SQLException {
 		Connection c = DBStatic.getSQLConnection();
 		Statement st = c.createStatement();
 		boolean res = false;
 		
-		ResultSet cursor = RequeteStatic.checkCredentialsValid(st, id, mdp);
+		ResultSet cursor = RequeteStatic.checkIdentifiantsValide(st, id, mdp);
 		if(cursor.first())
 			res = true;
 		
@@ -129,11 +122,11 @@ public class AuthenticationTools {
 	 * @return true si son id est present dans la table SESSION, false sinon
 	 * @throws SQLException
 	 */
-	public static boolean isSessionOpen(String login) throws SQLException {
+	public static boolean isUtilisateurConnecte(String login) throws SQLException {
 		Connection c = DBStatic.getSQLConnection();
 		Statement st = c.createStatement();
 		boolean res = false;
-		ResultSet cursor = RequeteStatic.checkSessionOpen(st, login);
+		ResultSet cursor = RequeteStatic.isSessionCree(st, login);
 		if(cursor.first())
 			res = true;
 		cursor.close();
@@ -148,8 +141,8 @@ public class AuthenticationTools {
 		long timetoAdd=30*60*1000; // 30 minutes in milliseconds
 		Timestamp time = new Timestamp(new Date().getTime() + timetoAdd);
 		String s = "";
-		RequeteStatic.updateTokenTime(st,login, time);
-		ResultSet cursor = RequeteStatic.retrieveTokenFromLogin(st, login);
+		RequeteStatic.updateDateExpirationAvecLogin(st,login, time);
+		ResultSet cursor = RequeteStatic.recupererTokenAvecLogin(st, login);
 		if(cursor.first())
 			 s = cursor.getString("cleSession");
 		else	
@@ -166,10 +159,9 @@ public class AuthenticationTools {
 		long timetoAdd=30*60*1000; // 30 minutes in milliseconds
 		Timestamp time = new Timestamp(new Date().getTime() + timetoAdd);
 		String key = AuthenticationTools.createKey(); 
-		//TODO peut etre check si la cle genere n'existe pas deja meme si peu probable 
 		String idofUser="";
 		
-		ResultSet user = RequeteStatic.checkUserExist(st, login);
+		ResultSet user = RequeteStatic.verifierUtilisateurExiste(st, login);
 		if(user.first())
 			idofUser = user.getString("id");
 		else
@@ -190,7 +182,7 @@ public class AuthenticationTools {
 	public static void rafraichirCle(String cle) throws SQLException {
 		Connection c = DBStatic.getSQLConnection();
 		Statement st = c.createStatement();
-		RequeteStatic.updateDateExpirationInSession(st, cle);
+		RequeteStatic.updateDateExpirationAvecCle(st, cle);
 		st.close();
 		c.close();
 	}
@@ -236,7 +228,7 @@ public class AuthenticationTools {
 		int res = 0;
 		Connection c = DBStatic.getSQLConnection();
 		Statement st = c.createStatement();
-		ResultSet rs = RequeteStatic.obtenirIdAvecCle(st, cle);
+		ResultSet rs = RequeteStatic.obtenirIdSessionAvecCle(st, cle);
 		if(rs.next())
 			res = rs.getInt("idSession");
 		rs.close();
