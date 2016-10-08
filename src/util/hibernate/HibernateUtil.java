@@ -1,4 +1,4 @@
-package Util.Hibernate;
+package util.hibernate;
 
 
 import org.hibernate.SessionFactory;
@@ -6,8 +6,10 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-import Util.Hibernate.Model.Sessions;
-import Util.Hibernate.Model.Utilisateurs;
+import util.hibernate.model.Admins;
+import util.hibernate.model.Profils;
+import util.hibernate.model.Sessions;
+import util.hibernate.model.Utilisateurs;
 
 public class HibernateUtil {
 
@@ -19,6 +21,8 @@ public class HibernateUtil {
         	// Create the SessionFactory from hibernate.cfg.xml
         	Configuration configuration = new Configuration()
         			.addAnnotatedClass(Sessions.class)
+        			.addAnnotatedClass(Profils.class)
+        			.addAnnotatedClass(Admins.class)
         			.addAnnotatedClass(Utilisateurs.class)
         			.configure();
      

@@ -1,4 +1,4 @@
-package services.servlets;
+package test;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,18 +12,18 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import Util.BDTools.DBStatic;
+import util.bdTools.DBStatic;
 
 /**
  * Servlet implementation class Test
  */
-public class Test extends HttpServlet {
+public class TestMongoDB extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Test() {
+    public TestMongoDB() {
         super();
         // TODO Auto-generated constructor stub
     }

@@ -14,6 +14,8 @@ import services.UtilisateurServices;
 
 public class ChangerMdp extends HttpServlet {
 
+	private static final long serialVersionUID = 6707840367155991458L;
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response){
 
 		/* Lecture des parametres */

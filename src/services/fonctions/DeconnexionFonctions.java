@@ -3,8 +3,8 @@ package services.fonctions;
 import java.security.KeyException;
 import java.sql.SQLException;
 
-import Util.AuthenticationTools;
 import exceptions.SessionExpireeException;
+import util.bdTools.RequeteStatic;
 
 public class DeconnexionFonctions {
 
@@ -18,11 +18,11 @@ public class DeconnexionFonctions {
 		if(cle.length() != 32)
 			throw new KeyException("Cle invalide");
 		
-		if (!AuthenticationTools.cleActive(cle))
+		if (!RequeteStatic.isCleActive(cle))
 			throw new SessionExpireeException("Votre session a expiree");
 		
 		/* Fermeture session */
-		AuthenticationTools.detruireCleSession(cle);
+		RequeteStatic.supprimerSessionAvecCle(cle);
 	}
 
 }

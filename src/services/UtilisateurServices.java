@@ -5,11 +5,11 @@ import java.sql.SQLException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import Util.ServiceTools;
 import exceptions.IDException;
 import exceptions.InformationUtilisateurException;
 import exceptions.SessionExpireeException;
 import services.fonctions.UtilisateurFonctions;
+import util.ServiceTools;
 
 public class UtilisateurServices {
 

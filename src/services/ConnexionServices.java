@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import Util.ServiceTools;
 import exceptions.InformationUtilisateurException;
 import services.fonctions.ConnexionFonctions;
+import util.ServiceTools;
 
 public class ConnexionServices {
 	public static JSONObject connexion(String login, String mdp) throws JSONException {

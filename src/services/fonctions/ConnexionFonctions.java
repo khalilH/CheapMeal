@@ -2,16 +2,12 @@ package services.fonctions;
 
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
-import org.hibernate.Session;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import Util.AuthenticationTools;
-import Util.Hibernate.HibernateUtil;
-import Util.Hibernate.Model.Sessions;
 import exceptions.InformationUtilisateurException;
+import util.bdTools.RequeteStatic;
 
 
 public class ConnexionFonctions {
@@ -21,29 +17,28 @@ public class ConnexionFonctions {
 		if(login == null || mdp == null){
 			throw new NullPointerException("Le login ou le mot de passe est null");
 		}
-		if(login == "" || mdp == "" || mdp.length() == 0){
-			throw new InformationUtilisateurException("Login ou mot de passe  non valide");
+		if(login.equals("") || mdp.equals("") || login.length() < 6 || mdp.length() < 6 ){
+			throw new InformationUtilisateurException("Login ou mot de passe non valide");
 		}
 		//Verifier si lutilisateur existe
-		if(AuthenticationTools.isIdentifiantsValide(login, mdp)){
+		if(RequeteStatic.checkIdentifiantsValide(login, mdp)){
 			
-			if(AuthenticationTools.isUtilisateurConnecte(login)){ 			// Si Lutilisateur est connecte
-				String authToken = AuthenticationTools.updateAndRetrieveTokenTime(login);
+			if(RequeteStatic.isSessionCree(login)){ 			// Si Lutilisateur est connecte
+				RequeteStatic.updateDateExpirationAvecLogin(login);
+				String authToken = RequeteStatic.recupererTokenAvecLogin(login); 
 				jb.put("Succes", "User's token has been replenished");
 				jb.put("Token", authToken);
 			}else{
-//				String authToken = AuthenticationTools.addSessionFromLogin(login);
-				Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+				RequeteStatic.createSessionFromLogin(login);
 				jb.put("Succes", "User is properly connected");
-				jb.put("Token", "abcd");
 			}
 		}
 		else{ 			// Identifiants invalide
 
-			if(AuthenticationTools.isUserInDatabase(login)){
+			if(!RequeteStatic.isLoginDisponible(login)){
 				jb.put("Error", "Votre mot de passe est incorrect");
 			}else{
-				jb.put("Error", "Votre compte n'est pas repertori� dans notre base");
+				jb.put("Error", "Votre compte n'est pas repertorie dans notre base");
 			}
 		}
 		

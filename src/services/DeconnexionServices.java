@@ -6,12 +6,13 @@ import java.sql.SQLException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import Util.ServiceTools;
 import exceptions.SessionExpireeException;
 import services.fonctions.DeconnexionFonctions;
+import util.ServiceTools;
 
 public class DeconnexionServices {
 
+	//TODO down
 	/* Harmoniser serviceRefused avec les bons codes d'erreur/succes */
 	/* Mettre les differentes exception a catch, attention a l'ordre */
 	

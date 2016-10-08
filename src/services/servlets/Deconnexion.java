@@ -20,11 +20,11 @@ public class Deconnexion extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		/* Recuperation des parametres */
-		String key = request.getParameter("cle");
+		String cle = request.getParameter("cle");
 		
 		/* Traitement du service */
 		try {
-			JSONObject result = DeconnexionServices.deconnexion(key);
+			JSONObject result = DeconnexionServices.deconnexion(cle);
 			
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();

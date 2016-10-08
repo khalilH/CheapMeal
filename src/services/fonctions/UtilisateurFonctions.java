@@ -1,19 +1,11 @@
 package services.fonctions;
 
-import java.security.KeyException;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-import javax.security.sasl.AuthenticationException;
-
-import Util.AuthenticationTools;
-import Util.BDTools.DBStatic;
-import Util.BDTools.RequeteStatic;
 import exceptions.IDException;
 import exceptions.InformationUtilisateurException;
 import exceptions.SessionExpireeException;
+import util.bdTools.RequeteStatic;
 
 public class UtilisateurFonctions {
 
@@ -21,7 +13,7 @@ public class UtilisateurFonctions {
 
 		/* Verification des parametres */
 		if(login == null || mdp == null || prenom == null || nom == null || email == null)
-			throw new InformationUtilisateurException("Informations non compl�tes");
+			throw new InformationUtilisateurException("Informations non completes");
 
 		if(login.equals("") || mdp.equals("") || prenom.equals("") || nom.equals("") || email.equals(""))
 			throw new InformationUtilisateurException("Nom d'utilisateur, mot de passe ou adresse mail invalide");
@@ -29,24 +21,18 @@ public class UtilisateurFonctions {
 		if(mdp.length() < 6)
 			throw new InformationUtilisateurException("Mot de passe trop court");
 
-		if(!AuthenticationTools.loginLibre(login))
+		if(!RequeteStatic.isLoginDisponible(login))
 			throw new InformationUtilisateurException("Ce nom d'utilisateur n'est pas libre");
 
-		if(!AuthenticationTools.emailLibre(email))
-			throw new InformationUtilisateurException("Cette adresse email est d�j� utilis�e");
+		if(!RequeteStatic.isEmailDisponible(email))
+			throw new InformationUtilisateurException("Cette adresse email est deja utilisee");
 
 		/* Creation de l'utilisateur dans la base SQL */
-		Connection c = DBStatic.getSQLConnection();
-		Statement stmt = c.createStatement();
-		RequeteStatic.ajoutUtilisateur(stmt, login, mdp, nom, prenom, email);
-		stmt.close();
-		c.close();
-		int id = AuthenticationTools.obtenirIdAvecLogin(login);
-		if(id == 0)
+		RequeteStatic.ajoutUtilisateur(login, mdp, nom, prenom, email);
+		int id = RequeteStatic.obtenirIdAvecLogin(login);
+		if(id == -1)
 			throw new IDException("Utilisateur inexistant");
 
-		//TODO Cr�er le profile ICI 
-		//ProfileFonctions.creerProfile(id);
 
 	}
 
@@ -54,40 +40,35 @@ public class UtilisateurFonctions {
 
 		/* Verifier les parametres */
 		if(key == null)
-			throw new NullPointerException("Clé session manquante");
+			throw new NullPointerException("Cle session manquante");
 		
 		if (key.length() != 32) 
-			throw new InformationUtilisateurException("Clé invalide");
+			throw new InformationUtilisateurException("Cle invalide");
 		
 		if (oldMdp == null || newMdp == null)
 			throw new NullPointerException("Missing argument");
 		
 		/* Verifier si la personne a une session active */
 
-		if(!AuthenticationTools.cleActive(key))
-			throw new SessionExpireeException("Votre session a expirée");
+		if(!RequeteStatic.isCleActive(key))
+			throw new SessionExpireeException("Votre session a expiree");
 
 		/* Verifier si le mot de passe contient au moins 6 caracteres */
 		if(newMdp.length() < 6)
-			throw new InformationUtilisateurException("Le mot de passe doit contenir au moins 6 caractères");
+			throw new InformationUtilisateurException("Le mot de passe doit contenir au moins 6 caracteres");
 		
 
 		/* Verifier si le mot de passe est different de l'ancien */
 		if(oldMdp.equals(newMdp))
-			throw new InformationUtilisateurException("Le mot de passe doit être différent de l'ancien");
+			throw new InformationUtilisateurException("Le mot de passe doit etre different de l'ancien");
 		
 
 		/* Changement du mdp */
-		int id = AuthenticationTools.obtenirIdAvecCle(key);
-		if(id == 0)
+		int id = RequeteStatic.obtenirIdSessionAvecCle(key);
+		if(id == -1)
 			throw new IDException("Utilisateur inconnu");
 		
-		Connection c = DBStatic.getSQLConnection();
-		Statement stmt = c.createStatement();
-		RequeteStatic.changerMdpAvecId(stmt, id, newMdp);
-		
-		stmt.close();
-		c.close();
+		RequeteStatic.changerMdpAvecId(id, newMdp);
 	}
 
 
