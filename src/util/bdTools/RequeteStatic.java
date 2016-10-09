@@ -146,6 +146,7 @@ public class RequeteStatic {
 						.setParameter("time", time)
 						.executeUpdate();
 		s.getTransaction().commit();
+		s.close();
 	}
 	
 	/**
@@ -181,6 +182,7 @@ public class RequeteStatic {
 		s1.setUtilisateur(user);
 		s.save(s1);
 		s.getTransaction().commit();
+		s.close();
 		return cle;
 		//TODO verifier que la cle generee n'existe pas deja (tres peu probable)
 	}
@@ -197,6 +199,7 @@ public class RequeteStatic {
 						.setParameter("cle", cle)
 						.executeUpdate();
 		s.getTransaction().commit();
+		s.close();
 	}
 	
 	/**
@@ -215,6 +218,7 @@ public class RequeteStatic {
 		Integer id = (Integer) s.save(new Utilisateurs(login, mdp, prenom, nom, email));
 		s.getTransaction().commit();
 		ajouterProfil(id);
+		s.close();
 		return id;
 	}
 	
@@ -231,6 +235,7 @@ public class RequeteStatic {
 		p1.setUtilisateur(user);
 		s.save(p1);
 		s.getTransaction().commit();
+		s.close();
 	}
 
 	/**
@@ -296,6 +301,7 @@ public class RequeteStatic {
 					.setParameter("id", id)
 					.executeUpdate();
 		s.getTransaction().commit();
+		s.close();
 	}
 	
 	/**
