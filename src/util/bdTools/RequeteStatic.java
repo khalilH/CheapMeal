@@ -26,7 +26,6 @@ public class RequeteStatic {
 						.setParameter("cleSession", cle)
 						.executeUpdate();
 	s.getTransaction().commit();
-
 				Update dune entite
 				-> En SQL Parce qu'il ya 2 table
 	s.createSQLQuery("update SESSIONS s, UTILISATEURS u set s.dateExpiration = :time where s.idSession = u.id and u.login = :u_login")

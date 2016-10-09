@@ -71,5 +71,4 @@ public class UtilisateurFonctions {
 		RequeteStatic.changerMdpAvecId(id, newMdp);
 	}
 
-
 }
