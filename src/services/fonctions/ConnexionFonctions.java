@@ -17,7 +17,7 @@ public class ConnexionFonctions {
 		if(login == null || mdp == null){
 			throw new NullPointerException("Le login ou le mot de passe est null");
 		}
-		if(login.equals("") || mdp.equals("") || login.length() < 6 || mdp.length() < 6 ){
+		if(login.equals("") || mdp.equals("") || mdp.length() < 6 ){
 			throw new InformationUtilisateurException("Login ou mot de passe non valide");
 		}
 		//Verifier si lutilisateur existe
@@ -29,8 +29,9 @@ public class ConnexionFonctions {
 				jb.put("Succes", "User's token has been replenished");
 				jb.put("Token", authToken);
 			}else{
-				RequeteStatic.createSessionFromLogin(login);
+				String cle = RequeteStatic.createSessionFromLogin(login);
 				jb.put("Succes", "User is properly connected");
+				jb.put("Token", cle);
 			}
 		}
 		else{ 			// Identifiants invalide
