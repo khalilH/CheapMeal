@@ -68,7 +68,6 @@ public class RequeteStatic {
 		Timestamp s_timestamp=(Timestamp) s.createQuery("Select s.dateExpiration from Sessions s where s.cleSession = :cleSession")
 					.setParameter("cleSession", cle)
 					.uniqueResult();
-		s.close();
 		return s_timestamp;
 	}
 	
@@ -96,7 +95,6 @@ public class RequeteStatic {
 		Utilisateurs user =(Utilisateurs) s.createQuery("from Utilisateurs u where login = :login")
 					.setParameter("login", login)
 					.uniqueResult();
-		s.close();
 		return user == null;
 	}
 
@@ -113,7 +111,6 @@ public class RequeteStatic {
 					.setParameter("login", login)
 					.setParameter("mdp", mdp)
 					.uniqueResult();
-		s.close();
 		return user != null;
 	}
 
@@ -128,7 +125,6 @@ public class RequeteStatic {
 		Sessions session =(Sessions) s.createQuery("select s from Utilisateurs u,Sessions s where u.login = :login and u.id = s.idSession")
 					.setParameter("login", login)
 					.uniqueResult();
-		s.close();
 		return session != null;
 	}
 
@@ -146,7 +142,6 @@ public class RequeteStatic {
 						.setParameter("time", time)
 						.executeUpdate();
 		s.getTransaction().commit();
-		s.close();
 	}
 	
 	/**
@@ -161,7 +156,6 @@ public class RequeteStatic {
 		String session_token =(String) s.createQuery("select s.cleSession from Utilisateurs u,Sessions s where u.login = :login and u.id = s.idSession")
 					.setParameter("login", login)
 					.uniqueResult();
-		s.close();
 		return session_token;
 	}
 
@@ -182,7 +176,6 @@ public class RequeteStatic {
 		s1.setUtilisateur(user);
 		s.save(s1);
 		s.getTransaction().commit();
-		s.close();
 		return cle;
 		//TODO verifier que la cle generee n'existe pas deja (tres peu probable)
 	}
@@ -199,7 +192,6 @@ public class RequeteStatic {
 						.setParameter("cle", cle)
 						.executeUpdate();
 		s.getTransaction().commit();
-		s.close();
 	}
 	
 	/**
@@ -218,7 +210,6 @@ public class RequeteStatic {
 		Integer id = (Integer) s.save(new Utilisateurs(login, mdp, prenom, nom, email));
 		s.getTransaction().commit();
 		ajouterProfil(id);
-		s.close();
 		return id;
 	}
 	
@@ -235,7 +226,6 @@ public class RequeteStatic {
 		p1.setUtilisateur(user);
 		s.save(p1);
 		s.getTransaction().commit();
-		s.close();
 	}
 
 	/**
@@ -249,7 +239,6 @@ public class RequeteStatic {
 		String u_mail =(String) s.createQuery("select u.mail from Utilisateurs u where u.mail= :mail")
 					.setParameter("mail", email)
 					.uniqueResult();
-		s.close();
 		return u_mail == null;
 	}
 	
@@ -265,7 +254,6 @@ public class RequeteStatic {
 		Integer u_id =(Integer) s.createQuery("select u.id from Utilisateurs u where u.login= :login")
 					.setParameter("login", login)
 					.uniqueResult();
-		s.close();
 		if(u_id == null)
 			return -1;
 		else
@@ -284,7 +272,6 @@ public class RequeteStatic {
 		String u_mdp =(String) s.createQuery("select u.mdp from Utilisateurs u where u.login= :login")
 					.setParameter("login", login)
 					.uniqueResult();
-		s.close();
 		return u_mdp;
 	}
 	
@@ -301,7 +288,6 @@ public class RequeteStatic {
 					.setParameter("id", id)
 					.executeUpdate();
 		s.getTransaction().commit();
-		s.close();
 	}
 	
 	/**
@@ -317,7 +303,6 @@ public class RequeteStatic {
 		Integer s_id =(Integer) s.createQuery("select s.idSession from Sessions s where s.cleSession = :cle")
 					.setParameter("cle", cle)
 					.uniqueResult();
-		s.close();
 		if(s_id == null)
 			return -1;
 		else
