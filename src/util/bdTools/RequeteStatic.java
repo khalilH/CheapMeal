@@ -44,7 +44,7 @@ public class RequeteStatic {
 	
 	
 	/**
-	 * Supprime la session d'un utilisateur grace à son Token
+	 * Supprime la session d'un utilisateur grace ï¿½ son Token
 	 * @param cle
 	 */
 	public static void supprimerSessionAvecCle(String cle){
@@ -68,6 +68,7 @@ public class RequeteStatic {
 		Timestamp s_timestamp=(Timestamp) s.createQuery("Select s.dateExpiration from Sessions s where s.cleSession = :cleSession")
 					.setParameter("cleSession", cle)
 					.uniqueResult();
+		s.getTransaction().commit();
 		return s_timestamp;
 	}
 	
@@ -95,6 +96,7 @@ public class RequeteStatic {
 		Utilisateurs user =(Utilisateurs) s.createQuery("from Utilisateurs u where login = :login")
 					.setParameter("login", login)
 					.uniqueResult();
+		s.getTransaction().commit();
 		return user == null;
 	}
 
@@ -111,6 +113,7 @@ public class RequeteStatic {
 					.setParameter("login", login)
 					.setParameter("mdp", mdp)
 					.uniqueResult();
+		s.getTransaction().commit();
 		return user != null;
 	}
 
@@ -125,6 +128,7 @@ public class RequeteStatic {
 		Sessions session =(Sessions) s.createQuery("select s from Utilisateurs u,Sessions s where u.login = :login and u.id = s.idSession")
 					.setParameter("login", login)
 					.uniqueResult();
+		s.getTransaction().commit();
 		return session != null;
 	}
 
@@ -156,6 +160,7 @@ public class RequeteStatic {
 		String session_token =(String) s.createQuery("select s.cleSession from Utilisateurs u,Sessions s where u.login = :login and u.id = s.idSession")
 					.setParameter("login", login)
 					.uniqueResult();
+		s.getTransaction().commit();
 		return session_token;
 	}
 
@@ -169,6 +174,7 @@ public class RequeteStatic {
 		int id = obtenirIdAvecLogin(login);
 		Timestamp time = new Timestamp(System.currentTimeMillis()+30*60*1000);
 		String cle = createKey();
+		
 		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
 		s.beginTransaction();
 		Utilisateurs user = (Utilisateurs) s.load(Utilisateurs.class, id);
@@ -239,6 +245,7 @@ public class RequeteStatic {
 		String u_mail =(String) s.createQuery("select u.mail from Utilisateurs u where u.mail= :mail")
 					.setParameter("mail", email)
 					.uniqueResult();
+		s.getTransaction().commit();
 		return u_mail == null;
 	}
 	
@@ -254,6 +261,7 @@ public class RequeteStatic {
 		Integer u_id =(Integer) s.createQuery("select u.id from Utilisateurs u where u.login= :login")
 					.setParameter("login", login)
 					.uniqueResult();
+		s.getTransaction().commit();
 		if(u_id == null)
 			return -1;
 		else
@@ -272,6 +280,7 @@ public class RequeteStatic {
 		String u_mdp =(String) s.createQuery("select u.mdp from Utilisateurs u where u.login= :login")
 					.setParameter("login", login)
 					.uniqueResult();
+		s.getTransaction().commit();
 		return u_mdp;
 	}
 	
@@ -303,6 +312,7 @@ public class RequeteStatic {
 		Integer s_id =(Integer) s.createQuery("select s.idSession from Sessions s where s.cleSession = :cle")
 					.setParameter("cle", cle)
 					.uniqueResult();
+		s.getTransaction().commit();
 		if(s_id == null)
 			return -1;
 		else

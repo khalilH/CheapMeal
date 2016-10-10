@@ -17,7 +17,7 @@ public class Deconnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		/* Recuperation des parametres */
 		String cle = request.getParameter("cle");
