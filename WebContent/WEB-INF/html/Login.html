@@ -14,7 +14,7 @@
 </head>
 <body>
     <!-- Fixe en haut la barre de navigation -->
-    <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+    <nav role="navigation" class="navbar navbar-default navbar-static-top">
         <div class="container-fluid">
             <!-- Fixe la banniere du haut-->
             <div class="navbar-header">
@@ -24,32 +24,44 @@
 
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 
-                      <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Page 1-1</a></li>
-                    <li><a href="#">Page 1-2</a></li>
-                    <li><a href="#">Page 1-3</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Page 2</a></li>
-            <li><a href="#">Page 3</a></li>
-        </ul>
-    </div>
+                <li><a href="#">Page 2</a></li>
+                <li><a href="#">Page 3</a></li>
+            </ul>
+        </div>
 
-</nav>
+    </nav>
+    <!--  On cree une box pour le login -->
+    <div class="container">
+        <div class="row main">
+        <!-- On centre la box -->
+         <div class="main-login main-center">
+            <!-- Formulaire horizontale -->
+            <form class="form-horizontal" method="post" action="#">
+                <!-- Champs Name -->
+                <div class="form-group">
+                    <label for="Login" class="cols-sm-2 control-label">Your Login</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="Login" id="Login"  placeholder="Enter your Login"/>
+                        </div>
+                    </div>
+                </div>
+                <!-- Champ Mot de passe -->
+                <div class="form-group">
+                    <label for="pwd" class="cols-sm-2 control-label">Your Password</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="pwd" id="pwd"  placeholder="Enter your Password"/>
+                        </div>
+                    </div>
+                </div>
 
-<form>
-    <div class="page-header">
-      <div class="form-group">
-        <label for="formGroupExampleInput">Example label</label>
-        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+            </form>
+        </div>
     </div>
 </div>
-</form>
-
 
 
 
