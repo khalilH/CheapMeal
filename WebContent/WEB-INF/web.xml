@@ -21,7 +21,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>Test</servlet-name>
-		<servlet-class>services.servlets.Test</servlet-class>
+		<servlet-class>test.TestMongoDB</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Test</servlet-name>
