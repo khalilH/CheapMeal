@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:web="http://xmlns.jcp.org/xml/ns/javaee">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
   <display-name>CheapMealz</display-name>
   <servlet>
     <servlet-name>Inscription</servlet-name>
@@ -41,6 +41,16 @@
     <servlet-name>ChangerMdp</servlet-name>
     <url-pattern>/changermdp</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>AjouterBio</servlet-name>
+    <servlet-class>services.servlets.AjouterBio</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AjouterBio</servlet-name>
+    <url-pattern>/ajouterBio</url-pattern>
+  </servlet-mapping>
+
   
     <servlet>
     <servlet-name>RecupMdp</servlet-name>
@@ -66,4 +76,5 @@
 		</res-auth>
 	</resource-ref>
   
+
 </web-app>
