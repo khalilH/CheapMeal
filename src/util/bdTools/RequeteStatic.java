@@ -355,6 +355,21 @@ public class RequeteStatic {
 		return res;
 	}
 	
+	/**
+	 * Permet de changer l'adresse mail d'un utilisateur avec son id
+	 * @param id l'identifiant d'un utilisateur
+	 * @param email la nouvelle adresse mail
+	 */
+	public static void changerEmailAvecId(int id, String email) {
+		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		s.beginTransaction();
+		s.createQuery("update Utilisateurs u set u.mail = :email where u.id = :id")
+					.setParameter("mail", email)
+					.setParameter("id", id)
+					.executeUpdate();
+		s.getTransaction().commit();
+	}
+	
 //TODO a supprimer si inutile, methode remplace par createSessionFromLogin
 //	public static void createSessionFromId(Utilisateurs u)  {
 //		Session s = HibernateUtil.getSessionFactory().getCurrentSession();

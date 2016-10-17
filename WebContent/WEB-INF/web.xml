@@ -41,4 +41,12 @@
     <servlet-name>ChangerMdp</servlet-name>
     <url-pattern>/changermdp</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>ChangerEmail</servlet-name>
+    <servlet-class>services.servlets.ChangerEmail</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChangerEmail</servlet-name>
+    <url-pattern>/changerEmail</url-pattern>
+  </servlet-mapping>
 </web-app>
