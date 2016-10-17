@@ -358,7 +358,7 @@ public class RequeteStatic {
 		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
 		s.beginTransaction();
 		String u_mail =(String) s.createQuery("select u.login from Utilisateurs u where u.mail= :email")
-					.setParameter("mail", email)
+					.setParameter("email", email)
 					.uniqueResult();
 		s.getTransaction().commit();
 		return u_mail;
