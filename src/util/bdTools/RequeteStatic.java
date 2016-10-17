@@ -354,7 +354,15 @@ public class RequeteStatic {
 		}
 		return res;
 	}
-	
+	public static String obtenirLoginAvecMail(String email){
+		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		s.beginTransaction();
+		String u_mail =(String) s.createQuery("select u.login from Utilisateurs u where u.mail= :email")
+					.setParameter("mail", email)
+					.uniqueResult();
+		s.getTransaction().commit();
+		return u_mail;
+	}
 //TODO a supprimer si inutile, methode remplace par createSessionFromLogin
 //	public static void createSessionFromId(Utilisateurs u)  {
 //		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
