@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Context>
+	<Resource name="mail/Sessions" 
+		auth="Container"
+		type="javax.mail.Session"
+		mail.smtp.host="smtp-mail.outlook.com:25"
+		mail.user="ladips3@hotmail.fr"
+		password="3eppvps3" >
+	</Resource> 
+
+
+</Context>
