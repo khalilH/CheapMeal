@@ -360,11 +360,11 @@ public class RequeteStatic {
 	 * @param id l'identifiant d'un utilisateur
 	 * @param email la nouvelle adresse mail
 	 */
-	public static void changerEmailAvecId(int id, String email) {
+	public static void changerEmailAvecId(int id, String mail) {
 		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
 		s.beginTransaction();
-		s.createQuery("update Utilisateurs u set u.mail = :email where u.id = :id")
-					.setParameter("mail", email)
+		s.createQuery("update Utilisateurs u set u.mail = :mail where u.id = :id")
+					.setParameter("mail", mail)
 					.setParameter("id", id)
 					.executeUpdate();
 		s.getTransaction().commit();
