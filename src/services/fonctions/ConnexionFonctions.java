@@ -3,16 +3,17 @@ package services.fonctions;
 
 import java.sql.SQLException;
 
+import javax.security.sasl.AuthenticationException;
+
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import exceptions.InformationUtilisateurException;
 import util.bdTools.RequeteStatic;
 
 
 public class ConnexionFonctions {
-	public static JSONObject Connexion(String login, String mdp) throws JSONException, InformationUtilisateurException, SQLException{
-		JSONObject jb = new JSONObject();
+	public static String Connexion(String login, String mdp) throws JSONException, InformationUtilisateurException, SQLException, AuthenticationException{
+		//JSONObject jb = new JSONObject();
 		//Verification parametre invalides
 		if(login == null || mdp == null){
 			throw new NullPointerException("Le login ou le mot de passe est null");
@@ -22,27 +23,30 @@ public class ConnexionFonctions {
 		}
 		//Verifier si lutilisateur existe
 		if(RequeteStatic.checkIdentifiantsValide(login, mdp)){
-			
+			String cle;
 			if(RequeteStatic.isSessionCree(login)){ 			// Si Lutilisateur est connecte
 				RequeteStatic.updateDateExpirationAvecLogin(login);
-				String authToken = RequeteStatic.recupererTokenAvecLogin(login); 
-				jb.put("Succes", "User's token has been replenished");
-				jb.put("Token", authToken);
+				cle = RequeteStatic.recupererTokenAvecLogin(login); 
+//				jb.put("Success", "User's token has been replenished");
+//				jb.put("Token", authToken);
 			}else{
-				String cle = RequeteStatic.createSessionFromLogin(login);
-				jb.put("Succes", "User is properly connected");
-				jb.put("Token", cle);
+				cle = RequeteStatic.createSessionFromLogin(login);
+//				jb.put("Success", "User is properly connected");
+//				jb.put("Token", cle);
 			}
+			return cle;
 		}
 		else{ 			// Identifiants invalide
 
 			if(!RequeteStatic.isLoginDisponible(login)){
-				jb.put("Error", "Votre mot de passe est incorrect");
+				//jb.put("Error", "Votre mot de passe est incorrect");
+				throw new AuthenticationException("Votre mot de passe est incorrect");
 			}else{
-				jb.put("Error", "Votre compte n'est pas repertorie dans notre base");
+				//jb.put("Error", "Votre compte n'est pas repertorie dans notre base");
+				throw new AuthenticationException("Nom d'utilisateur inconnu");
 			}
 		}
 		
-		return jb;
+		//return jb;
 	}
 }

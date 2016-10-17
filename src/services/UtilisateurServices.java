@@ -18,7 +18,7 @@ public class UtilisateurServices {
 	public static JSONObject inscription(String login, String mdp, String prenom, String nom, String email) throws JSONException {
 		try{
 			UtilisateurFonctions.inscription(login, mdp, prenom, nom, email);
-			return ServiceTools.serviceAccepted();
+			return ServiceTools.serviceAccepted("Utilisateur créé");
 		}catch (SQLException sqle) {
 			return ServiceTools.serviceRefused(sqle.getMessage(), 0);
 		}catch (IDException ide) {
@@ -31,7 +31,7 @@ public class UtilisateurServices {
 	public static JSONObject changerMotDePasse(String cle, String oldMdp, String newMdp) throws JSONException{
 		try {
 			UtilisateurFonctions.changerMotDePasse(cle, oldMdp, newMdp);
-			return ServiceTools.serviceAccepted();
+			return ServiceTools.serviceAccepted("Mot de passe modifié");
 		} catch (SQLException sqle) {
 			return ServiceTools.serviceRefused(sqle.getMessage(), 0);
 		} catch (InformationUtilisateurException iue) {

@@ -2,6 +2,8 @@ package services;
 
 import java.sql.SQLException;
 
+import javax.security.sasl.AuthenticationException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,17 +14,16 @@ import util.ServiceTools;
 public class ConnexionServices {
 	public static JSONObject connexion(String login, String mdp) throws JSONException {
 		try {
-			JSONObject result = ConnexionFonctions.Connexion(login,mdp);
-			
-
-			
-			return result;
+			String result = ConnexionFonctions.Connexion(login,mdp);
+			return ServiceTools.serviceAccepted(result);
 		} catch (NullPointerException npe) {
 			return ServiceTools.serviceRefused(npe.getMessage(), -1);
 		} catch (SQLException sqle) {
 			return ServiceTools.serviceRefused(sqle.getMessage(), -1);
 		} catch (InformationUtilisateurException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		} catch (AuthenticationException ae) {
+			return ServiceTools.serviceRefused(ae.getMessage(), -1);
 		}
 	}
 }

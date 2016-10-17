@@ -11,12 +11,8 @@ public class ServiceTools {
 		return res;
 	}
 	
-	public static JSONObject serviceAccepted() throws JSONException{
-		return new JSONObject().put("JSON", "Success");
-	}
-	
 	public static JSONObject serviceAccepted(String message) throws JSONException{
-		return new JSONObject().put(message, "Success");
+		return new JSONObject().put("success", message);
 	}
 
 //	public static JSONObject GestionDesErreur(Exception e){
