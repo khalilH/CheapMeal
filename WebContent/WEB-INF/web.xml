@@ -1,67 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-  <display-name>CheapMealz</display-name>
-  <servlet>
-    <servlet-name>Inscription</servlet-name>
-    <servlet-class>services.servlets.Inscription</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Inscription</servlet-name>
-    <url-pattern>/inscription</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>Connexion</servlet-name>
-    <servlet-class>services.servlets.Connexion</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Connexion</servlet-name>
-    <url-pattern>/connexion</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>Test</servlet-name>
-    <servlet-class>services.servlets.Test</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Test</servlet-name>
-    <url-pattern>/insert</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>Deconnexion</servlet-name>
-    <servlet-class>services.servlets.Deconnexion</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Deconnexion</servlet-name>
-    <url-pattern>/deconnexion</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>ChangerMdp</servlet-name>
-    <servlet-class>services.servlets.ChangerMdp</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ChangerMdp</servlet-name>
-    <url-pattern>/changermdp</url-pattern>
-  </servlet-mapping>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:web="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<display-name>CheapMealz</display-name>
+	<servlet>
+		<servlet-name>Inscription</servlet-name>
+		<servlet-class>services.servlets.Inscription</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Inscription</servlet-name>
+		<url-pattern>/inscription</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Connexion</servlet-name>
+		<servlet-class>services.servlets.Connexion</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Connexion</servlet-name>
+		<url-pattern>/connexion</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Test</servlet-name>
+		<servlet-class>services.servlets.Test</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Test</servlet-name>
+		<url-pattern>/insert</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Deconnexion</servlet-name>
+		<servlet-class>services.servlets.Deconnexion</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Deconnexion</servlet-name>
+		<url-pattern>/deconnexion</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ChangerMdp</servlet-name>
+		<servlet-class>services.servlets.ChangerMdp</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChangerMdp</servlet-name>
+		<url-pattern>/changermdp</url-pattern>
+	</servlet-mapping>
 
-  <servlet>
-    <servlet-name>AjouterBio</servlet-name>
-    <servlet-class>services.servlets.AjouterBio</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AjouterBio</servlet-name>
-    <url-pattern>/ajouterBio</url-pattern>
-  </servlet-mapping>
+	<servlet>
+		<servlet-name>ChangerEmail</servlet-name>
+		<servlet-class>services.servlets.ChangerEmail</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChangerEmail</servlet-name>
+		<url-pattern>/changerEmail</url-pattern>
+	</servlet-mapping>
 
-  
-    <servlet>
-    <servlet-name>RecupMdp</servlet-name>
-    <servlet-class>services.servlets.RecupMdp</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>RecupMdp</servlet-name>
-    <url-pattern>/recupmdp</url-pattern>
-  </servlet-mapping>
-  
-  	<resource-ref>
+	<servlet>
+		<servlet-name>AjouterBio</servlet-name>
+		<servlet-class>services.servlets.AjouterBio</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AjouterBio</servlet-name>
+		<url-pattern>/ajouterBio</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>RecupMdp</servlet-name>
+		<servlet-class>services.servlets.RecupMdp</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RecupMdp</servlet-name>
+		<url-pattern>/recupmdp</url-pattern>
+	</servlet-mapping>
+
+	<resource-ref>
 		<description> Resource reference to a factory for javax.mail.Session
 			instances that may be used for sending electronic mail messages,
 			preconfigured
@@ -75,6 +85,5 @@
 			Container
 		</res-auth>
 	</resource-ref>
-  
 
 </web-app>

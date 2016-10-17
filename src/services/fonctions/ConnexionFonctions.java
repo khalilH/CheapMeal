@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.security.sasl.AuthenticationException;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import exceptions.InformationUtilisateurException;
 import util.bdTools.RequeteStatic;
@@ -13,8 +14,8 @@ import util.bdTools.RequeteStatic;
 
 public class ConnexionFonctions {
 	public static String Connexion(String login, String mdp) throws JSONException, InformationUtilisateurException, SQLException, AuthenticationException{
-		//JSONObject jb = new JSONObject();
-		//Verification parametre invalides
+		JSONObject jb = new JSONObject();
+//		Verification parametre invalides
 		if(login == null || mdp == null){
 			throw new NullPointerException("Le login ou le mot de passe est null");
 		}
@@ -27,12 +28,12 @@ public class ConnexionFonctions {
 			if(RequeteStatic.isSessionCree(login)){ 			// Si Lutilisateur est connecte
 				RequeteStatic.updateDateExpirationAvecLogin(login);
 				cle = RequeteStatic.recupererTokenAvecLogin(login); 
-//				jb.put("Success", "User's token has been replenished");
-//				jb.put("Token", authToken);
+				jb.put("Success", "User's token has been replenished");
+				jb.put("Token", cle);
 			}else{
 				cle = RequeteStatic.createSessionFromLogin(login);
-//				jb.put("Success", "User is properly connected");
-//				jb.put("Token", cle);
+				jb.put("Success", "User is properly connected");
+				jb.put("Token", cle);
 			}
 			return cle;
 		}

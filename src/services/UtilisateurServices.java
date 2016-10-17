@@ -43,4 +43,19 @@ public class UtilisateurServices {
 		}
 	}
 
+	public static JSONObject changerEmail(String cle, String newEmail) throws JSONException{
+			try {
+				UtilisateurFonctions.changerEmail(cle, newEmail);
+				return ServiceTools.serviceAccepted("Adresse mail modifiee");
+			} catch (NullPointerException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), 0);
+			} catch (SessionExpireeException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), 0);
+			} catch (InformationUtilisateurException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), 0);
+			} catch (IDException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), 0);
+			}
+	}
+
 }

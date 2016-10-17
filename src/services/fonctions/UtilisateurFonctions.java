@@ -71,4 +71,36 @@ public class UtilisateurFonctions {
 		RequeteStatic.changerMdpAvecId(id, newMdp);
 	}
 
+	public static void changerEmail(String cle, String newEmail) 
+			throws SessionExpireeException, NullPointerException, 
+			InformationUtilisateurException, IDException {
+		
+		if (cle == null) 
+			throw new NullPointerException("Cle de session manquante");
+		
+		if (cle.length() != 32) 
+			throw new NullPointerException("Cle invalide");
+		
+		if (newEmail == null) 
+			throw new NullPointerException("Adresse mail manquante");
+		
+		//TODO verifier que l'adresse mail est une adresse mail valide
+//		if(!checkMail(newEmail)) 
+//			throw new MailException("Adresse mail non valide");
+		
+		if (!RequeteStatic.isCleActive(cle))
+			throw new SessionExpireeException("Votre session a expiree");
+		
+		if (!RequeteStatic.isEmailDisponible(newEmail)) 
+			throw new InformationUtilisateurException("Cette adresse email est deja utilisee");
+		
+		int id = RequeteStatic.obtenirIdSessionAvecCle(cle);
+		if (id == -1)
+			throw new IDException("Utilisateur inconnu");
+		
+		RequeteStatic.changerEmailAvecId(id, newEmail);
+		
+	}
+
+
 }
