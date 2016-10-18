@@ -40,16 +40,16 @@ public class TestMongoDB extends HttpServlet {
 //		String name = request.getParameter("name");
 //		String surname = request.getParameter("surname");
 		try {
-			MongoDatabase database = DBStatic.getMongoConnection();
-			MongoCollection<BasicDBObject> col = database.getCollection("Users", BasicDBObject.class);
-			BasicDBObject document = new BasicDBObject("login", "pet");
-			document.append("name", "pat").append("surname", "patate");
-			col.insertOne(document);
-			DBStatic.closeMongoDBConnection();
-//			ArrayList<String> ingredients = new ArrayList<String>();
-//			ingredients.add("pommes");
-//			ingredients.add("pate feuilletee");
-//			MongoFactory.ajouterRecette("tarte aux pomme", "5", "patou", ingredients, "cuir les pommes");
+//			MongoDatabase database = DBStatic.getMongoConnection();
+//			MongoCollection<BasicDBObject> col = database.getCollection("Users", BasicDBObject.class);
+//			BasicDBObject document = new BasicDBObject("login", "pet");
+//			document.append("name", "pat").append("surname", "patate");
+//			col.insertOne(document);
+//			DBStatic.closeMongoDBConnection();
+			ArrayList<String> ingredients = new ArrayList<String>();
+			ingredients.add("pommes");
+			ingredients.add("pate feuilletee");
+			MongoFactory.ajouterRecette("tarte aux pomme", "5", "patou", ingredients, "cuir les pommes");
 		}
 		catch (Exception e) {
 			response.setContentType("text/html");
