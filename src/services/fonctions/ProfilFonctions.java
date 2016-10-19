@@ -3,6 +3,7 @@ package services.fonctions;
 import exceptions.IDException;
 import exceptions.InformationUtilisateurException;
 import exceptions.SessionExpireeException;
+import util.ServiceTools;
 import util.bdTools.RequeteStatic;
 
 public class ProfilFonctions {
@@ -23,7 +24,7 @@ public class ProfilFonctions {
 			throw new InformationUtilisateurException("Biographie trop longue");
 		}
 		
-		if (!RequeteStatic.isCleActive(cle)) 
+		if (!ServiceTools.isCleActive(cle)) 
 			throw new SessionExpireeException("Votre session a expiree");
 
 		int id = RequeteStatic.obtenirIdSessionAvecCle(cle);

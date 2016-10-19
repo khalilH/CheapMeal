@@ -4,6 +4,7 @@ import java.security.KeyException;
 import java.sql.SQLException;
 
 import exceptions.SessionExpireeException;
+import util.ServiceTools;
 import util.bdTools.RequeteStatic;
 
 public class DeconnexionFonctions {
@@ -18,7 +19,7 @@ public class DeconnexionFonctions {
 		if(cle.length() != 32)
 			throw new KeyException("Cle invalide");
 		
-		if (!RequeteStatic.isCleActive(cle))
+		if (!ServiceTools.isCleActive(cle))
 			throw new SessionExpireeException("Votre session a expiree");
 		
 		/* Fermeture session */

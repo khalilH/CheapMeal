@@ -13,7 +13,7 @@ public class DBStatic {
 	
 	public static MongoDatabase getMongoConnection() throws UnknownHostException, MongoClientException{
  		mongoClient = new MongoClient("localhost", 27130);
- 		MongoDatabase res = mongoClient.getDatabase("tests");
+ 		MongoDatabase res = mongoClient.getDatabase("CheapMeal");
  		return res;
  	}
 	

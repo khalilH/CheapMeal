@@ -2,8 +2,10 @@ package util.bdTools;
 
 import java.sql.Timestamp;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
+import util.ServiceTools;
 import util.hibernate.HibernateUtil;
 import util.hibernate.model.Profils;
 import util.hibernate.model.Sessions;
@@ -57,33 +59,7 @@ public class RequeteStatic {
 		s.getTransaction().commit();
 	}
 
-	/**
-	 * Permet d'obtenir la date d'expiration d'une cle
-	 * @param cle
-	 * @return le timestamp de la date d'expiration
-	 */
-	public static Timestamp getDateExpirationAvecCle(String cle)  {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
-		s.beginTransaction();
-		Timestamp s_timestamp=(Timestamp) s.createQuery("Select s.dateExpiration from Sessions s where s.cleSession = :cleSession")
-					.setParameter("cleSession", cle)
-					.uniqueResult();
-		s.getTransaction().commit();
-		return s_timestamp;
-	}
 	
-	/**
-	 * Permet de verifier si une cle de session est toujours active
-	 * @param cle la cle de session a verifier
-	 * @return true si la cle de session est active
-	 */
-	public static boolean isCleActive(String cle) {
-		Timestamp dateExpiration = getDateExpirationAvecCle(cle),
-				currentTime = new Timestamp(System.currentTimeMillis());
-		
-		return dateExpiration != null && currentTime.before(dateExpiration);
-	}
-
 	/**
 	 * Verifie si un login est libre ou non
 	 * @param login le login a tester
@@ -173,7 +149,7 @@ public class RequeteStatic {
 	public static String createSessionFromLogin(String login) {
 		int id = obtenirIdAvecLogin(login);
 		Timestamp time = new Timestamp(System.currentTimeMillis()+30*60*1000);
-		String cle = createKey();
+		String cle = ServiceTools.createKey();
 		
 		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
 		s.beginTransaction();
@@ -329,43 +305,7 @@ public class RequeteStatic {
 		s.getTransaction().commit();
 		
 	}
-
-	/**
-	 * Code de generation aleatoire d'une cle de session de 32 caracteres
-	 * @return une cle aleatoire
-	 */
-	private static String createKey(){
-		double aux1, aux2;
-		int sc;
-		int codeAscii;
-		String res = "";
-		for(int i=0; i<32; i++){
-			aux1 = Math.random()*3;
-			sc = (int) aux1;
-			switch(sc){
-			case 0: 
-				//Chiffre (code Ascii entre 48 et 57)
-				aux2 = Math.random()*10+48;
-				codeAscii = (int) aux2;
-				res += (char)codeAscii;
-				break;
-			case 1:
-				//Lettre majuscule (code Ascii entre 65 et 90)
-				aux2 = Math.random()*26+65;
-				codeAscii = (int) aux2;
-				res += (char)codeAscii;
-				break;
-			case 2:
-				//Lettre minuscule (code ascii entre 97 et 122)
-				aux2 = Math.random()*26+97;
-				codeAscii = (int) aux2;
-				res += (char)codeAscii;
-				break;
-			}			
-		}
-		return res;
-	}
-
+	
 	/**
 	 * Permet de changer l'adresse mail d'un utilisateur avec son id
 	 * @param id l'identifiant d'un utilisateur
@@ -390,6 +330,39 @@ public class RequeteStatic {
 					.uniqueResult();
 		s.getTransaction().commit();
 		return u_mail;
+	}
+	
+	public static Sessions obtenirSession(String key){
+		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		s.beginTransaction();
+		Sessions res = (Sessions) s.createQuery("select s from Sessions s where s.cleSession = :cle")
+				.setParameter("cle", key)
+				.uniqueResult();
+		s.getTransaction().commit();
+		return res;
+	}
+	
+	public static Utilisateurs obtenirUtilisateur(Integer id, String login){
+		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		s.beginTransaction();
+		Utilisateurs res = null;
+		if(id != null && login != null){
+			res = (Utilisateurs) s.createQuery("select u from Utilisateurs u where u.id = :id and u.login = :login")
+					.setParameter("id", id)
+					.setParameter("login", login)
+					.uniqueResult();
+		}else if(id == null){
+			res = (Utilisateurs) s.createQuery("select u from Utilisateurs u where u.login = :login")
+					.setParameter("login", login)
+					.uniqueResult();
+		}else{
+			res = (Utilisateurs) s.createQuery("select u from Utilisateurs u where u.id = :id")
+					.setParameter("id", id)
+					.uniqueResult();
+		}
+		s.getTransaction().commit();
+		/* Si pas de parametre ou resultat n'existe pas, alors le resultat renvoye est null */
+		return res;
 	}
 
 //TODO a supprimer si inutile, methode remplace par createSessionFromLogin
