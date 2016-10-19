@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClientException;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
@@ -41,15 +42,18 @@ public class TestMongoDB extends HttpServlet {
 //		String surname = request.getParameter("surname");
 		try {
 //			MongoDatabase database = DBStatic.getMongoConnection();
-//			MongoCollection<BasicDBObject> col = database.getCollection("Users", BasicDBObject.class);
+//			MongoCollection<BasicDBObject> col = database.getCollection("users", BasicDBObject.class);
 //			BasicDBObject document = new BasicDBObject("login", "pet");
 //			document.append("name", "pat").append("surname", "patate");
 //			col.insertOne(document);
-//			DBStatic.closeMongoDBConnection();
+//			
+			DBStatic.closeMongoDBConnection();
 			ArrayList<String> ingredients = new ArrayList<String>();
 			ingredients.add("pommes");
 			ingredients.add("pate feuilletee");
-			MongoFactory.ajouterRecette("tarte aux pomme", "5", "patou", ingredients, "cuir les pommes");
+			ArrayList<String> preparation = new ArrayList<String>();
+			preparation.add("cuir les pommes");
+			MongoFactory.ajouterRecette("tarte aux pomme", "5", "patou", ingredients, preparation);
 		}
 		catch (Exception e) {
 			response.setContentType("text/html");
