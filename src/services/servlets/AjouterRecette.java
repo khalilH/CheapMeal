@@ -22,13 +22,21 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		String titre = request.getParameter("titre");
 		String key = request.getParameter("cle");
 		String ingr = request.getParameter("ingredients");
-		String prepa = request.getParameter("prepa");
+		String prepa = request.getParameter("preparation");
 
-		/* Ici, parser la liste des ingredients et des etpaes de preparation */
+		/* Ici, parser la liste des ingredients et des etapes de preparation */
 		
 		ArrayList<String> ingredients = new ArrayList<String>();
 		ArrayList<String> preparation = new ArrayList<String>();
 		
+		String[] ingr_tmp = ingr.split(",");
+		String[] prepa_tmp = prepa.split(",");
+
+		for(String s : ingr_tmp)
+			ingredients.add(s);
+		
+		for(String s : prepa_tmp)
+			preparation.add(s);
 		
 		try {
 			/* Traitement des services */

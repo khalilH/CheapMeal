@@ -53,7 +53,7 @@ public class TestMongoDB extends HttpServlet {
 			ingredients.add("pate feuilletee");
 			ArrayList<String> preparation = new ArrayList<String>();
 			preparation.add("cuir les pommes");
-			MongoFactory.ajouterRecette("tarte aux pomme", "5", "patou", ingredients, preparation);
+			MongoFactory.ajouterRecette("tarte aux pomme", 5, "patou", ingredients, preparation);
 		}
 		catch (Exception e) {
 			response.setContentType("text/html");

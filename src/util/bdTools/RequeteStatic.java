@@ -335,7 +335,7 @@ public class RequeteStatic {
 	public static Sessions obtenirSession(String key){
 		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
 		s.beginTransaction();
-		Sessions res = (Sessions) s.createQuery("select s from Sessions where s.cleSession = :cle")
+		Sessions res = (Sessions) s.createQuery("select s from Sessions s where s.cleSession = :cle")
 				.setParameter("cle", key)
 				.uniqueResult();
 		s.getTransaction().commit();
@@ -347,16 +347,16 @@ public class RequeteStatic {
 		s.beginTransaction();
 		Utilisateurs res = null;
 		if(id != null && login != null){
-			res = (Utilisateurs) s.createQuery("select u from Utilisateurs where u.id = :id and u.login = :login")
+			res = (Utilisateurs) s.createQuery("select u from Utilisateurs u where u.id = :id and u.login = :login")
 					.setParameter("id", id)
 					.setParameter("login", login)
 					.uniqueResult();
 		}else if(id == null){
-			res = (Utilisateurs) s.createQuery("select u from Utilisateurs where u.login = :login")
+			res = (Utilisateurs) s.createQuery("select u from Utilisateurs u where u.login = :login")
 					.setParameter("login", login)
 					.uniqueResult();
 		}else{
-			res = (Utilisateurs) s.createQuery("select u from Utilisateurs where u.id = :id")
+			res = (Utilisateurs) s.createQuery("select u from Utilisateurs u where u.id = :id")
 					.setParameter("id", id)
 					.uniqueResult();
 		}

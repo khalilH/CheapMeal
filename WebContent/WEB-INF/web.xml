@@ -70,6 +70,16 @@
 		<servlet-name>RecupMdp</servlet-name>
 		<url-pattern>/recupmdp</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>PublierRecette</servlet-name>
+		<servlet-class>services.servlets.AjouterRecette</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PublierRecette</servlet-name>
+		<url-pattern>/publierRecette</url-pattern>
+	</servlet-mapping>
+	
 
 	<resource-ref>
 		<description> Resource reference to a factory for javax.mail.Session
