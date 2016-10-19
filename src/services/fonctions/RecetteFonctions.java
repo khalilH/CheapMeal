@@ -3,12 +3,16 @@ package services.fonctions;
 import java.net.UnknownHostException;
 import java.util.List;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClientException;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
 import exceptions.InformationUtilisateurException;
 import exceptions.RecetteException;
 import exceptions.SessionExpireeException;
 import util.ServiceTools;
+import util.bdTools.DBStatic;
 import util.bdTools.MongoFactory;
 import util.bdTools.RequeteStatic;
 import util.hibernate.model.Sessions;
@@ -36,7 +40,13 @@ public class RecetteFonctions {
 		Sessions s = RequeteStatic.obtenirSession(key);
 		Utilisateurs u = RequeteStatic.obtenirUtilisateur(s.getIdSession(), null);
 		
-		MongoFactory.ajouterRecette(titre, u.getId(), u.getLogin(), listIng, prepa);
+		MongoDatabase database = DBStatic.getMongoConnection();
+		MongoCollection<BasicDBObject> col = database.getCollection("Recettes", BasicDBObject.class);
+		
+		BasicDBObject document = MongoFactory.creerDocumentRecette(titre, u.getId(), u.getLogin(), listIng, prepa);
+		
+		col.insertOne(document);
+		DBStatic.closeMongoDBConnection();
 		
 	}
 	
