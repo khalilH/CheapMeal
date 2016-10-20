@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import exceptions.IDException;
 import exceptions.InformationUtilisateurException;
 import exceptions.SessionExpireeException;
+import util.ServiceTools;
 import util.bdTools.RequeteStatic;
 
 public class UtilisateurFonctions {
@@ -50,7 +51,7 @@ public class UtilisateurFonctions {
 		
 		/* Verifier si la personne a une session active */
 
-		if(!RequeteStatic.isCleActive(key))
+		if(!ServiceTools.isCleActive(key))
 			throw new SessionExpireeException("Votre session a expiree");
 
 		/* Verifier si le mot de passe contient au moins 6 caracteres */
@@ -88,7 +89,7 @@ public class UtilisateurFonctions {
 //		if(!checkMail(newEmail)) 
 //			throw new MailException("Adresse mail non valide");
 		
-		if (!RequeteStatic.isCleActive(cle))
+		if (!ServiceTools.isCleActive(cle))
 			throw new SessionExpireeException("Votre session a expiree");
 		
 		if (!RequeteStatic.isEmailDisponible(newEmail)) 

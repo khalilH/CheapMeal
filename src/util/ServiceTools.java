@@ -1,5 +1,6 @@
 package util;
 
+import java.sql.Timestamp;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,8 +9,8 @@ import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.Session;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -19,6 +20,8 @@ import javax.naming.NamingException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import util.hibernate.HibernateUtil;
 
 public class ServiceTools {
 	public static JSONObject serviceRefused(String message, int codeErreur) throws JSONException{
@@ -87,4 +90,68 @@ public class ServiceTools {
 //		jb=ServiceTools.serviceRefused(""+e.toString(),100);
 //		return jb;
 //	}
+	
+	/**
+	 * Code de generation aleatoire d'une cle de session de 32 caracteres
+	 * @return une cle aleatoire
+	 */
+	public static String createKey(){
+		double aux1, aux2;
+		int sc;
+		int codeAscii;
+		String res = "";
+		for(int i=0; i<32; i++){
+			aux1 = Math.random()*3;
+			sc = (int) aux1;
+			switch(sc){
+			case 0: 
+				//Chiffre (code Ascii entre 48 et 57)
+				aux2 = Math.random()*10+48;
+				codeAscii = (int) aux2;
+				res += (char)codeAscii;
+				break;
+			case 1:
+				//Lettre majuscule (code Ascii entre 65 et 90)
+				aux2 = Math.random()*26+65;
+				codeAscii = (int) aux2;
+				res += (char)codeAscii;
+				break;
+			case 2:
+				//Lettre minuscule (code ascii entre 97 et 122)
+				aux2 = Math.random()*26+97;
+				codeAscii = (int) aux2;
+				res += (char)codeAscii;
+				break;
+			}			
+		}
+		return res;
+	}
+	
+	/**
+	 * Permet de verifier si une cle de session est toujours active
+	 * @param cle la cle de session a verifier
+	 * @return true si la cle de session est active
+	 */
+	public static boolean isCleActive(String cle) {
+		Timestamp dateExpiration = getDateExpirationAvecCle(cle),
+				currentTime = new Timestamp(System.currentTimeMillis());
+		
+		return dateExpiration != null && currentTime.before(dateExpiration);
+	}
+	
+	/**
+	 * Permet d'obtenir la date d'expiration d'une cle
+	 * @param cle
+	 * @return le timestamp de la date d'expiration
+	 */
+	public static Timestamp getDateExpirationAvecCle(String cle)  {
+		org.hibernate.Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		s.beginTransaction();
+		Timestamp s_timestamp=(Timestamp) s.createQuery("Select s.dateExpiration from Sessions s where s.cleSession = :cleSession")
+					.setParameter("cleSession", cle)
+					.uniqueResult();
+		s.getTransaction().commit();
+		return s_timestamp;
+	}
+
 }
