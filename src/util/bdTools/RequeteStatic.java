@@ -2,7 +2,6 @@ package util.bdTools;
 
 import java.sql.Timestamp;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
 import util.ServiceTools;
@@ -364,18 +363,5 @@ public class RequeteStatic {
 		/* Si pas de parametre ou resultat n'existe pas, alors le resultat renvoye est null */
 		return res;
 	}
-
-//TODO a supprimer si inutile, methode remplace par createSessionFromLogin
-//	public static void createSessionFromId(Utilisateurs u)  {
-//		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
-//		Timestamp time = new Timestamp(System.currentTimeMillis()+30*60*1000);
-//		String key = createKey();
-//		s.beginTransaction();
-//		Sessions s_user = new Sessions(u.getId(),key,time);
-//		s_user.setUtilisateur(u);
-//		s.save(s_user);
-//		s.getTransaction().commit();
-//	
-//	}
 
 }
