@@ -92,7 +92,7 @@ public class RecetteFonctions {
 
 	}
 	
-	public static void noterRecette(String key, String idRecette, int note) throws RecetteException, InformationUtilisateurException, SessionExpireeException{
+	public static void noterRecette(String key, String idRecette, int note) throws RecetteException, InformationUtilisateurException, SessionExpireeException, MongoClientException, UnknownHostException{
 		
 		if(idRecette == null || key == null)
 			throw new RecetteException("Informations non completes");
@@ -112,21 +112,41 @@ public class RecetteFonctions {
 		// Si la recette est celle de l'utilisateur, ne peut pas la noter
 		Sessions s = RequeteStatic.obtenirSession(key);
 		Utilisateurs u = RequeteStatic.obtenirUtilisateur(s.getIdSession(), null);
-		if(MongoFactory.isOwnerOfRecipe(u.getId(),u.getLogin(),id))
+		if(MongoFactory.isOwnerOfRecipe(u.getId(),u.getLogin(),idRecette))
 			throw new RecetteException("Impossible de noter une recette qui vous appartient");
 		
-		// Retrouver la recette pour mettre à jour sa note
+		// Query qui recup la recette
 		ObjectId _id = new ObjectId(idRecette); //idRecette au format hex
 		BasicDBObject query = new BasicDBObject();
 		query.put("_id", _id);
 		
+		// Connexion a la database Mongo
 		MongoDatabase database = DBStatic.getMongoConnection();
 		MongoCollection<BasicDBObject> col = database.getCollection("Recettes", BasicDBObject.class);
 		
-		FindIterable<BasicDBObject> find = col.find(query);
-		MongoCursor<BasicDBObject> cursor = find.iterator();
+		// Recuper la recette dans la bd 
+		MongoCursor<BasicDBObject> cursor = col.find(query).iterator();
 
-		BasicDBObject recette = cursor.next();
+		BasicDBObject recette;
+		if(cursor.hasNext())
+			recette = cursor.next();
+		else
+			throw new RecetteException("Cette recette n'existe pas");
+		
+		// Modifier la recette 
+		BasicDBObject noteDoc = (BasicDBObject) recette.get("note");
+		double moyenne = noteDoc.getDouble("moyenne");
+		int nbNotes = noteDoc.getInt("nbNotes") ;		
+		double newMoyenne = (moyenne*nbNotes+note)/(nbNotes+1);
+		noteDoc.replace("moyenne", newMoyenne);
+		noteDoc.replace("nbNotes", nbNotes+1);
+		recette.replace("note", noteDoc);
+
+		BasicDBObject tmp = new BasicDBObject();
+		tmp.put("$set", recette);
+		col.updateOne(query, tmp);
+		
+		DBStatic.closeMongoDBConnection();
 		
 	}
 

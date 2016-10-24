@@ -11,6 +11,7 @@
 		<servlet-name>Inscription</servlet-name>
 		<url-pattern>/inscription</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>Connexion</servlet-name>
 		<servlet-class>services.servlets.Connexion</servlet-class>
@@ -19,6 +20,7 @@
 		<servlet-name>Connexion</servlet-name>
 		<url-pattern>/connexion</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>Test</servlet-name>
 		<servlet-class>test.TestMongoDB</servlet-class>
@@ -27,6 +29,7 @@
 		<servlet-name>Test</servlet-name>
 		<url-pattern>/insert</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>Deconnexion</servlet-name>
 		<servlet-class>services.servlets.Deconnexion</servlet-class>
@@ -35,6 +38,7 @@
 		<servlet-name>Deconnexion</servlet-name>
 		<url-pattern>/deconnexion</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>ChangerMdp</servlet-name>
 		<servlet-class>services.servlets.ChangerMdp</servlet-class>
@@ -80,6 +84,14 @@
 		<url-pattern>/publierRecette</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>NoterRecette</servlet-name>
+		<servlet-class>services.servlets.NoterRecette</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NoterRecette</servlet-name>
+		<url-pattern>/noterRecette</url-pattern>
+	</servlet-mapping>
 
 	<resource-ref>
 		<description> Resource reference to a factory for javax.mail.Session
