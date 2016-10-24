@@ -10,12 +10,15 @@ import com.mongodb.client.MongoDatabase;
 
 public class MongoFactory {
 
-	private static String AUTEUR = "auteur";
-	private static String INGREDIENTS = "ingredients";
-	private static String PREPARATION = "preparation";
-	private static String ID_AUTEUR = "idAuteur";
-	private static String LOGIN_AUTEUR = "loginAuteur";
-	private static String TITRE = "titre";
+	private static final String AUTEUR = "auteur";
+	private static final String INGREDIENTS = "ingredients";
+	private static final String PREPARATION = "preparation";
+	private static final String ID_AUTEUR = "idAuteur";
+	private static final String LOGIN_AUTEUR = "loginAuteur";
+	private static final String TITRE = "titre";
+	private static final String NOTE = "note";
+	private static final String NOTE_MOYENNE = "moyenne";
+	private static final String NOMBRE_NOTE = "nbNotes";
 	
 	public static BasicDBObject creerDocumentRecette(String titre, int idAuteur, String loginAuteur, List<String> listeIng, List<String> prepa) throws MongoClientException, UnknownHostException{
 		BasicDBObject document = new BasicDBObject(TITRE, titre);
@@ -23,6 +26,8 @@ public class MongoFactory {
 		document.append(AUTEUR, auteur);
 		document.append(INGREDIENTS, listeIng);
 		document.append(PREPARATION, prepa);
+		BasicDBObject note = creerDocumentNote(0, 0);
+		document.append(NOTE, note);
 		
 		return document;
 	}
@@ -30,6 +35,12 @@ public class MongoFactory {
 	public static BasicDBObject creerDocumentAuteur(int id, String login){
 		BasicDBObject document = new BasicDBObject(ID_AUTEUR, id);
 		document.append(LOGIN_AUTEUR, login);
+		return document;
+	}
+	
+	public static BasicDBObject creerDocumentNote(double moyenne, int nbNotes){
+		BasicDBObject document = new BasicDBObject(NOTE_MOYENNE, moyenne);
+		document.append(NOMBRE_NOTE, nbNotes);
 		return document;
 	}
 

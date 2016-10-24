@@ -6,9 +6,12 @@ import java.util.List;
 import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClientException;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
 
@@ -87,6 +90,44 @@ public class RecetteFonctions {
 		DeleteResult del_res = col.deleteOne(query);
 
 
+	}
+	
+	public static void noterRecette(String key, String idRecette, int note) throws RecetteException, InformationUtilisateurException, SessionExpireeException{
+		
+		if(idRecette == null || key == null)
+			throw new RecetteException("Informations non completes");
+		
+		if(idRecette.equals(""))
+			throw new RecetteException("id de la recette invalide");
+		
+		if(key.length() != 32)
+			throw new InformationUtilisateurException("Cle invalide");
+
+		if(!ServiceTools.isCleActive(key))
+			throw new SessionExpireeException("Votre session a expiree");
+		
+		if(note < 0 || note > 5)
+			throw new RecetteException("La note doit être comprise entre 0 et 5");
+		
+		// Si la recette est celle de l'utilisateur, ne peut pas la noter
+		Sessions s = RequeteStatic.obtenirSession(key);
+		Utilisateurs u = RequeteStatic.obtenirUtilisateur(s.getIdSession(), null);
+		if(MongoFactory.isOwnerOfRecipe(u.getId(),u.getLogin(),id))
+			throw new RecetteException("Impossible de noter une recette qui vous appartient");
+		
+		// Retrouver la recette pour mettre à jour sa note
+		ObjectId _id = new ObjectId(idRecette); //idRecette au format hex
+		BasicDBObject query = new BasicDBObject();
+		query.put("_id", _id);
+		
+		MongoDatabase database = DBStatic.getMongoConnection();
+		MongoCollection<BasicDBObject> col = database.getCollection("Recettes", BasicDBObject.class);
+		
+		FindIterable<BasicDBObject> find = col.find(query);
+		MongoCursor<BasicDBObject> cursor = find.iterator();
+
+		BasicDBObject recette = cursor.next();
+		
 	}
 
 }
