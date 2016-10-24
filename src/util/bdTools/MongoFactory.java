@@ -1,9 +1,13 @@
 package util.bdTools;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClientException;
@@ -43,8 +47,19 @@ public class MongoFactory {
 		MongoDatabase database = DBStatic.getMongoConnection();
 		MongoCollection<BasicDBObject> col = database.getCollection("Recettes", BasicDBObject.class);
 		MongoCursor<BasicDBObject> cursor = col.find(document).iterator();
-		BasicDBObject obj = cursor.next();
-		return obj!=null;
+		return cursor.hasNext();
+	}
+
+	public static ArrayList<BasicDBObject> getRecettesFromLogin(String login) throws MongoClientException, UnknownHostException, JSONException {
+		BasicDBObject document = new BasicDBObject(AUTEUR+"."+LOGIN_AUTEUR, login);
+		MongoDatabase database = DBStatic.getMongoConnection();
+		MongoCollection<BasicDBObject> col = database.getCollection("Recettes", BasicDBObject.class);
+		
+		ArrayList<BasicDBObject> list = new ArrayList<BasicDBObject>();
+		for(BasicDBObject obj : col.find(document)){
+			list.add(obj);
+		}
+		return list;
 	}
 
 }

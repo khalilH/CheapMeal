@@ -75,8 +75,7 @@ public class RecetteFonctions {
 		BasicDBObject query = new BasicDBObject();
 		query.put("_id", new ObjectId(id_recette));
 		MongoCursor<BasicDBObject> cursor = col.find(query).iterator();
-		BasicDBObject obj = cursor.next();
-		if(obj == null)
+		if(!cursor.hasNext())
 			throw new RecetteException("La recette n'existe pas");
 		
 		

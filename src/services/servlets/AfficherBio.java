@@ -11,23 +11,24 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import services.RecetteService;
+import services.ProfilServices;
 
-public class SupprimerRecette extends HttpServlet {
-/**
-	 * 
-	 */
+public class AfficherBio extends  HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    public AfficherBio() {
+        super();
+    }
 
-protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/* Lecture des parametres */
-		String id_recette = request.getParameter("id_r");
-		String key = request.getParameter("cle");
-
+		String cle = request.getParameter("cle");
+		String login = request.getParameter("login");
+		
+				
 		try {
 			/* Traitement des services */
-			JSONObject res = RecetteService.supprimerRecette(id_recette,key);
+			JSONObject res = ProfilServices.afficherBio(cle, login);
 			
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();
