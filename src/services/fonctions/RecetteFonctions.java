@@ -56,12 +56,12 @@ public class RecetteFonctions {
 
 	}
 
-	public static void supprimerRecette(String id, String key) throws RecetteException, InformationUtilisateurException, SessionExpireeException, MongoClientException, UnknownHostException {
+	public static void supprimerRecette(String id_recette, String key) throws RecetteException, InformationUtilisateurException, SessionExpireeException, MongoClientException, UnknownHostException {
 		
-		if(id == null || key == null)
+		if(id_recette == null || key == null)
 			throw new RecetteException("Informations non completes");
 		
-		if(key.equals("") || id.equals(""))
+		if(key.equals("") || id_recette.equals(""))
 			throw new RecetteException("La clé ou l'id n'est pas valide");
 		
 		if (key.length() != 32)
@@ -73,11 +73,11 @@ public class RecetteFonctions {
 		//Verifier que c'est bien l'utilisateur qui est le propriétaire de la recette
 		Sessions s = RequeteStatic.obtenirSession(key);
 		Utilisateurs u = RequeteStatic.obtenirUtilisateur(s.getIdSession(), null);
-		if(!MongoFactory.isOwnerOfRecipe(u.getId(),u.getLogin(),id))
+		if(!MongoFactory.isOwnerOfRecipe(u.getId(),u.getLogin(),id_recette))
 			throw new RecetteException("Vous tentez de supprimer une recette qui ne vous appartient pas");
 		
 		// Creer la query qui va supprimer la recette avec le _id correspondant
-		ObjectId _id = new ObjectId(id);
+		ObjectId _id = new ObjectId(id_recette);
 		BasicDBObject query = new BasicDBObject();
 		query.put("_id", _id);
 		
