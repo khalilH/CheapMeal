@@ -3,9 +3,12 @@ package util.bdTools;
 import java.net.UnknownHostException;
 import java.util.List;
 
+import org.bson.types.ObjectId;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClientException;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
 public class MongoFactory {
@@ -33,11 +36,15 @@ public class MongoFactory {
 		return document;
 	}
 
-	public static boolean isOwnerOfRecipe(int id_auteur, String login, String id_recette) {
-		BasicDBObject document = new BasicDBObject(LOGIN_AUTEUR, login);
-		document.append(ID_AUTEUR, id_auteur);
-		
-		return false;
+	public static boolean isOwnerOfRecipe(int id_auteur, String login, String id_recette) throws MongoClientException, UnknownHostException {
+		BasicDBObject document = new BasicDBObject(AUTEUR+"."+LOGIN_AUTEUR, login);
+		document.append(AUTEUR+"."+ID_AUTEUR, id_auteur);
+		document.put("_id", new ObjectId(id_recette));
+		MongoDatabase database = DBStatic.getMongoConnection();
+		MongoCollection<BasicDBObject> col = database.getCollection("Recettes", BasicDBObject.class);
+		MongoCursor<BasicDBObject> cursor = col.find(document).iterator();
+		BasicDBObject obj = cursor.next();
+		return obj!=null;
 	}
 
 }
