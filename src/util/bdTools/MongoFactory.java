@@ -33,4 +33,9 @@ public class MongoFactory {
 		return document;
 	}
 
+	public static boolean isOwnerOfRecipe(int id, String login, String id2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
