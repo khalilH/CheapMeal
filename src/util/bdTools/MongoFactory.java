@@ -1,13 +1,6 @@
 package util.bdTools;
 
 import java.net.UnknownHostException;
-<<<<<<< HEAD
-import java.util.List;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.MongoClientException;
-import com.mongodb.client.MongoCollection;
-=======
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +13,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClientException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
->>>>>>> origin/AfficherProfil
 import com.mongodb.client.MongoDatabase;
 
 public class MongoFactory {
