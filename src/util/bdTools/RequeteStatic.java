@@ -274,6 +274,17 @@ public class RequeteStatic {
 		s.getTransaction().commit();
 	}
 	
+	public static void ajouterBioProfil(int id, String bio) {
+		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		s.beginTransaction();
+		s.createQuery("update Profils p set p.bio = :bio where p.id = :id")
+		.setParameter("bio", bio)
+		.setParameter("id", id)
+		.executeUpdate();
+		s.getTransaction().commit();
+		
+	}
+	
 	/**
 	 * Permet de recuperer l'identifiant d'un utilisateur a partir de
 	 * sa cle de session
@@ -293,18 +304,8 @@ public class RequeteStatic {
 		else
 			return s_id;
 	}
-	
-	public static void ajouterBioProfil(int id, String bio) {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
-		s.beginTransaction();
-		s.createQuery("update Profils p set p.bio = :bio where p.id = :id")
-		.setParameter("bio", bio)
-		.setParameter("id", id)
-		.executeUpdate();
-		s.getTransaction().commit();
-		
-	}
-	
+
+
 	/**
 	 * Permet de changer l'adresse mail d'un utilisateur avec son id
 	 * @param id l'identifiant d'un utilisateur
@@ -362,6 +363,17 @@ public class RequeteStatic {
 		s.getTransaction().commit();
 		/* Si pas de parametre ou resultat n'existe pas, alors le resultat renvoye est null */
 		return res;
+	}
+
+
+	public static String recupBio(String login) {
+		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		s.beginTransaction();
+		Utilisateurs u = obtenirUtilisateur(null, login);
+		Profils p = (Profils) s.createQuery("select p from Profils p where idProfil = :idProfil ")
+					.setParameter("idProfil",u.getId());
+		
+		return p.getBio();
 	}
 
 }

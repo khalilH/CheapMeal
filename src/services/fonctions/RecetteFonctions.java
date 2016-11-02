@@ -6,14 +6,10 @@ import java.util.List;
 import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
 import com.mongodb.MongoClientException;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.DeleteResult;
 
 import exceptions.InformationUtilisateurException;
 import exceptions.RecetteException;
@@ -59,13 +55,13 @@ public class RecetteFonctions {
 
 	}
 
-	public static void supprimerRecette(String id, String key) throws RecetteException, InformationUtilisateurException, SessionExpireeException, MongoClientException, UnknownHostException {
+	public static void supprimerRecette(String id_recette, String key) throws RecetteException, InformationUtilisateurException, SessionExpireeException, MongoClientException, UnknownHostException {
 		
-		if(id == null || key == null)
+		if(id_recette == null || key == null)
 			throw new RecetteException("Informations non completes");
 		
-		if(key.equals("") || id.equals(""))
-			throw new RecetteException("La clé ou l'id n'est pas valide");
+		if(key.equals("") || id_recette.equals(""))
+			throw new RecetteException("La clï¿½ ou l'id n'est pas valide");
 		
 		if (key.length() != 32)
 			throw new InformationUtilisateurException("Cle invalide");
@@ -73,22 +69,24 @@ public class RecetteFonctions {
 		if (!ServiceTools.isCleActive(key))
 			throw new SessionExpireeException("Votre session a expiree");
 		
-		//Verifier que c'est bien l'utilisateur qui est le propriétaire de la recette
-		Sessions s = RequeteStatic.obtenirSession(key);
-		Utilisateurs u = RequeteStatic.obtenirUtilisateur(s.getIdSession(), null);
-		if(!MongoFactory.isOwnerOfRecipe(u.getId(),u.getLogin(),id))
-			throw new RecetteException("Vous tentez de supprimer une recette qui ne vous appartient pas");
-		
-		// Creer la query qui va supprimer la recette avec le _id correspondant
-		ObjectId _id = new ObjectId(id);
-		BasicDBObject query = new BasicDBObject();
-		query.put("_id", _id);
-		
-		//Supprime la recette et recupere le deleteresult
+		//Verifier que la recette existe
 		MongoDatabase database = DBStatic.getMongoConnection();
 		MongoCollection<BasicDBObject> col = database.getCollection("Recettes", BasicDBObject.class);
-		DeleteResult del_res = col.deleteOne(query);
-
+		BasicDBObject query = new BasicDBObject();
+		query.put("_id", new ObjectId(id_recette));
+		MongoCursor<BasicDBObject> cursor = col.find(query).iterator();
+		if(!cursor.hasNext())
+			throw new RecetteException("La recette n'existe pas");
+		
+		
+		//Verifier que c'est bien l'utilisateur qui est le propriï¿½taire de la recette
+		Sessions s = RequeteStatic.obtenirSession(key);
+		Utilisateurs u = RequeteStatic.obtenirUtilisateur(s.getIdSession(), null);
+		if(!MongoFactory.isOwnerOfRecipe(u.getId(),u.getLogin(),id_recette))
+			throw new RecetteException("Vous tentez de supprimer une recette qui ne vous appartient pas");
+		
+		//Supprime la recette et recupere le deleteresult
+		col.deleteOne(query);
 
 	}
 	
@@ -107,7 +105,7 @@ public class RecetteFonctions {
 			throw new SessionExpireeException("Votre session a expiree");
 		
 		if(note < 0 || note > 5)
-			throw new RecetteException("La note doit être comprise entre 0 et 5");
+			throw new RecetteException("La note doit ï¿½tre comprise entre 0 et 5");
 		
 		// Si la recette est celle de l'utilisateur, ne peut pas la noter
 		Sessions s = RequeteStatic.obtenirSession(key);

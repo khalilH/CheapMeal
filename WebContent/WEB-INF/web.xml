@@ -92,6 +92,15 @@
 		<servlet-name>NoterRecette</servlet-name>
 		<url-pattern>/noterRecette</url-pattern>
 	</servlet-mapping>
+		<servlet>
+		<servlet-name>deleteRecette</servlet-name>
+		<servlet-class>services.servlets.SupprimerRecette</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>deleteRecette</servlet-name>
+		<url-pattern>/supprimerRecette</url-pattern>
+	</servlet-mapping>
+	
 
 	<resource-ref>
 		<description> Resource reference to a factory for javax.mail.Session

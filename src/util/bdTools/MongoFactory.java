@@ -1,11 +1,26 @@
 package util.bdTools;
 
 import java.net.UnknownHostException;
+<<<<<<< HEAD
 import java.util.List;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClientException;
 import com.mongodb.client.MongoCollection;
+=======
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bson.types.ObjectId;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.MongoClientException;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+>>>>>>> origin/AfficherProfil
 import com.mongodb.client.MongoDatabase;
 
 public class MongoFactory {
@@ -21,6 +36,7 @@ public class MongoFactory {
 	private static final String NOMBRE_NOTE = "nbNotes";
 	private static final String ID_USER = "idUser";
 	private static final String ID_RECETTE = "idRecette"; 
+
 	
 	public static BasicDBObject creerDocumentRecette(String titre, int idAuteur, String loginAuteur, List<String> listeIng, List<String> prepa) throws MongoClientException, UnknownHostException{
 		BasicDBObject document = new BasicDBObject(TITRE, titre);
@@ -52,9 +68,27 @@ public class MongoFactory {
 //		
 //	}
 
-	public static boolean isOwnerOfRecipe(int id, String login, String id2) {
-		// TODO Auto-generated method stub
-		return false;
+
+	public static boolean isOwnerOfRecipe(int id_auteur, String login, String id_recette) throws MongoClientException, UnknownHostException {
+		BasicDBObject document = new BasicDBObject(AUTEUR+"."+LOGIN_AUTEUR, login);
+		document.append(AUTEUR+"."+ID_AUTEUR, id_auteur);
+		document.put("_id", new ObjectId(id_recette));
+		MongoDatabase database = DBStatic.getMongoConnection();
+		MongoCollection<BasicDBObject> col = database.getCollection("Recettes", BasicDBObject.class);
+		MongoCursor<BasicDBObject> cursor = col.find(document).iterator();
+		return cursor.hasNext();
+	}
+
+	public static ArrayList<BasicDBObject> getRecettesFromLogin(String login) throws MongoClientException, UnknownHostException, JSONException {
+		BasicDBObject document = new BasicDBObject(AUTEUR+"."+LOGIN_AUTEUR, login);
+		MongoDatabase database = DBStatic.getMongoConnection();
+		MongoCollection<BasicDBObject> col = database.getCollection("Recettes", BasicDBObject.class);
+		
+		ArrayList<BasicDBObject> list = new ArrayList<BasicDBObject>();
+		for(BasicDBObject obj : col.find(document)){
+			list.add(obj);
+		}
+		return list;
 	}
 
 }
