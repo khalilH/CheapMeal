@@ -32,5 +32,37 @@ public class RecetteService {
 			return ServiceTools.serviceRefused(see.getMessage(), -1);
 		}
 	}
+
+	public static JSONObject supprimerRecette(String id_recette, String key) throws JSONException {
+		try {
+			RecetteFonctions.supprimerRecette(id_recette, key);
+			return ServiceTools.serviceAccepted("La recette a ete supprimée");
+		} catch (MongoClientException mce) {
+			return ServiceTools.serviceRefused(mce.getMessage(), -1);
+		} catch (UnknownHostException uhe) {
+			return ServiceTools.serviceRefused(uhe.getMessage(), -1);
+		} catch (RecetteException re) {
+			return ServiceTools.serviceRefused(re.getMessage(), -1);
+		} catch (InformationUtilisateurException iue) {
+			return ServiceTools.serviceRefused(iue.getMessage(), -1);
+		} catch (SessionExpireeException see) {
+			return ServiceTools.serviceRefused(see.getMessage(), -1);
+		}	}
 	
+	public static JSONObject noterRecette(String key, String idRecette, int note) throws JSONException{
+		try {
+			RecetteFonctions.noterRecette(key, idRecette, note);
+			return ServiceTools.serviceAccepted("La recette a ete notee");
+		} catch (MongoClientException mce) {
+			return ServiceTools.serviceRefused(mce.getMessage(), -1);
+		} catch (UnknownHostException uhe) {
+			return ServiceTools.serviceRefused(uhe.getMessage(), -1);
+		} catch (RecetteException re) {
+			return ServiceTools.serviceRefused(re.getMessage(), -1);
+		} catch (InformationUtilisateurException iue) {
+			return ServiceTools.serviceRefused(iue.getMessage(), -1);
+		} catch (SessionExpireeException see) {
+			return ServiceTools.serviceRefused(see.getMessage(), -1);
+		}
+	}
 }
