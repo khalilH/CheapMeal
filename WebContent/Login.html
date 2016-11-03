@@ -1,17 +1,19 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Authentification</title>
-<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="css/Login.css">
-<script src="bootstrap/js/jquery-3.1.1.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<script src="js/Login.js"></script>
-
 <!-- Optional Bootstrap theme -->
 <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<script src="bootstrap/js/jquery-3.1.1.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/Login.css">
+<script src="js/Login.js"></script>
+
+
 </head>
 
 
@@ -43,12 +45,14 @@
 				class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
 				<form role="form" name="login">
 					<fieldset>
-						<h2>Veuillez vous connectez</h2>
+						<h2 class="text-center">Veuillez vous connectez</h2>
 						<hr>
+						<div class="alert alert-danger hidden" id="ErrorMessage">
+	                 		<a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+ 					    	<strong>Warning!</strong> Indicates a warning that might need attention.
+						</div>
 						<div class="form-group">
-						  <label class="form-control-label" for="login">Input with warning</label>
 							<input type="text" name="login" id="login" class="form-control input-lg" placeholder="Login">
-							<div class="has-error">Success! You've done it.</div>
 						</div>
 						<div class="form-group">
 							<input type="password" name="password" id="password"
@@ -56,7 +60,8 @@
 						</div>
 						
 						<div class="btn-toolbar" role="toolbar">
-						<a href=""	class="btn btn-link pull-right ">Forgot Password?</a>
+						<a href=""	class="btn btn-link lead">
+							Forgot Password?</a>
 						</div>
 						
 						<hr>
@@ -69,6 +74,7 @@
 								<a href="" class="btn btn-lg btn-primary btn-block">Créer un compte</a>
 							</div>
 						</div>
+						<br>
 					</fieldset>
 				</form>
 			</div>
