@@ -51,7 +51,7 @@ public class ProfilFonctions {
 		if (cle.length() != 32)
 			throw new InformationUtilisateurException("Cle non valide");
 		
-		if(login == null)
+		if(login == null || login.equals(""))
 			throw new NullPointerException("Login manquant");
 		
 		if (!ServiceTools.isCleActive(cle)) 
