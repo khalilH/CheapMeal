@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.Mongo;
 import com.mongodb.MongoClientException;
 
 import exceptions.IDException;
@@ -67,7 +66,6 @@ public class ProfilFonctions {
 		ArrayList<BasicDBObject> recettes = MongoFactory.getRecettesFromLogin(login);
 		jb.put("recettes",recettes);
 		jb.put("Login", login);
-		
 		return jb;
 	}
 

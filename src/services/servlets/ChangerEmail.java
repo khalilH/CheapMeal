@@ -12,7 +12,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.UtilisateurServices;
-import util.bdTools.RequeteStatic;
 
 /**
  * Servlet implementation class ChangerEmail
