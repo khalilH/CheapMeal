@@ -1,0 +1,15 @@
+.container {
+	width: 80%;
+}
+
+h2 {
+	color: white;
+}
+
+.login_body {
+	background: url(../images/login_bg.jpg) no-repeat center center	fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
