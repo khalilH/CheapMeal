@@ -17,18 +17,61 @@ import com.mongodb.client.MongoDatabase;
 
 public class MongoFactory {
 
-	private static final String AUTEUR = "auteur";
-	private static final String INGREDIENTS = "ingredients";
-	private static final String PREPARATION = "preparation";
-	private static final String ID_AUTEUR = "idAuteur";
-	private static final String LOGIN_AUTEUR = "loginAuteur";
-	private static final String TITRE = "titre";
-	private static final String NOTE = "note";
-	private static final String NOTE_MOYENNE = "moyenne";
-	private static final String NOMBRE_NOTE = "nbNotes";
-	private static final String ID_USER = "idUser";
-	private static final String ID_RECETTE = "idRecette"; 
+	public static final String AUTEUR = "auteur";
+	public static final String INGREDIENTS = "ingredients";
+	public static final String PREPARATION = "preparation";
+	public static final String ID_AUTEUR = "idAuteur";
+	public static final String LOGIN_AUTEUR = "loginAuteur";
+	public static final String TITRE = "titre";
+	public static final String NOTE = "note";
+	public static final String NOTE_MOYENNE = "moyenne";
+	public static final String NOMBRE_NOTE = "nbNotes";
+	public static final String ID_USER = "idUser";
+	public static final String ID_RECETTE = "idRecette"; 
+	
+	public static String getAuteur() {
+		return AUTEUR;
+	}
 
+	public static String getIngredients() {
+		return INGREDIENTS;
+	}
+
+	public static String getPreparation() {
+		return PREPARATION;
+	}
+
+	public static String getIdAuteur() {
+		return ID_AUTEUR;
+	}
+
+	public static String getLoginAuteur() {
+		return LOGIN_AUTEUR;
+	}
+
+	public static String getTitre() {
+		return TITRE;
+	}
+
+	public static String getNote() {
+		return NOTE;
+	}
+
+	public static String getNoteMoyenne() {
+		return NOTE_MOYENNE;
+	}
+
+	public static String getNombreNote() {
+		return NOMBRE_NOTE;
+	}
+
+	public static String getIdUser() {
+		return ID_USER;
+	}
+
+	public static String getIdRecette() {
+		return ID_RECETTE;
+	}
 	
 	public static BasicDBObject creerDocumentRecette(String titre, int idAuteur, String loginAuteur, List<String> listeIng, List<String> prepa) throws MongoClientException, UnknownHostException{
 		BasicDBObject document = new BasicDBObject(TITRE, titre);

@@ -132,17 +132,24 @@ public class RecetteFonctions {
 			throw new RecetteException("Cette recette n'existe pas");
 		
 		// Modifier la recette 
-		BasicDBObject noteDoc = (BasicDBObject) recette.get("note");
-		double moyenne = noteDoc.getDouble("moyenne");
-		int nbNotes = noteDoc.getInt("nbNotes") ;		
+		BasicDBObject noteDoc = (BasicDBObject) recette.get(MongoFactory.NOTE);
+		double moyenne = noteDoc.getDouble(MongoFactory.NOTE_MOYENNE);
+		int nbNotes = noteDoc.getInt(MongoFactory.NOMBRE_NOTE) ;		
 		double newMoyenne = (moyenne*nbNotes+note)/(nbNotes+1);
-		noteDoc.replace("moyenne", newMoyenne);
-		noteDoc.replace("nbNotes", nbNotes+1);
-		recette.replace("note", noteDoc);
+		noteDoc.replace(MongoFactory.NOTE_MOYENNE, newMoyenne);
+		noteDoc.replace(MongoFactory.NOMBRE_NOTE, nbNotes+1);
+		recette.replace(MongoFactory.NOTE, noteDoc);
 
 		BasicDBObject tmp = new BasicDBObject();
 		tmp.put("$set", recette);
 		col.updateOne(query, tmp);
+
+		// Dire que l'utilisateur a noté la recette (ajout dans collection Mongo)
+		col = database.getCollection("UtiliateurNotes", BasicDBObject.class);
+		
+		query = new BasicDBObject();
+		query.put(MongoFactory.ID_USER, _id);
+		
 		
 		DBStatic.closeMongoDBConnection();
 		
