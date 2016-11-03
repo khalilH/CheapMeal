@@ -1,5 +1,6 @@
 package test;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,7 +17,9 @@ public class TestAPI {
 					.header("Accept", "application/json")
 					.asString();
 			
-			JSONObject json = new JSONObject(response.getBody());
+			JSONArray array = new JSONArray(response.getBody());
+			System.out.println(array.toString(1));
+			JSONObject json = new JSONObject().put("results", array);
 			System.out.println(json.toString(1));
 		} catch (UnirestException e) {
 			// TODO Auto-generated catch block
