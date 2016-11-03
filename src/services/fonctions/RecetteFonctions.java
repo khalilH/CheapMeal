@@ -61,7 +61,7 @@ public class RecetteFonctions {
 			throw new RecetteException("Informations non completes");
 		
 		if(key.equals("") || id_recette.equals(""))
-			throw new RecetteException("La clï¿½ ou l'id n'est pas valide");
+			throw new RecetteException("La cle ou l'id n'est pas valide");
 		
 		if (key.length() != 32)
 			throw new InformationUtilisateurException("Cle invalide");
@@ -105,7 +105,7 @@ public class RecetteFonctions {
 			throw new SessionExpireeException("Votre session a expiree");
 		
 		if(note < 0 || note > 5)
-			throw new RecetteException("La note doit ï¿½tre comprise entre 0 et 5");
+			throw new RecetteException("La note doit etre comprise entre 0 et 5");
 		
 		// Si la recette est celle de l'utilisateur, ne peut pas la noter
 		Sessions s = RequeteStatic.obtenirSession(key);
@@ -113,46 +113,16 @@ public class RecetteFonctions {
 		if(MongoFactory.isOwnerOfRecipe(u.getId(),u.getLogin(),idRecette))
 			throw new RecetteException("Impossible de noter une recette qui vous appartient");
 		
-		// Query qui recup la recette
-		ObjectId _id = new ObjectId(idRecette); //idRecette au format hex
-		BasicDBObject query = new BasicDBObject();
-		query.put("_id", _id);
 		
-		// Connexion a la database Mongo
-		MongoDatabase database = DBStatic.getMongoConnection();
-		MongoCollection<BasicDBObject> col = database.getCollection("Recettes", BasicDBObject.class);
+		// Noter la recette
+		boolean notation = MongoFactory.noterRecette(u, key, idRecette, note);
 		
-		// Recuper la recette dans la bd 
-		MongoCursor<BasicDBObject> cursor = col.find(query).iterator();
-
-		BasicDBObject recette;
-		if(cursor.hasNext())
-			recette = cursor.next();
-		else
-			throw new RecetteException("Cette recette n'existe pas");
-		
-		// Modifier la recette 
-		BasicDBObject noteDoc = (BasicDBObject) recette.get(MongoFactory.NOTE);
-		double moyenne = noteDoc.getDouble(MongoFactory.NOTE_MOYENNE);
-		int nbNotes = noteDoc.getInt(MongoFactory.NOMBRE_NOTE) ;		
-		double newMoyenne = (moyenne*nbNotes+note)/(nbNotes+1);
-		noteDoc.replace(MongoFactory.NOTE_MOYENNE, newMoyenne);
-		noteDoc.replace(MongoFactory.NOMBRE_NOTE, nbNotes+1);
-		recette.replace(MongoFactory.NOTE, noteDoc);
-
-		BasicDBObject tmp = new BasicDBObject();
-		tmp.put("$set", recette);
-		col.updateOne(query, tmp);
-
 		// Dire que l'utilisateur a noté la recette (ajout dans collection Mongo)
-		col = database.getCollection("UtiliateurNotes", BasicDBObject.class);
-		
-		query = new BasicDBObject();
-		query.put(MongoFactory.ID_USER, _id);
-		
-		
-		DBStatic.closeMongoDBConnection();
-		
+		if(notation)
+			MongoFactory.majNotationRecette(u, idRecette);
+		else
+			throw new RecetteException("Vous avez deja note cette recette");
+			
 	}
 
 }

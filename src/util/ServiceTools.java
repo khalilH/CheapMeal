@@ -21,6 +21,7 @@ import javax.naming.NamingException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import util.bdTools.RequeteStatic;
 import util.hibernate.HibernateUtil;
 
 public class ServiceTools {
@@ -128,15 +129,17 @@ public class ServiceTools {
 	}
 	
 	/**
-	 * Permet de verifier si une cle de session est toujours active
+	 * Permet de verifier si une cle de session est toujours active et la met a jour si elle l'est
 	 * @param cle la cle de session a verifier
 	 * @return true si la cle de session est active
 	 */
 	public static boolean isCleActive(String cle) {
 		Timestamp dateExpiration = getDateExpirationAvecCle(cle),
 				currentTime = new Timestamp(System.currentTimeMillis());
-		
-		return dateExpiration != null && currentTime.before(dateExpiration);
+		boolean res = dateExpiration != null && currentTime.before(dateExpiration);
+		if(res)
+			RequeteStatic.updateDateExpirationAvecCle(cle);
+		return res;
 	}
 	
 	/**
