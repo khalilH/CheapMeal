@@ -16,6 +16,11 @@ import services.RecetteService;
 
 public class AjouterRecette extends HttpServlet {
 
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		/* Lecture des parametres */

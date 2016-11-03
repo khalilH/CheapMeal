@@ -367,13 +367,13 @@ public class RequeteStatic {
 
 
 	public static String recupBio(String login) {
+		Utilisateurs u = obtenirUtilisateur(null, login);
 		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
 		s.beginTransaction();
-		Utilisateurs u = obtenirUtilisateur(null, login);
-		Profils p = (Profils) s.createQuery("select p from Profils p where idProfil = :idProfil ")
-					.setParameter("idProfil",u.getId());
-		
-		return p.getBio();
+		String p = (String) s.createQuery("select p.bio from Profils p where idProfil = :idProfil ")
+					.setParameter("idProfil",u.getId())
+					.uniqueResult();
+		return p;
 	}
 
 }

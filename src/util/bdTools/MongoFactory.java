@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.types.ObjectId;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClientException;
