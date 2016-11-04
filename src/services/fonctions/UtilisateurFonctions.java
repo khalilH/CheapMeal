@@ -5,10 +5,12 @@ import java.sql.SQLException;
 import exceptions.IDException;
 import exceptions.InformationUtilisateurException;
 import exceptions.SessionExpireeException;
+import util.BCrypt;
 import util.ServiceTools;
 import util.bdTools.RequeteStatic;
 
 public class UtilisateurFonctions {
+	
 
 	public static void inscription(String login, String mdp, String prenom, String nom, String email) throws InformationUtilisateurException, IDException, SQLException{
 
@@ -28,8 +30,11 @@ public class UtilisateurFonctions {
 		if(!RequeteStatic.isEmailDisponible(email))
 			throw new InformationUtilisateurException("Cette adresse email est deja utilisee");
 
+		/* Cryptage du mdp */
+		String hashed = BCrypt.hashpw(mdp, BCrypt.gensalt());
+		
 		/* Creation de l'utilisateur dans la base SQL */
-		RequeteStatic.ajoutUtilisateur(login, mdp, nom, prenom, email);
+		RequeteStatic.ajoutUtilisateur(login, hashed, nom, prenom, email);
 		int id = RequeteStatic.obtenirIdAvecLogin(login);
 		if(id == -1)
 			throw new IDException("Utilisateur inexistant");

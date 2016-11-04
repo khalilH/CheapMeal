@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import org.hibernate.Session;
 
+import util.BCrypt;
 import util.ServiceTools;
 import util.hibernate.HibernateUtil;
 import util.hibernate.model.Profils;
@@ -84,12 +85,12 @@ public class RequeteStatic {
 	public static boolean checkIdentifiantsValide(String login,String mdp)  {
 		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
 		s.beginTransaction();
-		Utilisateurs user =(Utilisateurs) s.createQuery("from Utilisateurs u where login = :login and mdp = :mdp")
+		Utilisateurs user = (Utilisateurs) s.createQuery("from Utilisateurs u where login = :login")
 					.setParameter("login", login)
-					.setParameter("mdp", mdp)
 					.uniqueResult();
 		s.getTransaction().commit();
-		return user != null;
+		boolean bonmdp = BCrypt.checkpw(mdp, user.getMdp());
+		return (user != null) && bonmdp;
 	}
 
 	/**
