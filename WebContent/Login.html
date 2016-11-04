@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Authentification</title>
+<!-- Optional Bootstrap theme -->
+<link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<script src="bootstrap/js/jquery-3.1.1.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/Login.css">
+<script src="js/Login.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/jquery-validate.bootstrap-tooltip.min.js"></script>
+
+
+</head>
+
+
+<body class="login_body">
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#myNavbar">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">WebSiteName</a>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#">Page 1</a></li>
+					<li><a href="#">Page 2</a></li>
+					<li><a href="#">Page 3</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<div class="container">
+		<div class="row" style="margin-top: 20px">
+			<div
+				class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+				<form role="form" id="login">
+					<fieldset>
+						<h2 class="text-center">Connexion</h2>
+						<hr>
+						<div  id="ErrorMessage">
+						</div>
+						<div class="form-group">
+							<input type="text" name="login" id="login" class="form-control input-lg" placeholder="Login">
+						</div>
+						<div class="form-group">
+							<input type="password" name="password" id="password"
+								class="form-control input-lg" placeholder="Password">
+						</div>
+						
+						<div class="btn-toolbar" role="toolbar">
+						<a href="RecuperationMdp.html"	class="btn btn-link lead">
+							Mot de passe oublié ?</a>
+						</div>
+						
+						<hr>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6">
+								<input type="submit" class="btn btn-lg btn-success btn-block"
+									value="Se connecter">
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6">
+								<a href="inscription.html" class="btn btn-lg btn-primary btn-block">Créer un compte</a>
+							</div>
+						</div>
+						<br>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+
+	</div>
+
+
+
+</body>
+</html>

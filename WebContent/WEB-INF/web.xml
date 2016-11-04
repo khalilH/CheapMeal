@@ -112,6 +112,9 @@
 		<url-pattern>/afficherBio</url-pattern>
 	</servlet-mapping>
 	
+ <welcome-file-list>  
+   <welcome-file>Login.html</welcome-file>  
+  </welcome-file-list>  
 
 	<resource-ref>
 		<description> Resource reference to a factory for javax.mail.Session
