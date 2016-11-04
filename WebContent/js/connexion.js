@@ -29,11 +29,11 @@ $(function() {
 		},
 		submitHandler : function(form) {
 			console.log("toyze");
-			requeteAJAX(form.login.value,form.password.value);
+			connexionAJAX(form.login.value,form.password.value);
 		}
 	});
 
-	function requeteAJAX(login, mdp) {
+	function connexionAJAX(login, mdp) {
 		console.log("Connexion de " + login + " mdp " + mdp);
 
 		$.ajax({
@@ -48,7 +48,7 @@ $(function() {
 					console.log("Connexion reussi ",rep);
 				} else {
 					console.log("Connexion Fail ",rep.message);
-					changeErrorMessage(rep.erreur);
+					changeErrorMessage("#ErrorLogin",rep.message);
 				}
 			},
 			error : function(resultat, statut, erreur) {
@@ -60,14 +60,18 @@ $(function() {
 		return false;
 
 	}
-	function changeErrorMessage(msg){
-		var ErrorBox= $("#ErrorMessage");
+
+	function changeErrorMessage(selector,msg){
+		var ErrorBox= $(selector);
+		console.log(msg+" toz");
 		ErrorBox.html("<div class='alert alert-danger' id='ErrorMessage'>" +
 				"<a class='close' data-dismiss='alert' aria-label='close'>×</a>" +
 				msg + 
 		"</div>");
 	}
-	
+	/*
+	 *  Anything down here is for modal
+	 */
 	$("#forgot").validate({
 		rules: {
 			forgotPassword :{required : true}
@@ -75,12 +79,15 @@ $(function() {
 		messages:{
 			forgotPassword:"<p> Vous devez saisir un mail</p>"
 		},
+		tooltip_options : {
+			forgotPassword:{ placement:'top',html:true}
+		},
 		submitHandler : function(form){
-			console.log("valid");
+			forgotAJAX(form.forgotPassword.value);
 		}
 	});
 	$("#send").on('click',function(){
-		$("#forgot").validate();
+		$("#forgot").submit();
 		console.log("validee");
 
 	});
@@ -89,6 +96,34 @@ $(function() {
 		$('#forgotPassword').focus();
 		$('.tooltip').remove();
 	})
+	
+		function forgotAJAX(mail) {
+		console.log("Forgot de "+mail);
+
+		$.ajax({
+			url : 'recupmdp',
+			type : 'get',
+			data : 'mail='+mail,
+			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+			dataType : 'json',
+			success : function(rep) {
+				console.log(JSON.stringify(rep));
+				if (rep.erreur == undefined) {
+					console.log("Recuperation reussi ",rep);
+				} else {
+					console.log("Recuperation Fail ",rep.message);
+					changeErrorMessage("#ErrorForgot",rep.message);
+				}
+			},
+			error : function(resultat, statut, erreur) {
+				console.log("Bug");
+				alert("dawg");
+			}
+		});
+
+		return false;
+
+	}
 	 function alignModal(){
 	        var modalDialog = $(this).find(".modal-dialog");
 	        // Applying the top margin on modal dialog to align it vertically center
