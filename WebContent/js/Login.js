@@ -1,14 +1,24 @@
 $(function() {
 
-	$("form[name='login']").submit(function(event) {
-		event.preventDefault(); // Empêche le navigateur de suivre le lien.
-		var mdp = this.password.value;
-		var login = this.login.value;
-		$("#ErrorMessage").removeClass('hidden');
-		if (verif_Form(login, mdp)) {
-
-		} else {
-
+	$("#login").validate({
+		rules: {
+			login:{required: true},
+			password:{required: true, minlength:6}
+	
+		},
+		messages: {
+			login:"<p class='text-nowrap'>Vous devez entrez un login</p>",
+			password:{
+				required:"<p>Mot de passe manquant</p>",
+				minlength:"<p>Votre mot de passe doit faire au moins 6 caractères</p>"
+			}
+		},
+		tooltip_options:{
+			login:{placement:'right',html:true},
+			password:{placement:'right', html:true}
+		},
+		submitHandler: function(form) {
+			console.log(form.login.value+" et "+form.password.value);
 		}
 	});
 
