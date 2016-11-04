@@ -34,35 +34,36 @@ $(function() {
 
 	function requeteAJAX(login, mdp) {
 		console.log("Connexion de " + login + " mdp " + mdp);
-//		$.ajax({
-//			url : 'connexion',
-//			type : 'POST',
-//			data : 'login=' + login + "&mdp=" + mdp,
-//			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-//			dataType : 'json',
-//			success : function(rep) {
-//				console.log(JSON.stringify(rep));
-//				if (rep.erreur == undefined) {
-//					console.log("Connexion reussi ",rep);
-//				} else {
-//					var ErrorBox = $("#ErrorMesage");
-//					ErrorBox.removeClass("hidden");
-//					console.log(ErrorBox.val+ "et "+ErrorBox.value);
-//					console.log("Connexion rate ",rep);
-//				}
-//			},
-//			error : function(resultat, statut, erreur) {
-//				console.log("Bug");
-//				alert("dawg");
-//			}
-//		});
-		var ErrorBox= $("#ErrorMessage");
-		ErrorBox.removeClass('hidden');
-		ErrorBox.html("<a class='close' data-dismiss='alert' aria-label='close'>×</a>" +
-				"Toz");
-		console.log(ErrorBox.text());
+		$.ajax({
+			url : 'connexion',
+			type : 'POST',
+			data : 'login=' + login + "&mdp=" + mdp,
+			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+			dataType : 'json',
+			success : function(rep) {
+				console.log(JSON.stringify(rep));
+				if (rep.erreur == undefined) {
+					console.log("Connexion reussi ",rep);
+				} else {
+					console.log("Connexion Fail ",rep.message);
+					changeErrorMessage(rep.erreur);
+				}
+			},
+			error : function(resultat, statut, erreur) {
+				console.log("Bug");
+				alert("dawg");
+			}
+		});
+		
 		return false;
 
+	}
+	function changeErrorMessage(msg){
+		var ErrorBox= $("#ErrorMessage");
+		ErrorBox.html("<div class='alert alert-danger' id='ErrorMessage'>" +
+						"<a class='close' data-dismiss='alert' aria-label='close'>×</a>" +
+							msg + 
+							"</div>");
 	}
 	
 });
