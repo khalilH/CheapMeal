@@ -10,7 +10,7 @@ $(function() {
 			login:"<p class='text-nowrap'>Vous devez entrez un login</p>",
 			password:{
 				required:"<p>Mot de passe manquant</p>",
-				minlength:"<p>Votre mot de passe doit faire au moins 6 caractères</p>"
+				minlength:"<p>Votre mot de passe est trop court</p>"
 			}
 		},
 		tooltip_options:{
