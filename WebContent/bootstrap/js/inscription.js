@@ -28,16 +28,32 @@ function inscription(formulaire){
  * @param mail
  */
 function creationUtilisateur(prenom, nom, nom_utilisateur, mdp, email){
-	$.ajax({
-		type: "POST",
-		url: "inscription",
-		data: "prenom="+prenom+"&nom="+nom+"&login="+nom_utilisateur+"&mdp="+mdp+"&email="+email,
-		dataType: "json",
-		success: traitementReponseInscription,
-		error:function(jaXHR, textStatus, errorThrown) {
-			alert(jaXHR+" "+textStatus+" "+errorThrown);
-		}
+	
+	require.config({
+	    paths: { "bcrypt": "bootstrap/js/bcrypt" }
 	});
+	require(["bcrypt"], function(bcrypt) {
+	    
+		var bcrypt = require('bcrypt');
+		var salt = bcrypt.genSaltSync(10);
+		var hash = bcrypt.hashSync(mdp, salt);
+
+		/* lors de la connexion pour savoir si c'est le bon mdp */
+		/* bcrypt.compareSync(mdp, hash); avec hash le mdp qu'on a récup dans la base */
+		
+		$.ajax({
+			type: "POST",
+			url: "inscription",
+			data: "prenom="+prenom+"&nom="+nom+"&login="+nom_utilisateur+"&mdp="+hash+"&email="+email,
+			dataType: "json",
+			success: traitementReponseInscription,
+			error:function(jaXHR, textStatus, errorThrown) {
+				alert(jaXHR+" "+textStatus+" "+errorThrown);
+			}
+		});
+		
+	});
+	
 	return;
 }
 
