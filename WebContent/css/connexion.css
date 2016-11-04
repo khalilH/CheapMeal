@@ -44,3 +44,7 @@ div.tooltip-inner>p {
 .tooltip.right .tooltip-arrow {
 	border-right-color: #ff4444;
 }
+
+.modal{
+	vertical-align : middle;
+}
