@@ -2,19 +2,12 @@ package test;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.MongoClientException;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 
 import util.bdTools.DBStatic;
 import util.bdTools.MongoFactory;

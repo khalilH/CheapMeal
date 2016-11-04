@@ -15,6 +15,11 @@ import services.RecetteService;
 
 public class NoterRecette extends HttpServlet{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException{
 		
 		/* Lecture des parametres */

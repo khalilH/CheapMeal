@@ -1,0 +1,41 @@
+.container {
+	width: 80%;
+}
+
+h2 {
+	color: white;
+}
+
+.btn-link:hover {
+	color: #5cb85c;
+}
+
+.btn-link {
+	color: white;
+	font-size: 18px;
+}
+
+.login_body {
+	background: url(../images/login_bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  
+  }
+div.tooltip-inner{
+ text-align: center;
+    border-radius: 0px;
+    margin-bottom: 6px;
+    background-color: #cc0000;
+    border-radius:5px;
+    font-size: 14px;
+    width:350px;
+}
+div.tooltip-inner > p {
+	margin-top : 8px;
+	margin-bottom : 8px;
+}
+.tooltip.right .tooltip-arrow  {
+	border-right-color : #cc0000;
+}

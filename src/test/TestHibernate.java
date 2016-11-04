@@ -1,19 +1,9 @@
 package test;
 
-import java.sql.Timestamp;
-
 import javax.mail.MessagingException;
 import javax.naming.NamingException;
 
-import org.hibernate.Session;
-
 import util.ServiceTools;
-import util.bdTools.RequeteStatic;
-import util.hibernate.HibernateUtil;
-import util.hibernate.model.Admins;
-import util.hibernate.model.Profils;
-import util.hibernate.model.Sessions;
-import util.hibernate.model.Utilisateurs;
 
 public class TestHibernate {
 

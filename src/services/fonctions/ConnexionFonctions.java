@@ -17,7 +17,7 @@ public class ConnexionFonctions {
 		JSONObject jb = new JSONObject();
 //		Verification parametre invalides
 		if(login == null || mdp == null){
-			throw new NullPointerException("Le login ou le mot de passe est null");
+			throw new NullPointerException("Le login ou le mot de passe est null  "+mdp+ " et  "+login);
 		}
 		if(login.equals("") || mdp.equals("") || mdp.length() < 6 ){
 			throw new InformationUtilisateurException("Login ou mot de passe non valide");
