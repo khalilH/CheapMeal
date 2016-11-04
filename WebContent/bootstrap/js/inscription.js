@@ -2,6 +2,16 @@ $(function() {
 
 	jQuery.validator.addMethod("pwdMatch", function(pwd, confirm_pwd) {
 	    return pwd.toUpperCase() === confirm_pwd.toUpperCase();
+	});
+	
+	jQuery.validator.addMethod("emailValide", function(email) {
+		var mailRE = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+		return mailRE.test(email);
+	});	
+	
+	jQuery.validator.addMethod("mdpValide", function(mot_de_passe) {
+		var caracteresAutorises = new RegExp('[0-9a-z]{6,}','i');
+		return caracteresAutorises.test(mot_de_passe);
 	});	
 
 	$("#prenom").validate({
@@ -9,23 +19,34 @@ $(function() {
 			prenom:{required: true},
 			nom:{required: true},
 			nom_utilisateur:{required: true},
-			mot_de_passe:{required: true, minLength:6},
-			mot_de_passe:{required: true, minLength:6},
-	
+			mot_de_passe:{required: true, minLength:6, mdpValide: true},
+			confirmation_mdp:{required: true, pwdMatch: true},
+			email:{required: true, emailValide: true}
 		},
 		messages: {
-			login:"<p class='text-nowrap'>Vous devez entrez un login</p>",
-			password:{
-				required:"<p>Mot de passe manquant</p>",
-				minlength:"<p>Votre mot de passe est trop court</p>"
-			}
+			prenom:"<p class='text-nowrap'>Prénom manquant</p>",
+			nom:"<p class='text-nowrap'>Nom manquant</p>",
+			nom_utilisateur:"<p class='text-nowrap'>Nom d'utilisateur manquant</p>",
+			mot_de_passe:{
+				required:"<p class='text-nowrap'>Mot de passe manquant</p>",
+				minlength:"<p class='text-nowrap'>Doit contenir au moins 6 caractères</p>"
+			},
+			confirmation_mdp:{
+				required:"<p class='text-nowrap'>Mot de passe manquant</p>",
+				pwdMatch:"<p class='text-nowrap'>Les mots de passe doivent correspondre</p>",
+			},
+			email:"<p class='text-nowrap'>Email manquant</p>"
 		},
 		tooltip_options:{
-			login:{placement:'right',html:true},
-			password:{placement:'right', html:true}
+			prenom:{placement:'left',html:true},
+			nom:{placement:'right', html:true},
+			nom_utilisateur:{placement:'right', html:true},
+			email:{placement:'right', html:true},
+			mot_de_passe:{placement:'left', html:true},
+			confirmation_mdp:{placement:'right', html:true}
 		},
 		submitHandler: function(form) {
-			console.log(form.login.value+" et "+form.password.value);
+			creationUtilisateur(form.prenom.value, form.nom.value, form.nom_utilisateur.value, form.mdp.value, form.email.value);
 		}
 	});
 	
@@ -35,20 +56,20 @@ $(function() {
 	 * @param formulaire
 	 * @returns true si la creation du compte est demandee, false sinon
 	 */
-	function inscription(formulaire){
-		var prenom = formulaire.prenom.value;
-		var nom = formulaire.nom.value;
-		var nom_utilisateur = formulaire.nom_utilisateur.value;
-		var mdp = formulaire.mot_de_passe.value;
-		var confirmation_mdp = formulaire.confirmation_mdp.value;
-		var email = formulaire.email.value;
-		var ok = verificationFormulaireInscription(prenom, nom, nom_utilisateur, mdp, confirmation_mdp, email);
-		if(ok){
-			creationUtilisateur(prenom, nom, nom_utilisateur, mdp, email);
-			return true;
-		}	
-		return false;
-	}
+//	function inscription(formulaire){
+//		var prenom = formulaire.prenom.value;
+//		var nom = formulaire.nom.value;
+//		var nom_utilisateur = formulaire.nom_utilisateur.value;
+//		var mdp = formulaire.mot_de_passe.value;
+//		var confirmation_mdp = formulaire.confirmation_mdp.value;
+//		var email = formulaire.email.value;
+//		var ok = verificationFormulaireInscription(prenom, nom, nom_utilisateur, mdp, confirmation_mdp, email);
+//		if(ok){
+//			creationUtilisateur(prenom, nom, nom_utilisateur, mdp, email);
+//			return true;
+//		}	
+//		return false;
+//	}
 
 	/**
 	 * Fait appel au serveur pour la creation du compte
@@ -106,35 +127,35 @@ $(function() {
 
 	/**************************************** Fonctions utilitaires ****************************************/
 
-	function verificationFormulaireInscription(prenom, nom, nom_utilisateur, mdp, confirmation_mdp, email){
-		if(mdp.length < 6){
-			func_erreur("Le mot de passe doit contenir au moins 6 caractères");
-			return false;
-		}
-		if (!emailValide(email)){
-			func_erreur("L'adresse email n'est pas valide");
-			return false;
-		}
-		if (!mdpValide(mdp)) {
-			func_erreur("Le mot de passe doit contenir seulement des chiffres et des lettres");
-			return false;
-		}
-		if (mdp != confirmation_mdp){
-			func_erreur("Les mots de passe doivent correspondre");
-			return false;
-		}
-		return true;
-	}
+//	function verificationFormulaireInscription(prenom, nom, nom_utilisateur, mdp, confirmation_mdp, email){
+//		if(mdp.length < 6){
+//			func_erreur("Le mot de passe doit contenir au moins 6 caractères");
+//			return false;
+//		}
+//		if (!emailValide(email)){
+//			func_erreur("L'adresse email n'est pas valide");
+//			return false;
+//		}
+//		if (!mdpValide(mdp)) {
+//			func_erreur("Le mot de passe doit contenir seulement des chiffres et des lettres");
+//			return false;
+//		}
+//		if (mdp != confirmation_mdp){
+//			func_erreur("Les mots de passe doivent correspondre");
+//			return false;
+//		}
+//		return true;
+//	}
 
-	function mdpValide(mdp){
-		var caracteresAutorises = new RegExp('[0-9a-z]{6,}','i');
-		return caracteresAutorises.test(mdp);
-	}
-
-	function emailValide(email){
-		var mailRE = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
-		return mailRE.test(email);
-	}
+//	function mdpValide(mdp){
+//		var caracteresAutorises = new RegExp('[0-9a-z]{6,}','i');
+//		return caracteresAutorises.test(mdp);
+//	}
+//
+//	function emailValide(email){
+//		var mailRE = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+//		return mailRE.test(email);
+//	}
 
 	function func_valid(msg){
 		alert("Succès: "+msg)
