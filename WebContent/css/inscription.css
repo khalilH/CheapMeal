@@ -1,5 +1,5 @@
 .inscription_body{
-	background: url(../../images/inscription_bg.jpg) no-repeat center center fixed;
+	background: url(../images/inscription_bg.jpg) no-repeat center center fixed;
 	--webkit-background-size: 100% auto;
 }
 
