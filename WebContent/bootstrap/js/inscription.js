@@ -2,7 +2,7 @@ $(function() {
 
 	jQuery.validator.addMethod("pwdMatch", function(pwd, confirm_pwd) {
 	    return pwd.toUpperCase() === confirm_pwd.toUpperCase();
-	});
+	});	
 
 	$("#prenom").validate({
 		rules: {
