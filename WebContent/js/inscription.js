@@ -1,7 +1,6 @@
 $(function() {
 
 	$.validator.addMethod("pwdMatch", function(mot_de_passe, confirmation_mdp) {
-		console.log(mot_de_passe+" "+confirmation_mdp.value);
 		return mot_de_passe.toString() === confirmation_mdp.value.toString();
 	});
 
@@ -45,7 +44,7 @@ $(function() {
 			confirmation_mdp:{placement:'right', html:true}
 		},
 		submitHandler: function(form) {
-			creationUtilisateur(form.prenom.value, form.nom.value, form.nom_utilisateur.value, form.mdp.value, form.email.value);
+			creationUtilisateur(form.prenom.value, form.nom.value, form.nom_utilisateur.value, form.mot_de_passe.value, form.email.value);
 		}
 	});
 
@@ -83,7 +82,7 @@ $(function() {
 		$.ajax({
 			type: "POST",
 			url: "inscription",
-			data: "prenom="+prenom+"&nom="+nom+"&login="+nom_utilisateur+"&mdp="+hash+"&email="+email,
+			data: "prenom="+prenom+"&nom="+nom+"&login="+nom_utilisateur+"&mdp="+mdp+"&email="+email,
 			dataType: "json",
 			success: traitementReponseInscription,
 			error:function(jaXHR, textStatus, errorThrown) {
@@ -100,13 +99,22 @@ $(function() {
 	 */
 	function traitementReponseInscription(rep) {
 		if (rep.erreur != undefined) {
-			func_erreur(rep.message);
+//			func_erreur(rep.message);
+			changeErrorMessage(rep.message);
 		}
 		else {
 			func_valid("Compte créé avec succès !")
 			/* redirection vers la page de connexion */
 			window.location.href = "connexion.html"; 
 		}
+	}
+	
+	function changeErrorMessage(msg){
+		var ErrorBox= $("#ErrorMessage");
+		ErrorBox.html("<div class='alert alert-danger' id='ErrorMessage'>" +
+				"<a class='close' data-dismiss='alert' aria-label='close'>×</a>" +
+				msg + 
+		"</div>");
 	}
 
 
@@ -142,36 +150,36 @@ $(function() {
 //	return mailRE.test(email);
 //	}
 
-//	function func_valid(msg){
-//		alert("Succès: "+msg)
-//		/* var msg_box="<div id=msg_valid>"+msg+"</div>";
-//	var old_msg1 = $("#msg_err");
-//	var old_msg2 = $("#msg_valid");
-//	if (old_msg1.length == 0 && old_msg2.length == 0) {
-//		$("#lastdiv").append(msg_box);
-//	}
-//	else if(old_msg1.length != 0){
-//		old_msg1.replaceWith(msg_box);
-//	}
-//	else if(old_msg2.length != 0){
-//		old_msg2.replaceWith(msg_box);
-//	} */
-//	}
-//
-//	function func_erreur(msg) {
-//		alert("Erreur: "+msg);
-//		/*var msg_box="<div id=msg_err>"+msg+"</div>";
-//	var old_msg1 = $("#msg_err");
-//	var old_msg2 = $("#msg_valid");
-//	if (old_msg1.length == 0 && old_msg2.length == 0) {
-//		$("test").append(msg_box);
-//	}
-//	else if(old_msg1.length != 0){
-//		old_msg1.replaceWith(msg_box);
-//	}
-//	else if(old_msg2.length != 0){
-//		old_msg2.replaceWith(msg_box);
-//	} */
-//	}
+	function func_valid(msg){
+		alert("Succès: "+msg)
+		/* var msg_box="<div id=msg_valid>"+msg+"</div>";
+	var old_msg1 = $("#msg_err");
+	var old_msg2 = $("#msg_valid");
+	if (old_msg1.length == 0 && old_msg2.length == 0) {
+		$("#lastdiv").append(msg_box);
+	}
+	else if(old_msg1.length != 0){
+		old_msg1.replaceWith(msg_box);
+	}
+	else if(old_msg2.length != 0){
+		old_msg2.replaceWith(msg_box);
+	} */
+	}
+
+	function func_erreur(msg) {
+		alert("Erreur: "+msg);
+		/*var msg_box="<div id=msg_err>"+msg+"</div>";
+	var old_msg1 = $("#msg_err");
+	var old_msg2 = $("#msg_valid");
+	if (old_msg1.length == 0 && old_msg2.length == 0) {
+		$("test").append(msg_box);
+	}
+	else if(old_msg1.length != 0){
+		old_msg1.replaceWith(msg_box);
+	}
+	else if(old_msg2.length != 0){
+		old_msg2.replaceWith(msg_box);
+	} */
+	}
 
 });

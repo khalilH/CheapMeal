@@ -48,11 +48,12 @@ $(function() {
 					console.log("Connexion reussi ",rep);
 				} else {
 					console.log("Connexion Fail ",rep.message);
-					changeErrorMessage(rep.erreur);
+					changeErrorMessage(rep.message);
 				}
 			},
 			error : function(resultat, statut, erreur) {
 				console.log("Bug");
+				console.log(resultat);
 				alert("dawg");
 			}
 		});
@@ -60,6 +61,7 @@ $(function() {
 		return false;
 
 	}
+	
 	function changeErrorMessage(msg){
 		var ErrorBox= $("#ErrorMessage");
 		ErrorBox.html("<div class='alert alert-danger' id='ErrorMessage'>" +

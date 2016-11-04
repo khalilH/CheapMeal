@@ -23,6 +23,7 @@ import util.bdTools.RequeteStatic;
 import util.hibernate.HibernateUtil;
 
 public class ServiceTools {
+	
 	public static JSONObject serviceRefused(String message, int codeErreur) throws JSONException{
 		JSONObject res = new JSONObject();
 		res.put("erreur", codeErreur);
@@ -155,4 +156,9 @@ public class ServiceTools {
 		return s_timestamp;
 	}
 
+	/* Retourne le grain de sel pour le cryptage */
+	public static int getSaltKey(){
+		return 10;
+	}
+	
 }
