@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Upload</title>
+<link rel="stylesheet" type="text/css"
+	href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/inscription.css">
+
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/jquery-validate.bootstrap-tooltip.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="js/require.js"></script>
+<script src="js/upload.js"></script>
+
+<!-- Optional Bootstrap theme -->
+<link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+<body>
+	<h1>File Upload to Database Demo</h1>
+	<form method="post" action="uploadServlet"
+		enctype="multipart/form-data">
+		<div class="row">
+			<div class="col-md-2">
+				<img id="previewImage" class="img-responsive img-rounded"
+					style="max-width: 160px; max-height: 160px" />
+			</div>
+			<div class="col-md-3">
+				<input type="file" accept="image/*"
+					name="upload" id="upload">
+			</div>
+
+		</div>
+	</form>
+</body>
+</html>
