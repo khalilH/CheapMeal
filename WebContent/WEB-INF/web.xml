@@ -113,7 +113,7 @@
 	</servlet-mapping>
 	
  <welcome-file-list>  
-   <welcome-file>Login.html</welcome-file>  
+   <welcome-file>connexion.html</welcome-file>  
   </welcome-file-list>  
 
 	<resource-ref>
