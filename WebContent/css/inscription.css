@@ -1,16 +1,17 @@
-.inscription_body{
-	background: url(../images/inscription_bg.jpg) no-repeat center center fixed;
-	--webkit-background-size: 100% auto;
+.inscription_body {
+	background: url(../images/inscription_bg.jpg) no-repeat center center
+		fixed; -
+	-webkit-background-size: 100% auto;
 }
 
 .brand {
-    position: absolute;
-    left: 50%;
-    margin-left: -50px !important;  /* 50% of your logo width */
-    display: block;
+	position: absolute;
+	left: 50%;
+	margin-left: -50px !important; /* 50% of your logo width */
+	display: block;
 }
 
-.navbar{
+.navbar {
 	position: static;
 	top: 0px;
 	left: 0px;
@@ -21,19 +22,25 @@
 	height: 45px;
 }
 
-div.tooltip-inner{
- text-align: center;
-    border-radius: 0px;
-    margin-bottom: 6px;
-    background-color: #cc0000;
-    border-radius:5px;
-    font-size: 14px;
-    width:350px;
+div.tooltip-inner {
+	text-align: center;
+	border-radius: 0px;
+	margin-bottom: 6px;
+	background-color: #ff4444;
+	border-radius: 5px;
+	font-size: 14px;
+	width: 350px;
 }
-div.tooltip-inner > p {
-	margin-top : 8px;
-	margin-bottom : 8px;
+
+div.tooltip-inner>p {
+	margin-top: 8px;
+	margin-bottom: 8px;
 }
-.tooltip.right .tooltip-arrow  {
-	border-right-color : #cc0000;
+
+.tooltip.right .tooltip-arrow {
+	border-right-color: #ff4444;
+}
+
+.tooltip.left .tooltip-arrow {
+	border-left-color: #ff4444;
 }

@@ -30,7 +30,7 @@ div.tooltip-inner {
 	text-align: center;
 	border-radius: 0px;
 	margin-bottom: 6px;
-	background-color: #cc0000;
+	background-color: #ff4444;
 	border-radius: 5px;
 	font-size: 14px;
 	width: 350px;
@@ -42,5 +42,5 @@ div.tooltip-inner>p {
 }
 
 .tooltip.right .tooltip-arrow {
-	border-right-color: #cc0000;
+	border-right-color: #ff4444;
 }

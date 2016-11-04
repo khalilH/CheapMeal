@@ -34,6 +34,7 @@ $(function() {
 
 	function requeteAJAX(login, mdp) {
 		console.log("Connexion de " + login + " mdp " + mdp);
+
 		$.ajax({
 			url : 'connexion',
 			type : 'POST',
@@ -54,16 +55,16 @@ $(function() {
 				alert("dawg");
 			}
 		});
-		
+
 		return false;
 
 	}
 	function changeErrorMessage(msg){
 		var ErrorBox= $("#ErrorMessage");
 		ErrorBox.html("<div class='alert alert-danger' id='ErrorMessage'>" +
-						"<a class='close' data-dismiss='alert' aria-label='close'>×</a>" +
-							msg + 
-							"</div>");
+				"<a class='close' data-dismiss='alert' aria-label='close'>×</a>" +
+				msg + 
+		"</div>");
 	}
-	
+
 });
