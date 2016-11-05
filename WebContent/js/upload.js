@@ -14,7 +14,7 @@ function readURL(input) {
     }
 }
 
-$("#upload").change(function(){
+$("#uploadInput").change(function(){
 	console.log($(this).val);
     readURL(this);
 });

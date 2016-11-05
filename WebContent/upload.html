@@ -21,25 +21,17 @@
 	<h1>File Upload to Database Demo</h1>
 	<form method="post" action="uploadServlet"
 		enctype="multipart/form-data">
-		<div class="form-group">
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="col-sm-2 margin-fix">
-						<img id="previewImage" width="160px" height="120px"
-							class="img-circle" />
-					</div>
-					<div class="col-sm-8  margin-fix">
-						<input type="file" accept="image/*" name="upload" id="upload">
-					</div>
-
-				</div>
+		<div class="media">
+			<a class="media-left media-middle" href="#"> <img
+				id="previewImage" width="140px" height="140px" class="media-object"
+				src="images/cheapmeal_logo.png" alt="Toz" />
+			</a>
+			<div class="media-body media-middle">
+				<label class="btn btn-primary btn-file">Ajouter une image <input
+					id="uploadInput" type="file" style="display: none;">
+				</label>
 			</div>
 		</div>
 	</form>
 </body>
-<style>
-.margin-fix {margin-left , margin-right:0px;
-	
-}
-</style>
 </html>
