@@ -156,9 +156,4 @@ public class ServiceTools {
 		return s_timestamp;
 	}
 
-	/* Retourne le grain de sel pour le cryptage */
-	public static int getSaltKey(){
-		return 10;
-	}
-	
 }

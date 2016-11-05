@@ -32,6 +32,9 @@ public class MongoFactory {
 	public static final String ID_USER = "idUser";
 	public static final String ID_RECETTE = "idRecette"; 
 	public static final String IDS_RECETTE = "idsRecette";
+	public static final String NOM_INGREDIENT = "nomIngredient";
+	public static final String QUANTITE = "quantite";
+	public static final String MESURE = "mesure";
 	
 	public static final String COLLECTION_RECETTE = "Recettes";
 	public static final String COLLECTION_UTILISATEUR_NOTES = "UtilisateurNotes";
@@ -84,11 +87,14 @@ public class MongoFactory {
 		return IDS_RECETTE;
 	}
 
-	public static BasicDBObject creerDocumentRecette(String titre, int idAuteur, String loginAuteur, List<String> listeIng, List<String> prepa) throws MongoClientException, UnknownHostException{
+	public static BasicDBObject creerDocumentRecette(String titre, int idAuteur, String loginAuteur, List<String> listIng, List<Double> listQuant, List<String> listMesure, List<String> prepa) throws MongoClientException, UnknownHostException{
 		BasicDBObject document = new BasicDBObject(TITRE, titre);
 		BasicDBObject auteur = creerDocumentAuteur(idAuteur, loginAuteur);
 		document.append(AUTEUR, auteur);
-		document.append(INGREDIENTS, listeIng);
+		ArrayList<BasicDBObject> ingredients = new ArrayList<>();
+		for(int i=0 ; i<listIng.size(); i++)
+			ingredients.add(creerDocumentIngredient(listIng.get(i), listQuant.get(i), listMesure.get(i)));
+		document.append(INGREDIENTS, ingredients);
 		document.append(PREPARATION, prepa);
 		BasicDBObject note = creerDocumentNote(0, 0);
 		document.append(NOTE, note);
@@ -105,6 +111,13 @@ public class MongoFactory {
 	public static BasicDBObject creerDocumentNote(double moyenne, int nbNotes){
 		BasicDBObject document = new BasicDBObject(NOTE_MOYENNE, moyenne);
 		document.append(NOMBRE_NOTE, nbNotes);
+		return document;
+	}
+	
+	public static BasicDBObject creerDocumentIngredient(String nom, double quantite, String mesure){
+		BasicDBObject document = new BasicDBObject(NOM_INGREDIENT, nom);
+		document.append(QUANTITE, quantite);
+		document.append(MESURE, mesure);
 		return document;
 	}
 
