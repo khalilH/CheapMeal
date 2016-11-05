@@ -1,0 +1,175 @@
+@font-face {
+	font-family: 'Gidole-Regular';
+	src: url('../fonts/Gidole-Regular.otf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'End';
+	src: url('../fonts/End.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+.navbar{
+	margin-bottom: 0!important;
+}
+
+.accueil_body{
+	/* background-color: #f1f3f2; */
+	background-color: #f1f3f2;
+	font-family: 'Gidole-Regular';
+}
+
+.brand {
+	position: absolute;
+	left: 50%;
+	margin-left: -50px !important; /* 50% of your logo width */
+	display: block;
+}
+
+.searchbar-container{
+	position: relative;
+	height: 325px;	
+	width: 100%;
+	background-color: #acacac;
+	background: url(../images/searchbar_bg.jpg) 0 0;
+	--webkit-background-size: 100% auto;
+}
+
+.titre-recherche{
+	text-align: center;
+	margin: 0 0 10px 0;
+	min-width: 420px;
+	color: #FFFFFF;
+}
+
+#imaginary_container{
+    margin-top:20%; /* Don't copy this */
+}
+
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+	border-right:0; 
+	box-shadow:0 0 0; 
+	border-color:#ccc;
+	
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+
+.glyphicon-search{
+	color: #1d7abc;
+}
+
+.rad10{
+	border-radius: 10px;	
+}
+
+.recette-container{
+	position: relative;
+	display: block;
+	
+}
+
+.contenu-page{
+	display: block;
+}
+
+.recette{
+	position: relative;
+	display: inline-block;
+	margin-left: 10px;
+	margin-top: 10px;
+	padding-left: 0px;
+	padding-right: 0px;
+	width: 375px;
+	height: 525px;
+	background-color: white;
+	border: 1px #BCDCF3 solid;
+	border-radius: 10px;
+}
+
+.recette-header{
+	height:30px;
+}
+
+.recette-img{
+	height: 375px;
+	width: 100%;
+	background-color: silver;
+}
+
+.recette-footer{
+	margin-top: 0px;
+}
+
+.titre-recette{
+	text-align: center;	
+	font-weight: bold;
+}
+
+.auteur-recette{
+	text-align: right;
+	margin-top: 20px;	
+	margin-right: 10px;
+}
+
+
+.menu-button{
+	font-size: 18px;
+}
+
+.menu-button:hover span{
+	color: #1d7abc;
+}
+
+.navbar-nav{
+	margin-left: 15%
+}
+
+.deconnexion-button{
+	color: white;
+	font-family: 'Gidole-Regular';
+	font-size: 15px;
+}
+
+
+.navbar-right{
+	margin-right: 5px;
+}
+
+.navbar-right:hover span{
+	color: white;	
+}
+.navbar-right:hover a{
+	color: white;
+	text-decoration: none;
+}
+
+.categorie{
+	text-align:center;
+	border-radius: 5px;
+	margin-top: 50px;
+	position: relative;
+	height: 40px;
+}
+
+.recettes-recentes{
+	background-color: #5ab2ea;
+}
+
+.recettes-top{
+	background-color: #ff7200;
+}
+
+.texte-categorie{
+	color: white;
+	font-size: 30px;
+}
