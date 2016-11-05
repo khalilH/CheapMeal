@@ -21,6 +21,15 @@
 		<url-pattern>/connexion</url-pattern>
 	</servlet-mapping>
 	
+		<servlet>
+		<servlet-name>InsererIngredients</servlet-name>
+		<servlet-class>services.servlets.InsererIngredients</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>InsererIngredients</servlet-name>
+		<url-pattern>/putIngredients</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>Test</servlet-name>
 		<servlet-class>test.TestMongoDB</servlet-class>
@@ -125,6 +134,7 @@
  <welcome-file-list>  
    <welcome-file>connexion.html</welcome-file>  
   </welcome-file-list>  
+
 
 	<resource-ref>
 		<description> Resource reference to a factory for javax.mail.Session

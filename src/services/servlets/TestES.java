@@ -47,7 +47,9 @@ public class TestES extends HttpServlet {
 
 			SearchResponse res = client.prepareSearch()
 					.setIndices("cheapmeal")
-					.setQuery(QueryBuilders.queryStringQuery("pommes"))
+					.setTypes("ingredients")
+					.setSize(50)
+					.setQuery(QueryBuilders.matchAllQuery())
 					.execute()
 					.actionGet();
 			
@@ -55,14 +57,14 @@ public class TestES extends HttpServlet {
 
 			pw.println("total Hits = "+res.getHits().getTotalHits()+" ;; ");
 			pw.println("Max score = "+res.getHits().getMaxScore()+" ;; ");
-			
+			int i = 0;
 			for (SearchHit hit : res.getHits()) {
-				
+				i++;
 				pw.print("id = "+hit.getId()+" ;; ");
 				pw.print("score = "+hit.getScore()+ " ;; ");
 				pw.println(hit.getSourceAsString());
 			}
-			
+			pw.println("nombre de hits recupere = "+i );
 			
 			client.close();
 		} catch (UnknownHostException e) {

@@ -35,6 +35,8 @@ public class MongoFactory {
 	public static final String NOM_INGREDIENT = "nomIngredient";
 	public static final String QUANTITE = "quantite";
 	public static final String MESURE = "mesure";
+	public static final String EAN = "ean";
+	
 	
 	public static final String COLLECTION_RECETTE = "Recettes";
 	public static final String COLLECTION_UTILISATEUR_NOTES = "UtilisateurNotes";
