@@ -4,8 +4,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Basic;
-
 import org.bson.types.ObjectId;
 import org.json.JSONException;
 
@@ -39,6 +37,7 @@ public class MongoFactory {
 	
 	
 	public static final String COLLECTION_RECETTE = "Recettes";
+	public static final String COLLECTION_INGREDIENTS= "ingredients";
 	public static final String COLLECTION_UTILISATEUR_NOTES = "UtilisateurNotes";
 
 	public static String getAuteur() {
@@ -149,9 +148,10 @@ public class MongoFactory {
 		for(BasicDBObject obj : col.find(document)){
 			list.add(obj);
 		}
+		DBStatic.closeMongoDBConnection();
 		return list;
 	}
-
+	
 	public static boolean noterRecette(Utilisateurs u, String key, String idRecette, int note) throws RecetteException, MongoClientException, UnknownHostException{
 		/* Notation de la recette */
 		boolean res;

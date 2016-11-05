@@ -135,5 +135,17 @@ public class RecetteFonctions {
 			throw new RecetteException("Vous avez deja note cette recette");
 
 	}
+	
+	public static ArrayList<String> getListeIngredients() throws MongoClientException, UnknownHostException {
+		BasicDBObject document = new BasicDBObject();
+		MongoDatabase database = DBStatic.getMongoConnection();
+		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_INGREDIENTS, BasicDBObject.class);
+		ArrayList<String> list = new ArrayList<>();
+		for (BasicDBObject obj : col.find(document)) {
+			list.add(obj.getString(MongoFactory.NOM_INGREDIENT));
+		}
+		DBStatic.closeMongoDBConnection();
+		return list;
+	}
 
 }

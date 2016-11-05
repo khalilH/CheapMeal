@@ -11,7 +11,7 @@
 		<servlet-name>Inscription</servlet-name>
 		<url-pattern>/inscription</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>Connexion</servlet-name>
 		<servlet-class>services.servlets.Connexion</servlet-class>
@@ -20,8 +20,8 @@
 		<servlet-name>Connexion</servlet-name>
 		<url-pattern>/connexion</url-pattern>
 	</servlet-mapping>
-	
-		<servlet>
+
+	<servlet>
 		<servlet-name>InsererIngredients</servlet-name>
 		<servlet-class>services.servlets.InsererIngredients</servlet-class>
 	</servlet>
@@ -29,7 +29,7 @@
 		<servlet-name>InsererIngredients</servlet-name>
 		<url-pattern>/putIngredients</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>Test</servlet-name>
 		<servlet-class>test.TestMongoDB</servlet-class>
@@ -38,8 +38,8 @@
 		<servlet-name>Test</servlet-name>
 		<url-pattern>/insert</url-pattern>
 	</servlet-mapping>
-	
-		<servlet>
+
+	<servlet>
 		<servlet-name>TestES</servlet-name>
 		<servlet-class>services.servlets.TestES</servlet-class>
 	</servlet>
@@ -47,8 +47,17 @@
 		<servlet-name>TestES</servlet-name>
 		<url-pattern>/testES</url-pattern>
 	</servlet-mapping>
-	
-	
+
+	<servlet>
+		<servlet-name>GetIngredients</servlet-name>
+		<servlet-class>services.servlets.GetIngredients</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetIngredients</servlet-name>
+		<url-pattern>/autocomplete/ingredients</url-pattern>
+	</servlet-mapping>
+
+
 	<servlet>
 		<servlet-name>Deconnexion</servlet-name>
 		<servlet-class>services.servlets.Deconnexion</servlet-class>
@@ -57,7 +66,7 @@
 		<servlet-name>Deconnexion</servlet-name>
 		<url-pattern>/deconnexion</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>ChangerMdp</servlet-name>
 		<servlet-class>services.servlets.ChangerMdp</servlet-class>
@@ -93,7 +102,7 @@
 		<servlet-name>RecupMdp</servlet-name>
 		<url-pattern>/recupmdp</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>PublierRecette</servlet-name>
 		<servlet-class>services.servlets.AjouterRecette</servlet-class>
@@ -102,8 +111,8 @@
 		<servlet-name>PublierRecette</servlet-name>
 		<url-pattern>/publierRecette</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>NoterRecette</servlet-name>
 		<servlet-class>services.servlets.NoterRecette</servlet-class>
@@ -112,8 +121,8 @@
 		<servlet-name>NoterRecette</servlet-name>
 		<url-pattern>/noterRecette</url-pattern>
 	</servlet-mapping>
-		<servlet>
-		
+	<servlet>
+
 		<servlet-name>deleteRecette</servlet-name>
 		<servlet-class>services.servlets.SupprimerRecette</servlet-class>
 	</servlet>
@@ -121,7 +130,7 @@
 		<servlet-name>deleteRecette</servlet-name>
 		<url-pattern>/supprimerRecette</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>AfficherBio</servlet-name>
 		<servlet-class>services.servlets.AfficherBio</servlet-class>
@@ -130,10 +139,10 @@
 		<servlet-name>AfficherBio</servlet-name>
 		<url-pattern>/afficherBio</url-pattern>
 	</servlet-mapping>
-	
- <welcome-file-list>  
-   <welcome-file>connexion.html</welcome-file>  
-  </welcome-file-list>  
+
+	<welcome-file-list>
+		<welcome-file>connexion.html</welcome-file>
+	</welcome-file-list>
 
 
 	<resource-ref>

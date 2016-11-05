@@ -48,7 +48,22 @@ public class RecetteService {
 		} catch (SessionExpireeException see) {
 			return ServiceTools.serviceRefused(see.getMessage(), -1);
 		}	}
-	
+
+	public static JSONObject getListeIngredients() throws JSONException {
+		try {
+			JSONObject res = new JSONObject();
+			List<String> ingredients;
+			ingredients = RecetteFonctions.getListeIngredients();
+			res.put("query", "Unit");
+			res.put("suggestions", ingredients);
+			return res;
+		} catch (MongoClientException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		} catch (UnknownHostException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		}
+	}
+
 	public static JSONObject noterRecette(String key, String idRecette, int note) throws JSONException{
 		try {
 			RecetteFonctions.noterRecette(key, idRecette, note);
