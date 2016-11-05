@@ -269,7 +269,7 @@ public class RequeteStatic {
 		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
 		s.beginTransaction();
 		s.createQuery("update Utilisateurs u set u.mdp = :mdp where u.id = :id")
-					.setParameter("mdp", mdp)
+					.setParameter("mdp", BCrypt.hashpw(mdp, BCrypt.gensalt()))
 					.setParameter("id", id)
 					.executeUpdate();
 		s.getTransaction().commit();

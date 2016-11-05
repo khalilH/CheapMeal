@@ -103,15 +103,24 @@ $(function() {
 			changeErrorMessage(rep.message);
 		}
 		else {
-			func_valid("Compte créé avec succès !")
+			changeSuccessMessage(rep.message);
 			/* redirection vers la page de connexion */
 			window.location.href = "connexion.html"; 
 		}
 	}
 	
 	function changeErrorMessage(msg){
-		var ErrorBox= $("#ErrorMessage");
+		var ErrorBox= $("#AlertMessage");
 		ErrorBox.html("<div class='alert alert-danger' id='ErrorMessage'>" +
+				"<a class='close' data-dismiss='alert' aria-label='close'>×</a>" +
+				msg + 
+		"</div>");
+	}
+	
+	function changeSuccessMessage(msg){
+		var ErrorBox= $("#AlertMessage");
+		console.log(msg+" toz");
+		ErrorBox.html("<div class='alert alert-success' id='SuccessMessage'>" +
 				"<a class='close' data-dismiss='alert' aria-label='close'>×</a>" +
 				msg + 
 		"</div>");
