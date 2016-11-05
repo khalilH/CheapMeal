@@ -1,4 +1,6 @@
 package services.fonctions;
+import java.util.Random;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.naming.NamingException;
@@ -18,21 +20,32 @@ public class RecupMdpFonctions {
 		
 		if(!RequeteStatic.isEmailDisponible(email)){
 			String login = RequeteStatic.obtenirLoginAvecMail(email);
-			String mdp = RequeteStatic.obtenirMdpAvecLogin(login);
+			String mdp = genererRandomMDP();
+			RequeteStatic.changerMdpAvecId(RequeteStatic.obtenirIdAvecLogin(login), mdp);
 			String body ="Hi,\n"
-					+ "Vous avez initialiser une procedure de recuperation de mot de passe.\n"
+					+ "Vous avez initialiser une procedure de reinitialisation de mot de passe.\n"
 					+ "Voici vos identifiants : \n"
 					+ "Login : "+login+"\n"
-					+ "Mot de passe : "+mdp+"\n\n"
+					+ "Mot de passe provisoire: "+mdp+"\n\n"
+					+ "Une fois connecte, n'oubliez pas de changer votre mot de passe."
 					+ "Aurevoir et a bientot sur CheapMeal :)";
-			String subject = "Recuperation de mot de passe";
+			String subject = "Reinitialisation de mot de passe";
 			ServiceTools.sendEmail(body, subject, email);
 		}else{
-			throw new InformationUtilisateurException("Ce mail n'existe pas");
+			throw new InformationUtilisateurException("Cette adresse email n'existe pas dans notre base de donnees.");
 		}
 		
 		
-		return "Mot de passe recupere";
+		return "Un email a ete envoye a l'adresse indiquee";
+	}
+	
+	public static String genererRandomMDP(){
+		String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		Random rand = new Random();
+		String res = "";
+		for(int i=0; i<10; i++)
+			res += alphabet.charAt(rand.nextInt(alphabet.length()));
+		return res;
 	}
 
 }

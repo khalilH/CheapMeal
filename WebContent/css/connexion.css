@@ -41,6 +41,10 @@ div.tooltip-inner>p {
 	margin-bottom: 8px;
 }
 
+.tooltip.bottom .tooltip-arrow {
+	border-bottom-color: #ff4444;
+}
+
 .tooltip.right .tooltip-arrow {
 	border-right-color: #ff4444;
 }
@@ -48,3 +52,9 @@ div.tooltip-inner>p {
 .modal{
 	vertical-align : middle;
 }
+
+.alert{
+   background-image: none !important;
+   margin-top: 10px;    
+}
+
