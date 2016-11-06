@@ -36,6 +36,8 @@ public class MongoFactory {
 	public static final String MESURE = "mesure";
 	public static final String EAN = "ean";
 	public static final String DATE = "date";
+	public static final String PRIX_AU_KG = "prix";
+	
 	
 	public static final String COLLECTION_RECETTE = "Recettes";
 	public static final String COLLECTION_INGREDIENTS= "ingredients";
@@ -123,6 +125,15 @@ public class MongoFactory {
 		document.append(QUANTITE, quantite);
 		document.append(MESURE, mesure);
 		return document;
+	}
+	
+	
+	public static BasicDBObject creerDocumentListeIngredient(String nom, String ean) {
+		return new BasicDBObject().append(NOM_INGREDIENT, nom).append(EAN, ean);
+	}
+	
+	public static BasicDBObject creerDocumentFruit(String nom, double prix) {
+		return new BasicDBObject().append(NOM_INGREDIENT, nom).append(PRIX_AU_KG, prix);
 	}
 
 	//	public static BasicDBObject updateDejaNote(String id, String idRecette, List<String> recettesDejaNotees){

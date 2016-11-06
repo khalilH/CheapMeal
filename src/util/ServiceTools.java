@@ -34,6 +34,11 @@ public class ServiceTools {
 	public static JSONObject serviceAccepted(String message) throws JSONException{
 		return new JSONObject().put("success", message);
 	}
+	
+	public static JSONObject serviceAccepted(JSONObject json) throws JSONException{
+		return new JSONObject().put("success", json);
+	}
+	
 	public static boolean isEmailValide(String email){
 		Pattern pattern = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9]+.[a-zA-Z]{2,3}$");
 		Matcher m = pattern.matcher(email);

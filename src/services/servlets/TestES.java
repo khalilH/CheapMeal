@@ -41,8 +41,8 @@ public class TestES extends HttpServlet {
 		try {
 			Settings settings = Settings.builder()
 			        .put("client.transport.sniff", true).build();
-			TransportClient client = new PreBuiltTransportClient(settings)
-					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"),9300));
+			TransportClient client = new PreBuiltTransportClient(settings);
+			client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"),9300));
 //			QueryBuilder qb = queryStringQuery("Chafik");
 
 			SearchResponse res = client.prepareSearch()

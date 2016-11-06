@@ -22,11 +22,11 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>InsererIngredients</servlet-name>
-		<servlet-class>services.servlets.InsererIngredients</servlet-class>
+		<servlet-name>PutIngredients</servlet-name>
+		<servlet-class>services.servlets.PutIngredients</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>InsererIngredients</servlet-name>
+		<servlet-name>PutIngredients</servlet-name>
 		<url-pattern>/putIngredients</url-pattern>
 	</servlet-mapping>
 
