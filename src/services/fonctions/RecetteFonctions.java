@@ -3,6 +3,7 @@ package services.fonctions;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
 
@@ -136,13 +137,18 @@ public class RecetteFonctions {
 
 	}
 	
-	public static ArrayList<String> getListeIngredients() throws MongoClientException, UnknownHostException {
+	public static ArrayList<BasicDBObject> getListeIngredients(String query) throws MongoClientException, UnknownHostException {
 		BasicDBObject document = new BasicDBObject();
+		document.put(MongoFactory.NOM_INGREDIENT, Pattern.compile(query));
 		MongoDatabase database = DBStatic.getMongoConnection();
 		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_INGREDIENTS, BasicDBObject.class);
-		ArrayList<String> list = new ArrayList<>();
+		ArrayList<BasicDBObject> list = new ArrayList<>();
 		for (BasicDBObject obj : col.find(document)) {
-			list.add(obj.getString(MongoFactory.NOM_INGREDIENT));
+			BasicDBObject entry = new BasicDBObject();
+			entry.put("data", obj.getString(MongoFactory.EAN));
+			entry.put("value", obj.getString(MongoFactory.NOM_INGREDIENT));
+			
+			list.add(entry);
 		}
 		DBStatic.closeMongoDBConnection();
 		return list;

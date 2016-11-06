@@ -3,9 +3,11 @@ package services;
 import java.net.UnknownHostException;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClientException;
 
 import exceptions.InformationUtilisateurException;
@@ -49,13 +51,16 @@ public class RecetteService {
 			return ServiceTools.serviceRefused(see.getMessage(), -1);
 		}	}
 
-	public static JSONObject getListeIngredients() throws JSONException {
+	public static JSONObject getListeIngredients(String query) throws JSONException {
 		try {
 			JSONObject res = new JSONObject();
-			List<String> ingredients;
-			ingredients = RecetteFonctions.getListeIngredients();
-			res.put("query", "Unit");
-			res.put("suggestions", ingredients);
+		
+			
+			List<BasicDBObject> ingredients;
+			ingredients = RecetteFonctions.getListeIngredients(query);
+			JSONArray suggestions = new JSONArray(ingredients);
+//			res.put("query", "Unit");
+			res.put("suggestions", suggestions);
 			return res;
 		} catch (MongoClientException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), -1);

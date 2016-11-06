@@ -27,8 +27,9 @@ public class GetIngredients extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
 		PrintWriter pw = response.getWriter();
+		String query = request.getParameter("query");
 		try {
-			JSONObject data = RecetteService.getListeIngredients();
+			JSONObject data = RecetteService.getListeIngredients(query);
 			pw.println(data);
 		} catch (JSONException e) {
 			e.printStackTrace();
