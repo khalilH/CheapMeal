@@ -38,3 +38,4 @@ public class ExternalAPI {
 		return prices;
 	}
 }
+

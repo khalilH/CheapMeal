@@ -2,9 +2,8 @@ package util.bdTools;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Basic;
 
 import org.bson.types.ObjectId;
 import org.json.JSONException;
@@ -35,8 +34,11 @@ public class MongoFactory {
 	public static final String NOM_INGREDIENT = "nomIngredient";
 	public static final String QUANTITE = "quantite";
 	public static final String MESURE = "mesure";
+	public static final String EAN = "ean";
+	public static final String DATE = "date";
 	
 	public static final String COLLECTION_RECETTE = "Recettes";
+	public static final String COLLECTION_INGREDIENTS= "ingredients";
 	public static final String COLLECTION_UTILISATEUR_NOTES = "UtilisateurNotes";
 
 	public static String getAuteur() {
@@ -88,6 +90,7 @@ public class MongoFactory {
 	}
 
 	public static BasicDBObject creerDocumentRecette(String titre, int idAuteur, String loginAuteur, List<String> listIng, List<Double> listQuant, List<String> listMesure, List<String> prepa) throws MongoClientException, UnknownHostException{
+		Date d = new Date();
 		BasicDBObject document = new BasicDBObject(TITRE, titre);
 		BasicDBObject auteur = creerDocumentAuteur(idAuteur, loginAuteur);
 		document.append(AUTEUR, auteur);
@@ -98,6 +101,7 @@ public class MongoFactory {
 		document.append(PREPARATION, prepa);
 		BasicDBObject note = creerDocumentNote(0, 0);
 		document.append(NOTE, note);
+		document.append(DATE, d.getTime());
 
 		return document;
 	}
@@ -147,9 +151,10 @@ public class MongoFactory {
 		for(BasicDBObject obj : col.find(document)){
 			list.add(obj);
 		}
+		DBStatic.closeMongoDBConnection();
 		return list;
 	}
-
+	
 	public static boolean noterRecette(Utilisateurs u, String key, String idRecette, int note) throws RecetteException, MongoClientException, UnknownHostException{
 		/* Notation de la recette */
 		boolean res;

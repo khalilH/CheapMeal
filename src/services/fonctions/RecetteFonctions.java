@@ -3,6 +3,7 @@ package services.fonctions;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
 
@@ -134,6 +135,31 @@ public class RecetteFonctions {
 		else
 			throw new RecetteException("Vous avez deja note cette recette");
 
+	}
+	
+	/**
+	 * Permet de recuperer les ingredients matchant la query
+	 * @param query de l'autocomplete
+	 * @return une liste de {"value":"ingredients", "data":"EAN"}
+	 * @throws MongoClientException
+	 * @throws UnknownHostException
+	 */
+	public static ArrayList<BasicDBObject> getListeIngredients(String query) throws MongoClientException, UnknownHostException, NullPointerException {
+		if (query == null || query.equals(""))
+			throw new NullPointerException("le champ query ne doit pas etre vide");
+		BasicDBObject document = new BasicDBObject();
+		document.put(MongoFactory.NOM_INGREDIENT, Pattern.compile(query));
+		MongoDatabase database = DBStatic.getMongoConnection();
+		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_INGREDIENTS, BasicDBObject.class);
+		ArrayList<BasicDBObject> list = new ArrayList<>();
+		for (BasicDBObject obj : col.find(document)) {
+			BasicDBObject suggestion = new BasicDBObject();
+			suggestion.put("data", obj.getString(MongoFactory.EAN));
+			suggestion.put("value", obj.getString(MongoFactory.NOM_INGREDIENT));
+			list.add(suggestion);
+		}
+		DBStatic.closeMongoDBConnection();
+		return list;
 	}
 
 }

@@ -3,9 +3,11 @@ package services;
 import java.net.UnknownHostException;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClientException;
 
 import exceptions.InformationUtilisateurException;
@@ -48,7 +50,25 @@ public class RecetteService {
 		} catch (SessionExpireeException see) {
 			return ServiceTools.serviceRefused(see.getMessage(), -1);
 		}	}
-	
+
+	public static JSONObject getListeIngredients(String query) throws JSONException {
+		try {
+			JSONObject res = new JSONObject();
+			List<BasicDBObject> ingredients = RecetteFonctions.getListeIngredients(query);
+			JSONArray suggestions = new JSONArray(ingredients);
+			res.put("suggestions", suggestions);
+			return res;
+		} catch (MongoClientException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		} catch (UnknownHostException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		} catch (NullPointerException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		}
+		
+		
+	}
+
 	public static JSONObject noterRecette(String key, String idRecette, int note) throws JSONException{
 		try {
 			RecetteFonctions.noterRecette(key, idRecette, note);
