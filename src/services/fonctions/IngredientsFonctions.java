@@ -38,7 +38,7 @@ public class IngredientsFonctions {
 				.getCollection(MongoFactory.COLLECTION_INGREDIENTS, BasicDBObject.class);
 		
 		BasicDBObject o = new BasicDBObject();
-		o.put(MongoFactory.NOM_INGREDIENT, Pattern.compile(query));
+		o.put(MongoFactory.NOM_INGREDIENT, Pattern.compile(query,Pattern.CASE_INSENSITIVE));
 		
 		ArrayList<BasicDBObject> list = new ArrayList<>();
 		for (BasicDBObject ingredient : col.find(o)) {
