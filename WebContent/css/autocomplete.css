@@ -1,3 +1,4 @@
+/* .skyblue h1 p seulement pour la page de test autocomplete.html */
 .skyblue {
   background-color: skyblue;
   height: 200px;
@@ -12,6 +13,7 @@ p {
   color: white;
 }
 
+/* Il n'y a que cette partie qui est a mettre en fait */
 .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
 .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
 .autocomplete-selected { background: #F0F0F0; }

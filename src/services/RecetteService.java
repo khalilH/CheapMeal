@@ -54,12 +54,8 @@ public class RecetteService {
 	public static JSONObject getListeIngredients(String query) throws JSONException {
 		try {
 			JSONObject res = new JSONObject();
-		
-			
-			List<BasicDBObject> ingredients;
-			ingredients = RecetteFonctions.getListeIngredients(query);
+			List<BasicDBObject> ingredients = RecetteFonctions.getListeIngredients(query);
 			JSONArray suggestions = new JSONArray(ingredients);
-//			res.put("query", "Unit");
 			res.put("suggestions", suggestions);
 			return res;
 		} catch (MongoClientException e) {

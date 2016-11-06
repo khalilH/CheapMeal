@@ -4,37 +4,45 @@
   <meta charset="ISO-8859-1">
   <title>AutoComplete Test</title>
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/autocomplete.css">
   <script src="js/jquery-3.1.1.min.js"></script>
-  <script src="js/jquery.autocomplete.js"></script>
-  <script src="js/autocomplete.js"></script>
+
+  <!--
+  fichiers a mettre dans chaque page ayant besoin de l'autocompletion pour recuperer
+  la liste des ingredients
+-->
+<script src="js/jquery.autocomplete.js"></script>
+<script src="js/autocomplete.js"></script>
+<link rel="stylesheet" href="css/autocomplete.css">
+
 </head>
 <body>
-  <div class="container-fluid">
-    <div class="container skyblue">
+  <!-- utiliser class="autocomplete" pour chaque input -->
 
-      <div class="row">
+<div class="container-fluid">
+  <div class="container skyblue">
 
-        <article class="col-md-3">
-          <h1>Ingredients</h1>
-          <input type="text" name="abalba" class="autocomplete">
-        </article>
-        <article class="col-md-3">
-          <h1>Ingredients</h1>
-          <input type="text" name="abalba" class="autocomplete">
-        </article>
-        <article class="col-md-3">
-          <h1>Ingredients</h1>
-          <input type="text" name="abalba" class="autocomplete">
-        </article>
-        <article class="col-md-3" id="choix">
-          <h1>Ingredients choisis</h1>
-        </article>
-      </div>
+    <div class="row">
 
-
+      <article class="col-md-3">
+        <h1>Ingredients</h1>
+        <input type="text" name="abalba" class="autocomplete">
+      </article>
+      <article class="col-md-3">
+        <h1>Ingredients</h1>
+        <input type="text" name="abalba" class="autocomplete">
+      </article>
+      <article class="col-md-3">
+        <h1>Ingredients</h1>
+        <input type="text" name="abalba" class="autocomplete">
+      </article>
+      <article class="col-md-3" id="choix">
+        <h1>Ingredients choisis</h1>
+      </article>
     </div>
+
+
   </div>
+</div>
 
 </body>
 </html>

@@ -137,6 +137,13 @@ public class RecetteFonctions {
 
 	}
 	
+	/**
+	 * Permet de recuperer les ingredients matchant la query
+	 * @param query de l'autocomplete
+	 * @return une liste de {"value":"ingredients", "data":"EAN"}
+	 * @throws MongoClientException
+	 * @throws UnknownHostException
+	 */
 	public static ArrayList<BasicDBObject> getListeIngredients(String query) throws MongoClientException, UnknownHostException {
 		BasicDBObject document = new BasicDBObject();
 		document.put(MongoFactory.NOM_INGREDIENT, Pattern.compile(query));
@@ -144,11 +151,10 @@ public class RecetteFonctions {
 		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_INGREDIENTS, BasicDBObject.class);
 		ArrayList<BasicDBObject> list = new ArrayList<>();
 		for (BasicDBObject obj : col.find(document)) {
-			BasicDBObject entry = new BasicDBObject();
-			entry.put("data", obj.getString(MongoFactory.EAN));
-			entry.put("value", obj.getString(MongoFactory.NOM_INGREDIENT));
-			
-			list.add(entry);
+			BasicDBObject suggestion = new BasicDBObject();
+			suggestion.put("data", obj.getString(MongoFactory.EAN));
+			suggestion.put("value", obj.getString(MongoFactory.NOM_INGREDIENT));
+			list.add(suggestion);
 		}
 		DBStatic.closeMongoDBConnection();
 		return list;
