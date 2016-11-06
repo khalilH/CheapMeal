@@ -62,7 +62,11 @@ public class RecetteService {
 			return ServiceTools.serviceRefused(e.getMessage(), -1);
 		} catch (UnknownHostException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		} catch (NullPointerException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), -1);
 		}
+		
+		
 	}
 
 	public static JSONObject noterRecette(String key, String idRecette, int note) throws JSONException{

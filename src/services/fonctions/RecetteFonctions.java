@@ -144,7 +144,9 @@ public class RecetteFonctions {
 	 * @throws MongoClientException
 	 * @throws UnknownHostException
 	 */
-	public static ArrayList<BasicDBObject> getListeIngredients(String query) throws MongoClientException, UnknownHostException {
+	public static ArrayList<BasicDBObject> getListeIngredients(String query) throws MongoClientException, UnknownHostException, NullPointerException {
+		if (query == null || query.equals(""))
+			throw new NullPointerException("le champ query ne doit pas etre vide");
 		BasicDBObject document = new BasicDBObject();
 		document.put(MongoFactory.NOM_INGREDIENT, Pattern.compile(query));
 		MongoDatabase database = DBStatic.getMongoConnection();
