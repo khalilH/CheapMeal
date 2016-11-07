@@ -12,19 +12,20 @@
 <script src="js/jquery-3.1.1.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="js/accueil.js"></script>
+<script src="js/cookie.js"></script>
 
 
 </head>
 <body class="accueil_body">
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-		
-					<div class="navbar-center navbar-brand">
+
+			<div class="navbar-center navbar-brand">
 				<a id="brandLogo" class="navbar-brand"> </a>
 			</div>
-			
+
 			<div class="navbar-header">
-				<button  type="button" class="navbar-toggle" data-toggle="collapse"
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target=".navbar-collapse">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
@@ -33,7 +34,7 @@
 
 
 			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav">
+				<ul id="leftNavbar" class="nav navbar-nav">
 					<li class="active"><a href="accueil.html" class="menu-button"><span
 							class="glyphicon glyphicon-home"></span> Accueil</a></li>
 					<li><a href="profile.html" class="menu-button"><span
@@ -42,13 +43,11 @@
 							class="glyphicon glyphicon-cog"></span> Compte</a></li>
 				</ul>
 
-				<div  class="nav navbar-nav navbar-right">
-					<ul class="list-unstyled">
-						<li>
-							<button id="deconnexion"  type="button" class="btn btn-primary navbar-btn">
-								<span  class="glyphicon glyphicon-log-out"></span> Déconnexion
-							</button>
-					</ul>
+				<div id="rightNavbar" class="nav navbar-nav navbar-right">
+					<button id="deconnexion" type="button"
+						class="btn btn-primary navbar-btn">
+						<span class="glyphicon glyphicon-log-out"></span> Déconnexion
+					</button>
 				</div>
 			</div>
 		</div>
@@ -136,7 +135,7 @@
 						</div>
 					</div>
 					<div class="col-md-6 col-lg-4 ">
-						<div  id="112213123" class="recette-container recette">
+						<div id="112213123" class="recette-container recette">
 							<div class="recette-header"></div>
 							<div class="recette-img"></div>
 							<div class="recette-footer">
@@ -166,68 +165,69 @@
 				</div>
 
 				<div class="row" id="BestRecipe">
-				<div class="recette-container recette">
-					<div class="col-md-4 recette">
-						<div class="recette-header"></div>
-						<div class="recette-img"></div>
-						<div class="recette-footer">
+					<div class="recette-container recette">
+						<div class="col-md-4 recette">
+							<div class="recette-header"></div>
+							<div class="recette-img"></div>
+							<div class="recette-footer">
+								<hr>
+								<h3 class="titre-recette">Poulet braisé</h3>
+								<!-- <div class="auteur-recette">Par: pat</div> -->
+							</div>
+						</div>
+						<div class="col-md-4 recette">
+							<div class="recette-header"></div>
+							<div class="recette-img"></div>
+							<div class="recette-footer">
+								<hr>
+								<h3 class="titre-recette">Pâtes au saumon</h3>
+								<!-- <div class="auteur-recette">Par: pat</div> -->
+							</div>
+						</div>
+						<div class="col-md-4 recette">
+							<div class="recette-header"></div>
+							<div class="recette-img"></div>
+							<div class="recette-footer">
+								<hr>
+								<h3 class="titre-recette">Kebab du Délice Jussieu</h3>
+								<!-- <div class="auteur-recette">Par: pat</div> -->
+							</div>
+						</div>
+						<div class="remplissage">
 							<hr>
-							<h3 class="titre-recette">Poulet braisé</h3>
-							<!-- <div class="auteur-recette">Par: pat</div> -->
+							<hr>
+						</div>
+						<div class="col-md-4 recette">
+							<div class="recette-header"></div>
+							<div class="recette-img"></div>
+							<div class="recette-footer">
+								<hr>
+								<h3 class="titre-recette">Pizza du CROUS</h3>
+								<!-- <div class="auteur-recette">Par: pat</div> -->
+							</div>
+						</div>
+						<div class="col-md-4 recette">
+							<div class="recette-header"></div>
+							<div class="recette-img"></div>
+							<div class="recette-footer">
+								<hr>
+								<h3 class="titre-recette">Morue à la portugaise</h3>
+								<!-- <div class="auteur-recette">Par: pat</div> -->
+							</div>
+						</div>
+						<div class="col-md-4 recette">
+							<div class="recette-header"></div>
+							<div class="recette-img"></div>
+							<div class="recette-footer">
+								<hr>
+								<h3 class="titre-recette">Piment antillais</h3>
+								<!-- <div class="auteur-recette">Par: pat</div> -->
+							</div>
 						</div>
 					</div>
-					<div class="col-md-4 recette">
-						<div class="recette-header"></div>
-						<div class="recette-img"></div>
-						<div class="recette-footer">
-							<hr>
-							<h3 class="titre-recette">Pâtes au saumon</h3>
-							<!-- <div class="auteur-recette">Par: pat</div> -->
-						</div>
-					</div>
-					<div class="col-md-4 recette">
-						<div class="recette-header"></div>
-						<div class="recette-img"></div>
-						<div class="recette-footer">
-							<hr>
-							<h3 class="titre-recette">Kebab du Délice Jussieu</h3>
-							<!-- <div class="auteur-recette">Par: pat</div> -->
-						</div>
-					</div>
-					<div class="remplissage">
-						<hr>
-						<hr>
-					</div>
-					<div class="col-md-4 recette">
-						<div class="recette-header"></div>
-						<div class="recette-img"></div>
-						<div class="recette-footer">
-							<hr>
-							<h3 class="titre-recette">Pizza du CROUS</h3>
-							<!-- <div class="auteur-recette">Par: pat</div> -->
-						</div>
-					</div>
-					<div class="col-md-4 recette">
-						<div class="recette-header"></div>
-						<div class="recette-img"></div>
-						<div class="recette-footer">
-							<hr>
-							<h3 class="titre-recette">Morue à la portugaise</h3>
-							<!-- <div class="auteur-recette">Par: pat</div> -->
-						</div>
-					</div>
-					<div class="col-md-4 recette">
-						<div class="recette-header"></div>
-						<div class="recette-img"></div>
-						<div class="recette-footer">
-							<hr>
-							<h3 class="titre-recette">Piment antillais</h3>
-							<!-- <div class="auteur-recette">Par: pat</div> -->
-						</div>
-					</div>
+
+
 				</div>
-
-
 			</div>
 		</div>
 	</div>
