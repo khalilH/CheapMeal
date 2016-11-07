@@ -1,7 +1,8 @@
 $(function() {
 
-	$.validator.addMethod("pwdMatch", function(mot_de_passe, confirmation_mdp) {
-		return mot_de_passe.toString() === confirmation_mdp.value.toString();
+	$.validator.addMethod("pwdMatch", function(confirmation_mdp, dom, arg) {
+		console.log("confirmation="+confirmation_mdp + "  arg:" + arg.value.toString());
+		return confirmation_mdp === arg.value;
 	});
 
 	$.validator.addMethod("emailValide", function(email) {
@@ -15,7 +16,7 @@ $(function() {
 			nom:{required: true},
 			nom_utilisateur:{required: true},
 			mot_de_passe:{required: true, minlength:6},
-			confirmation_mdp:{required: true, pwdMatch: [mot_de_passe, confirmation_mdp]},
+			confirmation_mdp:{required: true, pwdMatch: mot_de_passe},
 			email:{required: true, emailValide: email}
 		},
 		messages: {

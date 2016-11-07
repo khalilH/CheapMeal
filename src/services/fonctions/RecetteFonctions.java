@@ -43,7 +43,8 @@ public class RecetteFonctions {
 		mesures.add("ml");
 		
 		if (titre.equals("") || listIng.stream().filter(i -> i.length() == 0).count() > 0 || listQuant.stream().filter(i -> i<=0).count() > 0 
-				|| listMesures.stream().filter(i -> !mesures.contains(i)).count() > 0 || prepa.stream().filter(p -> p.length() == 0).count() > 0)
+				|| listMesures.stream().filter(i -> !mesures.contains(i)).count() > 0 || prepa.stream().filter(p -> p.length() == 0).count() > 0
+				|| listIng.size() != listMesures.size() || listIng.size() != listQuant.size() || listMesures.size() != listQuant.size())
 			throw new RecetteException("Titre, ingredients, quantites ou etape de preparation invalide");
 
 		if (key.length() != 32)
@@ -51,7 +52,7 @@ public class RecetteFonctions {
 
 		if (!ServiceTools.isCleActive(key))
 			throw new SessionExpireeException("Votre session a expiree");
-
+		
 		/* Ajout de la recette */
 		Sessions s = RequeteStatic.obtenirSession(key);
 		Utilisateurs u = RequeteStatic.obtenirUtilisateur(s.getIdSession(), null);
