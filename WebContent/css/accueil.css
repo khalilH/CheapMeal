@@ -26,7 +26,12 @@
 	background: url(../images/cheapmeal_logo.png) 0 0;
 	padding-right:100px;
 }
-
+.btn {
+	position : relative;
+}
+.navbar {
+	margin-bottom : 0;
+}
 .navbar-right:hover span{
 	color: white;	
 }
