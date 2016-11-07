@@ -74,3 +74,70 @@
 	font-family: 'Gidole-Regular';
 	font-size: 15px;
 }
+
+.contenu-page{
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+.fiche-recette{
+	background-color: white;
+	border-radius: 10px;
+}
+
+.titre-recette{
+	font-size: 50px;
+	text-align:center;
+	margin-top: 15px;
+}
+
+.contenu-recette{
+	margin-top: 30px;
+}
+
+.contenu-left{
+}
+
+.photo-recette{
+	height: 375px;
+	width: 100%;
+	background-color: silver;
+}
+
+.nom-auteur-recette{
+	text-align:center;
+	margin: 0 auto;
+	margin-top: 40px;
+}
+
+.auteur-recette{
+	height: 150px;
+	width: 150px;
+	margin: 0 auto;
+	margin-top: 20px;
+	background-color: lime;
+}
+
+.noter-recette{
+	text-align:center;
+	margin-top: 20px;
+}
+
+.txt-size-35{
+	font-size:35px;
+}
+
+.txt-size-25{
+	font-size:25px;
+}
+
+.cadre{
+	position: relative;
+	border-radius: 5px;
+	border: 1px #BCDCF3 solid;
+}
+
+.padding-intracadre{
+	padding-left: 10px;
+	padding-right: 10px;
+}
