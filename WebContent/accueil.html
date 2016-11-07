@@ -12,6 +12,7 @@
 <script src="js/jquery-3.1.1.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="js/accueil.js"></script>
+<script src="js/cookie.js"></script>
 
 
 </head>
@@ -33,7 +34,7 @@
 
 
 			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav">
+				<ul id="leftNavbar" class="nav navbar-nav">
 					<li class="active"><a href="accueil.html" class="menu-button"><span
 							class="glyphicon glyphicon-home"></span> Accueil</a></li>
 					<li><a href="profile.html" class="menu-button"><span
@@ -42,7 +43,7 @@
 							class="glyphicon glyphicon-cog"></span> Compte</a></li>
 				</ul>
 
-				<div class="nav navbar-nav navbar-right">
+				<div id="rightNavbar" class="nav navbar-nav navbar-right">
 					<button id="deconnexion" type="button"
 						class="btn btn-primary navbar-btn">
 						<span class="glyphicon glyphicon-log-out"></span> Déconnexion

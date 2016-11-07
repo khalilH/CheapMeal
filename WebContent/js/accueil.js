@@ -1,6 +1,6 @@
 $(function (){
 	//TODO Onload de la page regarde le cookie et mettre mode connecte
-	console.log("Loading webpage");
+	isConnected();
 	$("#deconnexion").on('click',function(){
 		// TODO Delete cookie + verifier sil existe (erreur)
 		var key;
