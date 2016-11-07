@@ -13,8 +13,7 @@ public class SearchServices {
 	public static JSONObject search(String query) throws JSONException {
 
 		try {
-			JSONObject results = SearchFonctions.search(query);
-			return results;
+			return SearchFonctions.search(query);
 		} catch (UnknownHostException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), -1);
 		}

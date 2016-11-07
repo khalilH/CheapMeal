@@ -26,13 +26,26 @@ public class SearchFonctions {
 		TransportClient client = new PreBuiltTransportClient(settings);
 		client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"),9300));
 
-		SearchResponse res = client.prepareSearch()
-				.setIndices("cheapmeal")
-				.setTypes("Recettes")
-				.setSize(10)
-				.setQuery(QueryBuilders.queryStringQuery(query))
-				.execute()
-				.actionGet();
+		SearchResponse res;
+
+		if (query == null || query.equals("")) {
+			res = client.prepareSearch()
+					.setIndices("cheapmeal")
+					.setTypes("Recettes")
+					.setSize(50)
+					.setQuery(QueryBuilders.matchAllQuery())
+					.execute()
+					.actionGet();
+		}
+		else {
+			res = client.prepareSearch()
+					.setIndices("cheapmeal")
+					.setTypes("Recettes")
+					.setSize(50)
+					.setQuery(QueryBuilders.queryStringQuery(query))
+					.execute()
+					.actionGet();
+		}
 
 		SearchHits hits = res.getHits();
 		JSONObject results = new JSONObject()
@@ -41,9 +54,9 @@ public class SearchFonctions {
 		List<JSONObject> list = new ArrayList<>();
 		for (SearchHit searchHit : hits) {
 			JSONObject hit = new JSONObject()
-					.append("_id", searchHit.getId())
-					.append("score", searchHit.getScore())
-					.append("source", new JSONObject(searchHit.getSourceAsString()));
+					.put("_id", searchHit.getId())
+					.put("score", searchHit.getScore())
+					.put("source", new JSONObject(searchHit.getSourceAsString()));
 			list.add(hit);
 		}
 
