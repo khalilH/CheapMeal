@@ -5,22 +5,11 @@
 	font-style: normal;
 }
 
-@font-face {
-	font-family: 'End';
-	src: url('../fonts/End.ttf');
-	font-weight: normal;
-	font-style: normal;
-}
-
-
-
 .accueil_body{
 	/* background-color: #f1f3f2; */
 	background-color: #f1f3f2;
 	font-family: 'Gidole-Regular';
 }
-
-
 
 #brandLogo {
 	background: url(../images/cheapmeal_logo.png) 0 0;
@@ -28,6 +17,7 @@
 }
 .btn {
 	position : relative;
+	height: 40px;
 }
 .navbar {
 	margin-bottom : 0;
@@ -148,6 +138,7 @@
 
 .menu-button{
 	font-size: 18px;
+	margin-top:3px;
 }
 
 .menu-button:hover span{
