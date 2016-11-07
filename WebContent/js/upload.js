@@ -30,6 +30,7 @@ $(function() {
 	    processData: false,
 	    type: 'POST',
 	    success: function(data){
+	    	console.log(data.length);
 	        $('#previewImage').attr('src',"data:image/png;base64,"+data);
 	    }
 		});

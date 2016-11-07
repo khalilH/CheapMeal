@@ -45,13 +45,13 @@ public class UploadImage extends HttpServlet {
 			// obtains input stream of the upload file
 			inputStream = filePart.getInputStream();
 			BufferedImage image = ImageIO.read(inputStream);
-			File f = new File("/home/ladi/images/test.png");
+			File f = new File("/var/lib/tomcat8/webapps/images/toz.png");
 			ImageIO.write(image, "png", f);
 		}
 		PrintWriter writer = response.getWriter();
 		response.setContentType("plain/text");
 
-		File f = new File("/home/ladi/images/test.png");
+		File f = new File("/var/lib/tomcat8/webapps/images/toz.png");
 		String encodstring = encodeFileToBase64Binary(f);
 
 		writer.println(encodstring);
