@@ -12,9 +12,6 @@ import util.ServiceTools;
 
 public class DeconnexionServices {
 
-	//TODO down
-	/* Harmoniser serviceRefused avec les bons codes d'erreur/succes */
-	/* Mettre les differentes exception a catch, attention a l'ordre */
 	
 	public static JSONObject deconnexion(String key) throws JSONException {
 		try {

@@ -149,6 +149,16 @@
 		<url-pattern>/afficherBio</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>IsConnecte</servlet-name>
+		<servlet-class>services.servlets.IsConnecte</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>IsConnecte</servlet-name>
+		<url-pattern>/isConnecte</url-pattern>
+	</servlet-mapping>
+
+
 	<welcome-file-list>
 		<welcome-file>connexion.html</welcome-file>
 	</welcome-file-list>

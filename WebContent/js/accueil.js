@@ -1,6 +1,11 @@
 $(function (){
 	//TODO Onload de la page regarde le cookie et mettre mode connecte
-	isConnected();
+	if(isConnected()){
+		loadNavbarConnected();
+	}
+	else{
+		loadNavbarDisconnected();
+	}
 	$("#deconnexion").on('click',function(){
 		// TODO Delete cookie + verifier sil existe (erreur)
 		var key;

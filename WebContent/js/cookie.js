@@ -1,11 +1,19 @@
 var C_NAME_KEY = "Cheap_Meal_key";
 
-/** ********************** Cookie mnam mnam mnam ********************** */
+/**
+ * Créer un cookie
+ * @param cname le nom du cookie
+ * @param cvalue la valeur du cookie
+ */
 function setCookie(cname, cvalue) {
 
 	document.cookie = cname + "=" + cvalue;
 }
-
+/**
+ * Récupère la valeur d'un cookie
+ * @param cname le nom du cookie dont on souhaite la valeur
+ * 
+ */
 function getCookie(cname) {
 	var name = cname + "=";
 	var ca = document.cookie.split(';');
@@ -31,9 +39,16 @@ function getCookie(cname) {
 	return null;
 }
 
+/**
+ * Permet de détruire un cookie en mettant sa valeur à -1
+ */
 function destroy_cookie() {
-	setCookie(C_NAME, "-1", "-1");
+	setCookie(C_NAME, "-1");
 }
+/**
+ * Permet de charger une navbar en mode déconnecte 
+ * 
+ */
 function loadNavbarDisconnected() {
 	console.log("No cookie found, user is disconnected");
 	var leftNavbarHtml = "<li class='active'><a href='accueil.html' class='menu-button'>"
@@ -48,6 +63,11 @@ function loadNavbarDisconnected() {
 			+ "<span class='glyphicon glyphicon-thumbs-up'></span> S'enregistrer</button></div></div>"
 	$("#rightNavbar").html(rightNavbarHtml);
 }
+
+/**
+ * Permet de charger une navbar en mode connecte 
+ * 
+ */
 function loadNavbarConnected() {
 	console.log("Cookie found, user is connected");
 	var leftNavbarHtml = "<li class='active'><a href='accueil.html' class='menu-button'>"
@@ -62,39 +82,41 @@ function loadNavbarConnected() {
 			+ "<span class='glyphicon glyphicon-log-out'></span> Déconnexion</button>";
 	$("#rightNavbar").html(rightNavbarHtml);
 }
-function isConnected() {
-	cookie = getCookie(C_NAME_KEY);
-	if (cookie == null) {
-		loadNavbarDisconnected();
-	} else {
-		loadNavbarConnected();
-	}		
 
+/**
+ * Requete ajax permettant de vérifier si un utilisateur est connecté
+ * @param value la valeur de la clé à vérifier
+ * @returns vrai si la clé est valide, faux sinon
+ */
+function ajaxKeyValideOrNot(value){
+	$.ajax({
+		 url : "isConnecte",
+		 type : "GET",
+		 data : "cle=" + value,
+		 dataType : "json",
+		 contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		 success : function(rep) {
+			 console.log("User is truly connected "+rep);
+			 if(rep.Erreur == undefined)
+				 return true;
+			 else
+				 return false;
+		 },
+		 error : function(jqXHR, textStatus, errorThrown) {
+			 console.log("Crashed while doing ajax request for isConnected");
+		 }
+		 });
 }
-// function isConnected(callBack) {
-//
-// genId = getCookie(C_NAME);
-// if(genId == null) {
-// console.log("No previous session id.");
-// callBack({});
-// return;
-// }
-//
-// $.ajax({
-// url : "http://vps197081.ovh.net:8080/Issa/isconnected?",
-// type : "get",
-// crossDomain: false,
-// data : "format=json" + "&session_id=" + genId,
-// dataType : "json",
-// success : function(rep) {
-// callBack(rep);
-// },
-// error : function(jqXHR, textStatus, errorThrown) {
-// // We do nothing if there isn't an active session
-// console.log("Error(" + textStatus + ") : " + jqXHR.responseText);
-// console.log("Maybe user is not connected.");
-// callBack({});
-// }
-// });
-// }
+/**
+ * Permet de vérifier si l'utilisateur est connecté
+ * @returns vrai s'il est conencté
+ */
+function isConnected() {
+	cookie_key = getCookie(C_NAME_KEY);
+	if (cookie_key != null) {
+		return ajaxKeyValideOrNot(cookie_key);
+	}
+	
+	return false;
+}
 
