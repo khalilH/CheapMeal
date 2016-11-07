@@ -48,6 +48,7 @@ $(function() {
 				var json = JSON.parse(jsonrep);
 				if (rep.erreur == undefined) {
 					console.log("Connexion reussi ",rep);
+					window.location.href="accueil.html";
 				} else {
 					console.log("Connexion Fail ",rep.message);
 					changeErrorMessage("#ErrorLogin", json.message);
