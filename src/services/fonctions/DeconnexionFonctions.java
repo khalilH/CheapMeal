@@ -19,9 +19,6 @@ public class DeconnexionFonctions {
 		if(cle.length() != 32)
 			throw new KeyException("Cle invalide");
 		
-		if (!ServiceTools.isCleActive(cle))
-			throw new SessionExpireeException("Votre session a expiree");
-		
 		/* Fermeture session */
 		RequeteStatic.supprimerSessionAvecCle(cle);
 	}

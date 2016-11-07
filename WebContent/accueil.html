@@ -9,43 +9,48 @@
 <link rel="stylesheet" type="text/css"
 	href="bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/accueil.css">
-
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="js/accueil.js"></script>
 
 
 </head>
 <body class="accueil_body">
-
-	<!-- Fixe en haut la barre de navigation -->
-	<nav role="navigation" class="navbar navbar-default navbar-static-top">
+	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<!-- Fixe la banniere du haut-->
+		
+					<div class="navbar-center navbar-brand">
+				<a id="brandLogo" class="navbar-brand"> </a>
+			</div>
+			
 			<div class="navbar-header">
-				<!-- Logo du site -->
-				<div class="brand">
-					<a href="accueil.html"> <img alt="CheapMeal"
-						src="images/cheapmeal_logo.png">
-					</a>
-				</div>
+				<button  type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
 			</div>
 
-			<ul class="nav navbar-nav">
-				<li><a href="accueil.html" class="menu-button"><span
-						class="glyphicon glyphicon-home"></span> Accueil</a></li>
-				<li><a href="#" class="menu-button"><span
-						class="glyphicon glyphicon-user"></span> Profile</a></li>
-				<li><a href="#" class="menu-button"><span
-						class="glyphicon glyphicon-cog"></span> Compte</a></li>
-			</ul>
 
-			<ul class="nav navbar-nav navbar-right">
-				<li class="hidden-sm hidden-xs">
-					<button type="button" class="btn btn-primary navbar-btn">
-						<a href="" class="deconnexion-button"><span
-							class="glyphicon glyphicon-log-out"></span> Déconnexion</a>
-					</button>
-				</li>
-			</ul>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="accueil.html" class="menu-button"><span
+							class="glyphicon glyphicon-home"></span> Accueil</a></li>
+					<li><a href="profile.html" class="menu-button"><span
+							class="glyphicon glyphicon-user"></span> Profile</a></li>
+					<li><a href="compte.html" class="menu-button"><span
+							class="glyphicon glyphicon-cog"></span> Compte</a></li>
+				</ul>
 
+				<div  class="nav navbar-nav navbar-right">
+					<ul class="list-unstyled">
+						<li>
+							<button id="deconnexion"  type="button" class="btn btn-primary navbar-btn">
+								<span  class="glyphicon glyphicon-log-out"></span> Déconnexion
+							</button>
+					</ul>
+				</div>
+			</div>
 		</div>
 	</nav>
 
@@ -74,147 +79,155 @@
 			</div>
 		</div>
 
-		<div class="recette-container">
 
-			<div class="container-fluid">
-				<div class="container">
-					
-					<div class="row">
-						<div class="col-md-12 recettes-recentes categorie">
+		<div class="container-fluid">
+			<div class="container">
+
+				<div class="row">
+					<div class="col-md-12 recettes-recentes categorie">
 						<span class="texte-categorie">Recettes récentes</span>
-						</div>
 					</div>
-
-					<div class="row">
-						<div class="col-md-4 recette">
-							<div class="recette-header"></div>
-							<div class="recette-img"></div>
-							<div class="recette-footer">
-								<hr>
-								<h3 class="titre-recette">Poulet braisé</h3>
-								<!-- <div class="auteur-recette">Par: pat</div> -->
-							</div>
-						</div>
-						<div class="col-md-4 recette">
-							<div class="recette-header"></div>
-							<div class="recette-img"></div>
-							<div class="recette-footer">
-								<hr>
-								<h3 class="titre-recette">Pâtes au saumon</h3>
-								<!-- <div class="auteur-recette">Par: pat</div> -->
-							</div>
-						</div>
-						<div class="col-md-4 recette">
-							<div class="recette-header"></div>
-							<div class="recette-img"></div>
-							<div class="recette-footer">
-								<hr>
-								<h3 class="titre-recette">Kebab du Délice Jussieu</h3>
-								<!-- <div class="auteur-recette">Par: pat</div> -->
-							</div>
-						</div>
-						<div class="remplissage">
-							<hr>
-							<hr>
-						</div>
-						<div class="col-md-4 recette">
-							<div class="recette-header"></div>
-							<div class="recette-img"></div>
-							<div class="recette-footer">
-								<hr>
-								<h3 class="titre-recette">Pizza du CROUS</h3>
-								<!-- <div class="auteur-recette">Par: pat</div> -->
-							</div>
-						</div>
-						<div class="col-md-4 recette">
-							<div class="recette-header"></div>
-							<div class="recette-img"></div>
-							<div class="recette-footer">
-								<hr>
-								<h3 class="titre-recette">Morue à la portugaise</h3>
-								<!-- <div class="auteur-recette">Par: pat</div> -->
-							</div>
-						</div>
-						<div class="col-md-4 recette">
-							<div class="recette-header"></div>
-							<div class="recette-img"></div>
-							<div class="recette-footer">
-								<hr>
-								<h3 class="titre-recette">Piment antillais</h3>
-								<!-- <div class="auteur-recette">Par: pat</div> -->
-							</div>
-						</div>
-					</div>
-					
-					<div class="row">
-						<div class="col-md-12 recettes-top categorie">
-						<span class="texte-categorie">Top des recettes</span>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-4 recette">
-							<div class="recette-header"></div>
-							<div class="recette-img"></div>
-							<div class="recette-footer">
-								<hr>
-								<h3 class="titre-recette">Poulet braisé</h3>
-								<!-- <div class="auteur-recette">Par: pat</div> -->
-							</div>
-						</div>
-						<div class="col-md-4 recette">
-							<div class="recette-header"></div>
-							<div class="recette-img"></div>
-							<div class="recette-footer">
-								<hr>
-								<h3 class="titre-recette">Pâtes au saumon</h3>
-								<!-- <div class="auteur-recette">Par: pat</div> -->
-							</div>
-						</div>
-						<div class="col-md-4 recette">
-							<div class="recette-header"></div>
-							<div class="recette-img"></div>
-							<div class="recette-footer">
-								<hr>
-								<h3 class="titre-recette">Kebab du Délice Jussieu</h3>
-								<!-- <div class="auteur-recette">Par: pat</div> -->
-							</div>
-						</div>
-						<div class="remplissage">
-							<hr>
-							<hr>
-						</div>
-						<div class="col-md-4 recette">
-							<div class="recette-header"></div>
-							<div class="recette-img"></div>
-							<div class="recette-footer">
-								<hr>
-								<h3 class="titre-recette">Pizza du CROUS</h3>
-								<!-- <div class="auteur-recette">Par: pat</div> -->
-							</div>
-						</div>
-						<div class="col-md-4 recette">
-							<div class="recette-header"></div>
-							<div class="recette-img"></div>
-							<div class="recette-footer">
-								<hr>
-								<h3 class="titre-recette">Morue à la portugaise</h3>
-								<!-- <div class="auteur-recette">Par: pat</div> -->
-							</div>
-						</div>
-						<div class="col-md-4 recette">
-							<div class="recette-header"></div>
-							<div class="recette-img"></div>
-							<div class="recette-footer">
-								<hr>
-								<h3 class="titre-recette">Piment antillais</h3>
-								<!-- <div class="auteur-recette">Par: pat</div> -->
-							</div>
-						</div>
-					</div>
-					
-					
 				</div>
+
+				<div class="row" id="recentRecipe">
+					<div class="col-md-6 col-lg-4 ">
+						<div class="recette-container recette ">
+							<div class="recette-header"></div>
+							<div class="recette-img"></div>
+							<div class="recette-footer">
+								<hr>
+								<h3 class="titre-recette">Poulet braisé</h3>
+								<!-- <div class="auteur-recette">Par: pat</div> -->
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-4 ">
+						<div class="recette-container recette">
+							<div class="recette-header"></div>
+							<div class="recette-img"></div>
+							<div class="recette-footer">
+								<hr>
+								<h3 class="titre-recette">Pâtes au saumon</h3>
+								<!-- <div class="auteur-recette">Par: pat</div> -->
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-4 ">
+						<div class="recette-container recette">
+							<div class="recette-header"></div>
+							<div class="recette-img"></div>
+							<div class="recette-footer">
+								<hr>
+								<h3 class="titre-recette">Kebab du Délice Jussieu</h3>
+								<!-- <div class="auteur-recette">Par: pat</div> -->
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6 col-lg-4 ">
+						<div class="recette-container recette">
+							<div class="recette-header"></div>
+							<div class="recette-img"></div>
+							<div class="recette-footer">
+								<hr>
+								<h3 class="titre-recette">Pizza du CROUS</h3>
+								<!-- <div class="auteur-recette">Par: pat</div> -->
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-4 ">
+						<div  id="112213123" class="recette-container recette">
+							<div class="recette-header"></div>
+							<div class="recette-img"></div>
+							<div class="recette-footer">
+								<hr>
+								<h3 class="titre-recette">Morue à la portugaise</h3>
+								<!-- <div class="auteur-recette">Par: pat</div> -->
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-4 ">
+						<div class="recette-container recette">
+							<div class="recette-header"></div>
+							<div class="recette-img"></div>
+							<div class="recette-footer">
+								<hr>
+								<h3 class="titre-recette">Piment antillais</h3>
+								<!-- <div class="auteur-recette">Par: pat</div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12 recettes-top categorie">
+						<span class="texte-categorie">Top des recettes</span>
+					</div>
+				</div>
+
+				<div class="row" id="BestRecipe">
+				<div class="recette-container recette">
+					<div class="col-md-4 recette">
+						<div class="recette-header"></div>
+						<div class="recette-img"></div>
+						<div class="recette-footer">
+							<hr>
+							<h3 class="titre-recette">Poulet braisé</h3>
+							<!-- <div class="auteur-recette">Par: pat</div> -->
+						</div>
+					</div>
+					<div class="col-md-4 recette">
+						<div class="recette-header"></div>
+						<div class="recette-img"></div>
+						<div class="recette-footer">
+							<hr>
+							<h3 class="titre-recette">Pâtes au saumon</h3>
+							<!-- <div class="auteur-recette">Par: pat</div> -->
+						</div>
+					</div>
+					<div class="col-md-4 recette">
+						<div class="recette-header"></div>
+						<div class="recette-img"></div>
+						<div class="recette-footer">
+							<hr>
+							<h3 class="titre-recette">Kebab du Délice Jussieu</h3>
+							<!-- <div class="auteur-recette">Par: pat</div> -->
+						</div>
+					</div>
+					<div class="remplissage">
+						<hr>
+						<hr>
+					</div>
+					<div class="col-md-4 recette">
+						<div class="recette-header"></div>
+						<div class="recette-img"></div>
+						<div class="recette-footer">
+							<hr>
+							<h3 class="titre-recette">Pizza du CROUS</h3>
+							<!-- <div class="auteur-recette">Par: pat</div> -->
+						</div>
+					</div>
+					<div class="col-md-4 recette">
+						<div class="recette-header"></div>
+						<div class="recette-img"></div>
+						<div class="recette-footer">
+							<hr>
+							<h3 class="titre-recette">Morue à la portugaise</h3>
+							<!-- <div class="auteur-recette">Par: pat</div> -->
+						</div>
+					</div>
+					<div class="col-md-4 recette">
+						<div class="recette-header"></div>
+						<div class="recette-img"></div>
+						<div class="recette-footer">
+							<hr>
+							<h3 class="titre-recette">Piment antillais</h3>
+							<!-- <div class="auteur-recette">Par: pat</div> -->
+						</div>
+					</div>
+				</div>
+
+
 			</div>
 		</div>
 	</div>
