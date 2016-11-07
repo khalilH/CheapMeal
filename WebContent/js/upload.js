@@ -6,7 +6,7 @@ $(function() {
 			var reader = new FileReader();
 
 			reader.onload = function(e) {
-				$('#previewImage').attr('src', e.target.result);
+//				$('#previewImage').attr('src', e.target.result);
 			}
 
 			reader.readAsDataURL(input.files[0]);
@@ -30,7 +30,7 @@ $(function() {
 	    processData: false,
 	    type: 'POST',
 	    success: function(data){
-	        console.log(data);
+	        $('#previewImage').attr('src',"data:image/png;base64,"+data);
 	    }
 		});
 	});
