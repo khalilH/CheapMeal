@@ -2,11 +2,11 @@ package services;
 
 import java.sql.SQLException;
 
-import javax.security.sasl.AuthenticationException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import exceptions.AuthenticationException;
 import exceptions.InformationUtilisateurException;
 import services.fonctions.ConnexionFonctions;
 import util.ServiceTools;

@@ -48,6 +48,7 @@ $(function() {
 				var json = JSON.parse(jsonrep);
 				if (rep.erreur == undefined) {
 					console.log("Connexion reussi ",rep);
+					setCookie(C_NAME,rep.success,login);
 					window.location.href="accueil.html";
 				} else {
 					console.log("Connexion Fail ",rep.message);
