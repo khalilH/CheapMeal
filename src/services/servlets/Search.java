@@ -11,34 +11,29 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import services.ProfilServices;
+import services.SearchServices;
 
-public class AfficherBio extends  HttpServlet {
+public class Search extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
-       
-    public AfficherBio() {
-        super();
-    }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/* Lecture des parametres */
-		String cle = request.getParameter("cle");
-		String login = request.getParameter("login");
 		
-				
+		/* Lecture des parametres */
+		String query = request.getParameter("query");
+		
+		/* Traitement du service */
 		try {
-			/* Traitement des services */
-			JSONObject res = ProfilServices.afficherBio(cle, login);
-			
+			JSONObject result = SearchServices.search(query);
+
 			/* Ecriture de la reponse */
-			PrintWriter writer = response.getWriter();
 			response.setContentType("application/json");
-			writer.println(res.toString());
-			
+			PrintWriter printWriter = response.getWriter();
+			printWriter.println(result);
 		} catch (JSONException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+
+
 }

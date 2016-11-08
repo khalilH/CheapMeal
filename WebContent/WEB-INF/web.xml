@@ -31,6 +31,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>Search</servlet-name>
+		<servlet-class>services.servlets.Search</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Search</servlet-name>
+		<url-pattern>/search</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>Test</servlet-name>
 		<servlet-class>test.TestMongoDB</servlet-class>
 	</servlet>
@@ -132,13 +141,23 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>AfficherBio</servlet-name>
-		<servlet-class>services.servlets.AfficherBio</servlet-class>
+		<servlet-name>AfficherProfil</servlet-name>
+		<servlet-class>services.servlets.AfficherProfil</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>AfficherBio</servlet-name>
-		<url-pattern>/afficherBio</url-pattern>
+		<servlet-name>AfficherProfil</servlet-name>
+		<url-pattern>/afficherProfil</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>IsConnecte</servlet-name>
+		<servlet-class>services.servlets.IsConnecte</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>IsConnecte</servlet-name>
+		<url-pattern>/isConnecte</url-pattern>
+	</servlet-mapping>
+
 
 	<welcome-file-list>
 		<welcome-file>connexion.html</welcome-file>

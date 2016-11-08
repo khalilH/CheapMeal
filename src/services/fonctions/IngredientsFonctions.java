@@ -18,15 +18,14 @@ import util.bdTools.MongoFactory;
 public class IngredientsFonctions {
 
 	/**
-	 * Permet de recuperer les ingredients matchant la query
+	 * Permet de recuperer la liste ingredients utilisables matchant la query
 	 * @param query de l'autocomplete
-	 * @return une liste de {"value":"ingredients", "data":"data_value"}
-	 * data_value est le code barre EAN, ou le prix d'un fruit ou legume
+	 * @return la liste des ingredients utilisables sous forme de String
 	 * @throws MongoClientException
 	 * @throws UnknownHostException
 	 * @throws NullPointerException query non fournie
 	 */
-	public static ArrayList<BasicDBObject> getListeIngredients(String query) 
+	public static ArrayList<String> getListeIngredients(String query) 
 			throws MongoClientException, UnknownHostException, 
 			NullPointerException {
 		
@@ -34,52 +33,51 @@ public class IngredientsFonctions {
 			throw new NullPointerException("le champ query ne doit pas etre vide");
 		
 		MongoDatabase database = DBStatic.getMongoConnection();
-		MongoCollection<BasicDBObject> col = database
+		MongoCollection<BasicDBObject> collection = database
 				.getCollection(MongoFactory.COLLECTION_INGREDIENTS, BasicDBObject.class);
 		
 		BasicDBObject o = new BasicDBObject();
-		o.put(MongoFactory.NOM_INGREDIENT, Pattern.compile(query));
+		o.put(MongoFactory.NOM_INGREDIENT, Pattern.compile(query,Pattern.CASE_INSENSITIVE));
 		
-		ArrayList<BasicDBObject> list = new ArrayList<>();
-		for (BasicDBObject ingredient : col.find(o)) {
-			BasicDBObject suggestion = new BasicDBObject();
-			if (ingredient.containsField(MongoFactory.EAN)) {
-				suggestion.put("data", ingredient.getString(MongoFactory.EAN));
-			}
-			else if (ingredient.containsField(MongoFactory.PRIX_AU_KG)){
-				suggestion.put("data", ingredient.getString(MongoFactory.PRIX_AU_KG));
-			}
-			suggestion.put("value", ingredient.getString(MongoFactory.NOM_INGREDIENT));
-			list.add(suggestion);
+		ArrayList<String> list = new ArrayList<>();
+		for (BasicDBObject ingredient : collection.find(o)) {
+			list.add(ingredient.getString(MongoFactory.NOM_INGREDIENT));
 		}
 		DBStatic.closeMongoDBConnection();
 		return list;
 	}
-
-	public static ArrayList<String> putListeIngredients(String fileName) throws MongoClientException, UnknownHostException, FileNotFoundException {
+	
+	/**
+	 * Permet de reconstruire la liste des ingredients utilisables et de les stocker
+	 * dans la collection ingredients dans MongoDB
+	 * @param fileName le fichier contenant la liste des ingredients
+	 * @throws MongoClientException
+	 * @throws UnknownHostException
+	 * @throws FileNotFoundException
+	 */
+	//TODO essayer GoogleDrive API
+	public static void putListeIngredients(String fileName) throws MongoClientException, UnknownHostException, FileNotFoundException {
 		MongoDatabase database = DBStatic.getMongoConnection();
-		MongoCollection<BasicDBObject> col = database.getCollection(
+		MongoCollection<BasicDBObject> collection = database.getCollection(
 				MongoFactory.COLLECTION_INGREDIENTS, BasicDBObject.class);
-		col.deleteMany(new BasicDBObject());
-		ArrayList<String> list = new ArrayList<>();
+		collection.deleteMany(new BasicDBObject());
+		
 		Scanner scanner = new Scanner(new File(fileName));
-		scanner.nextLine(); // Pour tej la premiere ligne
+		scanner.nextLine(); 
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
 			String[] tab = line.split(",");
 			BasicDBObject document;
 			if (tab[0].equals("i")) {
-				document = MongoFactory.creerDocumentListeIngredient(tab[1], tab[2]);
+				document = MongoFactory.creerDocumentListeIngredient(tab[1], tab[2], Double.parseDouble(tab[3]));
 			}
 			else {
-				document = MongoFactory.creerDocumentFruit(tab[1], Double.parseDouble(tab[2]));
+				document = MongoFactory.creerDocumentFruit(tab[1], Double.parseDouble(tab[2]), Double.parseDouble(tab[3]));
 			}
-			list.add(line);
-			col.insertOne(document);
+			collection.insertOne(document);
 		}
 		scanner.close();
 		DBStatic.closeMongoDBConnection();
-		return list;
 	}
 	
 }

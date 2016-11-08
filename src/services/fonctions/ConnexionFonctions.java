@@ -3,12 +3,13 @@ package services.fonctions;
 
 import java.sql.SQLException;
 
-import javax.security.sasl.AuthenticationException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import exceptions.AuthenticationException;
 import exceptions.InformationUtilisateurException;
+import util.ServiceTools;
 import util.bdTools.RequeteStatic;
 
 
@@ -49,5 +50,21 @@ public class ConnexionFonctions {
 		}
 		
 		//return jb;
+	}
+
+	public static int isConnecte(String key) throws InformationUtilisateurException {
+		if(key == null)
+			throw new NullPointerException("La cle n'a pas été fournie");
+		if(key.equals(""))
+			throw new InformationUtilisateurException("Cle vide");
+		if(key.length() != 32)
+			throw new InformationUtilisateurException("Cle corrompu");
+		
+		if(ServiceTools.isCleActive(key)){
+			return RequeteStatic.obtenirIdSessionAvecCle(key);
+		}else{
+			throw new InformationUtilisateurException("Clé n'est pas active");
+		}
+
 	}
 }

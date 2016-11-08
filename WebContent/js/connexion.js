@@ -28,7 +28,6 @@ $(function() {
 			}
 		},
 		submitHandler : function(form) {
-			console.log("toyze");
 			connexionAJAX(form.login.value,form.password.value);
 		}
 	});
@@ -43,11 +42,11 @@ $(function() {
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			dataType : 'json',
 			success : function(rep) {
-				console.log(JSON.stringify(rep));
 				var jsonrep = JSON.stringify(rep)
 				var json = JSON.parse(jsonrep);
 				if (rep.erreur == undefined) {
 					console.log("Connexion reussi ",rep);
+					setCookie(C_NAME_KEY,rep.success);
 					window.location.href="accueil.html";
 				} else {
 					console.log("Connexion Fail ",rep.message);

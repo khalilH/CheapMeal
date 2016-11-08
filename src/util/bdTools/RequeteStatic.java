@@ -13,38 +13,7 @@ import util.hibernate.model.Utilisateurs;
 
 
 public class RequeteStatic {
-	/**
-	 * 
-	 * 	Session s = HibernateUtil.getSessionFactory().getCurrentSession();
-		s.beginTransaction();
-		
-				Exemple de creation d'une entite
-	
-	Integer id  =(Integer) s.save(new Utilisateurs("toz", "1234", "issa", "toz", "1223@"));
-	
-				Suppression dune entite
-				
-	s.createQuery("delete from Sessions where cleSession = :cleSession")
-						.setParameter("cleSession", cle)
-						.executeUpdate();
-	s.getTransaction().commit();
-				Update dune entite
-				-> En SQL Parce qu'il ya 2 table
-	s.createSQLQuery("update SESSIONS s, UTILISATEURS u set s.dateExpiration = :time where s.idSession = u.id and u.login = :u_login")
-						.setParameter("u_login", login)
-						.setParameter("time", time)
-						.executeUpdate();
-	s.getTransaction().commit();
-				
-				Get dune entite
-				
-					Sessions s_user =(Sessions) s.createQuery(" from Sessions where cleSession = :cleSession")
-					.setParameter("cleSession", cle)
-					.uniqueResult();
-				
-	**/
-	
-	
+
 	/**
 	 * Supprime la session d'un utilisateur grace � son Token
 	 * @param cle
@@ -159,7 +128,6 @@ public class RequeteStatic {
 		s.save(s1);
 		s.getTransaction().commit();
 		return cle;
-		//TODO verifier que la cle generee n'existe pas deja (tres peu probable)
 	}
 
 	/**

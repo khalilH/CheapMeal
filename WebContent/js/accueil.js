@@ -1,5 +1,11 @@
 $(function (){
 	//TODO Onload de la page regarde le cookie et mettre mode connecte
+	if(isConnected()){
+		loadNavbarConnected();
+	}
+	else{
+		loadNavbarDisconnected();
+	}
 	$("#deconnexion").on('click',function(){
 		// TODO Delete cookie + verifier sil existe (erreur)
 		var key;
@@ -30,6 +36,18 @@ $(function (){
 		console.log("J'ai clique sur une recette ",this.id);
 		//TODO Afficher la page de recette
 	});
+	
+	
+	
+	
+	
+	
+	/***** DOWN HERE CODE FOR PARSING JSON RESPONSE **********/
+	function Auteur(id,login){
+		this.id = id;
+		this.login = login;
+	}
+	
 	function Recette(id,auteur, titre,photo){
 		this.id = id;
 		this.auteur = auteur;
@@ -55,16 +73,17 @@ $(function (){
 	RecetteList.prototype.getHtmlRecent = function(){
 		var s ="";
 		for(var i = 0 ; i < this.recetteRecente.length; i++){
-			s+=this.recetteRecente[i].getHtml();
+			s+=this.recetteRecente[i].getHtml()+"\n \n";
 		}
 		return s;
+		
 	}
 	RecetteList.prototype.revival= function(key, value) {
 			if(key.length == 0) /* "haut" du JSON ==fin */
 			{
 				var r;
 				if((value.Erreur == undefined) || (value.Erreur == 0)){ // Si l'on trouve pas un champs Erreur dans le JSON
-					r = new RecetteList(value.resultats, value.recherche, value.contact, value.auteur, value.date);
+					r = new RecetteList(value.recettesRecentes, value.recettesBest);
 				}
 				else {
 					r = new Object();
@@ -72,31 +91,18 @@ $(function (){
 				}
 				return (r);
 			}
-			else if((isNumber(key)) && (value.auteur instanceof User)) { // Si l'on est dans une case du tableau et que l'auteur est un utilisateur
-				var c = new Commentaire(value._id, value.auteur, value.texte, value.date, value.score);
-
-				return c;
-			}
-			else if(key == "date"){ // Si la clé  est une date
-				var d=new Date(value);
-
-				return (d);
+			else if((isNumber(key)) && (value.auteur instanceof Auteur)) { // Si l'on est dans une case du tableau et que l'auteur est un objet de la classe auteur
+				var recette = new Recette(value._id, value.auteur, value.titre, value.photo);
+				return recette;
 			}
 			else if(key == "auteur") { // Lorsquon doit crée un utilisateur
-				var u;
-				if((env != undefined) && (env.users != undefined) && (env.users[value.idauteur] != undefined)){	
-					u = env.users[value.idauteur];
-				}
-				else {
-					u = new User(value.idauteur, value.login, value.contact);
-				}
-
-				return u;
+				var auteur;
+				auteur = new Auteur(value.idAuteur, value.loginAuteur);
+				return auteur;
 			}
 			else{
 				return (value);
 			}
 		};
-	}
 	
 });

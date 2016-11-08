@@ -127,13 +127,34 @@ public class MongoFactory {
 		return document;
 	}
 	
-	
-	public static BasicDBObject creerDocumentListeIngredient(String nom, String ean) {
-		return new BasicDBObject().append(NOM_INGREDIENT, nom).append(EAN, ean);
+	/**
+	 * Cree un document representant un ingredient, qui sera stocke dans la 
+	 * collection ingredients
+	 * @param nom le nom de l'ingredient
+	 * @param ean le code barre de l'ingredient
+	 * @param quantite la quantite (en g, cl, unite) du l'ingredient associe
+	 * au code barre ean
+	 * @return Objet JSON representant un ingredient
+	 */
+	public static BasicDBObject creerDocumentListeIngredient(String nom, String ean, double quantite) {
+		return new BasicDBObject()
+				.append(NOM_INGREDIENT, nom)
+				.append(EAN, ean)
+				.append(QUANTITE, quantite);
 	}
-	
-	public static BasicDBObject creerDocumentFruit(String nom, double prix) {
-		return new BasicDBObject().append(NOM_INGREDIENT, nom).append(PRIX_AU_KG, prix);
+
+	/**
+	 * Cree un document representant un fruit ou un legume, qui sera stocke 
+	 * dans la collection ingredients
+	 * @param nom le nom du fruit ou legume
+	 * @param le prix au kilo
+	 * @param quantite la quantite en g 
+	 * @return Objet JSON representant un fruit ou un legume
+	 */
+	public static BasicDBObject creerDocumentFruit(String nom, double prix, double quantite) {
+		return new BasicDBObject().append(NOM_INGREDIENT, nom)
+				.append(PRIX_AU_KG, prix)
+				.append(QUANTITE, quantite);
 	}
 
 	//	public static BasicDBObject updateDejaNote(String id, String idRecette, List<String> recettesDejaNotees){

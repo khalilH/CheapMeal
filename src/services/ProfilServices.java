@@ -16,7 +16,15 @@ import util.ServiceTools;
 public class ProfilServices {
 
 	//TODO harmoniser les codes d'erreur
-	
+
+	/**
+	 * Permet de faire appel aux fonction permettant d'ajouter ou de mettre a
+	 * jour la biographie d'un utilisateur
+	 * @param cle la cle de session de l' utilisateur
+	 * @param bio la biographie de l'utilisateur
+	 * @return JSONObject contenant "success" ou "error" avec un message d'erreur
+	 * @throws JSONException : s'il y a eut une erreur a la creation ou manipulation du JSONObject 
+	 */
 	public static JSONObject ajouterBio(String cle, String bio) throws JSONException{
 		try {
 			ProfilFonctions.ajouterBio(cle, bio);
@@ -32,9 +40,9 @@ public class ProfilServices {
 		}
 	}
 
-	public static JSONObject afficherBio(String cle,String login) throws JSONException{
+	public static JSONObject afficherProfil(String cle,String login) throws JSONException{
 		try {
-			JSONObject jb = ProfilFonctions.afficherBio(cle, login);
+			JSONObject jb = ProfilFonctions.afficherProfil(cle, login);
 			return jb;
 		} catch (NullPointerException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), 0);
@@ -43,13 +51,10 @@ public class ProfilServices {
 		} catch (SessionExpireeException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), 0);
 		} catch (MongoClientException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return ServiceTools.serviceRefused(e.getMessage(), 0);
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return ServiceTools.serviceRefused(e.getMessage(), 0);
 		}
-		return null;
 	}
 
 }
