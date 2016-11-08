@@ -8,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClientException;
 
 import services.fonctions.IngredientsFonctions;
@@ -16,9 +15,16 @@ import util.ServiceTools;
 
 public class IngredientsServices {
 
+	/**
+	 * Permet de construire la reponse formatee permettant l'utilisation
+	 * du plugin Ajax AutoComplete for jQuery
+	 * @param query la sous-chaine a utiliser pour l'autocompletion
+	 * @return JSONObject contenant la reponse formatee ou "error" avec un message d'erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
+	 */
 	public static JSONObject getListeIngredients(String query) throws JSONException {
 		try {
-			List<BasicDBObject> ingredients = IngredientsFonctions.getListeIngredients(query);
+			List<String> ingredients = IngredientsFonctions.getListeIngredients(query);
 			JSONArray suggestions = new JSONArray(ingredients);
 			JSONObject res = new JSONObject()
 					.put("suggestions", suggestions);
@@ -32,11 +38,16 @@ public class IngredientsServices {
 		}
 	}
 	
+	/**
+	 * Permer de faire appel aux fonctions constituant le service "Put Ingredients"
+	 * @param fileName le nom du fichier contenant la liste des ingredients
+	 * @return JSONObject contenant "success" ou "error" avec un message d'erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
+	 */
 	public static JSONObject putListeIngredients(String fileName) throws JSONException {
 		try {
-			List<String> ingredients = IngredientsFonctions.putListeIngredients(fileName);
-			JSONArray array = new JSONArray(ingredients);
-			return new JSONObject().append("ingredients", array);
+			IngredientsFonctions.putListeIngredients(fileName);
+			return ServiceTools.serviceAccepted("Liste d'ingredients utilisable mise a jour");
 		} catch (MongoClientException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), -1);
 		} catch (UnknownHostException e) {
