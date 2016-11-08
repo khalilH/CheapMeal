@@ -5,6 +5,53 @@ $(function (){
 	}
 	else{
 		loadNavbarDisconnected();
+		var json = {
+  "recettesRecentes": [
+    {"auteur": {
+    "idAuteur": "10",
+    "loginAuteur": "Maitre"
+    },
+    "_id" : "100",
+    "titre" : "Pates pizza",
+    "photo" : "images/favicon.png"
+    },
+       {"auteur": {
+    "idAuteur": "12",
+    "loginAuteur": "Maitre toz"
+    },
+    "_id" : "120",
+    "titre" : "Pates crous",
+    "photo" : "images/cheapmeal_logo.png"
+    }
+  ],
+   "recettesBest": [
+        {"auteur": {
+    "idAuteur": "10",
+    "loginAuteur": "Maitre"
+    },
+    "_id" : "100",
+    "titre" : "Pates pizza",
+    "photo" : "images/favicon.png"
+    },
+       {"auteur": {
+    "idAuteur": "12",
+    "loginAuteur": "Maitre toz"
+    },
+    "_id" : "120",
+    "titre" : "Pates crous",
+    "photo" : "images/cheapmeal_logo.png"
+    }
+  ]
+};
+json = JSON.stringify(json);
+	var obj = JSON.parse(json, RecetteList.prototype.revival);
+	if(!obj instanceof RecetteList)
+		console.log("toz");
+		else
+				console.log(obj.getHtmlRecent);
+
+	//console.log(obj.prototype.getHtmlRecent);
+
 	}
 	$("#deconnexion").on('click',function(){
 		// TODO Delete cookie + verifier sil existe (erreur)
@@ -79,6 +126,7 @@ $(function (){
 		
 	}
 	RecetteList.prototype.revival= function(key, value) {
+		console.log(key +" et "+value);
 			if(key.length == 0) /* "haut" du JSON ==fin */
 			{
 				var r;

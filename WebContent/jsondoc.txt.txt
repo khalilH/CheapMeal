@@ -1,0 +1,38 @@
+{
+  "recettesRecentes": [
+    {"auteur": {
+    "idAuteur": "10",
+    "loginAuteur": "Maitre"
+    },
+    "_id" : "100",
+    "titre" : "Pates pizza",
+    "photo" : "images/favicon.png"
+    },
+       {"auteur": {
+    "idAuteur": "12",
+    "loginAuteur": "Maitre toz"
+    },
+    "_id" : "120",
+    "titre" : "Pates crous",
+    "photo" : "images/cheapmeal_logo.png"
+    }
+  ],
+   "recettesBest": [
+        {"auteur": {
+    "idAuteur": "10",
+    "loginAuteur": "Maitre"
+    },
+    "_id" : "100",
+    "titre" : "Pates pizza",
+    "photo" : "images/favicon.png"
+    },
+       {"auteur": {
+    "idAuteur": "12",
+    "loginAuteur": "Maitre toz"
+    },
+    "_id" : "120",
+    "titre" : "Pates crous",
+    "photo" : "images/cheapmeal_logo.png"
+    }
+  ]
+}
