@@ -1,7 +1,9 @@
 package util;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,6 +17,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.naming.NamingException;
+import javax.servlet.http.Part;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -123,7 +126,16 @@ public class ServiceTools {
 //		jb=ServiceTools.serviceRefused(""+e.toString(),100);
 //		return jb;
 //	}
+	/**
+	 * Permet de récupérer les parametre d'un formulaire encode en multipart
+	 * @throws MessagingException 
+	 * @throws IOException 
+	 */
 	
+	public static String getValueFromPart(Part p ) throws IOException, MessagingException{
+		Scanner c = new Scanner(p.getInputStream());
+		return c.nextLine();
+	}
 	/**
 	 * Code de generation aleatoire d'une cle de session de 32 caracteres
 	 * @return une cle aleatoire
