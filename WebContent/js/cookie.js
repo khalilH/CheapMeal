@@ -27,10 +27,8 @@ function getCookie(cname) {
 		if (c.indexOf(name) == 0) {
 			str = c.substring(name.length, c.length);
 			if (str == "-1") {
-				console.log("Oh oh it has been reinitialised.");
 				return null;
 			}
-			console.log("[GetCookie] OK " + cname + ": " + str);
 			return str;
 		}
 	}
@@ -50,7 +48,6 @@ function destroy_cookie() {
  * 
  */
 function loadNavbarDisconnected() {
-	console.log("No cookie found, user is disconnected");
 	var leftNavbarHtml = "<li class='active'><a href='accueil.html' class='menu-button'>"
 			+ "<span class='glyphicon glyphicon-home'></span> Accueil</a></li>";
 	$("#leftNavbar").html(leftNavbarHtml);
@@ -69,14 +66,12 @@ function loadNavbarDisconnected() {
  * 
  */
 function loadNavbarConnected() {
-	console.log("Cookie found, user is connected");
 	var leftNavbarHtml = "<li class='active'><a href='accueil.html' class='menu-button'>"
 			+ "<span class='glyphicon glyphicon-home'></span> Accueil</a></li>"
 			+ "<li><a href='profile.html' class='menu-button'>"
 			+ "<span class='glyphicon glyphicon-user'></span> Profile</a></li>"
 			+ "<li><a href='compte.html' class='menu-button'>"
 			+ "<span class='glyphicon glyphicon-cog'></span> Compte</a></li>";
-	console.log($("#leftNavbar").html(leftNavbarHtml));
 
 	var rightNavbarHtml = "<button id='deconnexion' type='button' class='btn btn-primary navbar-btn'>"
 			+ "<span class='glyphicon glyphicon-log-out'></span> Déconnexion</button>";
@@ -98,9 +93,9 @@ function ajaxKeyValideOrNot(value){
 		 success : function(rep) {
 			 console.log("User is truly connected "+rep);
 			 if(rep.Erreur == undefined)
-				 return true;
+				 return 1;
 			 else
-				 return false;
+				 return 0;
 		 },
 		 error : function(jqXHR, textStatus, errorThrown) {
 			 console.log("Crashed while doing ajax request for isConnected");
@@ -117,6 +112,6 @@ function isConnected() {
 		return ajaxKeyValideOrNot(cookie_key);
 	}
 	
-	return false;
+	return -1;
 }
 

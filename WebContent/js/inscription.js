@@ -1,5 +1,8 @@
 $(function() {
-
+	if(isConnected() === 1){
+		//Users is logged in need to redirect him
+		window.location.href="accueil.html";
+	}
 	$.validator.addMethod("pwdMatch", function(confirmation_mdp, dom, arg) {
 		console.log("confirmation="+confirmation_mdp + "  arg:" + arg.value.toString());
 		return confirmation_mdp === arg.value;
