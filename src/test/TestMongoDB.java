@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
 import util.RequestParameter;
 import util.bdTools.DBStatic;
 import util.bdTools.MongoFactory;
@@ -55,9 +59,15 @@ public class TestMongoDB extends HttpServlet {
 			mesures.add("unite(s)");
 			mesures.add("g");
 			ArrayList<String> preparation = new ArrayList<String>();
-			preparation.add("cuir les pommes");
-			Part photo = request.getPart(RequestParameter.FILE);
-			MongoFactory.creerDocumentRecette("tarte aux pomme", 5, "patou", ingredients, quantites, mesures, preparation,photo);
+			preparation.add("cuir les patates");
+			Part photo =null;
+			
+			
+			BasicDBObject doc = MongoFactory.creerDocumentRecette("tarte aux pomme", 5, "victor", ingredients, quantites, mesures, preparation,photo);
+			MongoDatabase database = DBStatic.getMongoConnection();
+			MongoCollection<BasicDBObject> col = database.getCollection("Recettes", BasicDBObject.class);
+			col.insertOne(doc);
+			
 		}
 		catch (Exception e) {
 			response.setContentType("text/html");

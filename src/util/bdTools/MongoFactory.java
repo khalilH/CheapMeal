@@ -11,6 +11,8 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.servlet.http.Part;
 
+import org.bson.types.ObjectId;
+
 import com.mongodb.BasicDBObject;
 
 /**
@@ -77,12 +79,14 @@ public class MongoFactory {
 		BasicDBObject note = creerDocumentNote(0, 0);
 		document.append(NOTE, note);
 		document.append(DATE, d.getTime());
+		document.append("_id", ObjectId.get());
 
-		InputStream inputStream = photo.getInputStream();
-		BufferedImage image = ImageIO.read(inputStream);
-		File f = new File("/var/lib/tomcat8/webapps/images/"+document.get("_id").toString()+".png");
-		ImageIO.write(image, "png", f);
-		
+		if(photo !=null){
+			InputStream inputStream = photo.getInputStream();
+			BufferedImage image = ImageIO.read(inputStream);
+			File f = new File("/var/lib/tomcat8/webapps/images/"+document.get("_id").toString()+".png");
+			ImageIO.write(image, "png", f);
+		}
 		return document;
 	}
 

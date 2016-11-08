@@ -131,7 +131,6 @@ public class RecetteFonctions {
 
 			BasicDBObject document = MongoFactory.creerDocumentRecette(titre, u.getId(), u.getLogin(), ingredients, quantites, mesures, preparation,photo);
 			col.insertOne(document);
-			//TODO RECUP _ID AND PUT IT IN DOC
 		} catch (Exception e) {
 			throw new MongoDBException(ErrorCode.ERREUR_INTERNE, ErrorCode.MONGO_EXCEPTION);
 		}
