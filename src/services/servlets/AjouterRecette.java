@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import services.RecetteService;
+import services.RecetteServices;
 import util.RequestParameter;
 
 public class AjouterRecette extends HttpServlet {
@@ -55,7 +55,7 @@ public class AjouterRecette extends HttpServlet {
 
 		try {
 			/* Traitement des services */
-			JSONObject res = RecetteService.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation);
+			JSONObject res = RecetteServices.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation);
 
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();

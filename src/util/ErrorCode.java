@@ -60,6 +60,7 @@ public class ErrorCode {
 	public static final int RECETTE_INEXISTANTE = 50;
 	public static final int RECETTE_AUTRE_USER = 51;
 	public static final int RECETTE_DEJA_NOTE= 52;
+	public static final int RECETTE_ID_INVALIDE = 53;
 	
 	public static final int SQL_EXCEPTION = 80;
 

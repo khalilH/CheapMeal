@@ -71,6 +71,36 @@ public class RecetteFonctions {
 
 	}
 	
+	
+	/**
+	 * Permet d'obtenir l'objet Json correspondant a la recette dont l'id est en parametre 
+	 * @param id id de la recette
+	 * @return JSONObject contenant les informations de la recette
+	 * @throws MyException
+	 * @throws MongoClientException
+	 * @throws UnknownHostException
+	 */
+	public static JSONObject afficherRecette(String id) throws MyException, MongoClientException, UnknownHostException{
+		if(id == null)
+			throw new ParametreManquantException("Parametre(s) manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
+		if(id.equals(""))
+			throw new NonValideException("Parametre non valide", ErrorCode.RECETTE_ID_INVALIDE);
+		
+		BasicDBObject query = new BasicDBObject("_id", id);
+		MongoDatabase database = DBStatic.getMongoConnection();
+		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
+		MongoCursor<BasicDBObject> cursor = col.find(query).iterator();
+		BasicDBObject res = null;
+		if(cursor.hasNext())
+			res = cursor.next();
+		
+		if(res != null){
+			// TODO Ajouter le prix calculé via l'API
+		}
+		
+		return new JSONObject(res);
+	}
+	
 
 	/**
 	 * 

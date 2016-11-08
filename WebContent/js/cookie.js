@@ -45,8 +45,8 @@ function getCookie(cname) {
 /**
  * Permet de détruire un cookie en mettant sa valeur à -1
  */
-function destroy_cookie() {
-	setCookie(C_NAME_KEY, "-1");
+function destroy_cookie(cname) {
+	setCookie(cname, "-1");
 }
 /**
  * Permet de charger une navbar en mode déconnecte
@@ -119,6 +119,5 @@ function isConnected() {
 		var res = ajaxKeyValideOrNot(cookie_key);
 		return res;
 	}
-
 	return -1;
 }

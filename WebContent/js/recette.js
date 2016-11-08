@@ -127,7 +127,7 @@ function Note(moyenne,nbNotes){
 	this.nbNotes = nbNotes;
 }
 
-function Recette(id,auteur,titre,ingredients,preparation,note,photo){
+function Recette(id,auteur,titre,ingredients,preparation,note,photo,prix){
 	this.id = id;
 	this.auteur = auteur;
 	this.titre = titre;
@@ -135,13 +135,15 @@ function Recette(id,auteur,titre,ingredients,preparation,note,photo){
 	this.ingredients = ingredients;
 	this.preparation = preparation;
 	this.note = note;
+	this.prix = prix;
 }
 
 Recette.revival = function(key, value){
 	if(key.length == 0){
 		var r;
-		if((value.Erreur == undefined) || (value.Erreur == 0)){ // Si l'on trouve pas un champs Erreur dans le JSON
-			r = new Recette(value._id, value.auteur, value.titre, value.ingredients, value.preparation, value.note, value.photo);
+		if((value.Erreur == undefined) || (value.Erreur == 0)){ 
+			// Si l'on trouve pas un champs Erreur dans le JSON
+			r = new Recette(value._id, value.auteur, value.titre, value.ingredients, value.preparation, value.note, value.photo, value.prix);
 		}
 		else {
 			r = new Object();
@@ -172,7 +174,14 @@ Recette.traiteReponseJSON = function(json_text){
 
 	//obj est une Recette
 	var obj = JSON.parse(JSON.stringify(json_text), Recette.revival);
+	
 	if(obj.erreur == undefined){
+		
+		if(isConnected() === -1){
+			$("#noter-recette").html("");
+		}
+		
+		
 		$("#titre-recette").html("<span>"+obj.titre+"</span>");
 		$("#nom-auteur-recette").html("<span>"+obj.auteur.loginAuteur+"</span>");
 		/* photo auteur */
@@ -187,9 +196,7 @@ Recette.traiteReponseJSON = function(json_text){
 		}
 		s+="</ul>";
 		$("#ingr").html(s);
-
-		/* estimation du prix de la recette */
-		//$("#prix").html("9.15€");
+		$("#prix").html("<span class='txt-size-35'>Prix estimé: </span><span class='txt-size-25'>"+obj.prix+"€</span>");
 
 		var p = "<ul>";
 		for(i=0; i<obj.preparation.length; i++){
@@ -199,8 +206,7 @@ Recette.traiteReponseJSON = function(json_text){
 		$("#prep").html(p);
 
 	}else{
-		/* environnement.users = old_users; 
-		gestionErreurJson(obj.erreur); */
+		alert(obj.erreur)
 	}
 }
 
@@ -210,6 +216,16 @@ function isNumber(s){
 	return ! isNaN (s-0);
 }
 
+/* Permet de recuperer un parametre qu ise trouve dans l'url */
+$.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null){
+       return null;
+    }
+    else{
+       return results[1] || 0;
+    }
+}
 
 
 $(document).ready(function() {
@@ -218,7 +234,7 @@ $(document).ready(function() {
 		$('#count').html(value);
 	});
 
-	json_text = {
+	/*json_text = {
 			"_id" : "5820a24696aa58767018a53f",
 			"titre" : "Tarte aux pommes",
 			"auteur" : { 
@@ -238,10 +254,27 @@ $(document).ready(function() {
 						"moyenne" : 0,
 						"nbNotes" : 0
 					},
-					"date" : "1478533702656" 
+					"date" : "1478533702656",
+					"prix" : "7.45"
 	};
-
-	Recette.traiteReponseJSON(json_text);
+	
+	Recette.traiteReponseJSON(json_text);*/
+	
+	var idRecette = $.urlParam("idRecette"); /* idRecette = getParameter */
+	
+	$.ajax({
+		url : 'recette/afficher',
+		type : 'GET',
+		data : 'idRecette='+idRecette,
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		dataType : 'json',
+		success : Recette.traiteReponseJSON,
+		error : function(resultat, statut, erreur) {
+			console.log("Bug");
+			console.log(resultat);
+			alert("dawg");
+		}
+	});
 
 });
 
