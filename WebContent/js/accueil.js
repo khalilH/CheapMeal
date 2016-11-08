@@ -47,11 +47,13 @@ $(function (){
 		return ! isNaN (s-0);
 	}
 	 function recetteRevival(key, value) {
+		 console.log(key+" et "+value);
 			if(key.length == 0) /* "haut" du JSON ==fin */
 			{
 				var r;
 				if((value.Erreur == undefined) || (value.Erreur == 0)){ // Si l'on trouve pas un champs Erreur dans le JSON
 					r = new RecetteList(value.recettesRecentes, value.recettesBest);
+					console.log("J'ai cree un r");
 				}
 				else {
 					r = new Object();
@@ -102,15 +104,15 @@ $(function (){
 		//TODO remplacer par la bonne requete
 		console.log("Loading home page")
 		$.ajax({
-			url : 'searchHome',
+			url : 'recette/getAccueil',
 			type : 'GET',
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			dataType : 'json',
 			success : function(rep) {
 				var jsonrep = JSON.stringify(rep)
-				console.log(jsonrep);
 				if(jsonrep.erreur == undefined){
 					var recetteListe = JSON.parse(jsonrep,recetteRevival);
+					console.log(recetteListe);
 					updatePage(recetteListe);
 				}
 			},
@@ -123,8 +125,8 @@ $(function (){
 		
 	}
 	function updatePage(liste){
-		$("#recentRecipe").html(liste.getHtmlRecent);
-		$("#BestRecipe").html(liste.getHtmlRecent);
+		$("#recentRecipe").html(liste.getHtmlRecent());
+		$("#BestRecipe").html(liste.getHtmlBest());
 
 	}
 	$("#searchForm").on('submit',function(event){
@@ -138,7 +140,7 @@ $(function (){
 		console.log("DeConnexion de "+key);
 		
 		$.ajax({
-			url : 'deconnexion',
+			url : 'user/deconnexion',
 			type : 'POST',
 			data : 'cle='+key,
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
