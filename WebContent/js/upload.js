@@ -21,17 +21,22 @@ $(function() {
 		event.preventDefault();
 		var data = new FormData();
 		console.log(this.uploadInput.files[0]);
-		data.append('file-0', this.uploadInput.files[0]);
+		data.append('file', this.uploadInput.files[0]);
+		data.append('titre','Super Recette');
+		data.append('cle',"w4HTyQ9BSE02lcSbSgoNAF2XIk9VXgvj");
+		data.append("ingredients","pomme");
+		data.append("quantites","10");
+		data.append("mesures","g");
+		data.append("preparation","mettre le toz dans le four");
 		jQuery.ajax({
-	    url: 'upload',
+	    url: 'recette/publier',
 	    data: data,
 	    cache: false,
 	    contentType: false,
 	    processData: false,
 	    type: 'POST',
 	    success: function(data){
-	    	console.log(data.length);
-	        $('#previewImage').attr('src',"data:image/png;base64,"+data);
+	    	console.log(data);
 	    }
 		});
 	});

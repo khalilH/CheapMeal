@@ -3,6 +3,8 @@ package services;
 import java.net.UnknownHostException;
 import java.util.List;
 
+import javax.servlet.http.Part;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,10 +39,11 @@ public class RecetteService {
 			List<String> ingredients, 
 			List<Double> quantites, 
 			List<String> mesures, 
-			List<String> preparation) throws JSONException{
+			List<String> preparation,
+			Part photo) throws JSONException{
 
 		try {
-			RecetteFonctions.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation);
+			RecetteFonctions.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation,photo);
 			return ServiceTools.serviceAccepted("La recette a ete ajoutee");
 		} catch (MyException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());

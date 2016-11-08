@@ -5,16 +5,24 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+import util.RequestParameter;
 import util.bdTools.DBStatic;
 import util.bdTools.MongoFactory;
 
 /**
  * Servlet implementation class Test
  */
+@MultipartConfig
 public class TestMongoDB extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -51,8 +59,15 @@ public class TestMongoDB extends HttpServlet {
 			mesures.add("unite(s)");
 			mesures.add("g");
 			ArrayList<String> preparation = new ArrayList<String>();
-			preparation.add("cuir les pommes");
-			MongoFactory.creerDocumentRecette("tarte aux pomme", 5, "patou", ingredients, quantites, mesures, preparation);
+			preparation.add("cuir les patates");
+			Part photo =null;
+			
+			
+			BasicDBObject doc = MongoFactory.creerDocumentRecette("tarte aux pomme", 5, "victor", ingredients, quantites, mesures, preparation,photo);
+			MongoDatabase database = DBStatic.getMongoConnection();
+			MongoCollection<BasicDBObject> col = database.getCollection("Recettes", BasicDBObject.class);
+			col.insertOne(doc);
+			
 		}
 		catch (Exception e) {
 			response.setContentType("text/html");

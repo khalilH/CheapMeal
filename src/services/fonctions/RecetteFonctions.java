@@ -4,6 +4,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.Part;
+
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -86,11 +88,12 @@ public class RecetteFonctions {
 			List<String> ingredients, 
 			List<Double> quantites, 
 			List<String> mesures, 
-			List<String> preparation)
+			List<String> preparation,
+			Part photo)
 					throws MyException {
 
 		/* Verification des parametres */
-		if (titre == null || cle == null || ingredients == null || quantites == null || preparation == null)
+		if (titre == null || cle == null || ingredients == null || quantites == null || preparation == null || photo == null)
 			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
 
 		/* Mise en place de la liste des mesures compatibles */
@@ -126,7 +129,7 @@ public class RecetteFonctions {
 			MongoDatabase database = DBStatic.getMongoConnection();
 			MongoCollection<BasicDBObject> col = database.getCollection("Recettes", BasicDBObject.class);
 
-			BasicDBObject document = MongoFactory.creerDocumentRecette(titre, u.getId(), u.getLogin(), ingredients, quantites, mesures, preparation);
+			BasicDBObject document = MongoFactory.creerDocumentRecette(titre, u.getId(), u.getLogin(), ingredients, quantites, mesures, preparation,photo);
 			col.insertOne(document);
 		} catch (Exception e) {
 			throw new MongoDBException(ErrorCode.ERREUR_INTERNE, ErrorCode.MONGO_EXCEPTION);

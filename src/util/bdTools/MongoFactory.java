@@ -1,8 +1,17 @@
 package util.bdTools;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.Part;
+
+import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
 
@@ -32,7 +41,8 @@ public class MongoFactory {
 	public static final String EAN = "ean";
 	public static final String DATE = "date";
 	public static final String PRIX_AU_KG = "prix";
-	
+	public static final String PHOTO = "photo";
+
 	public static final String DATABASE_NAME = "CheapMeal";
 	
 	public static final String COLLECTION_RECETTE = "Recettes";
@@ -49,12 +59,14 @@ public class MongoFactory {
 	 * @param mesures
 	 * @param preparation
 	 * @return
+	 * @throws IOException 
 	 */
 	public static BasicDBObject creerDocumentRecette(String titre, int idAuteur, String loginAuteur, 
 			List<String> listIng, 
 			List<Double> quantites, 
 			List<String> mesures, 
-			List<String> preparation) {
+			List<String> preparation,
+			Part photo) throws IOException {
 		
 		Date d = new Date();
 		BasicDBObject document = new BasicDBObject(TITRE, titre);
@@ -68,7 +80,16 @@ public class MongoFactory {
 		BasicDBObject note = creerDocumentNote(0, 0);
 		document.append(NOTE, note);
 		document.append(DATE, d.getTime());
+		document.append("_id", ObjectId.get());
 
+		if(photo !=null){
+			InputStream inputStream = photo.getInputStream();
+			BufferedImage image = ImageIO.read(inputStream);
+			String oid = document.get("_id").toString();
+			File f = new File("/var/lib/tomcat8/webapps/images/"+oid+".png");
+			ImageIO.write(image, "png", f);
+			document.append(PHOTO,oid );
+		}
 		return document;
 	}
 
