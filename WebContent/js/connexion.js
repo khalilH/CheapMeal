@@ -52,6 +52,7 @@ $(function() {
 				if (rep.erreur == undefined) {
 					console.log("Connexion reussi ",rep);
 					setCookie(C_NAME_KEY,rep.success);
+					setCookie(C_NAME_LOGIN, login);
 					window.location.href="accueil.html";
 				} else {
 					console.log("Connexion Fail ",rep.message);

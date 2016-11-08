@@ -9,6 +9,9 @@
 	href="bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/recette.css">
 
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/recette.js"></script>
+
 </head>
 <body class="recette_body">
 
@@ -47,18 +50,25 @@
 		</div>
 	</nav>
 
-	<div class="contenu-page">
+	<div class="contenu-page" id="#contenu-recette">
 		<div class="fiche-recette col-lg-12">
-			<div class="titre-recette">Poulet braisé</div>
+			<div class="titre-recette" id="titre-recette">Poulet braisé</div>
 			<div class="contenu-recette">
 				<div class="contenu-left col-lg-3 ">
-					<div class="photo-recette"></div>
-					<div class="nom-auteur-recette">
+					<div class="photo-recette" id="#photo-recette"></div>
+					<div class="nom-auteur-recette" id="nom-auteur-recette">
 						<span>La12</span>
 					</div>
-					<div class="auteur-recette"></div>
-					<div class="noter-recette">
-						<span>Notez la recette</span>
+					<div class="photo-auteur-recette margin-top-10" id="photo-auteur"></div>
+					<div class="note-recette margin-top-20">
+						<span>Note de la recette:</span>
+					<div id="note"><span>3</span><span>/5</span><span> (3 votes)</span></div>
+					</div> 
+					<div class="noter-recette margin-top-20">
+						<div class="row lead margin-top-20">
+							<p>Notez cette recette:</p>
+							<div id="hearts" class="starrr"></div>
+						</div>
 					</div>
 				</div>
 
@@ -68,7 +78,7 @@
 							<div class="titre-ingredients">
 								<span class="txt-size-35">Ingrédients:</span>
 							</div>
-							<div class="ingr">
+							<div class="ingr" id="ingr">
 								<ul>
 									<li><span class="txt-size-25">poulet</span></li>
 									<li><span class="txt-size-25">épices</span></li>
@@ -77,27 +87,33 @@
 							</div>
 							<div>
 								<span class="txt-size-35">Prix estimé: </span><span
-									class="txt-size-25">9.15€</span>
+									class="txt-size-25" id="#prix">9.15€</span>
 							</div>
 						</div>
 					</div>
-					<div class="preparation"></div>
-				</div>
 
-				<div class="cadre">
-					<div class="preparation padding-intracadre">
-						<div class="titre-ingredients">
-							<span class="txt-size-35">Préparation:</span>
-						</div>
-						<div>
-							<ul>
-								<li><span class="txt-size-25">poulet</span></li>
-								<li><span class="txt-size-25">épices</span></li>
-								<li><span class="txt-size-25">sauce verte</span></li>
-							</ul>
+					<div class="cadre margin-top-20">
+						<div class="preparation">
+							<div class="preparation padding-intracadre">
+								<div class="titre-ingredients">
+									<span class="txt-size-35">Préparation:</span>
+								</div>
+								<div id="prep">
+									<ul>
+										<li><span class="txt-size-25">Sortir la sauce
+												verte du frigo</span></li>
+										<li><span class="txt-size-25">Assaisonner le
+												poulet</span></li>
+										<li><span class="txt-size-25">Braiser le poulet</span></li>
+										<li><span class="txt-size-25">Servir avec du riz
+												et des alokos</span></li>
+									</ul>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
+
 			</div>
 
 
