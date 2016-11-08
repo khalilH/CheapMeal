@@ -10,7 +10,7 @@ var __slice = [].slice;
 				numStars: 5,
 				change: function(e, value) {
 					/* A implémenter */
-					
+
 					/* Une fois la recette notée, remplacer par un texte "Vous avez note cette recette" */
 					/* Si l'utilisateur a deja note la recette, afficher directement la note qu'il a mise */
 				}
@@ -112,37 +112,104 @@ $(function() {
 
 /***** DOWN HERE CODE FOR PARSING JSON RESPONSE **********/
 function Auteur(id,login){
-	this.id = id;
-	this.login = login;
+	this.idAuteur = id;
+	this.loginAuteur = login;
 }
 
-function Ingredient(nom, quantite, mesure){
-	this.nom = nom;
+function Ingredient(nom,quantite,mesure){
+	this.nomIngredient = nom;
 	this.quantite = quantite;
 	this.mesure = mesure;
 }
 
-function Recette(id,auteur,titre,photo){
+function Note(moyenne,nbNotes){
+	this.moyenne = moyenne;
+	this.nbNotes = nbNotes;
+}
+
+function Recette(id,auteur,titre,ingredients,preparation,note,photo){
 	this.id = id;
 	this.auteur = auteur;
 	this.titre = titre;
 	this.photo = photo;
+	this.ingredients = ingredients;
+	this.preparation = preparation;
+	this.note = note;
 }
 
-function Ingredients(){}
-
-Ingredients.prototype.getHtml=function(){
-	var s = "<div class='ingr'>";
-	var tmp = "";
-	"<ul><li><span class='txt-size-25'>poulet</span></li>"+
-	"<li><span class='txt-size-25'>épices</span></li>"+	
-	"<li><span class='txt-size-25'>sauce verte</span></li></ul>"+
-	"</div>"
+Recette.revival = function(key, value){
+	if(key.length == 0){
+		var r;
+		if((value.Erreur == undefined) || (value.Erreur == 0)){ // Si l'on trouve pas un champs Erreur dans le JSON
+			r = new Recette(value._id, value.auteur, value.titre, value.ingredients, value.preparation, value.note, value.photo);
+		}
+		else {
+			r = new Object();
+			r.Erreur = value.Erreur;
+		}
+		return (r);
+	}else if((isNumber(key)) && !(typeof value === "string")) {
+		//cas où on est dans le tableau d'ingrédients
+		var ingr = new Ingredient(value.nomIngredient, value.quantite, value.mesure);
+		return ingr;
+	}
+	else if(key == "auteur"){
+		var auteur;
+		auteur = new Auteur(value.idAuteur, value.loginAuteur);
+		return auteur;
+	}
+	else if(key == "note"){
+		var note;
+		note = new Note(value.moyenne, value.nbNotes);
+		return note;
+	}
+	else {
+		return value;
+	}
 }
 
-Recette.prototype.getHtml=function(){
-	
+Recette.traiteReponseJSON = function(json_text){
+
+	//obj est une Recette
+	var obj = JSON.parse(JSON.stringify(json_text), Recette.revival);
+	if(obj.erreur == undefined){
+		$("#titre-recette").html("<span>"+obj.titre+"</span>");
+		$("#nom-auteur-recette").html("<span>"+obj.auteur.loginAuteur+"</span>");
+		/* photo auteur */
+		$("#note").html("<span>"+obj.note.moyenne+"/5"+" ("+obj.note.nbNotes+" votes)</span>");
+		/* si l'utilisateur a deja note la recette, afficher le nombre d'etoile attribue */
+
+		var s = "<ul>";
+		var i;
+		for(i=0; i<obj.ingredients.length; i++){
+			var ingr = obj.ingredients[i];
+			s+="<li><span class='txt-size-25'>"+ingr.nomIngredient+": "+ingr.quantite+" "+ingr.mesure+"</span></li>";
+		}
+		s+="</ul>";
+		$("#ingr").html(s);
+
+		/* estimation du prix de la recette */
+		//$("#prix").html("9.15€");
+
+		var p = "<ul>";
+		for(i=0; i<obj.preparation.length; i++){
+			p+="<li><span class='txt-size-25'>"+obj.preparation[i]+"</span></li>";
+		}
+		p+="</ul>";
+		$("#prep").html(p);
+
+	}else{
+		/* environnement.users = old_users; 
+		gestionErreurJson(obj.erreur); */
+	}
 }
+
+
+
+function isNumber(s){
+	return ! isNaN (s-0);
+}
+
 
 
 $(document).ready(function() {
@@ -150,6 +217,31 @@ $(document).ready(function() {
 	$('#hearts').on('starrr:change', function(e, value){
 		$('#count').html(value);
 	});
+
+	json_text = {
+			"_id" : "5820a24696aa58767018a53f",
+			"titre" : "Tarte aux pommes",
+			"auteur" : { 
+				"idAuteur" : 10, 
+				"loginAuteur" : "patra" 
+			},
+			"ingredients" : [ 
+				{ "nomIngredient" : "pomme", "quantite" : 5, "mesure" : "unite(s)" },
+				{ "nomIngredient" : "pâte feuilleté", "quantite" : 1, "mesure" : "unite(s)" },
+				{ "nomIngredient" : "sucre", "quantite" : 500, "mesure" : "g" }
+				],
+				"preparation" : [ 
+					"couper les pommes", 
+					"mettre à cuir pendant 50min"
+					], 
+					"note" : { 
+						"moyenne" : 0,
+						"nbNotes" : 0
+					},
+					"date" : "1478533702656" 
+	};
+
+	Recette.traiteReponseJSON(json_text);
 
 });
 
