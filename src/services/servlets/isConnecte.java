@@ -11,10 +11,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.ConnexionServices;
-import services.RecupMdpServices;
 
 public class isConnecte {
-	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
