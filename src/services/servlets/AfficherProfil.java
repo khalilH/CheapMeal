@@ -13,10 +13,10 @@ import org.json.JSONObject;
 
 import services.ProfilServices;
 
-public class AfficherBio extends  HttpServlet {
+public class AfficherProfil extends  HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AfficherBio() {
+    public AfficherProfil() {
         super();
     }
 
@@ -28,7 +28,7 @@ public class AfficherBio extends  HttpServlet {
 				
 		try {
 			/* Traitement des services */
-			JSONObject res = ProfilServices.afficherBio(cle, login);
+			JSONObject res = ProfilServices.afficherProfil(cle, login);
 			
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();

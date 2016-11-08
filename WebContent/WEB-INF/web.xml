@@ -141,12 +141,12 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>AfficherBio</servlet-name>
-		<servlet-class>services.servlets.AfficherBio</servlet-class>
+		<servlet-name>AfficherProfil</servlet-name>
+		<servlet-class>services.servlets.AfficherProfil</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>AfficherBio</servlet-name>
-		<url-pattern>/afficherBio</url-pattern>
+		<servlet-name>AfficherProfil</servlet-name>
+		<url-pattern>/afficherProfil</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

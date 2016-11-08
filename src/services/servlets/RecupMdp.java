@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import services.RecupMdpServices;
+import services.UtilisateurServices;
 
 public class RecupMdp  extends HttpServlet{
 	
@@ -30,7 +30,7 @@ public class RecupMdp  extends HttpServlet{
 			
 			/* Traitement du service */
 			try {
-				JSONObject result = RecupMdpServices.recupMdp(email);
+				JSONObject result = UtilisateurServices.recupMdp(email);
 				
 				/* Ecriture de la reponse */
 				PrintWriter writer = response.getWriter();

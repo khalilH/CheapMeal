@@ -18,6 +18,15 @@ import util.bdTools.RequeteStatic;
 
 public class ProfilFonctions {
 
+	/**
+	 * Permet de creer ou de mettre a jour la biographie de l'utilisateur
+	 * @param cle la cle de session
+	 * @param bio la biographie
+	 * @throws InformationUtilisateurException 
+	 * @throws NullPointerException
+	 * @throws SessionExpireeException
+	 * @throws IDException
+	 */
 	public static void ajouterBio(String cle, String bio) throws 
 	InformationUtilisateurException, NullPointerException, 
 	SessionExpireeException, IDException {
@@ -44,7 +53,7 @@ public class ProfilFonctions {
 		RequeteStatic.ajouterBioProfil(id, bio);
 	}
 
-	public static JSONObject afficherBio(String cle, String login) throws InformationUtilisateurException, SessionExpireeException, JSONException, MongoClientException, UnknownHostException {
+	public static JSONObject afficherProfil(String cle, String login) throws InformationUtilisateurException, SessionExpireeException, JSONException, MongoClientException, UnknownHostException {
 		if (cle == null) 
 			throw new NullPointerException("Cle de session manquante");
 

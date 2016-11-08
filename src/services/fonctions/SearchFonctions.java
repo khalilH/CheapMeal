@@ -19,6 +19,13 @@ import org.json.JSONObject;
 
 public class SearchFonctions {
 
+	/**
+	 * Recherche les Recettes satisfaisant la recherche
+	 * @param query requete de la recherche, optionel
+	 * @return un JSONObject contenant les recettes satisfaisant la requete
+	 * @throws JSONException
+	 * @throws UnknownHostException si elasticSearch ne repond pas
+	 */
 	public static JSONObject search(String query) throws JSONException, UnknownHostException {
 
 		Settings settings = Settings.builder()
