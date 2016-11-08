@@ -61,11 +61,14 @@ $(function (){
 			}
 			else if((isNumber(key)) && (value.auteur instanceof Auteur)) { // Si l'on est dans une case du tableau et que l'auteur est un objet de la classe auteur
 				var recette = new Recette(value._id, value.auteur, value.titre, value.photo);
+				console.log("J'ai cree toz");
 				return recette;
 			}
 			else if(key == "auteur") { // Lorsquon doit crée un utilisateur
 				var auteur;
 				auteur = new Auteur(value.idAuteur, value.loginAuteur);
+				console.log("J'ai cree toz "+auteur);
+
 				return auteur;
 			}
 			else{
@@ -104,11 +107,10 @@ $(function (){
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			dataType : 'json',
 			success : function(rep) {
-				console.log(JSON.stringify(rep));
 				var jsonrep = JSON.stringify(rep)
 				console.log(jsonrep);
-				if(rep.erreur == undefined){
-					var recetteListe = JSON.parse(rep,recetteRevival);
+				if(jsonrep.erreur == undefined){
+					var recetteListe = JSON.parse(jsonrep,recetteRevival);
 					updatePage(recetteListe);
 				}
 			},

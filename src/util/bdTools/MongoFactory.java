@@ -179,9 +179,11 @@ public class MongoFactory {
 		BasicDBObject sortQuery = new BasicDBObject("date",-1);
 		MongoDatabase database = DBStatic.getMongoConnection();
 		MongoCollection<BasicDBObject> col = database.getCollection(COLLECTION_RECETTE, BasicDBObject.class);
-		MongoCursor<BasicDBObject> cursor = col.find().sort(sortQuery).iterator();
+		MongoCursor<BasicDBObject> cursor = col.find().sort(sortQuery).limit(1).iterator();
 		while(cursor.hasNext()){
 			BasicDBObject obj = cursor.next();
+			ObjectId oid = obj.getObjectId("_id");
+			obj.replace("_id", oid.toString());
 			list.add(obj);
 		}
 		return list;
@@ -192,9 +194,11 @@ public class MongoFactory {
 		BasicDBObject sortQuery = new BasicDBObject(NOTE+"."+NOTE_MOYENNE,-1);
 		MongoDatabase database = DBStatic.getMongoConnection();
 		MongoCollection<BasicDBObject> col = database.getCollection(COLLECTION_RECETTE, BasicDBObject.class);
-		MongoCursor<BasicDBObject> cursor = col.find().sort(sortQuery).iterator();
+		MongoCursor<BasicDBObject> cursor = col.find().sort(sortQuery).limit(1).iterator();
 		while(cursor.hasNext()){
 			BasicDBObject obj = cursor.next();
+			ObjectId oid = obj.getObjectId("_id");
+			obj.replace("_id", oid.toString());
 			list.add(obj);
 		}
 		return list;

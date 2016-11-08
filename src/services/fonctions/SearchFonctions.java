@@ -78,11 +78,5 @@ public class SearchFonctions {
 
 	}
 	
-	public static JSONObject searchHomePage() throws JSONException, MongoClientException, UnknownHostException{
-		JSONObject jb = new JSONObject();
-		jb.append("recettesRecentes", MongoFactory.getRecentRecipes());
-		jb.append("recettesBest", MongoFactory.getBestRecipes());
-		return jb;
 
-	}
 }

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClientException;
@@ -24,6 +27,45 @@ import util.hibernate.model.Utilisateurs;
 
 public class RecetteFonctions {
 
+	public static ArrayList<BasicDBObject> getRecentRecipes() throws MongoClientException, UnknownHostException {
+		ArrayList<BasicDBObject> list = new ArrayList<>();
+		BasicDBObject sortQuery = new BasicDBObject("date",-1);
+		MongoDatabase database = DBStatic.getMongoConnection();
+		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
+		MongoCursor<BasicDBObject> cursor = col.find().sort(sortQuery).limit(1).iterator();
+		while(cursor.hasNext()){
+			BasicDBObject obj = cursor.next();
+			ObjectId oid = obj.getObjectId("_id");
+			obj.replace("_id", oid.toString());
+			list.add(obj);
+		}
+		return list;
+	}
+	
+	public static ArrayList<BasicDBObject> getBestRecipes() throws MongoClientException, UnknownHostException {
+		ArrayList<BasicDBObject> list = new ArrayList<>();
+		BasicDBObject sortQuery = new BasicDBObject(MongoFactory.NOTE+"."+MongoFactory.NOTE_MOYENNE,-1);
+		MongoDatabase database = DBStatic.getMongoConnection();
+		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
+		MongoCursor<BasicDBObject> cursor = col.find().sort(sortQuery).limit(1).iterator();
+		while(cursor.hasNext()){
+			BasicDBObject obj = cursor.next();
+			ObjectId oid = obj.getObjectId("_id");
+			obj.replace("_id", oid.toString());
+			list.add(obj);
+		}
+		return list;
+	}
+	
+	public static JSONObject searchHomePage() throws JSONException, MongoClientException, UnknownHostException{
+		JSONObject jb = new JSONObject();
+		JSONArray recentRecipes = new JSONArray(MongoFactory.getRecentRecipes());
+		JSONArray bestRecipes = new JSONArray(MongoFactory.getBestRecipes());
+		jb.put("recettesRecentes", recentRecipes);
+		jb.put("recettesBest", bestRecipes);
+		return jb;
+
+	}
 	
 	public static void ajouterRecette(String titre, String key, List<String> listIng, List<Double> listQuant, List<String> listMesures, List<String> prepa)
 			throws RecetteException, InformationUtilisateurException, SessionExpireeException, MongoClientException,
