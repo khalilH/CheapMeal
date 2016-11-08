@@ -15,11 +15,10 @@ $(function (){
 	Recette.prototype.getHtml=function(){
 		var s ="<div  class='col-md-6 col-lg-4'>"+
 		"<div class='recette-container recette' id='"+this.id+"' >"+
-		"<div class='recette-header'></div>"+
 		"<div class='recette-img'>"+
 			"<img width='100%' height='100%' src='"+this.photo+"'</img></div>"+
 		"<div class='recette-footer'>"+
-		"<hr><h3 class='titre-recette'>"+this.titre+"</h3>"+
+		"<h3 class='titre-recette'>"+this.titre+"</h3>"+
 		"</div></div></div>";
 		return s;
 	}
@@ -78,63 +77,46 @@ $(function (){
 		/**** BACK TO NORMAL JAVASCRIPT ****/
 		
 		
-		
+	/**
+	 *  CODE FIRING WHEN JQUERY IS READY 
+	 */	
 	if((bool = isConnected()) === 1){
 		loadNavbarConnected();
 	}
 	else if(bool === -1){ //User doesnt have a cookie let him browse
 		loadNavbarDisconnected();
-	}else // User have an expirated key let him reconnect
-		window.href.location="connexion.html";
-		
-		var json = {
-  "recettesRecentes": [
-    {"auteur": {
-    "idAuteur": "10",
-    "loginAuteur": "Maitre"
-    },
-    "_id" : "100",
-    "titre" : "Pates pizza",
-    "photo" : "images/favicon.png"
-    },
-       {"auteur": {
-    "idAuteur": "12",
-    "loginAuteur": "Maitre toz"
-    },
-    "_id" : "120",
-    "titre" : "Pates crous",
-    "photo" : "images/cheapmeal_logo.png"
-    }
-  ],
-   "recettesBest": [
-        {"auteur": {
-    "idAuteur": "10",
-    "loginAuteur": "Maitre"
-    },
-    "_id" : "100",
-    "titre" : "Pates pizza",
-    "photo" : "images/favicon.png"
-    },
-       {"auteur": {
-    "idAuteur": "12",
-    "loginAuteur": "Maitre toz"
-    },
-    "_id" : "120",
-    "titre" : "Pates crous",
-    "photo" : "images/cheapmeal_logo.png"
-    }
-  ]
-};
-json = JSON.stringify(json);
-	var obj = JSON.parse(json,recetteRevival);
-	if(!(obj instanceof RecetteList))
-		console.log("toz");
-	else{
-		$("#recentRecipe").html(obj.getHtmlRecent());
-		$("#BestRecipe").html(obj.getHtmlBest());
+	}else{ // User have an expirated key let him reconnect
+		window.location.href="connexion.html";
 	}
+	searchForHomePage();
 	
-		$("#deconnexion").on('click',function(){
+	function searchForHomePage(){
+		//TODO remplacer par la bonne requete
+		console.log("Loading home page")
+		$.ajax({
+			url : 'searchHome',
+			type : 'GET',
+			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+			dataType : 'json',
+			success : function(rep) {
+				console.log(JSON.stringify(rep));
+				var jsonrep = JSON.stringify(rep)
+				if(rep.Erreur == undefined)
+					console.log(jsonrep);
+			},
+			error : function(resultat, statut, erreur) {
+				console.log("Bug");
+				console.log(resultat);
+				alert("dawg");
+			}
+		});
+		
+	}
+	$("#searchForm").on('submit',function(event){
+		event.preventDefault();
+		var query = this.search.value;
+	});
+	$("#deconnexion").on('click',function(){
 		// TODO Delete cookie + verifier sil existe (erreur)
 		var key;
 		console.log("DeConnexion de "+key);
@@ -160,12 +142,21 @@ json = JSON.stringify(json);
 		
 	});
 	
+
+	
+	$("#connexion").on('click',function(){
+		window.location.href="connexion.html";
+	});
+	$("#signup").on('click',function(){
+			window.location.href="inscription.html";
+	});
+		
+	
 	$('.recette').on('click',function(){
 		console.log("J'ai clique sur une recette ",this.id);
-		//TODO Afficher la page de recette
+		//TODO Afficher la page de la recette
 	});
-	
-	
+
 	
 	
 	

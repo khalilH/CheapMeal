@@ -12,6 +12,7 @@
 <script src="js/jquery-3.1.1.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="js/accueil.js"></script>
+<script src="js/require.js"></script>
 <script src="js/cookie.js"></script>
 
 
@@ -62,15 +63,18 @@
 							<div>
 								<h3 class="titre-recherche">Trouver une recette</h3>
 							</div>
-							<div class="input-group stylish-input-group">
-								<input type="text" class="form-control rad10"
-									placeholder="Tarte aux pommes, Poulet massala, Loc Lac ...">
-								<span class="input-group-addon rad10">
-									<button type="submit">
-										<span class="glyphicon glyphicon-search"></span>
-									</button>
-								</span>
-							</div>
+							<form role="form" id="searchForm">
+								<div class="input-group stylish-input-group">
+									<input name="search" type="text" class="form-control rad10"
+										placeholder="Tarte aux pommes, Poulet massala, Loc Lac ...">
+									<span class="input-group-addon rad10">
+										<button type="submit">
+											<span class="glyphicon glyphicon-search"></span>
+										</button>
+									</span>
+
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>

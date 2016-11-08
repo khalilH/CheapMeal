@@ -41,10 +41,8 @@ public class ConnexionFonctions {
 		else{ 			// Identifiants invalide
 
 			if(!RequeteStatic.isLoginDisponible(login)){
-				//jb.put("Error", "Votre mot de passe est incorrect");
 				throw new AuthenticationException("Votre mot de passe est incorrect");
 			}else{
-				//jb.put("Error", "Votre compte n'est pas repertorie dans notre base");
 				throw new AuthenticationException("Nom d'utilisateur inconnu");
 			}
 		}

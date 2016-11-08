@@ -4,7 +4,9 @@
 	font-weight: normal;
 	font-style: normal;
 }
-
+h3 {
+	margin-top : 10px;
+}
 .accueil_body{
 	/* background-color: #f1f3f2; */
 	background-color: #f1f3f2;
