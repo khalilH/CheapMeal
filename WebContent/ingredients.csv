@@ -1,52 +1,52 @@
-TYPE,NOM,EAN ou prix
-i,beurre,3451790941610
-i,chocolat noir,7613033113697
-i,oeufs frais,3270190205685
-i,farine,3068110702235
-i,sucre en poudre,3220035150007
-i,sucre roux,3220035210008
-i,levure,8722700030027
-i,sucre vanille,3564700029879
-i,pate brisee,3248830690627
-i,huile assaisonnement,3265479186007
-i,sel,3252378001319
-i,poivre,3560070762101
-i,mascarpone,3760056260502
-i,poudre cacao,3564700748435
-i,biscuits cuillere,3256220179805
-i,eau,3068320040103
-i,Maizena,8712100338694
-i,sucre glace,3165432640006
-i,champignons,3333160002025
-i,jus citron,3225350000501
-i,creme fraiche,3270190020998
-i,miel,3560070279166
-i,yaourt nature,3033490593841
-i,saumon fume,3560070556991
-i,aneth,3166290201866
-i,lait,3270190204374
-i,lait concentre,3560070799695
-i,pate feuilletee,3270190022534
-i,poudre d'amandes,3179140503232
-i,viande hachee,3245413750785
-i,puree de tomate,3560070323289
-i,fromage rape,3270190207696
-i,gousse vanille,3179142897902
-i,jambon,3270190200802
-i,olives,3256220112208
-i,creme epaisse,3250390151562
-i,concentré de tomate,3560070280612
-i,thon en boite,3019080067015
-i,pates torti,3038350013606
-i,spaghetti,3038350025005
-i,puree de pomme de terre,7613034246882
-i,nutella,3017624047813
-i,compote de pommes,3045320027280
-i,confiture de fraise,3560070369690
-i,mozzarella,8000430133035
-i,cornichons,4012200040263
-i,filet de poulet,3266980123994
-f,tomate,2.25
-f,fraise,11.2
-f,pomme,2.34
-f,carotte,0.93
+TYPE,NOM,EAN,quantite(g-cl-u)
+i,beurre,3451790941610,250
+i,chocolat noir,7613033113697,200
+i,oeufs frais,3270190205685,12
+i,farine,3068110702235,1000
+i,sucre en poudre,3220035150007,1000
+i,sucre roux,3220035210008,1000
+i,levure,8722700030027,7
+i,sucre vanille,3564700029879,10
+i,pate brisee,3248830690627,1
+i,huile assaisonnement,3265479186007,200
+i,sel,3252378001319,500
+i,poivre,3560070762101,42
+i,mascarpone,3760056260502,500
+i,poudre cacao,3564700748435,250
+i,biscuits cuillere,3256220179805,36
+i,eau,3068320040103,150
+i,Maizena,8712100338694,400
+i,sucre glace,3165432640006,500
+i,champignons,3333160002025,230
+i,jus citron,3225350000501,70
+i,creme fraiche,3270190020998,200
+i,miel,3560070279166,250
+i,yaourt nature,3033490593841,12
+i,saumon fume,3560070556991,2
+i,aneth,3166290201866,10
+i,lait,3270190204374,100
+i,lait concentre,3560070799695,400
+i,pate feuilletee,3270190022534,1
+i,poudre d'amandes,3179140503232,125
+i,viande hachee,3245413750785,500
+i,puree de tomate,3560070323289,500
+i,fromage rape,3270190207696,200
+i,gousse vanille,3179142897902,4
+i,jambon,3270190200802,4
+i,olives,3256220112208,200
+i,creme epaisse,3250390151562,20
+i,concentré de tomate,3560070280612,150
+i,thon en boite,3019080067015,140
+i,pates torti,3038350013606,500
+i,spaghetti,3038350025005,1000
+i,puree de pomme de terre,7613034246882,520
+i,nutella,3017624047813,750
+i,compote de pommes,3045320027280,750
+i,confiture de fraise,3560070369690,370
+i,mozzarella,8000430133035,125
+i,cornichons,4012200040263,850
+i,filet de poulet,3266980123994,720
+f,tomate,2.25,1000
+f,fraise,11.2,1000
+f,pomme,2.34,1000
+f,carotte,0.93,1000
