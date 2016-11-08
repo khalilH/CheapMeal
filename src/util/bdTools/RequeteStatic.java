@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import org.hibernate.Session;
 
+import util.BCrypt;
 import util.ServiceTools;
 import util.hibernate.HibernateUtil;
 import util.hibernate.model.Profils;
@@ -12,38 +13,7 @@ import util.hibernate.model.Utilisateurs;
 
 
 public class RequeteStatic {
-	/**
-	 * 
-	 * 	Session s = HibernateUtil.getSessionFactory().getCurrentSession();
-		s.beginTransaction();
-		
-				Exemple de creation d'une entite
-	
-	Integer id  =(Integer) s.save(new Utilisateurs("toz", "1234", "issa", "toz", "1223@"));
-	
-				Suppression dune entite
-				
-	s.createQuery("delete from Sessions where cleSession = :cleSession")
-						.setParameter("cleSession", cle)
-						.executeUpdate();
-	s.getTransaction().commit();
-				Update dune entite
-				-> En SQL Parce qu'il ya 2 table
-	s.createSQLQuery("update SESSIONS s, UTILISATEURS u set s.dateExpiration = :time where s.idSession = u.id and u.login = :u_login")
-						.setParameter("u_login", login)
-						.setParameter("time", time)
-						.executeUpdate();
-	s.getTransaction().commit();
-				
-				Get dune entite
-				
-					Sessions s_user =(Sessions) s.createQuery(" from Sessions where cleSession = :cleSession")
-					.setParameter("cleSession", cle)
-					.uniqueResult();
-				
-	**/
-	
-	
+
 	/**
 	 * Supprime la session d'un utilisateur grace � son Token
 	 * @param cle
@@ -84,12 +54,12 @@ public class RequeteStatic {
 	public static boolean checkIdentifiantsValide(String login,String mdp)  {
 		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
 		s.beginTransaction();
-		Utilisateurs user =(Utilisateurs) s.createQuery("from Utilisateurs u where login = :login and mdp = :mdp")
+		Utilisateurs user = (Utilisateurs) s.createQuery("from Utilisateurs u where login = :login")
 					.setParameter("login", login)
-					.setParameter("mdp", mdp)
 					.uniqueResult();
 		s.getTransaction().commit();
-		return user != null;
+		boolean bonmdp = BCrypt.checkpw(mdp, user.getMdp());
+		return (user != null) && bonmdp;
 	}
 
 	/**
@@ -158,7 +128,6 @@ public class RequeteStatic {
 		s.save(s1);
 		s.getTransaction().commit();
 		return cle;
-		//TODO verifier que la cle generee n'existe pas deja (tres peu probable)
 	}
 
 	/**
@@ -268,7 +237,7 @@ public class RequeteStatic {
 		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
 		s.beginTransaction();
 		s.createQuery("update Utilisateurs u set u.mdp = :mdp where u.id = :id")
-					.setParameter("mdp", mdp)
+					.setParameter("mdp", BCrypt.hashpw(mdp, BCrypt.gensalt()))
 					.setParameter("id", id)
 					.executeUpdate();
 		s.getTransaction().commit();

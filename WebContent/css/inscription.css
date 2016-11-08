@@ -44,3 +44,7 @@ div.tooltip-inner>p {
 .tooltip.left .tooltip-arrow {
 	border-left-color: #ff4444;
 }
+
+.btn{
+	background-image: none !important;   
+}

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import services.RecupMdpServices;
+import services.UtilisateurServices;
 
 public class RecupMdp  extends HttpServlet{
 	
@@ -21,7 +21,6 @@ public class RecupMdp  extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	//TODO Recup le mdp crypte et le decrypte cote client avec Bcrypt
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 			
@@ -31,7 +30,7 @@ public class RecupMdp  extends HttpServlet{
 			
 			/* Traitement du service */
 			try {
-				JSONObject result = RecupMdpServices.recupMdp(email);
+				JSONObject result = UtilisateurServices.recupMdp(email);
 				
 				/* Ecriture de la reponse */
 				PrintWriter writer = response.getWriter();

@@ -2,9 +2,8 @@ package util.bdTools;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Basic;
 
 import org.bson.types.ObjectId;
 import org.json.JSONException;
@@ -32,8 +31,16 @@ public class MongoFactory {
 	public static final String ID_USER = "idUser";
 	public static final String ID_RECETTE = "idRecette"; 
 	public static final String IDS_RECETTE = "idsRecette";
+	public static final String NOM_INGREDIENT = "nomIngredient";
+	public static final String QUANTITE = "quantite";
+	public static final String MESURE = "mesure";
+	public static final String EAN = "ean";
+	public static final String DATE = "date";
+	public static final String PRIX_AU_KG = "prix";
+	
 	
 	public static final String COLLECTION_RECETTE = "Recettes";
+	public static final String COLLECTION_INGREDIENTS= "ingredients";
 	public static final String COLLECTION_UTILISATEUR_NOTES = "UtilisateurNotes";
 
 	public static String getAuteur() {
@@ -84,14 +91,19 @@ public class MongoFactory {
 		return IDS_RECETTE;
 	}
 
-	public static BasicDBObject creerDocumentRecette(String titre, int idAuteur, String loginAuteur, List<String> listeIng, List<String> prepa) throws MongoClientException, UnknownHostException{
+	public static BasicDBObject creerDocumentRecette(String titre, int idAuteur, String loginAuteur, List<String> listIng, List<Double> listQuant, List<String> listMesure, List<String> prepa) throws MongoClientException, UnknownHostException{
+		Date d = new Date();
 		BasicDBObject document = new BasicDBObject(TITRE, titre);
 		BasicDBObject auteur = creerDocumentAuteur(idAuteur, loginAuteur);
 		document.append(AUTEUR, auteur);
-		document.append(INGREDIENTS, listeIng);
+		ArrayList<BasicDBObject> ingredients = new ArrayList<>();
+		for(int i=0 ; i<listIng.size(); i++)
+			ingredients.add(creerDocumentIngredient(listIng.get(i), listQuant.get(i), listMesure.get(i)));
+		document.append(INGREDIENTS, ingredients);
 		document.append(PREPARATION, prepa);
 		BasicDBObject note = creerDocumentNote(0, 0);
 		document.append(NOTE, note);
+		document.append(DATE, d.getTime());
 
 		return document;
 	}
@@ -106,6 +118,43 @@ public class MongoFactory {
 		BasicDBObject document = new BasicDBObject(NOTE_MOYENNE, moyenne);
 		document.append(NOMBRE_NOTE, nbNotes);
 		return document;
+	}
+	
+	public static BasicDBObject creerDocumentIngredient(String nom, double quantite, String mesure){
+		BasicDBObject document = new BasicDBObject(NOM_INGREDIENT, nom);
+		document.append(QUANTITE, quantite);
+		document.append(MESURE, mesure);
+		return document;
+	}
+	
+	/**
+	 * Cree un document representant un ingredient, qui sera stocke dans la 
+	 * collection ingredients
+	 * @param nom le nom de l'ingredient
+	 * @param ean le code barre de l'ingredient
+	 * @param quantite la quantite (en g, cl, unite) du l'ingredient associe
+	 * au code barre ean
+	 * @return Objet JSON representant un ingredient
+	 */
+	public static BasicDBObject creerDocumentListeIngredient(String nom, String ean, double quantite) {
+		return new BasicDBObject()
+				.append(NOM_INGREDIENT, nom)
+				.append(EAN, ean)
+				.append(QUANTITE, quantite);
+	}
+
+	/**
+	 * Cree un document representant un fruit ou un legume, qui sera stocke 
+	 * dans la collection ingredients
+	 * @param nom le nom du fruit ou legume
+	 * @param le prix au kilo
+	 * @param quantite la quantite en g 
+	 * @return Objet JSON representant un fruit ou un legume
+	 */
+	public static BasicDBObject creerDocumentFruit(String nom, double prix, double quantite) {
+		return new BasicDBObject().append(NOM_INGREDIENT, nom)
+				.append(PRIX_AU_KG, prix)
+				.append(QUANTITE, quantite);
 	}
 
 	//	public static BasicDBObject updateDejaNote(String id, String idRecette, List<String> recettesDejaNotees){
@@ -134,9 +183,10 @@ public class MongoFactory {
 		for(BasicDBObject obj : col.find(document)){
 			list.add(obj);
 		}
+		DBStatic.closeMongoDBConnection();
 		return list;
 	}
-
+	
 	public static boolean noterRecette(Utilisateurs u, String key, String idRecette, int note) throws RecetteException, MongoClientException, UnknownHostException{
 		/* Notation de la recette */
 		boolean res;

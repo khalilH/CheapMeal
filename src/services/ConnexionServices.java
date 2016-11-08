@@ -2,11 +2,13 @@ package services;
 
 import java.sql.SQLException;
 
-import javax.security.sasl.AuthenticationException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.mongodb.util.JSON;
+
+import exceptions.AuthenticationException;
 import exceptions.InformationUtilisateurException;
 import services.fonctions.ConnexionFonctions;
 import util.ServiceTools;
@@ -25,5 +27,16 @@ public class ConnexionServices {
 		} catch (AuthenticationException ae) {
 			return ServiceTools.serviceRefused(ae.getMessage(), -1);
 		}
+	}
+	
+	public static JSONObject isConnecte(String key) throws JSONException{
+		String result;
+		try {
+			result = ConnexionFonctions.isConnecte(key)+"";
+			return ServiceTools.serviceAccepted(result);
+		} catch (InformationUtilisateurException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		}
+		
 	}
 }

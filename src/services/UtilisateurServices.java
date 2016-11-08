@@ -1,6 +1,11 @@
 package services;
 
+import java.security.KeyException;
 import java.sql.SQLException;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.naming.NamingException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,5 +62,46 @@ public class UtilisateurServices {
 				return ServiceTools.serviceRefused(e.getMessage(), 0);
 			}
 	}
+	
+	/**
+	 * Permet de faire appel aux fonction constituant le service "Deconnexion"
+	 * @param key la cle de session de l'utilisateur a deconnecter
+	 * @return JSONObject contenant "success" ou "error" avec un message d'erreur
+	 * @throws JSONException : s'il y a eut une erreur a la creation ou manipulation du JSONObject 
+	 */
+	public static JSONObject deconnexion(String key) throws JSONException {
+		try {
+			UtilisateurFonctions.deconnexion(key);
+			return ServiceTools.serviceAccepted("Deconnexion");
+		} catch (NullPointerException npe) {
+			return ServiceTools.serviceRefused(npe.getMessage(), -1);
+		} catch (KeyException ke) {
+			return ServiceTools.serviceRefused(ke.getMessage(), -1);
+		} catch (SQLException sqle) {
+			return ServiceTools.serviceRefused(sqle.getMessage(), -1);
+		} catch (SessionExpireeException see) {
+			return ServiceTools.serviceAccepted("Deconnexion");
+		}
+	}
+	
+	
+	public static JSONObject recupMdp(String email) throws JSONException {
+		try {
+			String result = UtilisateurFonctions.recup(email);
+			return ServiceTools.serviceAccepted(result);
+			
+		} catch (NullPointerException npe) {
+			return ServiceTools.serviceRefused(npe.getMessage(), -1);
+		} catch (InformationUtilisateurException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		} catch (AddressException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		} catch (NamingException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		} catch (MessagingException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		}
+	}
+
 
 }

@@ -1,14 +1,22 @@
 package services.fonctions;
 
+import java.security.KeyException;
 import java.sql.SQLException;
+import java.util.Random;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.naming.NamingException;
 
 import exceptions.IDException;
 import exceptions.InformationUtilisateurException;
 import exceptions.SessionExpireeException;
+import util.BCrypt;
 import util.ServiceTools;
 import util.bdTools.RequeteStatic;
 
 public class UtilisateurFonctions {
+	
 
 	public static void inscription(String login, String mdp, String prenom, String nom, String email) throws InformationUtilisateurException, IDException, SQLException{
 
@@ -22,14 +30,20 @@ public class UtilisateurFonctions {
 		if(mdp.length() < 6)
 			throw new InformationUtilisateurException("Mot de passe trop court");
 
+		if (!ServiceTools.isEmailValide(email)) 
+			throw new InformationUtilisateurException("Email non valide");
+		
 		if(!RequeteStatic.isLoginDisponible(login))
 			throw new InformationUtilisateurException("Ce nom d'utilisateur n'est pas libre");
 
 		if(!RequeteStatic.isEmailDisponible(email))
 			throw new InformationUtilisateurException("Cette adresse email est deja utilisee");
 
+		/* Cryptage du mdp */
+		String hashed = BCrypt.hashpw(mdp, BCrypt.gensalt());
+		
 		/* Creation de l'utilisateur dans la base SQL */
-		RequeteStatic.ajoutUtilisateur(login, mdp, nom, prenom, email);
+		RequeteStatic.ajoutUtilisateur(login, hashed, nom, prenom, email);
 		int id = RequeteStatic.obtenirIdAvecLogin(login);
 		if(id == -1)
 			throw new IDException("Utilisateur inexistant");
@@ -58,6 +72,8 @@ public class UtilisateurFonctions {
 		if(newMdp.length() < 6)
 			throw new InformationUtilisateurException("Le mot de passe doit contenir au moins 6 caracteres");
 		
+		
+		//TODO faire verification que l'ancien mot de passe est correct
 
 		/* Verifier si le mot de passe est different de l'ancien */
 		if(oldMdp.equals(newMdp))
@@ -80,14 +96,13 @@ public class UtilisateurFonctions {
 			throw new NullPointerException("Cle de session manquante");
 		
 		if (cle.length() != 32) 
-			throw new NullPointerException("Cle invalide");
+			throw new InformationUtilisateurException("Cle invalide");
 		
 		if (newEmail == null) 
 			throw new NullPointerException("Adresse mail manquante");
 		
-		//TODO verifier que l'adresse mail est une adresse mail valide
-//		if(!checkMail(newEmail)) 
-//			throw new MailException("Adresse mail non valide");
+		if (!ServiceTools.isEmailValide(newEmail)) 
+			throw new InformationUtilisateurException("Email non valide");
 		
 		if (!ServiceTools.isCleActive(cle))
 			throw new SessionExpireeException("Votre session a expiree");
@@ -102,6 +117,62 @@ public class UtilisateurFonctions {
 		RequeteStatic.changerEmailAvecId(id, newEmail);
 		
 	}
+	
+	/**
+	 * Permet de deconnecter un utilisateur en supprimant sa cle de session
+	 * de la base de donnee
+	 * @param cle la cle de session
+	 * @throws NullPointerException cle non passee en parametre
+	 * @throws KeyException cle non valide
+	 * @throws SQLException 
+	 * @throws SessionExpireeException la session a deja expire
+	 */
+	public static void deconnexion(String cle) throws NullPointerException, KeyException, SQLException, SessionExpireeException {
+		
+		if (cle == null)
+			throw new NullPointerException("Arguments manquants");
+		
+		if(cle.length() != 32)
+			throw new KeyException("Cle invalide");
+		
+		if (!ServiceTools.isCleActive(cle))
+			throw new SessionExpireeException("Votre session a expiree");
+		
+		/* Fermeture session */
+		RequeteStatic.supprimerSessionAvecCle(cle);
+	}
 
+	public static String recup(String email) throws InformationUtilisateurException, AddressException, NamingException, MessagingException {
+		if(email == null)
+			throw new NullPointerException("Email manquant");
+		if(!ServiceTools.isEmailValide(email))
+			throw new InformationUtilisateurException("Ne correspond pas a un email");
+		
+		if(!RequeteStatic.isEmailDisponible(email)){
+			String login = RequeteStatic.obtenirLoginAvecMail(email);
+			String mdp = genererRandomMDP();
+			RequeteStatic.changerMdpAvecId(RequeteStatic.obtenirIdAvecLogin(login), mdp);
+			String body ="Hi,\n"
+					+ "Vous avez initialiser une procedure de reinitialisation de mot de passe.\n"
+					+ "Voici vos identifiants : \n"
+					+ "Login : "+login+"\n"
+					+ "Mot de passe provisoire: "+mdp+"\n\n"
+					+ "Une fois connecte, n'oubliez pas de changer votre mot de passe."
+					+ "Au revoir et a bientot sur CheapMeal :)";
+			String subject = "Reinitialisation de mot de passe";
+			ServiceTools.sendEmail(body, subject, email);
+		}else{
+			throw new InformationUtilisateurException("Cette adresse email n'existe pas dans notre base de donnees.");
+		}
+		return "Un email a ete envoye a l'adresse indiquee";
+	}
 
+	public static String genererRandomMDP(){
+		String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		Random rand = new Random();
+		String res = "";
+		for(int i=0; i<10; i++)
+			res += alphabet.charAt(rand.nextInt(alphabet.length()));
+		return res;
+	}
 }

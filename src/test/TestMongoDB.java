@@ -44,9 +44,15 @@ public class TestMongoDB extends HttpServlet {
 			ArrayList<String> ingredients = new ArrayList<String>();
 			ingredients.add("pommes");
 			ingredients.add("pate feuilletee");
+			ArrayList<Double> quantites = new ArrayList<>();
+			quantites.add(5.0);
+			quantites.add(250.0);
+			ArrayList<String> mesures = new ArrayList<String>();
+			mesures.add("unite(s)");
+			mesures.add("g");
 			ArrayList<String> preparation = new ArrayList<String>();
 			preparation.add("cuir les pommes");
-			MongoFactory.creerDocumentRecette("tarte aux pomme", 5, "patou", ingredients, preparation);
+			MongoFactory.creerDocumentRecette("tarte aux pomme", 5, "patou", ingredients, quantites, mesures, preparation);
 		}
 		catch (Exception e) {
 			response.setContentType("text/html");

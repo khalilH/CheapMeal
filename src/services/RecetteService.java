@@ -16,9 +16,9 @@ import util.ServiceTools;
 
 public class RecetteService {
 
-	public static JSONObject ajouterRecette(String titre, String key, List<String> listIng, List<String> prepa) throws JSONException{
+	public static JSONObject ajouterRecette(String titre, String key, List<String> listIng, List<Double> listQuant, List<String> listMesures, List<String> prepa) throws JSONException{
 		try {
-			RecetteFonctions.ajouterRecette(titre, key, listIng, prepa);
+			RecetteFonctions.ajouterRecette(titre, key, listIng, listQuant, listMesures, prepa);
 			return ServiceTools.serviceAccepted("La recette a ete ajoutee");
 		} catch (MongoClientException mce) {
 			return ServiceTools.serviceRefused(mce.getMessage(), -1);
@@ -48,7 +48,8 @@ public class RecetteService {
 		} catch (SessionExpireeException see) {
 			return ServiceTools.serviceRefused(see.getMessage(), -1);
 		}	}
-	
+
+
 	public static JSONObject noterRecette(String key, String idRecette, int note) throws JSONException{
 		try {
 			RecetteFonctions.noterRecette(key, idRecette, note);

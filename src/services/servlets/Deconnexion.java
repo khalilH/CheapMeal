@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import services.DeconnexionServices;
+import services.UtilisateurServices;
 
 public class Deconnexion extends HttpServlet {
 	
@@ -24,7 +24,7 @@ public class Deconnexion extends HttpServlet {
 		
 		/* Traitement du service */
 		try {
-			JSONObject result = DeconnexionServices.deconnexion(cle);
+			JSONObject result = UtilisateurServices.deconnexion(cle);
 			
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();

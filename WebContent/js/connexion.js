@@ -11,7 +11,7 @@ $(function() {
 
 		},
 		messages : {
-			login : "<p class='text-nowrap'>Vous devez entrez un login</p>",
+			login : "<p class='text-nowrap'>Nom d'utilisateur manquant</p>",
 			password : {
 				required : "<p>Mot de passe manquant</p>",
 				minlength : "<p>Votre mot de passe est trop court</p>"
@@ -28,7 +28,6 @@ $(function() {
 			}
 		},
 		submitHandler : function(form) {
-			console.log("toyze");
 			connexionAJAX(form.login.value,form.password.value);
 		}
 	});
@@ -43,16 +42,20 @@ $(function() {
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			dataType : 'json',
 			success : function(rep) {
-				console.log(JSON.stringify(rep));
+				var jsonrep = JSON.stringify(rep)
+				var json = JSON.parse(jsonrep);
 				if (rep.erreur == undefined) {
 					console.log("Connexion reussi ",rep);
+					setCookie(C_NAME_KEY,rep.success);
+					window.location.href="accueil.html";
 				} else {
 					console.log("Connexion Fail ",rep.message);
-					changeErrorMessage("#ErrorLogin",rep.message);
+					changeErrorMessage("#ErrorLogin", json.message);
 				}
 			},
 			error : function(resultat, statut, erreur) {
 				console.log("Bug");
+				console.log(resultat);
 				alert("dawg");
 			}
 		});
@@ -69,6 +72,17 @@ $(function() {
 				msg + 
 		"</div>");
 	}
+	
+	function changeSuccessMessage(selector,msg){
+		var ErrorBox= $(selector);
+		console.log(msg+" toz");
+		ErrorBox.html("<div class='alert alert-success' id='SuccessMessage'>" +
+				"<a class='close' data-dismiss='alert' aria-label='close'>×</a>" +
+				msg + 
+		"</div>");
+	}
+
+	
 	/*
 	 *  Anything down here is for modal
 	 */
@@ -77,10 +91,10 @@ $(function() {
 			forgotPassword :{required : true}
 		},
 		messages:{
-			forgotPassword:"<p> Vous devez saisir un mail</p>"
+			forgotPassword:"<p>Adresse email invalide</p>"
 		},
 		tooltip_options : {
-			forgotPassword:{ placement:'top',html:true}
+			forgotPassword:{ placement:'bottom',html:true}
 		},
 		submitHandler : function(form){
 			forgotAJAX(form.forgotPassword.value);
@@ -92,12 +106,12 @@ $(function() {
 
 	});
 	$('#forgotModal').on('shown.bs.modal',function(){
-	    document.activeElement.blur()
+		document.activeElement.blur()
 		$('#forgotPassword').focus();
 		$('.tooltip').remove();
 	})
-	
-		function forgotAJAX(mail) {
+
+	function forgotAJAX(mail) {
 		console.log("Forgot de "+mail);
 
 		$.ajax({
@@ -108,11 +122,14 @@ $(function() {
 			dataType : 'json',
 			success : function(rep) {
 				console.log(JSON.stringify(rep));
+				var jsonrep = JSON.stringify(rep)
+				var json = JSON.parse(jsonrep);
 				if (rep.erreur == undefined) {
 					console.log("Recuperation reussi ",rep);
+					changeSuccessMessage("#AlertMdpOublie", json.success);
 				} else {
 					console.log("Recuperation Fail ",rep.message);
-					changeErrorMessage("#ErrorForgot",rep.message);
+					changeErrorMessage("#AlertMdpOublie",json.message);
 				}
 			},
 			error : function(resultat, statut, erreur) {
@@ -122,18 +139,18 @@ $(function() {
 		});
 
 		return false;
-
 	}
-	 function alignModal(){
-	        var modalDialog = $(this).find(".modal-dialog");
-	        // Applying the top margin on modal dialog to align it vertically center
-	        modalDialog.css("margin-top", Math.max(0, ($(window).height() - modalDialog.height()) / 4));
-	    }
-	    // Align modal when it is displayed
-	    $(".modal").on("shown.bs.modal", alignModal);
-	    
-	    // Align modal when user resize the window
-	    $(window).on("resize", function(){
-	        $(".modal:visible").each(alignModal);
-	    });   
+
+	function alignModal(){
+		var modalDialog = $(this).find(".modal-dialog");
+		// Applying the top margin on modal dialog to align it vertically center
+		modalDialog.css("margin-top", Math.max(0, ($(window).height() - modalDialog.height()) / 4));
+	}
+	// Align modal when it is displayed
+	$(".modal").on("shown.bs.modal", alignModal);
+
+	// Align modal when user resize the window
+	$(window).on("resize", function(){
+		$(".modal:visible").each(alignModal);
+	});   
 });
