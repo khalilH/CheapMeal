@@ -116,6 +116,12 @@ function Auteur(id,login){
 	this.login = login;
 }
 
+function Ingredient(nom, quantite, mesure){
+	this.nom = nom;
+	this.quantite = quantite;
+	this.mesure = mesure;
+}
+
 function Recette(id,auteur,titre,photo){
 	this.id = id;
 	this.auteur = auteur;
@@ -123,10 +129,11 @@ function Recette(id,auteur,titre,photo){
 	this.photo = photo;
 }
 
+function Ingredients(){}
+
 Ingredients.prototype.getHtml=function(){
 	var s = "<div class='ingr'>";
 	var tmp = "";
-	for(...)
 	"<ul><li><span class='txt-size-25'>poulet</span></li>"+
 	"<li><span class='txt-size-25'>épices</span></li>"+	
 	"<li><span class='txt-size-25'>sauce verte</span></li></ul>"+

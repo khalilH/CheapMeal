@@ -76,8 +76,9 @@
 }
 
 .contenu-page{
-	margin-left: 20%;
-	margin-right: 20%;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 20px;
 }
 
 .fiche-recette{
@@ -89,10 +90,11 @@
 	font-size: 50px;
 	text-align:center;
 	margin-top: 15px;
+	font-weight: bold;
 }
 
 .contenu-recette{
-	margin-top: 30px;
+	margin-top: 15px;
 }
 
 .contenu-left{
@@ -108,9 +110,11 @@
 	text-align:center;
 	margin: 0 auto;
 	margin-top: 40px;
+	font-size: 40px;
+	font-weight: bold;
 }
 
-.auteur-recette{
+.photo-auteur-recette{
 	height: 150px;
 	width: 150px;
 	margin: 0 auto;
@@ -123,6 +127,7 @@
 
 .txt-size-35{
 	font-size:35px;
+	font-weight: bold;
 }
 
 .txt-size-25{
@@ -144,5 +149,14 @@
 	margin-top: 20px;
 }
 
-#hearts { color: #ee8b2d;}
-#hearts-existing { color: #ee8b2d;}
+.margin-top-10{
+	margin-top: 10px;
+}
+
+#hearts { color: #1d7abc;}
+#hearts-existing { color: #1d7abc;}
+
+.note-recette{
+	text-align: center;
+	font-size: 21px;
+}
