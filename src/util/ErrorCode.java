@@ -13,6 +13,7 @@ package util;
 //30 mot de passe incorrect (AuthenticationException)
 //31 compte utilisateur inexistant
 //32 mot de passe identique (changerMotDePasse)
+//33 confirmation de mot de passe different du mot de passe indique (changerMdp et inscription)
 //40 Session Expiree (SessionExpireeException)
 //41 Cle non active (CleNonActiveException)
 //22 user does not exist, not found 
@@ -51,6 +52,7 @@ public class ErrorCode {
 	public static final int PASSWORD_INCORRECT = 30;
 	public static final int UTILISATEUR_INEXISTANT = 31;
 	public static final int PASSWORD_IDENTIQUE = 32;
+	public static final int PASSWORD_CONFIRMATION_DIFFERENT = 33;
 	
 	public static final int SESSION_EXPIREE = 40;
 	public static final int CLE_NON_ACTIVE = 41;

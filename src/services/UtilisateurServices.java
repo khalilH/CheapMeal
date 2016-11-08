@@ -19,9 +19,9 @@ public class UtilisateurServices {
 	 * @return
 	 * @throws JSONException
 	 */
-	public static JSONObject inscription(String login, String mdp, String prenom, String nom, String email) throws JSONException {
+	public static JSONObject inscription(String login, String mdp, String confirmationMdp, String prenom, String nom, String email) throws JSONException {
 		try {
-			UtilisateurFonctions.inscription(login, mdp, prenom, nom, email);
+			UtilisateurFonctions.inscription(login, mdp, confirmationMdp, prenom, nom, email);
 			return ServiceTools.serviceAccepted("Utilisateur cree");
 		} catch (MyException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
@@ -36,9 +36,9 @@ public class UtilisateurServices {
 	 * @return
 	 * @throws JSONException
 	 */
-	public static JSONObject changerMotDePasse(String cle, String oldMdp, String newMdp) throws JSONException{
+	public static JSONObject changerMotDePasse(String cle, String currentMdp, String oldMdp, String newMdp) throws JSONException{
 		try {
-			UtilisateurFonctions.changerMotDePasse(cle, oldMdp, newMdp);
+			UtilisateurFonctions.changerMotDePasse(cle, currentMdp, oldMdp, newMdp);
 			return ServiceTools.serviceAccepted("Mot de passe modifie");
 		} catch (MyException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());

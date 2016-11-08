@@ -21,12 +21,13 @@ public class ChangerMdp extends HttpServlet {
 
 		/* Lecture des parametres */
 		String cle = request.getParameter(RequestParameter.CLE);
-		String oldMdp = request.getParameter(RequestParameter.MOT_DE_PASSE_OLD);
+		String currentMdp = request.getParameter(RequestParameter.MOT_DE_PASSE);
 		String newMdp = request.getParameter(RequestParameter.MOT_DE_PASSE_NEW);
+		String confirmationMdp = request.getParameter(RequestParameter.MOT_DE_PASSE_CONFIRMATION);
 		
 		/* Traitement des services */
 		try {
-			JSONObject res = UtilisateurServices.changerMotDePasse(cle, oldMdp, newMdp);
+			JSONObject res = UtilisateurServices.changerMotDePasse(cle, currentMdp, newMdp, confirmationMdp);
 
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();

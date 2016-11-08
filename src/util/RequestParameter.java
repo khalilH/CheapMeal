@@ -13,8 +13,9 @@ public class RequestParameter {
 	public static final String NOM = "nom";
 	public static final String EMAIL = "email";
 	public static final String CLE = "cle";
-	public static final String MOT_DE_PASSE_OLD = "oldMdp";
+	public static final String MOT_DE_PASSE_CURRENT = "currentMdp";
 	public static final String MOT_DE_PASSE_NEW = "newMdp";
+	public static final String MOT_DE_PASSE_CONFIRMATION = "confirmationMdp";
 	public static final String EMAIL_NEW = "newEmail";
 	public static final String QUERY = "query";
 	public static final String BIO = "bio";
