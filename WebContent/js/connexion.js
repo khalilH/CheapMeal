@@ -1,8 +1,8 @@
 $(function() {
-	console.log(isConnected());
 	if(isConnected() == 1){
 		//Users is logged in need to redirect him
 		window.location.href="accueil.html";
+		return;
 	}
 	$("#login").validate({
 		rules : {

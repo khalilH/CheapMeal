@@ -82,11 +82,16 @@ $(function (){
 	 */	
 	if((bool = isConnected()) === 1){
 		loadNavbarConnected();
+		console.log("connecte")
+
 	}
 	else if(bool === -1){ //User doesnt have a cookie let him browse
 		loadNavbarDisconnected();
+		console.log("deconnecte")
 	}else{ // User have an expirated key let him reconnect
+		console.log("Invalide")
 		window.location.href="connexion.html";
+		return;
 	}
 	searchForHomePage();
 	
@@ -115,10 +120,11 @@ $(function (){
 	$("#searchForm").on('submit',function(event){
 		event.preventDefault();
 		var query = this.search.value;
+		console.log(query);
 	});
 	$("#deconnexion").on('click',function(){
 		// TODO Delete cookie + verifier sil existe (erreur)
-		var key;
+		var key = getCookie(C_NAME_KEY);
 		console.log("DeConnexion de "+key);
 		
 		$.ajax({
@@ -131,7 +137,9 @@ $(function (){
 				console.log(JSON.stringify(rep));
 				var jsonrep = JSON.stringify(rep)
 				var json = JSON.parse(jsonrep);
+				destroy_cookie();
 				window.location.href="accueil.html";
+				return;
 			},
 			error : function(resultat, statut, erreur) {
 				console.log("Bug");
@@ -146,9 +154,11 @@ $(function (){
 	
 	$("#connexion").on('click',function(){
 		window.location.href="connexion.html";
+		return;
 	});
 	$("#signup").on('click',function(){
 			window.location.href="inscription.html";
+			return;
 	});
 		
 	

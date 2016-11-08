@@ -2,6 +2,7 @@ $(function() {
 	if(isConnected() === 1){
 		//Users is logged in need to redirect him
 		window.location.href="accueil.html";
+		return;
 	}
 	$.validator.addMethod("pwdMatch", function(confirmation_mdp, dom, arg) {
 		console.log("confirmation="+confirmation_mdp + "  arg:" + arg.value.toString());
@@ -110,6 +111,7 @@ $(function() {
 			changeSuccessMessage(rep.message);
 			/* redirection vers la page de connexion */
 			window.location.href = "connexion.html"; 
+			return;
 		}
 	}
 	
