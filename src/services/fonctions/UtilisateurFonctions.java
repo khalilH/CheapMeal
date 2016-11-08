@@ -14,6 +14,7 @@ import util.BCrypt;
 import util.ErrorCode;
 import util.ServiceTools;
 import util.bdTools.RequeteStatic;
+import util.hibernate.model.Utilisateurs;
 
 public class UtilisateurFonctions {
 	
@@ -26,18 +27,21 @@ public class UtilisateurFonctions {
 	 * @param email
 	 * @throws MyException
 	 */
-	public static void inscription(String login, String mdp, String prenom, String nom, String email) 
+	public static void inscription(String login, String mdp, String confirmationMdp, String prenom, String nom, String email) 
 			throws MyException {
 
 		/* Verification des parametres */
 		if(login == null || mdp == null || prenom == null || nom == null || email == null)
-			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
+			throw new ParametreManquantException("Parametres(s) manquants(s)", ErrorCode.PARAMETRE_MANQUANT);
 
 		if(login.equals("") || mdp.equals("") || prenom.equals("") || nom.equals("") || email.equals(""))
-			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
+			throw new ParametreManquantException("Parametres(s) manquants(s)", ErrorCode.PARAMETRE_MANQUANT);
 			
 		if(mdp.length() < 6)
 			throw new NonValideException("Mot de passe trop court", ErrorCode.PASSWORD_INVALIDE);
+		
+		if(!mdp.equals(confirmationMdp))
+			throw new NonValideException("Confirmation du mot de passe different du mot de passe indique", ErrorCode.PASSWORD_CONFIRMATION_DIFFERENT);
 
 		if (!ServiceTools.isEmailValide(email)) 
 			throw new NonValideException("Email non valide", ErrorCode.EMAIL_INVALIDE);
@@ -64,19 +68,20 @@ public class UtilisateurFonctions {
 	/**
 	 * 
 	 * @param cle
+	 * @param currentMdp
 	 * @param newMdp
-	 * @param oldMdp
+	 * @param confirmationMdp
 	 * @throws MyException
 	 */
-	public static void changerMotDePasse(String cle, String newMdp, String oldMdp) 
+	public static void changerMotDePasse(String cle, String currentMdp, String newMdp, String confirmationMdp) 
 			throws MyException {
 
 		/* Verifier les parametres */
-		if(cle == null || oldMdp == null || newMdp == null)
-			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
+		if(cle == null || currentMdp == null || confirmationMdp == null || newMdp == null)
+			throw new ParametreManquantException("Parametres(s) manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
 		
-		if(cle.equals("") || oldMdp.equals("") || newMdp.equals(""))
-			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
+		if(cle.equals("") || currentMdp.equals("") || confirmationMdp.equals("") || newMdp.equals(""))
+			throw new ParametreManquantException("Parametres(s) manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
 		
 		if (cle.length() != 32) 
 			throw new NonValideException("Cle invalide", ErrorCode.CLE_INVALIDE);
@@ -89,13 +94,18 @@ public class UtilisateurFonctions {
 		if(!ServiceTools.isCleActive(cle))
 			throw new SessionExpireeException("Votre session a expiree", ErrorCode.SESSION_EXPIREE);
 		
-		//TODO faire verification que l'ancien mot de passe est correct 
-
-		/* Verifier si le mot de passe est different de l'ancien */
-		if(oldMdp.equals(newMdp))
-			throw new AuthenticationException("Mot de passe identique a l'ancien", ErrorCode.PASSWORD_IDENTIQUE);
+		Utilisateurs u = RequeteStatic.obtenirUtilisateur(RequeteStatic.obtenirIdSessionAvecCle(cle), null);
+		if(!BCrypt.checkpw(currentMdp, u.getMdp()))
+			throw new AuthenticationException("Mot de passe incorrect", ErrorCode.PASSWORD_INCORRECT);
 		
+		/* Verifier si le mot de passe est different de l'ancien */
+		if(currentMdp.equals(newMdp))
+			throw new AuthenticationException("Mot de passe identique a l'ancien", ErrorCode.PASSWORD_IDENTIQUE);
 
+		/* Verifier si le nouveau mot de passe et la confirmation sont identiques */
+		if(!newMdp.equals(confirmationMdp))
+			throw new AuthenticationException("La confirmation n'est pas identique au nouveau mot de passe", ErrorCode.PASSWORD_CONFIRMATION_DIFFERENT);
+		
 		/* Changement du mdp */
 		int id = RequeteStatic.obtenirIdSessionAvecCle(cle);
 		if(id == -1)
@@ -114,10 +124,10 @@ public class UtilisateurFonctions {
 			throws MyException {
 		
 		if (cle == null || newEmail == null) 
-			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
+			throw new ParametreManquantException("Parametres(s) manquants(s)", ErrorCode.PARAMETRE_MANQUANT);
 		
 		if (cle.equals("") || newEmail.equals("")) 
-			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
+			throw new ParametreManquantException("Parametres(s) manquants(s)", ErrorCode.PARAMETRE_MANQUANT);
 		
 		if (cle.length() != 32) 
 			throw new NonValideException("Cle invalide", ErrorCode.CLE_INVALIDE);
@@ -150,10 +160,10 @@ public class UtilisateurFonctions {
 		
 		//Verification parametre invalides
 		if(login == null || mdp == null)
-			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
+			throw new ParametreManquantException("Parametres(s) manquants(s)", ErrorCode.PARAMETRE_MANQUANT);
 		
 		if(login.equals("") || mdp.equals(""))
-			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
+			throw new ParametreManquantException("Parametres(s) manquants(s)", ErrorCode.PARAMETRE_MANQUANT);
 		
 		if (mdp.length() < 6)
 			throw new NonValideException("Mot de passe trop court", ErrorCode.PASSWORD_INVALIDE);
@@ -169,7 +179,7 @@ public class UtilisateurFonctions {
 			}
 			return cle;
 		}
-		else{ 			// Identifiants invalide
+		else{// Identifiants invalide
 			if(!RequeteStatic.isLoginDisponible(login)){
 				throw new AuthenticationException("Mot de passe incorrect", ErrorCode.PASSWORD_INCORRECT);
 			}else{

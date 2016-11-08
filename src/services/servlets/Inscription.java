@@ -22,13 +22,14 @@ public class Inscription extends HttpServlet {
 		/* Lecture des parametres */
 		String login = request.getParameter(RequestParameter.LOGIN);
 		String mdp = request.getParameter(RequestParameter.MOT_DE_PASSE);
+		String confirmationMdp = request.getParameter(RequestParameter.MOT_DE_PASSE_CONFIRMATION);
 		String prenom = request.getParameter(RequestParameter.PRENOM);
 		String nom = request.getParameter(RequestParameter.NOM);
 		String email = request.getParameter(RequestParameter.EMAIL);
 		
 		/* Traitement des services */
 		try {
-			JSONObject res = UtilisateurServices.inscription(login, mdp, prenom, nom, email);
+			JSONObject res = UtilisateurServices.inscription(login, mdp, confirmationMdp, prenom, nom, email);
 			
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();
