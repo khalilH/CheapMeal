@@ -8,36 +8,43 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.naming.NamingException;
 
+import exceptions.AuthenticationException;
 import exceptions.IDException;
 import exceptions.InformationUtilisateurException;
+import exceptions.NonDisponibleException;
+import exceptions.NonValideException;
+import exceptions.ParametreManquantException;
 import exceptions.SessionExpireeException;
 import util.BCrypt;
+import util.ErrorCode;
 import util.ServiceTools;
 import util.bdTools.RequeteStatic;
 
 public class UtilisateurFonctions {
 	
 
-	public static void inscription(String login, String mdp, String prenom, String nom, String email) throws InformationUtilisateurException, IDException, SQLException{
+	public static void inscription(String login, String mdp, String prenom, String nom, String email) 
+			throws NonDisponibleException, NonValideException, 
+				exceptions.SQLException, ParametreManquantException{
 
 		/* Verification des parametres */
 		if(login == null || mdp == null || prenom == null || nom == null || email == null)
-			throw new InformationUtilisateurException("Informations non completes");
+			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
 
 		if(login.equals("") || mdp.equals("") || prenom.equals("") || nom.equals("") || email.equals(""))
-			throw new InformationUtilisateurException("Nom d'utilisateur, mot de passe ou adresse mail invalide");
-
+			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
+			
 		if(mdp.length() < 6)
-			throw new InformationUtilisateurException("Mot de passe trop court");
+			throw new NonValideException("Mot de passe trop court", ErrorCode.PASSWORD_INVALIDE);
 
 		if (!ServiceTools.isEmailValide(email)) 
-			throw new InformationUtilisateurException("Email non valide");
+			throw new NonValideException("Email non valide", ErrorCode.EMAIL_INVALIDE);
 		
 		if(!RequeteStatic.isLoginDisponible(login))
-			throw new InformationUtilisateurException("Ce nom d'utilisateur n'est pas libre");
+			throw new NonDisponibleException("Ce nom d'utilisateur est deja utilise", ErrorCode.LOGIN_NON_DISPO);
 
 		if(!RequeteStatic.isEmailDisponible(email))
-			throw new InformationUtilisateurException("Cette adresse email est deja utilisee");
+			throw new NonDisponibleException("Cette adresse email est deja utilisee", ErrorCode.EMAIL_NON_DISPO);
 
 		/* Cryptage du mdp */
 		String hashed = BCrypt.hashpw(mdp, BCrypt.gensalt());
@@ -46,44 +53,46 @@ public class UtilisateurFonctions {
 		RequeteStatic.ajoutUtilisateur(login, hashed, nom, prenom, email);
 		int id = RequeteStatic.obtenirIdAvecLogin(login);
 		if(id == -1)
-			throw new IDException("Utilisateur inexistant");
+			throw new exceptions.SQLException("Erreur interne au serveur", ErrorCode.SQL_EXCEPTION);
 
 
 	}
 
-	public static void changerMotDePasse(String key, String newMdp, String oldMdp) throws SQLException, InformationUtilisateurException, SessionExpireeException, IDException{
+	//TODO verifier pas de soucis changement d'ordre des parametres
+	public static void changerMotDePasse(String cle, String newMdp, String oldMdp) 
+			throws ParametreManquantException, NonValideException, 
+			SessionExpireeException, AuthenticationException, 
+			exceptions.SQLException {
 
 		/* Verifier les parametres */
-		if(key == null)
-			throw new NullPointerException("Cle session manquante");
+		if(cle == null || oldMdp == null || newMdp == null)
+			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
 		
-		if (key.length() != 32) 
-			throw new InformationUtilisateurException("Cle invalide");
+		if(cle.equals("") || oldMdp.equals("") || newMdp.equals(""))
+			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
 		
-		if (oldMdp == null || newMdp == null)
-			throw new NullPointerException("Missing argument");
+		if (cle.length() != 32) 
+			throw new NonValideException("Cle invalide", ErrorCode.CLE_INVALIDE);
 		
-		/* Verifier si la personne a une session active */
-
-		if(!ServiceTools.isCleActive(key))
-			throw new SessionExpireeException("Votre session a expiree");
-
 		/* Verifier si le mot de passe contient au moins 6 caracteres */
 		if(newMdp.length() < 6)
-			throw new InformationUtilisateurException("Le mot de passe doit contenir au moins 6 caracteres");
+			throw new NonValideException("Mot de passe trop court", ErrorCode.PASSWORD_INVALIDE);
 		
+		/* Verifier si la personne a une session active */
+		if(!ServiceTools.isCleActive(cle))
+			throw new SessionExpireeException("Votre session a expiree", ErrorCode.SESSION_EXPIREE);
 		
-		//TODO faire verification que l'ancien mot de passe est correct
+		//TODO faire verification que l'ancien mot de passe est correct 
 
 		/* Verifier si le mot de passe est different de l'ancien */
 		if(oldMdp.equals(newMdp))
-			throw new InformationUtilisateurException("Le mot de passe doit etre different de l'ancien");
+			throw new AuthenticationException("Mot de passe identique a l'ancien", ErrorCode.PASSWORD_IDENTIQUE);
 		
 
 		/* Changement du mdp */
-		int id = RequeteStatic.obtenirIdSessionAvecCle(key);
+		int id = RequeteStatic.obtenirIdSessionAvecCle(cle);
 		if(id == -1)
-			throw new IDException("Utilisateur inconnu");
+			throw new exceptions.SQLException("Erreur interne", ErrorCode.SQL_EXCEPTION);
 		
 		RequeteStatic.changerMdpAvecId(id, newMdp);
 	}
@@ -122,21 +131,23 @@ public class UtilisateurFonctions {
 	 * Permet de deconnecter un utilisateur en supprimant sa cle de session
 	 * de la base de donnee
 	 * @param cle la cle de session
-	 * @throws NullPointerException cle non passee en parametre
-	 * @throws KeyException cle non valide
-	 * @throws SQLException 
+	 * @throws ParametreManquantException cle non passee en parametre
+	 * @throws NonValideException cle non valide
 	 * @throws SessionExpireeException la session a deja expire
 	 */
-	public static void deconnexion(String cle) throws NullPointerException, KeyException, SQLException, SessionExpireeException {
+	public static void deconnexion(String cle) 
+			throws ParametreManquantException, 
+					NonValideException, 
+					SessionExpireeException {
 		
 		if (cle == null)
-			throw new NullPointerException("Arguments manquants");
+			throw new ParametreManquantException("Arguments manquants", ErrorCode.PARAMETRE_MANQUANT);
 		
 		if(cle.length() != 32)
-			throw new KeyException("Cle invalide");
+			throw new NonValideException("Cle invalide", ErrorCode.CLE_INVALIDE);
 		
 		if (!ServiceTools.isCleActive(cle))
-			throw new SessionExpireeException("Votre session a expiree");
+			throw new SessionExpireeException("Votre session a expiree", ErrorCode.SESSION_EXPIREE);
 		
 		/* Fermeture session */
 		RequeteStatic.supprimerSessionAvecCle(cle);

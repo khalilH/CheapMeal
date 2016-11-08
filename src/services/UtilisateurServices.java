@@ -1,6 +1,5 @@
 package services;
 
-import java.security.KeyException;
 import java.sql.SQLException;
 
 import javax.mail.MessagingException;
@@ -10,8 +9,12 @@ import javax.naming.NamingException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import exceptions.AuthenticationException;
 import exceptions.IDException;
 import exceptions.InformationUtilisateurException;
+import exceptions.NonDisponibleException;
+import exceptions.NonValideException;
+import exceptions.ParametreManquantException;
 import exceptions.SessionExpireeException;
 import services.fonctions.UtilisateurFonctions;
 import util.ServiceTools;
@@ -21,31 +24,36 @@ public class UtilisateurServices {
 	//TODO remplacer les 0 par les bons codes d'erreurs
 	
 	public static JSONObject inscription(String login, String mdp, String prenom, String nom, String email) throws JSONException {
-		try{
-			UtilisateurFonctions.inscription(login, mdp, prenom, nom, email);
-			return ServiceTools.serviceAccepted("Utilisateur créé");
-		}catch (SQLException sqle) {
-			return ServiceTools.serviceRefused(sqle.getMessage(), 0);
-		}catch (IDException ide) {
-			return ServiceTools.serviceRefused(ide.getMessage(), 0);
-		}catch (InformationUtilisateurException iue){
-			return ServiceTools.serviceRefused(iue.getMessage(), 0);
-		}
+			try {
+				UtilisateurFonctions.inscription(login, mdp, prenom, nom, email);
+				return ServiceTools.serviceAccepted("Utilisateur cree");
+			} catch (NonDisponibleException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+			} catch (NonValideException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+			} catch (exceptions.SQLException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+			} catch (ParametreManquantException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+			}		
 	}
 	
 	public static JSONObject changerMotDePasse(String cle, String oldMdp, String newMdp) throws JSONException{
-		try {
-			UtilisateurFonctions.changerMotDePasse(cle, oldMdp, newMdp);
-			return ServiceTools.serviceAccepted("Mot de passe modifié");
-		} catch (SQLException sqle) {
-			return ServiceTools.serviceRefused(sqle.getMessage(), 0);
-		} catch (InformationUtilisateurException iue) {
-			return ServiceTools.serviceRefused(iue.getMessage(), 0);
-		} catch (SessionExpireeException see) {
-			return ServiceTools.serviceRefused(see.getMessage(), 0);
-		} catch (IDException ide){
-			return ServiceTools.serviceRefused(ide.getMessage(), 0);
-		}
+			try {
+				UtilisateurFonctions.changerMotDePasse(cle, oldMdp, newMdp);
+				return ServiceTools.serviceAccepted("Mot de passe modifie");
+			} catch (ParametreManquantException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+			} catch (NonValideException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+			} catch (SessionExpireeException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+			} catch (AuthenticationException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+			} catch (exceptions.SQLException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+			}
+	
 	}
 
 	public static JSONObject changerEmail(String cle, String newEmail) throws JSONException{
@@ -70,18 +78,16 @@ public class UtilisateurServices {
 	 * @throws JSONException : s'il y a eut une erreur a la creation ou manipulation du JSONObject 
 	 */
 	public static JSONObject deconnexion(String key) throws JSONException {
-		try {
-			UtilisateurFonctions.deconnexion(key);
-			return ServiceTools.serviceAccepted("Deconnexion");
-		} catch (NullPointerException npe) {
-			return ServiceTools.serviceRefused(npe.getMessage(), -1);
-		} catch (KeyException ke) {
-			return ServiceTools.serviceRefused(ke.getMessage(), -1);
-		} catch (SQLException sqle) {
-			return ServiceTools.serviceRefused(sqle.getMessage(), -1);
-		} catch (SessionExpireeException see) {
-			return ServiceTools.serviceAccepted("Deconnexion");
-		}
+			try {
+				UtilisateurFonctions.deconnexion(key);
+				return ServiceTools.serviceAccepted("Deconnexion");
+			} catch (ParametreManquantException e) {
+			 	return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+			} catch (NonValideException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+			} catch (SessionExpireeException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+			}
 	}
 	
 	
