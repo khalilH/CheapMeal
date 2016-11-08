@@ -106,8 +106,11 @@ $(function (){
 			success : function(rep) {
 				console.log(JSON.stringify(rep));
 				var jsonrep = JSON.stringify(rep)
-				if(rep.Erreur == undefined)
-					console.log(jsonrep);
+				console.log(jsonrep);
+				if(rep.erreur == undefined){
+					var recetteListe = JSON.parse(rep,recetteRevival);
+					updatePage(recetteListe);
+				}
 			},
 			error : function(resultat, statut, erreur) {
 				console.log("Bug");
@@ -116,6 +119,11 @@ $(function (){
 			}
 		});
 		
+	}
+	function updatePage(liste){
+		$("#recentRecipe").html(liste.getHtmlRecent);
+		$("#BestRecipe").html(liste.getHtmlRecent);
+
 	}
 	$("#searchForm").on('submit',function(event){
 		event.preventDefault();

@@ -17,6 +17,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.mongodb.MongoClientException;
+
+import util.bdTools.MongoFactory;
+
 public class SearchFonctions {
 
 	/**
@@ -71,6 +75,14 @@ public class SearchFonctions {
 		JSONArray array = new JSONArray(list);
 		results.put("hits", array);		
 		return new JSONObject().put("results", results);
+
+	}
+	
+	public static JSONObject searchHomePage() throws JSONException, MongoClientException, UnknownHostException{
+		JSONObject jb = new JSONObject();
+		jb.append("recettesRecentes", MongoFactory.getRecentRecipes());
+		jb.append("recettesBest", MongoFactory.getBestRecipes());
+		return jb;
 
 	}
 }

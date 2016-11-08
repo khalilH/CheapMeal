@@ -173,6 +173,33 @@ public class MongoFactory {
 		MongoCursor<BasicDBObject> cursor = col.find(document).iterator();
 		return cursor.hasNext();
 	}
+	
+	public static ArrayList<BasicDBObject> getRecentRecipes() throws MongoClientException, UnknownHostException {
+		ArrayList<BasicDBObject> list = new ArrayList<>();
+		BasicDBObject sortQuery = new BasicDBObject("date",-1);
+		MongoDatabase database = DBStatic.getMongoConnection();
+		MongoCollection<BasicDBObject> col = database.getCollection(COLLECTION_RECETTE, BasicDBObject.class);
+		MongoCursor<BasicDBObject> cursor = col.find().sort(sortQuery).iterator();
+		while(cursor.hasNext()){
+			BasicDBObject obj = cursor.next();
+			list.add(obj);
+		}
+		return list;
+	}
+	
+	public static ArrayList<BasicDBObject> getBestRecipes() throws MongoClientException, UnknownHostException {
+		ArrayList<BasicDBObject> list = new ArrayList<>();
+		BasicDBObject sortQuery = new BasicDBObject(NOTE+"."+NOTE_MOYENNE,-1);
+		MongoDatabase database = DBStatic.getMongoConnection();
+		MongoCollection<BasicDBObject> col = database.getCollection(COLLECTION_RECETTE, BasicDBObject.class);
+		MongoCursor<BasicDBObject> cursor = col.find().sort(sortQuery).iterator();
+		while(cursor.hasNext()){
+			BasicDBObject obj = cursor.next();
+			list.add(obj);
+		}
+		return list;
+	}
+
 
 	public static ArrayList<BasicDBObject> getRecettesFromLogin(String login) throws MongoClientException, UnknownHostException, JSONException {
 		BasicDBObject document = new BasicDBObject(AUTEUR+"."+LOGIN_AUTEUR, login);

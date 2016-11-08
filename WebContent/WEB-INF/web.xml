@@ -166,6 +166,16 @@
 		<servlet-name>Upload</servlet-name>
 		<url-pattern>/upload</url-pattern>
 	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>SearchHome</servlet-name>
+		<servlet-class>services.servlets.SearchHomePage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SearchHome</servlet-name>
+		<url-pattern>/searchHome</url-pattern>
+	</servlet-mapping>
 
 	<welcome-file-list>
 		<welcome-file>connexion.html</welcome-file>
