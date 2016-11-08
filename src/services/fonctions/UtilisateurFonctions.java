@@ -8,9 +8,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.naming.NamingException;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import exceptions.IDException;
 import exceptions.InformationUtilisateurException;
 import exceptions.SessionExpireeException;
@@ -75,6 +72,8 @@ public class UtilisateurFonctions {
 		if(newMdp.length() < 6)
 			throw new InformationUtilisateurException("Le mot de passe doit contenir au moins 6 caracteres");
 		
+		
+		//TODO faire verification que l'ancien mot de passe est correct
 
 		/* Verifier si le mot de passe est different de l'ancien */
 		if(oldMdp.equals(newMdp))
