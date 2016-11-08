@@ -1,11 +1,16 @@
 package exceptions;
 
-public class AuthenticationException extends Exception {
+/**
+ * 
+ * @author khalil
+ *
+ */
+public class AuthenticationException extends MyException {
 
 	private static final long serialVersionUID = 1L;
 
-	public AuthenticationException(String message){
-		super(message);
+	public AuthenticationException(String message, int code){
+		super(message, code);
 	}
 	
 }

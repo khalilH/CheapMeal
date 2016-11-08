@@ -1,15 +1,12 @@
 package services;
 
-import java.io.FileNotFoundException;
-import java.net.UnknownHostException;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.mongodb.MongoClientException;
-
+import exceptions.MyException;
 import services.fonctions.IngredientsFonctions;
 import util.ServiceTools;
 
@@ -29,15 +26,13 @@ public class IngredientsServices {
 			JSONObject res = new JSONObject()
 					.put("suggestions", suggestions);
 			return res;
-		} catch (MongoClientException e) {
-			return ServiceTools.serviceRefused(e.getMessage(), -1);
-		} catch (UnknownHostException e) {
-			return ServiceTools.serviceRefused(e.getMessage(), -1);
-		} catch (NullPointerException e) {
-			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 		}
+
+
 	}
-	
+
 	/**
 	 * Permer de faire appel aux fonctions constituant le service "Put Ingredients"
 	 * @param fileName le nom du fichier contenant la liste des ingredients
@@ -48,12 +43,9 @@ public class IngredientsServices {
 		try {
 			IngredientsFonctions.putListeIngredients(fileName);
 			return ServiceTools.serviceAccepted("Liste d'ingredients utilisable mise a jour");
-		} catch (MongoClientException e) {
-			return ServiceTools.serviceRefused(e.getMessage(), -1);
-		} catch (UnknownHostException e) {
-			return ServiceTools.serviceRefused(e.getMessage(), -1);
-		} catch (FileNotFoundException e) {
-			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 		}
+
 	}
 }

@@ -6,17 +6,27 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientException;
 import com.mongodb.client.MongoDatabase;
 
-
+/**
+ */
 public class DBStatic {
 	
 	private static MongoClient mongoClient;
 	
+	/**
+	 * 
+	 * @return
+	 * @throws UnknownHostException
+	 * @throws MongoClientException
+	 */
 	public static MongoDatabase getMongoConnection() throws UnknownHostException, MongoClientException{
  		mongoClient = new MongoClient("localhost", 27130);
- 		MongoDatabase res = mongoClient.getDatabase("CheapMeal");
+ 		MongoDatabase res = mongoClient.getDatabase(MongoFactory.DATABASE_NAME);
  		return res;
  	}
 	
+	/**
+	 * 
+	 */
 	public static final void closeMongoDBConnection() {
 		try {
 			mongoClient.close();

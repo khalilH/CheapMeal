@@ -12,25 +12,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.UtilisateurServices;
+import util.RequestParameter;
 
-public class RecupMdp  extends HttpServlet{
+public class RecupererMdp  extends HttpServlet{
 	
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 			
 			/* Recuperation des parametres */
-			String email = request.getParameter("mail");
+			String email = request.getParameter(RequestParameter.EMAIL);
 	
-			
 			/* Traitement du service */
 			try {
-				JSONObject result = UtilisateurServices.recupMdp(email);
+				JSONObject result = UtilisateurServices.recupererMdp(email);
 				
 				/* Ecriture de la reponse */
 				PrintWriter writer = response.getWriter();

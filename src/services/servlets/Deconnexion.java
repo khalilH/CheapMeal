@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.UtilisateurServices;
+import util.RequestParameter;
 
 public class Deconnexion extends HttpServlet {
 	
@@ -20,7 +21,7 @@ public class Deconnexion extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		/* Recuperation des parametres */
-		String cle = request.getParameter("cle");
+		String cle = request.getParameter(RequestParameter.CLE);
 		
 		/* Traitement du service */
 		try {

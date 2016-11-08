@@ -1,68 +1,66 @@
 package services;
 
-import java.security.KeyException;
-import java.sql.SQLException;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import javax.naming.NamingException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import exceptions.IDException;
-import exceptions.InformationUtilisateurException;
-import exceptions.SessionExpireeException;
+import exceptions.MyException;
 import services.fonctions.UtilisateurFonctions;
 import util.ServiceTools;
 
 public class UtilisateurServices {
 
-	//TODO remplacer les 0 par les bons codes d'erreurs
-	
+	/**
+	 * 
+	 * @param login
+	 * @param mdp
+	 * @param prenom
+	 * @param nom
+	 * @param email
+	 * @return
+	 * @throws JSONException
+	 */
 	public static JSONObject inscription(String login, String mdp, String prenom, String nom, String email) throws JSONException {
-		try{
+		try {
 			UtilisateurFonctions.inscription(login, mdp, prenom, nom, email);
-			return ServiceTools.serviceAccepted("Utilisateur créé");
-		}catch (SQLException sqle) {
-			return ServiceTools.serviceRefused(sqle.getMessage(), 0);
-		}catch (IDException ide) {
-			return ServiceTools.serviceRefused(ide.getMessage(), 0);
-		}catch (InformationUtilisateurException iue){
-			return ServiceTools.serviceRefused(iue.getMessage(), 0);
-		}
+			return ServiceTools.serviceAccepted("Utilisateur cree");
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+		}	
 	}
 	
+	/**
+	 * 
+	 * @param cle
+	 * @param oldMdp
+	 * @param newMdp
+	 * @return
+	 * @throws JSONException
+	 */
 	public static JSONObject changerMotDePasse(String cle, String oldMdp, String newMdp) throws JSONException{
 		try {
 			UtilisateurFonctions.changerMotDePasse(cle, oldMdp, newMdp);
-			return ServiceTools.serviceAccepted("Mot de passe modifié");
-		} catch (SQLException sqle) {
-			return ServiceTools.serviceRefused(sqle.getMessage(), 0);
-		} catch (InformationUtilisateurException iue) {
-			return ServiceTools.serviceRefused(iue.getMessage(), 0);
-		} catch (SessionExpireeException see) {
-			return ServiceTools.serviceRefused(see.getMessage(), 0);
-		} catch (IDException ide){
-			return ServiceTools.serviceRefused(ide.getMessage(), 0);
+			return ServiceTools.serviceAccepted("Mot de passe modifie");
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 		}
 	}
 
+	/**
+	 * 
+	 * @param cle
+	 * @param newEmail
+	 * @return
+	 * @throws JSONException
+	 */
 	public static JSONObject changerEmail(String cle, String newEmail) throws JSONException{
-			try {
-				UtilisateurFonctions.changerEmail(cle, newEmail);
-				return ServiceTools.serviceAccepted("Adresse mail modifiee");
-			} catch (NullPointerException e) {
-				return ServiceTools.serviceRefused(e.getMessage(), 0);
-			} catch (SessionExpireeException e) {
-				return ServiceTools.serviceRefused(e.getMessage(), 0);
-			} catch (InformationUtilisateurException e) {
-				return ServiceTools.serviceRefused(e.getMessage(), 0);
-			} catch (IDException e) {
-				return ServiceTools.serviceRefused(e.getMessage(), 0);
-			}
+		try {
+			UtilisateurFonctions.changerEmail(cle, newEmail);
+			return ServiceTools.serviceAccepted("Adresse mail modifiee");
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+		}
 	}
-	
+
 	/**
 	 * Permet de faire appel aux fonction constituant le service "Deconnexion"
 	 * @param key la cle de session de l'utilisateur a deconnecter
@@ -73,33 +71,55 @@ public class UtilisateurServices {
 		try {
 			UtilisateurFonctions.deconnexion(key);
 			return ServiceTools.serviceAccepted("Deconnexion");
-		} catch (NullPointerException npe) {
-			return ServiceTools.serviceRefused(npe.getMessage(), -1);
-		} catch (KeyException ke) {
-			return ServiceTools.serviceRefused(ke.getMessage(), -1);
-		} catch (SQLException sqle) {
-			return ServiceTools.serviceRefused(sqle.getMessage(), -1);
-		} catch (SessionExpireeException see) {
-			return ServiceTools.serviceAccepted("Deconnexion");
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 		}
 	}
-	
-	
-	public static JSONObject recupMdp(String email) throws JSONException {
+
+	/**
+	 * 
+	 * @param email
+	 * @return
+	 * @throws JSONException
+	 */
+	public static JSONObject recupererMdp(String email) throws JSONException {
 		try {
-			String result = UtilisateurFonctions.recup(email);
+			String result = UtilisateurFonctions.recupererMdp(email);
 			return ServiceTools.serviceAccepted(result);
-			
-		} catch (NullPointerException npe) {
-			return ServiceTools.serviceRefused(npe.getMessage(), -1);
-		} catch (InformationUtilisateurException e) {
-			return ServiceTools.serviceRefused(e.getMessage(), -1);
-		} catch (AddressException e) {
-			return ServiceTools.serviceRefused(e.getMessage(), -1);
-		} catch (NamingException e) {
-			return ServiceTools.serviceRefused(e.getMessage(), -1);
-		} catch (MessagingException e) {
-			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+		}
+	}
+
+	/**
+	 * 
+	 * @param login
+	 * @param mdp
+	 * @return
+	 * @throws JSONException
+	 */
+	public static JSONObject connexion(String login, String mdp) throws JSONException {
+		String result;
+		try {
+			result = UtilisateurFonctions.Connexion(login,mdp);
+			return ServiceTools.serviceAccepted(result);
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+		}
+	}
+
+	/**
+	 * 
+	 * @param cle
+	 * @return
+	 * @throws JSONException
+	 */
+	public static JSONObject isConnecte(String cle) throws JSONException{
+		try {
+			String result = UtilisateurFonctions.isConnecte(cle)+"";
+			return ServiceTools.serviceAccepted(result);
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 		}
 	}
 

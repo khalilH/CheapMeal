@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.UtilisateurServices;
+import util.RequestParameter;
 
 public class ChangerMdp extends HttpServlet {
 
@@ -19,9 +20,9 @@ public class ChangerMdp extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response){
 
 		/* Lecture des parametres */
-		String cle = request.getParameter("cle");
-		String oldMdp = request.getParameter("oldMdp");
-		String newMdp = request.getParameter("newMdp");
+		String cle = request.getParameter(RequestParameter.CLE);
+		String oldMdp = request.getParameter(RequestParameter.MOT_DE_PASSE_OLD);
+		String newMdp = request.getParameter(RequestParameter.MOT_DE_PASSE_NEW);
 		
 		/* Traitement des services */
 		try {
