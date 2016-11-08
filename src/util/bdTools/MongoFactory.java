@@ -1,12 +1,10 @@
 package util.bdTools;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.MongoClientException;
 
 /**
  * 
@@ -141,5 +139,6 @@ public class MongoFactory {
 				.append(PRIX_AU_KG, prixAuKg)
 				.append(QUANTITE, quantite);
 	}
+
 
 }

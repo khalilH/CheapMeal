@@ -166,6 +166,16 @@
 		<servlet-name>Upload</servlet-name>
 		<url-pattern>/upload</url-pattern>
 	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>GetRecettesAccueil</servlet-name>
+		<servlet-class>services.servlets.GetRecettesAccueil</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetRecettesAccueil</servlet-name>
+		<url-pattern>/recette/getAccueil</url-pattern>
+	</servlet-mapping>
 
 	<welcome-file-list>
 		<welcome-file>connexion.html</welcome-file>

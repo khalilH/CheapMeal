@@ -1,9 +1,9 @@
 package services.fonctions;
 
-import java.util.List;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
@@ -73,4 +73,6 @@ public class SearchFonctions {
 		return new JSONObject().put("results", results);
 
 	}
+	
+
 }

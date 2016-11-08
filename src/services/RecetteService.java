@@ -1,5 +1,6 @@
 package services;
 
+import java.net.UnknownHostException;
 import java.util.List;
 
 import org.json.JSONException;
@@ -11,6 +12,16 @@ import util.ServiceTools;
 
 public class RecetteService {
 
+	public static JSONObject getRecettesAccueil() throws JSONException {
+
+		try {
+			return RecetteFonctions.getRecettesAccueil();
+		} catch (UnknownHostException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		}
+
+	}
+	
 	/**
 	 * 
 	 * @param titre

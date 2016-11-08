@@ -3,8 +3,11 @@ var C_NAME_LOGIN = "Cheap_Meal_login"
 
 /**
  * Créer un cookie
- * @param cname le nom du cookie
- * @param cvalue la valeur du cookie
+ * 
+ * @param cname
+ *            le nom du cookie
+ * @param cvalue
+ *            la valeur du cookie
  */
 function setCookie(cname, cvalue) {
 
@@ -12,7 +15,9 @@ function setCookie(cname, cvalue) {
 }
 /**
  * Récupère la valeur d'un cookie
- * @param cname le nom du cookie dont on souhaite la valeur
+ * 
+ * @param cname
+ *            le nom du cookie dont on souhaite la valeur
  * 
  */
 function getCookie(cname) {
@@ -34,7 +39,6 @@ function getCookie(cname) {
 		}
 	}
 
-	console.log("[GetCookie] Nothing to show");
 	return null;
 }
 
@@ -42,10 +46,10 @@ function getCookie(cname) {
  * Permet de détruire un cookie en mettant sa valeur à -1
  */
 function destroy_cookie() {
-	setCookie(C_NAME, "-1");
+	setCookie(C_NAME_KEY, "-1");
 }
 /**
- * Permet de charger une navbar en mode déconnecte 
+ * Permet de charger une navbar en mode déconnecte
  * 
  */
 function loadNavbarDisconnected() {
@@ -54,16 +58,16 @@ function loadNavbarDisconnected() {
 	$("#leftNavbar").html(leftNavbarHtml);
 
 	var rightNavbarHtml = "<div class='row'><div class='col-xs-5'>"
-			+ "<button id='deconnexion' type='button' class='btn btn-primary navbar-btn'>"
+			+ "<button id='connexion' type='button' class='btn btn-primary navbar-btn'>"
 			+ "<span class='glyphicon glyphicon-log-in'></span> Connexion</button></div>"
-			+ "<div class='col-xs-5 col-xs-offset-1'><button id='deconnezxion' type='button'"
+			+ "<div class='col-xs-5 col-xs-offset-1'><button id='signup' type='button'"
 			+ "class='btn btn-success navbar-btn'>"
 			+ "<span class='glyphicon glyphicon-thumbs-up'></span> S'enregistrer</button></div></div>"
 	$("#rightNavbar").html(rightNavbarHtml);
 }
 
 /**
- * Permet de charger une navbar en mode connecte 
+ * Permet de charger une navbar en mode connecte
  * 
  */
 function loadNavbarConnected() {
@@ -81,38 +85,40 @@ function loadNavbarConnected() {
 
 /**
  * Requete ajax permettant de vérifier si un utilisateur est connecté
- * @param value la valeur de la clé à vérifier
+ * 
+ * @param value
+ *            la valeur de la clé à vérifier
  * @returns vrai si la clé est valide, faux sinon
  */
-function ajaxKeyValideOrNot(value){
-	$.ajax({
-		 url : "isConnecte",
-		 type : "GET",
-		 data : "cle=" + value,
-		 dataType : "json",
-		 contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-		 success : function(rep) {
-			 console.log("User is truly connected "+rep);
-			 if(rep.Erreur == undefined)
-				 return 1;
-			 else
-				 return 0;
-		 },
-		 error : function(jqXHR, textStatus, errorThrown) {
-			 console.log("Crashed while doing ajax request for isConnected");
-		 }
-		 });
+function ajaxKeyValideOrNot(value) {
+	var res = $.ajax({
+		url : "isConnecte",
+		type : "GET",
+		data : "cle=" + value,
+		dataType : "json",
+		async : false,
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		error : function(jqXHR, textStatus, errorThrown) {
+			console.log("Crashed while doing ajax request for isConnected");
+		}
+	});
+	console.log(res);
+	if (res.responseJSON.erreur == undefined) {
+		return 1;
+	} else
+		return 0;
 }
 /**
  * Permet de vérifier si l'utilisateur est connecté
+ * 
  * @returns vrai s'il est conencté
  */
 function isConnected() {
 	cookie_key = getCookie(C_NAME_KEY);
 	if (cookie_key != null) {
-		return ajaxKeyValideOrNot(cookie_key);
+		var res = ajaxKeyValideOrNot(cookie_key);
+		return res;
 	}
-	
+
 	return -1;
 }
-
