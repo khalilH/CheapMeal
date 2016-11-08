@@ -1,8 +1,15 @@
 package util.bdTools;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.Part;
 
 import com.mongodb.BasicDBObject;
 
@@ -49,12 +56,14 @@ public class MongoFactory {
 	 * @param mesures
 	 * @param preparation
 	 * @return
+	 * @throws IOException 
 	 */
 	public static BasicDBObject creerDocumentRecette(String titre, int idAuteur, String loginAuteur, 
 			List<String> listIng, 
 			List<Double> quantites, 
 			List<String> mesures, 
-			List<String> preparation) {
+			List<String> preparation,
+			Part photo) throws IOException {
 		
 		Date d = new Date();
 		BasicDBObject document = new BasicDBObject(TITRE, titre);
@@ -69,6 +78,11 @@ public class MongoFactory {
 		document.append(NOTE, note);
 		document.append(DATE, d.getTime());
 
+		InputStream inputStream = photo.getInputStream();
+		BufferedImage image = ImageIO.read(inputStream);
+		File f = new File("/var/lib/tomcat8/webapps/images/"+document.get("_id").toString()+".png");
+		ImageIO.write(image, "png", f);
+		
 		return document;
 	}
 

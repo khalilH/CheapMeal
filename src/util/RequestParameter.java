@@ -25,5 +25,6 @@ public class RequestParameter {
 	public static final String PREPARATION = "preparation";
 	public static final String ID_RECETTE = "idRecette";
 	public static final String NOTE = "note";
+	public static final String FILE = "file";
 	
 }

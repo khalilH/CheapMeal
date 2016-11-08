@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +29,7 @@ public class AjouterRecette extends HttpServlet {
 		String quant = request.getParameter(RequestParameter.QUANTITES);
 		String mesu = request.getParameter(RequestParameter.MESURES);
 		String prepa = request.getParameter(RequestParameter.PREPARATION);
+		Part photo = request.getPart(RequestParameter.FILE);
 
 		/* Ici, parser la liste des ingredients et des etapes de preparation */
 
@@ -55,7 +57,7 @@ public class AjouterRecette extends HttpServlet {
 
 		try {
 			/* Traitement des services */
-			JSONObject res = RecetteService.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation);
+			JSONObject res = RecetteService.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation,photo);
 
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();
