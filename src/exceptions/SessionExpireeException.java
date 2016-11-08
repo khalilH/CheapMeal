@@ -1,5 +1,10 @@
 package exceptions;
 
+/**
+ * 
+ * @author khalil
+ *
+ */
 public class SessionExpireeException extends MyException {
 
 	private static final long serialVersionUID = 1L;

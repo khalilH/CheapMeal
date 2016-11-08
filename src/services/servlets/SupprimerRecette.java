@@ -12,28 +12,27 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.RecetteService;
+import util.RequestParameter;
 
 public class SupprimerRecette extends HttpServlet {
-/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
-protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		/* Lecture des parametres */
-		String id_recette = request.getParameter("id_r");
-		String key = request.getParameter("cle");
+		String idRecette = request.getParameter(RequestParameter.ID_RECETTE);
+		String cle = request.getParameter(RequestParameter.CLE);
 
 		try {
 			/* Traitement des services */
-			JSONObject res = RecetteService.supprimerRecette(id_recette,key);
-			
+			JSONObject res = RecetteService.supprimerRecette(idRecette,cle);
+
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();
 			response.setContentType("application/json");
 			writer.println(res.toString());
-			
+
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

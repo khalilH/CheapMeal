@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import services.ConnexionServices;
+import services.UtilisateurServices;
 import util.RequestParameter;
 
 public class Connexion extends HttpServlet {
@@ -27,7 +27,7 @@ public class Connexion extends HttpServlet {
 		String mdp = request.getParameter(RequestParameter.MOT_DE_PASSE);
 		
 		try {
-			JSONObject jb = ConnexionServices.connexion(login, mdp);
+			JSONObject jb = UtilisateurServices.connexion(login, mdp);
 
 			response.setContentType("text/html");
 			PrintWriter writer = response.getWriter();

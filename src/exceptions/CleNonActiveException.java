@@ -5,12 +5,12 @@ package exceptions;
  * @author khalil
  *
  */
-public class ParametreManquantException extends MyException {
+public class CleNonActiveException extends MyException {
 
 	private static final long serialVersionUID = 1L;
 
-	public ParametreManquantException(String message, int code){
+	public CleNonActiveException(String message, int code){
 		super(message, code);
 	}
-
+	
 }

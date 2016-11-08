@@ -12,29 +12,26 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.RecetteService;
+import util.RequestParameter;
 
 public class NoterRecette extends HttpServlet{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException{
 		
 		/* Lecture des parametres */
-		String key = request.getParameter("cle");
-		String idRecette = request.getParameter("idRecette");
-		String noteStr = request.getParameter("note");
+		String cle = request.getParameter(RequestParameter.CLE);
+		String idRecette = request.getParameter(RequestParameter.ID_RECETTE);
+		String note = request.getParameter(RequestParameter.NOTE);
 		
-		int note;
-		if(noteStr != null)
-			note = Integer.parseInt(noteStr);
+		int noteValue;
+		if(note != null)
+			noteValue = Integer.parseInt(note);
 		else
-			note = -1;
-
+			noteValue = -1;
 		try {
-			JSONObject res = RecetteService.noterRecette(key, idRecette, note);
+			JSONObject res = RecetteService.noterRecette(cle, idRecette, noteValue);
 			
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();

@@ -5,11 +5,11 @@ package exceptions;
  * @author khalil
  *
  */
-public class ParametreManquantException extends MyException {
+public class MongoDBException extends MyException {
 
 	private static final long serialVersionUID = 1L;
 
-	public ParametreManquantException(String message, int code){
+	public MongoDBException(String message, int code){
 		super(message, code);
 	}
 

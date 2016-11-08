@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.ProfilServices;
+import util.RequestParameter;
 
 /**
  * Servlet implementation class AjouterBio
@@ -22,9 +23,8 @@ public class AjouterBio extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		/* Lecture des parametres */
-		String cle = request.getParameter("cle");
-		String bio = request.getParameter("bio");
-		
+		String cle = request.getParameter(RequestParameter.CLE);
+		String bio = request.getParameter(RequestParameter.BIO);
 				
 		try {
 			/* Traitement des services */
@@ -34,7 +34,6 @@ public class AjouterBio extends HttpServlet {
 			PrintWriter writer = response.getWriter();
 			response.setContentType("application/json");
 			writer.println(res.toString());
-			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

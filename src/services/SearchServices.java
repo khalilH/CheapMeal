@@ -24,7 +24,5 @@ public class SearchServices {
 		} catch (UnknownHostException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), -1);
 		}
-
 	}
-
 }

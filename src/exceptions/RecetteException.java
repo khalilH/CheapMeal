@@ -1,14 +1,16 @@
 package exceptions;
 
-public class RecetteException extends Exception{
+/**
+ * 
+ * @author khalil
+ *
+ */
+public class RecetteException extends MyException{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	public RecetteException(String msg){
-		super(msg);
+	public RecetteException(String msg, int code){
+		super(msg, code);
 	}
 	
 }

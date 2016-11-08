@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.IngredientsServices;
+import util.RequestParameter;
 
 public class GetIngredients extends HttpServlet {
 
@@ -20,7 +21,7 @@ public class GetIngredients extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		/* Lecture des parametres */
-		String query = request.getParameter("query");
+		String query = request.getParameter(RequestParameter.QUERY);
 		
 		/* Traitement du service */
 		try {

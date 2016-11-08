@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.UtilisateurServices;
+import util.RequestParameter;
 
 /**
  * Servlet implementation class ChangerEmail
@@ -26,8 +27,8 @@ public class ChangerEmail extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		/* lecture des parametres */
-		String cle = request.getParameter("cle");
-		String newEmail = request.getParameter("newEmail");
+		String cle = request.getParameter(RequestParameter.CLE);
+		String newEmail = request.getParameter(RequestParameter.EMAIL_NEW);
 		
 		/* Traitement des services */
 		try {
