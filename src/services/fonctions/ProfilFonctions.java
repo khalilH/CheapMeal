@@ -1,19 +1,19 @@
 package services.fonctions;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.MongoClientException;
 
-import exceptions.IDException;
-import exceptions.InformationUtilisateurException;
+import exceptions.MyException;
+import exceptions.NonDisponibleException;
+import exceptions.NonValideException;
+import exceptions.ParametreManquantException;
 import exceptions.SessionExpireeException;
+import util.ErrorCode;
 import util.ServiceTools;
-import util.bdTools.MongoFactory;
 import util.bdTools.RequeteStatic;
 
 public class ProfilFonctions {
@@ -22,57 +22,59 @@ public class ProfilFonctions {
 	 * Permet de creer ou de mettre a jour la biographie de l'utilisateur
 	 * @param cle la cle de session
 	 * @param bio la biographie
-	 * @throws InformationUtilisateurException 
-	 * @throws NullPointerException
-	 * @throws SessionExpireeException
-	 * @throws IDException
+	 * @throws MyException
 	 */
-	public static void ajouterBio(String cle, String bio) throws 
-	InformationUtilisateurException, NullPointerException, 
-	SessionExpireeException, IDException {
-		if (cle == null) 
-			throw new NullPointerException("Cle de session manquante");
+	public static void ajouterBio(String cle, String bio) throws MyException {
+		if (cle == null || bio == null || cle.equals("") || bio.equals("")) 
+			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
 
 		if (cle.length() != 32)
-			throw new InformationUtilisateurException("Cle non valide");
-		
-		if (bio == null)
-			throw new NullPointerException("Biographie manquante");
-		
+			throw new NonValideException("Cle invalide", ErrorCode.CLE_INVALIDE);
+
 		if (bio.length() > 250) {
-			throw new InformationUtilisateurException("Biographie trop longue");
+			throw new NonValideException("Biographie trop longue", ErrorCode.BIO_INVALIDE);
 		}
-		
+
 		if (!ServiceTools.isCleActive(cle)) 
-			throw new SessionExpireeException("Votre session a expiree");
+			throw new SessionExpireeException("Votre session a expiree", ErrorCode.SESSION_EXPIREE);
 
 		int id = RequeteStatic.obtenirIdSessionAvecCle(cle);
 		if (id == -1)
-			throw new IDException("Utilisateur inconnu");
-	
+			throw new exceptions.SQLException(ErrorCode.ERREUR_INTERNE, ErrorCode.SQL_EXCEPTION);
+
 		RequeteStatic.ajouterBioProfil(id, bio);
 	}
 
-	public static JSONObject afficherProfil(String cle, String login) throws InformationUtilisateurException, SessionExpireeException, JSONException, MongoClientException, UnknownHostException {
-		if (cle == null) 
-			throw new NullPointerException("Cle de session manquante");
+	/**
+	 * 
+	 * @param cle
+	 * @param login
+	 * @return
+	 * @throws MyException
+	 * @throws JSONException 
+	 */
+	public static JSONObject afficherProfil(String cle, String login) throws MyException, JSONException  {
+		if (cle == null || login == null || login.equals("") || login.equals("")) 
+			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
 
 		if (cle.length() != 32)
-			throw new InformationUtilisateurException("Cle non valide");
-		
-		if(login == null || login.equals(""))
-			throw new NullPointerException("Login manquant");
-		
+			throw new NonValideException("Cle invalide", ErrorCode.CLE_INVALIDE);
+
 		if (!ServiceTools.isCleActive(cle)) 
-			throw new SessionExpireeException("Votre session a expiree");
-		
+			throw new SessionExpireeException("Votre session a expiree", ErrorCode.SESSION_EXPIREE);
+
 		if(RequeteStatic.isLoginDisponible(login))
-			throw new InformationUtilisateurException("L'utilisateur n'existe pas");
-		
+			throw new NonDisponibleException("Ce nom d'utilisateur est deja utilise", ErrorCode.LOGIN_NON_DISPO);
+
 		JSONObject jb = new JSONObject();
 		String bio = RequeteStatic.recupBio(login);
 		jb.put("Bio",bio );
-		ArrayList<BasicDBObject> recettes = MongoFactory.getRecettesFromLogin(login);
+		ArrayList<BasicDBObject> recettes;
+		try {
+			recettes = RecetteFonctions.getRecettesFromLogin(login);
+		} catch (Exception e) {
+			throw new exceptions.MongoDBException(ErrorCode.ERREUR_INTERNE, ErrorCode.MONGO_EXCEPTION);
+		}
 		jb.put("recettes",recettes);
 		jb.put("Login", login);
 		return jb;

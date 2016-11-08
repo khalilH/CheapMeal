@@ -1,9 +1,9 @@
 package services.fonctions;
 
-import java.util.List;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
@@ -16,10 +16,6 @@ import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.mongodb.MongoClientException;
-
-import util.bdTools.MongoFactory;
 
 public class SearchFonctions {
 

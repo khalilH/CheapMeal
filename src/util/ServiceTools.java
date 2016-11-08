@@ -22,8 +22,20 @@ import org.json.JSONObject;
 import util.bdTools.RequeteStatic;
 import util.hibernate.HibernateUtil;
 
+/**
+ * 
+ * @author khalil
+ *
+ */
 public class ServiceTools {
 	
+	/**
+	 * 
+	 * @param message
+	 * @param codeErreur
+	 * @return
+	 * @throws JSONException
+	 */
 	public static JSONObject serviceRefused(String message, int codeErreur) throws JSONException{
 		JSONObject res = new JSONObject();
 		res.put("erreur", codeErreur);
@@ -31,31 +43,47 @@ public class ServiceTools {
 		return res;
 	}
 	
+	/**
+	 * 
+	 * @param message
+	 * @return
+	 * @throws JSONException
+	 */
 	public static JSONObject serviceAccepted(String message) throws JSONException{
 		return new JSONObject().put("success", message);
 	}
 	
+	/**
+	 * 
+	 * @param json
+	 * @return
+	 * @throws JSONException
+	 */
 	public static JSONObject serviceAccepted(JSONObject json) throws JSONException{
 		return new JSONObject().put("success", json);
 	}
 	
+	/**
+	 * 
+	 * @param email
+	 * @return
+	 */
 	public static boolean isEmailValide(String email){
 		Pattern pattern = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9]+.[a-zA-Z]{2,3}$");
 		Matcher m = pattern.matcher(email);
 		return m.matches();
 	}
 	
+	/**
+	 * 
+	 * @param body
+	 * @param subject
+	 * @param email
+	 * @throws NamingException
+	 * @throws AddressException
+	 * @throws MessagingException
+	 */
 	public static void sendEmail(String body, String subject, String email) throws NamingException, AddressException, MessagingException{
-//		Context initCtx = new InitialContext();
-//		Context envCtx = (Context) initCtx.lookup("java:comp/env");
-//		//Configurations de la session. Tomcat peut instancier des objets sessions edja configurees pour se connecter a un serveur SMTP
-//		Object ses = envCtx.lookup("mail/Session");
-//		Session session = null;		
-//		if (ses instanceof Session) {
-//			 session = (Session) ses;
-//			
-//		}
-		
 	    Properties properties = new Properties();
 	    properties.setProperty("mail.smtp.host", "smtp-mail.outlook.com");
 	    properties.put("mail.smtp.starttls.enable","true");

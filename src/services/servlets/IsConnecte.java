@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import services.ConnexionServices;
+import services.UtilisateurServices;
+import util.RequestParameter;
 
 public class IsConnecte extends HttpServlet {
 
@@ -21,12 +22,12 @@ public class IsConnecte extends HttpServlet {
 			throws ServletException, IOException {
 			
 			/* Recuperation des parametres */
-			String key = request.getParameter("cle");
+			String cle = request.getParameter(RequestParameter.CLE);
 	
 			
 			/* Traitement du service */
 			try {
-				JSONObject result = ConnexionServices.isConnecte(key);
+				JSONObject result = UtilisateurServices.isConnecte(cle);
 				
 				/* Ecriture de la reponse */
 				PrintWriter writer = response.getWriter();

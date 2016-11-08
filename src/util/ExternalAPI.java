@@ -10,6 +10,11 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+/**
+ * 
+ * @author khalil
+ *
+ */
 public class ExternalAPI {
 
 	public static final String X_MASHAPE_KEY = "KReKhv4jhXmshDBVbYlbtdiYGRJdp1ZOAKtjsnfyiGaxZnxQAJ";
@@ -18,7 +23,13 @@ public class ExternalAPI {
 	public static final String LOCAL_PRODUCT_KEY = "local_product";
 	public static final String PRICE_KEY = "price";
 	
-	
+	/**
+	 * 
+	 * @param ean
+	 * @return
+	 * @throws UnirestException
+	 * @throws JSONException
+	 */
 	public static ArrayList<Double> searchPrices(String ean) throws UnirestException, JSONException {
 		String urlRequest = BASE_URL+"?ean="+ean+"&zipcode="+ZIPCODE;
 		HttpResponse<String> response = Unirest.get(urlRequest)

@@ -11,6 +11,11 @@ import util.hibernate.model.Profils;
 import util.hibernate.model.Sessions;
 import util.hibernate.model.Utilisateurs;
 
+/**
+ * 
+ * @author khalil
+ *
+ */
 public class HibernateUtil {
 
 	private static SessionFactory sessionFactory= buildSessionFactory();

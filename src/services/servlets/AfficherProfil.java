@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.ProfilServices;
+import util.RequestParameter;
 
 public class AfficherProfil extends  HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -22,10 +23,9 @@ public class AfficherProfil extends  HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/* Lecture des parametres */
-		String cle = request.getParameter("cle");
-		String login = request.getParameter("login");
+		String cle = request.getParameter(RequestParameter.CLE);
+		String login = request.getParameter(RequestParameter.LOGIN);
 		
-				
 		try {
 			/* Traitement des services */
 			JSONObject res = ProfilServices.afficherProfil(cle, login);

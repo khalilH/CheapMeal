@@ -15,8 +15,8 @@ import util.hibernate.model.Utilisateurs;
 public class RequeteStatic {
 
 	/**
-	 * Supprime la session d'un utilisateur grace � son Token
-	 * @param cle
+	 * Supprime la session d'un utilisateur grace a cle de session
+	 * @param cle la cle de session
 	 */
 	public static void supprimerSessionAvecCle(String cle){
 		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -145,13 +145,14 @@ public class RequeteStatic {
 	}
 	
 	/**
-	 * Permet d'ajouter un utilisateur (creation de compte)
+	 * Permet d'ajouter un utilisateur (creation de compte), cree egalement
+	 * son profil
 	 * @param login le login
 	 * @param mdp le mot de passe
 	 * @param nom le nom
 	 * @param prenom le prenom
 	 * @param email l'adresse mail
-	 * @return l'identifiant id avec lequel l'utilisateur a ete ajoute
+	 * @return l'identifiant id avec lequel l'utilisateur a ete ajoute dans
 	 * dans la base de donnee
 	 */
 	public static Integer ajoutUtilisateur(String login, String mdp, String nom, String prenom, String email) {
@@ -196,7 +197,7 @@ public class RequeteStatic {
 	/**
 	 * Permet d'obtenir l'identifiant d'un utilisateur a partir 
 	 * de son nom d'utilisateur
-	 * @param login
+	 * @param login le nom d'utilisateur
 	 * @return l'id de l'utilisateur si l'utilisateur existe, -1 sinon
 	 */
 	public static int obtenirIdAvecLogin(String login) {

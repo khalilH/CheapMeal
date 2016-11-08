@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import services.SearchServices;
+import services.RecetteService;
 
-public class SearchHomePage extends HttpServlet {
+public class GetRecettesAccueil extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -23,7 +23,7 @@ public class SearchHomePage extends HttpServlet {
 		
 		/* Traitement du service */
 		try {
-			JSONObject result = SearchServices.searchHomePage();
+			JSONObject result = RecetteService.getRecettesAccueil();
 
 			/* Ecriture de la reponse */
 			response.setContentType("application/json");

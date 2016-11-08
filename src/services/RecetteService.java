@@ -6,64 +6,78 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.mongodb.MongoClientException;
-
-import exceptions.InformationUtilisateurException;
-import exceptions.RecetteException;
-import exceptions.SessionExpireeException;
+import exceptions.MyException;
 import services.fonctions.RecetteFonctions;
 import util.ServiceTools;
 
 public class RecetteService {
 
-	public static JSONObject ajouterRecette(String titre, String key, List<String> listIng, List<Double> listQuant, List<String> listMesures, List<String> prepa) throws JSONException{
+	public static JSONObject getRecettesAccueil() throws JSONException {
+
 		try {
-			RecetteFonctions.ajouterRecette(titre, key, listIng, listQuant, listMesures, prepa);
+			return RecetteFonctions.getRecettesAccueil();
+		} catch (UnknownHostException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), -1);
+		}
+
+	}
+	
+	/**
+	 * 
+	 * @param titre
+	 * @param cle
+	 * @param ingredients
+	 * @param quantites
+	 * @param mesures
+	 * @param preparation
+	 * @return
+	 * @throws JSONException
+	 */
+	public static JSONObject ajouterRecette(String titre, String cle, 
+			List<String> ingredients, 
+			List<Double> quantites, 
+			List<String> mesures, 
+			List<String> preparation) throws JSONException{
+
+		try {
+			RecetteFonctions.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation);
 			return ServiceTools.serviceAccepted("La recette a ete ajoutee");
-		} catch (MongoClientException mce) {
-			return ServiceTools.serviceRefused(mce.getMessage(), -1);
-		} catch (UnknownHostException uhe) {
-			return ServiceTools.serviceRefused(uhe.getMessage(), -1);
-		} catch (RecetteException re) {
-			return ServiceTools.serviceRefused(re.getMessage(), -1);
-		} catch (InformationUtilisateurException iue) {
-			return ServiceTools.serviceRefused(iue.getMessage(), -1);
-		} catch (SessionExpireeException see) {
-			return ServiceTools.serviceRefused(see.getMessage(), -1);
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 		}
 	}
 
-	public static JSONObject supprimerRecette(String id_recette, String key) throws JSONException {
+	/**
+	 * 
+	 * @param idRecette
+	 * @param cle
+	 * @return
+	 * @throws JSONException
+	 */
+	public static JSONObject supprimerRecette(String idRecette, String cle) throws JSONException {
 		try {
-			RecetteFonctions.supprimerRecette(id_recette, key);
-			return ServiceTools.serviceAccepted("La recette a ete supprimée");
-		} catch (MongoClientException mce) {
-			return ServiceTools.serviceRefused(mce.getMessage(), -1);
-		} catch (UnknownHostException uhe) {
-			return ServiceTools.serviceRefused(uhe.getMessage(), -1);
-		} catch (RecetteException re) {
-			return ServiceTools.serviceRefused(re.getMessage(), -1);
-		} catch (InformationUtilisateurException iue) {
-			return ServiceTools.serviceRefused(iue.getMessage(), -1);
-		} catch (SessionExpireeException see) {
-			return ServiceTools.serviceRefused(see.getMessage(), -1);
-		}	}
-
-
-	public static JSONObject noterRecette(String key, String idRecette, int note) throws JSONException{
-		try {
-			RecetteFonctions.noterRecette(key, idRecette, note);
-			return ServiceTools.serviceAccepted("La recette a ete notee");
-		} catch (MongoClientException mce) {
-			return ServiceTools.serviceRefused(mce.getMessage(), -1);
-		} catch (UnknownHostException uhe) {
-			return ServiceTools.serviceRefused(uhe.getMessage(), -1);
-		} catch (RecetteException re) {
-			return ServiceTools.serviceRefused(re.getMessage(), -1);
-		} catch (InformationUtilisateurException iue) {
-			return ServiceTools.serviceRefused(iue.getMessage(), -1);
-		} catch (SessionExpireeException see) {
-			return ServiceTools.serviceRefused(see.getMessage(), -1);
+			RecetteFonctions.supprimerRecette(idRecette, cle);
+			return ServiceTools.serviceAccepted("La recette a ete supprimee");
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 		}
+	}	
+
+
+	/**
+	 * 
+	 * @param cle
+	 * @param idRecette
+	 * @param note
+	 * @return
+	 * @throws JSONException
+	 */
+	public static JSONObject noterRecette(String cle, String idRecette, int note) throws JSONException{
+			try {
+				RecetteFonctions.noterRecette(cle, idRecette, note);
+				return ServiceTools.serviceAccepted("La recette a ete notee");
+			} catch (MyException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+			}
 	}
 }

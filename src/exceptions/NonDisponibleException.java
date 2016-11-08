@@ -5,12 +5,12 @@ package exceptions;
  * @author khalil
  *
  */
-public class SessionExpireeException extends MyException {
+public class NonDisponibleException extends MyException {
 
 	private static final long serialVersionUID = 1L;
 
-	public SessionExpireeException(String message, int code) {
+	public NonDisponibleException(String message, int code){
 		super(message, code);
 	}
-
+	
 }
