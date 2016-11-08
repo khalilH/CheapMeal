@@ -41,7 +41,8 @@ public class MongoFactory {
 	public static final String EAN = "ean";
 	public static final String DATE = "date";
 	public static final String PRIX_AU_KG = "prix";
-	
+	public static final String PHOTO = "photo";
+
 	public static final String DATABASE_NAME = "CheapMeal";
 	
 	public static final String COLLECTION_RECETTE = "Recettes";
@@ -84,8 +85,10 @@ public class MongoFactory {
 		if(photo !=null){
 			InputStream inputStream = photo.getInputStream();
 			BufferedImage image = ImageIO.read(inputStream);
-			File f = new File("/var/lib/tomcat8/webapps/images/"+document.get("_id").toString()+".png");
+			String oid = document.get("_id").toString();
+			File f = new File("/var/lib/tomcat8/webapps/images/"+oid+".png");
 			ImageIO.write(image, "png", f);
+			document.append(PHOTO,oid );
 		}
 		return document;
 	}
