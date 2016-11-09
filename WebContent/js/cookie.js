@@ -92,7 +92,7 @@ function loadNavbarConnected() {
  */
 function ajaxKeyValideOrNot(value) {
 	var res = $.ajax({
-		url : "isConnecte",
+		url : "user/estConnecte",
 		type : "GET",
 		data : "cle=" + value,
 		dataType : "json",

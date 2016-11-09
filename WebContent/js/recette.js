@@ -172,15 +172,20 @@ Recette.revival = function(key, value){
 
 Recette.traiteReponseJSON = function(json_text){
 
+	console.log(JSON.stringify(json_text));
+	
 	//obj est une Recette
 	var obj = JSON.parse(JSON.stringify(json_text), Recette.revival);
 	
 	if(obj.erreur == undefined){
 		
-		if(isConnected() === -1){
-			$("#noter-recette").html("");
+		if(isConnected() === 1){
+			$("#noter-recette").html("<div class='row lead margin-top-20'>"+
+			"<p>Notez cette recette:</p>"+
+			"<div id='hearts' class='starrr'></div>"+
+			"</div>"
+			);
 		}
-		
 		
 		$("#titre-recette").html("<span>"+obj.titre+"</span>");
 		$("#nom-auteur-recette").html("<span>"+obj.auteur.loginAuteur+"</span>");
@@ -227,12 +232,17 @@ $.urlParam = function(name){
     }
 }
 
-
 $(document).ready(function() {
 
 	$('#hearts').on('starrr:change', function(e, value){
 		$('#count').html(value);
 	});
+	
+	if(isConnected() == -1){
+		loadNavbarDisconnected();
+	}else{
+		loadNavbarConnected();
+	}
 
 	/*json_text = {
 			"_id" : "5820a24696aa58767018a53f",

@@ -86,7 +86,7 @@ public class RecetteFonctions {
 		if(id.equals(""))
 			throw new NonValideException("Parametre non valide", ErrorCode.RECETTE_ID_INVALIDE);
 		
-		BasicDBObject query = new BasicDBObject("_id", id);
+		BasicDBObject query = new BasicDBObject("_id", new ObjectId(id));
 		MongoDatabase database = DBStatic.getMongoConnection();
 		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
 		MongoCursor<BasicDBObject> cursor = col.find(query).iterator();

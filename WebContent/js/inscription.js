@@ -86,7 +86,7 @@ $(function() {
 
 		$.ajax({
 			type: "POST",
-			url: "inscription",
+			url: "user/inscription",
 			data: "prenom="+prenom+"&nom="+nom+"&login="+nom_utilisateur+"&mdp="+mdp+"&email="+email,
 			dataType: "json",
 			success: traitementReponseInscription,
