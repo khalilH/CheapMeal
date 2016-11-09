@@ -8,6 +8,10 @@ img {
 #leftPanel{
     text-align: center;
 }
+.h4 {
+	line-height : 2.5;
+	margin : 0;
+}
 
 .no-pad {
 	padding :0;
