@@ -11,10 +11,7 @@ import org.json.JSONObject;
 import com.mongodb.MongoClientException;
 
 import exceptions.MyException;
-import exceptions.NonValideException;
-import exceptions.ParametreManquantException;
 import services.fonctions.RecetteFonctions;
-import util.ErrorCode;
 import util.ServiceTools;
 
 public class RecetteServices {
@@ -100,8 +97,6 @@ public class RecetteServices {
 				return RecetteFonctions.afficherRecette(id);
 			} catch (MongoClientException e) {
 				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
-			} catch (UnknownHostException e) {
-				return ServiceTools.serviceRefused(e.getMessage(), ErrorCode.MONGO_EXCEPTION);
 			} catch (MyException e) {
 				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 			}

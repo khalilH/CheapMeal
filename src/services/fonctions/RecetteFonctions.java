@@ -82,14 +82,20 @@ public class RecetteFonctions {
 	 * @throws MongoClientException
 	 * @throws UnknownHostException
 	 */
-	public static JSONObject afficherRecette(String id) throws MyException, MongoClientException, UnknownHostException{
+	public static JSONObject afficherRecette(String id) throws MyException {
 		if(id == null)
 			throw new ParametreManquantException("Parametre(s) manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
 		if(id.equals(""))
 			throw new NonValideException("Parametre non valide", ErrorCode.RECETTE_ID_INVALIDE);
 
 		BasicDBObject query = new BasicDBObject("_id", new ObjectId(id));
-		MongoDatabase database = DBStatic.getMongoConnection();
+		MongoDatabase database;
+		try {
+			database = DBStatic.getMongoConnection();
+		} catch (Exception e) {
+			throw new MongoDBException(ErrorCode.ERREUR_INTERNE, ErrorCode.MONGO_EXCEPTION);
+		}
+		
 		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
 		MongoCursor<BasicDBObject> cursor = col.find(query).iterator();
 		BasicDBObject res = null;
@@ -97,7 +103,7 @@ public class RecetteFonctions {
 			res = cursor.next();
 
 		if(res != null){
-			// TODO Ajouter le prix calculé via l'API
+			// TODO Ajouter le prix calcule via l'API
 		}
 
 		return new JSONObject(res);
