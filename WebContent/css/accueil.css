@@ -13,48 +13,12 @@ h3 {
 	font-family: 'Gidole-Regular';
 }
 
-#brandLogo {
-	background: url(../images/cheapmeal_logo.png) 0 0;
-	padding-right:100px;
-}
-.btn {
-	position : relative;
-	height: 40px;
-}
-.navbar {
-	margin-bottom : 0;
-}
-.navbar-right:hover span{
-	color: white;	
-}
-.navbar-right:hover a{
-	color: white;
-	text-decoration: none;
-}
-.navbar-brand {
-  float: none;
-  }
 
-.navbar-toggle {
-	z-index:9999;
-}
 @media (min-width: 768px){
 .navbar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
     margin-left: 0px;
 }
 }
-
-.navbar-center
-{
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 0;
-    text-align: center;
-    margin: auto;
-  height:100%;
-}
-
 
 .searchbar-container{
 	position: relative;
@@ -145,11 +109,7 @@ h3 {
 	color: #1d7abc;
 }
 
-.deconnexion-button{
-	color: white;
-	font-family: 'Gidole-Regular';
-	font-size: 15px;
-}
+
 
 .categorie{
 	text-align:center;
