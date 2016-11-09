@@ -1,8 +1,25 @@
 .body-container{
 	margin-top:20px;
 }
-.pp {
-	height: 375px;
+#profilPicture {
+	height: 250px;
+	width : 250px;
+	margin-bottom : 10px;
+}
+.arrow-bottom {
+
+  width: 0; 
+  height: 0; 
+  position : absolute;
+  z-index : 10;
+  margin-left : 42%;
+  border-bottom: 10px solid transparent;
+    border-left: 10px solid transparent;
+  border-top: 10px solid white; 
+  border-right:10px solid transparent; 
+}
+.arrow-bottom:hover {
+	cursor : pointer;
 }
 .img-recette {
 	height : 120px;
