@@ -1,5 +1,6 @@
 var C_NAME_KEY = "Cheap_Meal_key";
 var C_NAME_LOGIN = "Cheap_Meal_login"
+var C_NAME_ID = "Cheap_Meal_id"
 
 /**
  * Créer un cookie

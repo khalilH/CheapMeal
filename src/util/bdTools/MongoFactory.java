@@ -23,6 +23,8 @@ public class MongoFactory {
 	public static final String NOTE = "note";
 	public static final String NOTE_MOYENNE = "moyenne";
 	public static final String NOMBRE_NOTE = "nbNotes";
+	public static final String USERS_NOTES = "usersNotes"; /* Pour les objets contenant {"idUser":1,"userNote":5} */
+	public static final String USER_NOTE = "userNote";
 	public static final String ID_USER = "idUser";
 	public static final String ID_RECETTE = "idRecette"; 
 	public static final String IDS_RECETTE = "idsRecette";
@@ -54,7 +56,7 @@ public class MongoFactory {
 			List<String> listIng, 
 			List<Double> quantites, 
 			List<String> mesures, 
-			List<String> preparation) {
+			String preparation) {
 		
 		Date d = new Date();
 		BasicDBObject document = new BasicDBObject(TITRE, titre);
@@ -68,6 +70,7 @@ public class MongoFactory {
 		BasicDBObject note = creerDocumentNote(0, 0);
 		document.append(NOTE, note);
 		document.append(DATE, d.getTime());
+		
 
 		return document;
 	}
@@ -93,6 +96,7 @@ public class MongoFactory {
 	public static BasicDBObject creerDocumentNote(double moyenne, int nbNotes){
 		BasicDBObject document = new BasicDBObject(NOTE_MOYENNE, moyenne);
 		document.append(NOMBRE_NOTE, nbNotes);
+		document.append(USERS_NOTES, new ArrayList<Integer>());
 		return document;
 	}
 	

@@ -42,7 +42,7 @@ public class RecetteServices {
 			List<String> ingredients, 
 			List<Double> quantites, 
 			List<String> mesures, 
-			List<String> preparation) throws JSONException{
+			String preparation) throws JSONException{
 
 		try {
 			RecetteFonctions.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation);
@@ -79,8 +79,8 @@ public class RecetteServices {
 	 */
 	public static JSONObject noterRecette(String cle, String idRecette, int note) throws JSONException{
 			try {
-				RecetteFonctions.noterRecette(cle, idRecette, note);
-				return ServiceTools.serviceAccepted("La recette a ete notee");
+				return RecetteFonctions.noterRecette(cle, idRecette, note);
+				//return ServiceTools.serviceAccepted("La recette a ete notee");
 			} catch (MyException e) {
 				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 			}

@@ -51,8 +51,9 @@ $(function() {
 				var json = JSON.parse(jsonrep);
 				if (rep.erreur == undefined) {
 					console.log("Connexion reussi ",rep);
-					setCookie(C_NAME_KEY,rep.success);
+					setCookie(C_NAME_KEY, rep.cle);
 					setCookie(C_NAME_LOGIN, login);
+					setCookie(C_NAME_ID, rep.id)
 					window.location.href="accueil.html";
 				} else {
 					console.log("Connexion Fail ",rep.message);

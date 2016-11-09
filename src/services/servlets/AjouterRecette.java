@@ -27,19 +27,17 @@ public class AjouterRecette extends HttpServlet {
 		String ingr = request.getParameter(RequestParameter.INGREDIENTS);
 		String quant = request.getParameter(RequestParameter.QUANTITES);
 		String mesu = request.getParameter(RequestParameter.MESURES);
-		String prepa = request.getParameter(RequestParameter.PREPARATION);
+		String preparation = request.getParameter(RequestParameter.PREPARATION);
 
 		/* Ici, parser la liste des ingredients et des etapes de preparation */
 
 		ArrayList<String> ingredients = new ArrayList<String>();
 		ArrayList<Double> quantites = new ArrayList<Double>();
 		ArrayList<String> mesures = new ArrayList<String>();
-		ArrayList<String> preparation = new ArrayList<String>();
 
 		String[] ingr_tmp = ingr.split(",");
 		String[] quantites_tmp = quant.split(",");
 		String[] mesures_tmp = mesu.split(",");
-		String[] prepa_tmp = prepa.split(",");
 
 		for(String s : ingr_tmp)
 			ingredients.add(s);
@@ -49,9 +47,6 @@ public class AjouterRecette extends HttpServlet {
 
 		for(String s : mesures_tmp)
 			mesures.add(s);
-
-		for(String s : prepa_tmp)
-			preparation.add(s);
 
 		try {
 			/* Traitement des services */

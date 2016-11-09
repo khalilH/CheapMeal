@@ -8,8 +8,31 @@ var __slice = [].slice;
 		Starrr.prototype.defaults = {
 				rating: void 0,
 				numStars: 5,
-				change: function(e, value) {
+				change: function(idRecette, note) {
 					/* A implémenter */
+
+					$.ajax({
+						url : 'recette/noter',
+						type : 'POST',
+						data : "cle="+getCookie(C_NAME_KEY)+"&idRecette="+idRecette+"&note="+note,
+						contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+						dataType : 'json',
+						success : function(rep){
+
+							console.log("Notation reussie");
+							var obj = JSON.parse(JSON.stringify(rep), Note.revival);
+
+							/* Remplacer la note affichee avec la nouvelle note */
+							$("#noter-recette").html("<span style:'text-align:center'>Vous avez noté cette recette</span>");
+							$("#note").html("<span>"+obj.moyenne+"/5"+" ("+obj.nbNotes+" votes)</span>");
+
+						},
+						error : function(resultat, statut, erreur) {
+							console.log("Bug");
+							console.log(resultat);
+							alert("dawg");
+						}
+					});
 
 					/* Une fois la recette notée, remplacer par un texte "Vous avez note cette recette" */
 					/* Si l'utilisateur a deja note la recette, afficher directement la note qu'il a mise */
@@ -138,6 +161,33 @@ function Recette(id,auteur,titre,ingredients,preparation,note,photo,prix){
 	this.prix = prix;
 }
 
+function Note(moyenne,nbNotes,usersNotes){
+	this.moyenne = moyenne;
+	this.nbNotes = nbNotes;
+	this.usersNotes = usersNotes;
+}
+
+function NoteUser(idUser, noteUser){
+	this.idUser = idUser;
+	this.noteUser = noteUser;
+}
+
+Note.revival = function(key, value){
+	if(key.length == 0){
+		var n;
+		if((value.Erreur == undefined) || (value.Erreur == 0)){ 
+			// Si l'on trouve pas un champs Erreur dans le JSON
+			n = new Note(value.moyenne, value.nbNotes);
+		}
+		else{
+			n = new Object();
+			n.Erreur = value.Erreur;
+		}
+	}else{
+		return value;
+	}
+}
+
 Recette.revival = function(key, value){
 	if(key.length == 0){
 		var r;
@@ -150,10 +200,13 @@ Recette.revival = function(key, value){
 			r.Erreur = value.Erreur;
 		}
 		return (r);
-	}else if((isNumber(key)) && !(typeof value === "string")) {
+	}else if((isNumber(key)) && value.nomIngredient != undefined) {
 		//cas où on est dans le tableau d'ingrédients
 		var ingr = new Ingredient(value.nomIngredient, value.quantite, value.mesure);
 		return ingr;
+	}else if((isNumber(key)) && value.idUser != undefined){
+		var usrNote = new NoteUser(value.idUser, value.noteUser);
+		return usrNote;
 	}
 	else if(key == "auteur"){
 		var auteur;
@@ -162,7 +215,7 @@ Recette.revival = function(key, value){
 	}
 	else if(key == "note"){
 		var note;
-		note = new Note(value.moyenne, value.nbNotes);
+		note = new Note(value.moyenne, value.nbNotes, value.usersNotes);
 		return note;
 	}
 	else {
@@ -172,29 +225,50 @@ Recette.revival = function(key, value){
 
 Recette.traiteReponseJSON = function(json_text){
 
-	console.log(JSON.stringify(json_text));
-	
+	//console.log(JSON.stringify(json_text));
+
 	//obj est une Recette
 	var obj = JSON.parse(JSON.stringify(json_text), Recette.revival);
+
+	console.log(JSON.stringify(obj));
 	
 	if(obj.erreur == undefined){
-		
-		if(isConnected() === 1){
-			$("#noter-recette").html("<div class='row lead margin-top-20'>"+
-			"<p>Notez cette recette:</p>"+
-			"<div id='hearts' class='starrr'></div>"+
-			"</div>"
-			);
-		}
-		
+
 		$("#titre-recette").html("<span>"+obj.titre+"</span>");
 		$("#nom-auteur-recette").html("<span>"+obj.auteur.loginAuteur+"</span>");
 		/* photo auteur */
 		$("#note").html("<span>"+obj.note.moyenne+"/5"+" ("+obj.note.nbNotes+" votes)</span>");
+
 		/* si l'utilisateur a deja note la recette, afficher le nombre d'etoile attribue */
+		var varUsersNotes = obj.note.usersNotes;
+		var i, aNote = false;
+		var id = getCookie(C_NAME_ID);
+		for(i=0; i<varUsersNotes.length; i++){
+			if(varUsersNotes[i].idUser == id){
+				aNote = true;
+				break;
+			}
+		}
+
+		if(isConnected() === 1){
+			if(getCookie(C_NAME_LOGIN) != obj.auteur.loginAuteur){
+				if(aNote == false){
+					console.log("JE PASSE ICI");
+					$("#noter-recette").html("<div class='row lead margin-top-20'>"+
+							"<p>Notez cette recette:</p>"+
+							"<div id='hearts' class='starrr'></div>"+
+							"</div>"
+					);
+				}else{
+					$("#noter-recette").html("<div class='row lead margin-top-20'>"+
+							"<p>Vous avez donné"+varUsersNotes[i].noteUser+" étoile(s) à cette recette.</p>"+
+							"</div>"
+					);
+				}
+			}
+		}
 
 		var s = "<ul>";
-		var i;
 		for(i=0; i<obj.ingredients.length; i++){
 			var ingr = obj.ingredients[i];
 			s+="<li><span class='txt-size-25'>"+ingr.nomIngredient+": "+ingr.quantite+" "+ingr.mesure+"</span></li>";
@@ -202,20 +276,12 @@ Recette.traiteReponseJSON = function(json_text){
 		s+="</ul>";
 		$("#ingr").html(s);
 		$("#prix").html("<span class='txt-size-35'>Prix estimé: </span><span class='txt-size-25'>"+obj.prix+"€</span>");
-
-		var p = "<ul>";
-		for(i=0; i<obj.preparation.length; i++){
-			p+="<li><span class='txt-size-25'>"+obj.preparation[i]+"</span></li>";
-		}
-		p+="</ul>";
-		$("#prep").html(p);
+		$("#prep").html("<span class='txt-size-25'>"+obj.preparation+"</span>");
 
 	}else{
 		alert(obj.erreur)
 	}
 }
-
-
 
 function isNumber(s){
 	return ! isNaN (s-0);
@@ -223,13 +289,13 @@ function isNumber(s){
 
 /* Permet de recuperer un parametre qu ise trouve dans l'url */
 $.urlParam = function(name){
-    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    if (results==null){
-       return null;
-    }
-    else{
-       return results[1] || 0;
-    }
+	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	if (results==null){
+		return null;
+	}
+	else{
+		return results[1] || 0;
+	}
 }
 
 $(document).ready(function() {
@@ -237,41 +303,51 @@ $(document).ready(function() {
 	$('#hearts').on('starrr:change', function(e, value){
 		$('#count').html(value);
 	});
-	
+
 	if(isConnected() == -1){
 		loadNavbarDisconnected();
 	}else{
 		loadNavbarConnected();
 	}
 
-	/*json_text = {
-			"_id" : "5820a24696aa58767018a53f",
-			"titre" : "Tarte aux pommes",
-			"auteur" : { 
-				"idAuteur" : 10, 
-				"loginAuteur" : "patra" 
-			},
-			"ingredients" : [ 
-				{ "nomIngredient" : "pomme", "quantite" : 5, "mesure" : "unite(s)" },
-				{ "nomIngredient" : "pâte feuilleté", "quantite" : 1, "mesure" : "unite(s)" },
-				{ "nomIngredient" : "sucre", "quantite" : 500, "mesure" : "g" }
-				],
-				"preparation" : [ 
-					"couper les pommes", 
-					"mettre à cuir pendant 50min"
-					], 
-					"note" : { 
-						"moyenne" : 0,
-						"nbNotes" : 0
-					},
-					"date" : "1478533702656",
-					"prix" : "7.45"
-	};
-	
-	Recette.traiteReponseJSON(json_text);*/
-	
+	/* json_text = {
+  		"date": 1478640910844,
+  		"note": {
+    		"moyenne": 4,
+    		"nbNotes": 4,
+    	"usersNotes": [
+      				{
+        				"idUser": 1,
+        				"noteUser": 3
+      				},
+      				{
+        				"idUser": 2,
+        				"noteUser": 5
+      				}
+    			]
+    		},
+  		"titre": "Super Recette",
+  		"ingredients": [
+    				{
+      					"mesure": "g",
+      					"nomIngredient": "pomme",
+      					"quantite": 10
+    				}	
+  			],
+  		"_id": "5822450e96aa58213b3299a7",
+  		"auteur": {
+    		"idAuteur": 10,
+    		"loginAuteur": "patra"
+  		},
+  		"preparation": [
+    		"mettre le toz dans le four"
+  		]
+	}
+
+	console.log(Recette.traiteReponseJSON(json_text));*/
+
 	var idRecette = $.urlParam("idRecette"); /* idRecette = getParameter */
-	
+
 	$.ajax({
 		url : 'recette/afficher',
 		type : 'GET',

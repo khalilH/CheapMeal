@@ -99,10 +99,11 @@ public class UtilisateurServices {
 	 * @throws JSONException
 	 */
 	public static JSONObject connexion(String login, String mdp) throws JSONException {
-		String result;
+		JSONObject result;
 		try {
-			result = UtilisateurFonctions.Connexion(login,mdp);
-			return ServiceTools.serviceAccepted(result);
+			result = UtilisateurFonctions.connexion(login,mdp);
+			//return ServiceTools.serviceAccepted(result);
+			return result;
 		} catch (MyException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 		}
