@@ -1,10 +1,16 @@
+.body-container{
+	margin-top:20px;
+}
 .pp {
 	height: 375px;
 }
-img {
-	height : 250px;
+.img-recette {
+	height : 120px;
+	width : 120px;
 }
-
+.mg-bottom-20{
+	margin-bottom : 20px;
+}
 #leftPanel{
     text-align: center;
 }
