@@ -1,0 +1,72 @@
+.body-container{
+	margin-top:20px;
+}
+#profilPicture {
+	height: 250px;
+	width : 100%;
+	margin-bottom : 10px;
+}
+.btn-delete{
+	color : #DD0000;
+}
+.btn-delete:hover{
+	color : #DD0000;
+}
+.mg-top-10{
+	margin-top : 10px;
+}
+.arrow-bottom {
+
+  width: 0; 
+  height: 0; 
+  position : absolute;
+  z-index : 10;
+  margin-left : 42%;
+  border-bottom: 10px solid transparent;
+    border-left: 10px solid transparent;
+  border-top: 10px solid white; 
+  border-right:10px solid transparent; 
+}
+.arrow-bottom:hover {
+	cursor : pointer;
+}
+.btn-default {
+	background-color : transparent;
+	border-color : #ccc;
+}
+.img-recette {
+	height : 120px;
+	width : 120px;
+}
+.mg-bottom-20{
+	margin-bottom : 20px;
+}
+#leftPanel{
+    text-align: center;
+}
+.h4 {
+	line-height : 2.5;
+	margin : 0;
+}
+
+.no-pad {
+	padding :0;
+}
+.pad15{
+	padding-left : 15px;
+	padding-right : 15px;
+}
+
+.bg-blue{
+	background-color : #418bca ;	
+}
+.bg-pink{
+	background-color : #e05d6f ;	
+}
+.bg-green{
+	background-color : #16a085 ;	
+}
+
+.white-text {
+	color : #fff;
+}

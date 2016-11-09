@@ -135,66 +135,13 @@ $(function() {
 
 	/**************************************** Fonctions utilitaires ****************************************/
 
-//	function verificationFormulaireInscription(prenom, nom, nom_utilisateur, mdp, confirmation_mdp, email){
-//	if(mdp.length < 6){
-//	func_erreur("Le mot de passe doit contenir au moins 6 caractères");
-//	return false;
-//	}
-//	if (!emailValide(email)){
-//	func_erreur("L'adresse email n'est pas valide");
-//	return false;
-//	}
-//	if (!mdpValide(mdp)) {
-//	func_erreur("Le mot de passe doit contenir seulement des chiffres et des lettres");
-//	return false;
-//	}
-//	if (mdp != confirmation_mdp){
-//	func_erreur("Les mots de passe doivent correspondre");
-//	return false;
-//	}
-//	return true;
-//	}
-
-//	function mdpValide(mdp){
-//	var caracteresAutorises = new RegExp('[0-9a-z]{6,}','i');
-//	return caracteresAutorises.test(mdp);
-//	}
-
-//	function emailValide(email){
-//	var mailRE = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
-//	return mailRE.test(email);
-//	}
-
 	function func_valid(msg){
 		alert("Succès: "+msg)
-		/* var msg_box="<div id=msg_valid>"+msg+"</div>";
-	var old_msg1 = $("#msg_err");
-	var old_msg2 = $("#msg_valid");
-	if (old_msg1.length == 0 && old_msg2.length == 0) {
-		$("#lastdiv").append(msg_box);
-	}
-	else if(old_msg1.length != 0){
-		old_msg1.replaceWith(msg_box);
-	}
-	else if(old_msg2.length != 0){
-		old_msg2.replaceWith(msg_box);
-	} */
+
 	}
 
 	function func_erreur(msg) {
 		alert("Erreur: "+msg);
-		/*var msg_box="<div id=msg_err>"+msg+"</div>";
-	var old_msg1 = $("#msg_err");
-	var old_msg2 = $("#msg_valid");
-	if (old_msg1.length == 0 && old_msg2.length == 0) {
-		$("test").append(msg_box);
-	}
-	else if(old_msg1.length != 0){
-		old_msg1.replaceWith(msg_box);
-	}
-	else if(old_msg2.length != 0){
-		old_msg2.replaceWith(msg_box);
-	} */
 	}
 
 });

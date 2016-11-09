@@ -192,12 +192,13 @@ public class ServiceTools {
 	 * @return le timestamp de la date d'expiration
 	 */
 	public static Timestamp getDateExpirationAvecCle(String cle)  {
-		org.hibernate.Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		org.hibernate.Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		Timestamp s_timestamp=(Timestamp) s.createQuery("Select s.dateExpiration from Sessions s where s.cleSession = :cleSession")
 					.setParameter("cleSession", cle)
 					.uniqueResult();
 		s.getTransaction().commit();
+		s.close();
 		return s_timestamp;
 	}
 

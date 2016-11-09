@@ -1,5 +1,6 @@
 package services.fonctions;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.json.JSONException;
@@ -64,11 +65,18 @@ public class ProfilFonctions {
 			throw new SessionExpireeException("Votre session a expiree", ErrorCode.SESSION_EXPIREE);
 
 		if(RequeteStatic.isLoginDisponible(login))
-			throw new NonDisponibleException("Ce nom d'utilisateur est deja utilise", ErrorCode.LOGIN_NON_DISPO);
+			throw new NonDisponibleException("Ce nom d'utilisateur n'existe pas", ErrorCode.LOGIN_NON_DISPO);
 
 		JSONObject jb = new JSONObject();
+		JSONObject profil = new JSONObject();
 		String bio = RequeteStatic.recupBio(login);
-		jb.put("Bio",bio );
+		profil.put("bio",bio );
+		profil.put("login", login);
+		File f = new File("/var/lib/tomcat8/webapps/images/profil"+login+".png");
+		if(f.exists())
+			profil.put("photo", login);
+		else
+			profil.put("photo","genericImage");
 		ArrayList<BasicDBObject> recettes;
 		try {
 			recettes = RecetteFonctions.getRecettesFromLogin(login);
@@ -76,7 +84,7 @@ public class ProfilFonctions {
 			throw new exceptions.MongoDBException(ErrorCode.ERREUR_INTERNE, ErrorCode.MONGO_EXCEPTION);
 		}
 		jb.put("recettes",recettes);
-		jb.put("Login", login);
+		jb.put("profil", profil);
 		return jb;
 	}
 
