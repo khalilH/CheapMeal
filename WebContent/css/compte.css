@@ -1,0 +1,52 @@
+@font-face {
+	font-family: 'Gidole-Regular';
+	src: url('../fonts/Gidole-Regular.otf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.compte-body {
+	background-color: #f1f3f2;
+	font-family: 'Gidole-Regular';
+}
+
+.contenu-page {
+	margin-left: 20%;
+	margin-right: 20%;
+	margin-top: 20px;
+}
+
+.container {
+	background-color: white;
+	border-radius: 10px;
+}
+
+.partie-mail {
+	margin-right: 20px;
+	margin-left: 20px;
+	margin-top: 20px;
+}
+
+.partie-mdp {
+	margin-right: 20px;
+	margin-left: 20px;
+	margin-top: 20px;
+}
+
+.titre-partie {
+	font-size: 35px;
+	font-weight: bold;
+}
+
+.description-partie {
+	font-size: 25px;
+}
+
+.margin-left-15 {
+	margin-left: 15px;
+}
+
+.form{
+	
+}
+
