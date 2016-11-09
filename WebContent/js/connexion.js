@@ -41,7 +41,7 @@ $(function() {
 		console.log("Connexion de " + login + " mdp " + mdp);
 
 		$.ajax({
-			url : 'connexion',
+			url : 'user/connexion',
 			type : 'POST',
 			data : 'login=' + login + "&mdp=" + mdp,
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
@@ -121,7 +121,7 @@ $(function() {
 		console.log("Forgot de "+mail);
 
 		$.ajax({
-			url : 'recupmdp',
+			url : 'user/recupererMdp',
 			type : 'get',
 			data : 'mail='+mail,
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',

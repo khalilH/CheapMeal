@@ -38,7 +38,7 @@ public class RecetteFonctions {
 		BasicDBObject sortQuery = new BasicDBObject("date",-1);
 		MongoDatabase database = DBStatic.getMongoConnection();
 		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
-		MongoCursor<BasicDBObject> cursor = col.find().sort(sortQuery).limit(1).iterator();
+		MongoCursor<BasicDBObject> cursor = col.find().sort(sortQuery).limit(9).iterator();
 		while(cursor.hasNext()){
 			BasicDBObject obj = cursor.next();
 			ObjectId oid = obj.getObjectId("_id");
@@ -53,7 +53,7 @@ public class RecetteFonctions {
 		BasicDBObject sortQuery = new BasicDBObject(MongoFactory.NOTE+"."+MongoFactory.NOTE_MOYENNE,-1);
 		MongoDatabase database = DBStatic.getMongoConnection();
 		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
-		MongoCursor<BasicDBObject> cursor = col.find().sort(sortQuery).limit(1).iterator();
+		MongoCursor<BasicDBObject> cursor = col.find().sort(sortQuery).limit(9).iterator();
 		while(cursor.hasNext()){
 			BasicDBObject obj = cursor.next();
 			ObjectId oid = obj.getObjectId("_id");
@@ -267,6 +267,8 @@ public class RecetteFonctions {
 		BasicDBObject document = new BasicDBObject(MongoFactory.AUTEUR+"."+MongoFactory.LOGIN_AUTEUR, login);
 		ArrayList<BasicDBObject> list = new ArrayList<BasicDBObject>();
 		for(BasicDBObject obj : recettesCollection.find(document)){
+			ObjectId oid = obj.getObjectId("_id");
+			obj.replace("_id", oid.toString());
 			list.add(obj);
 		}
 		return list;

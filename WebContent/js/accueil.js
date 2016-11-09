@@ -10,7 +10,7 @@ $(function (){
 		this.id = id;
 		this.auteur = auteur;
 		this.titre = titre;
-		this.photo = photo;
+		this.photo = "../images/"+photo+".png";
 	}
 	Recette.prototype.getHtml=function(){
 		var s ="<div  class='col-md-6 col-lg-4'>"+
@@ -47,13 +47,11 @@ $(function (){
 		return ! isNaN (s-0);
 	}
 	 function recetteRevival(key, value) {
-		 console.log(key+" et "+value);
 			if(key.length == 0) /* "haut" du JSON ==fin */
 			{
 				var r;
 				if((value.Erreur == undefined) || (value.Erreur == 0)){ // Si l'on trouve pas un champs Erreur dans le JSON
 					r = new RecetteList(value.recettesRecentes, value.recettesBest);
-					console.log("J'ai cree un r");
 				}
 				else {
 					r = new Object();
@@ -63,13 +61,11 @@ $(function (){
 			}
 			else if((isNumber(key)) && (value.auteur instanceof Auteur)) { // Si l'on est dans une case du tableau et que l'auteur est un objet de la classe auteur
 				var recette = new Recette(value._id, value.auteur, value.titre, value.photo);
-				console.log("J'ai cree toz");
 				return recette;
 			}
 			else if(key == "auteur") { // Lorsquon doit crée un utilisateur
 				var auteur;
 				auteur = new Auteur(value.idAuteur, value.loginAuteur);
-				console.log("J'ai cree toz "+auteur);
 
 				return auteur;
 			}
@@ -124,6 +120,11 @@ $(function (){
 		});
 		
 	}
+	$('.recette').on('click',function(){
+		console.log("J'ai clique sur une recette ",this.id);
+		//TODO Afficher la page de la recette
+	});
+	
 	function updatePage(liste){
 		$("#recentRecipe").html(liste.getHtmlRecent());
 		$("#BestRecipe").html(liste.getHtmlBest());

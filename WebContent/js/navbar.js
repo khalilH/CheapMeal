@@ -39,9 +39,6 @@ $("#deconnexion").on('click',function(){
 	});
 		
 	
-	$('.recette').on('click',function(){
-		console.log("J'ai clique sur une recette ",this.id);
-		//TODO Afficher la page de la recette
-	});
+
 	
 });

@@ -5,12 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Recette</title>
 
-<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/navbar.css">
 <link rel="stylesheet" type="text/css" href="css/profil.css">
 
 <script src="js/jquery-3.1.1.min.js"></script>
-<script src="js/recette.js"></script>
+<script src="js/profil.js"></script>
 <script src="js/cookie.js"></script>
 <script src="js/navbar.js"></script>
 
@@ -38,10 +39,10 @@
 							class="glyphicon glyphicon-cog"></span> Compte</a></li>
 				</ul>
 				<div class="nav navbar-nav navbar-right">
-							<button id="deconnexion" type="button"
-								class="btn btn-primary navbar-btn">
-								<span class="glyphicon glyphicon-log-out"></span> Déconnexion
-							</button>
+					<button id="deconnexion" type="button"
+						class="btn btn-primary navbar-btn">
+						<span class="glyphicon glyphicon-log-out"></span> Déconnexion
+					</button>
 				</div>
 			</div>
 		</div>
@@ -53,11 +54,13 @@
 					<div class="row pad15">
 						<div class="col-sm-12">
 							<h3>Afuri</h3>
-							<img class="img-responsive" id="profilPicture" src="images/login_bg.jpg"
-								alt="Profil Picture">
-							<div>
+							<img class="img-responsive" id="profilPicture"
+								src="images/login_bg.jpg" alt="Profil Picture">
+							<div id="connected">
 								<div class="arrow-bottom"></div>
-							<button type="button" class="btn btn-md btn-primary form-control"> Modifier photo</button>
+								<button type="button"
+									class="btn btn-md btn-primary form-control">Modifier
+									photo</button>
 							</div>
 							<p>Contact me at : azeioa@hotmail.fr</p>
 							<blockquote>Tzo jaime les firttrs et le poulet
@@ -88,69 +91,97 @@
 				<div class="col-sm-8" id="rightPanel">
 					<div class="row">
 						<div class="col-sm-12">
-						<button type="button"
+							<button id="addRecette" type="button"
 								class="btn btn-primary form-control mg-bottom-20">
-								<span class="glyphicon glyphicon-plus"></span> Ajouter une recette
-						</button>
+								<span class="glyphicon glyphicon-plus"></span> Ajouter une
+								recette
+							</button>
+						</div>
 						<div class="col-sm-12">
-							<div class="media well recette">
+							<div class="media well recette" id="abdallah">
 								<div class="media-left media-middle">
-										<img class="media-object img-recette" width="50px" src="images/cheapmeal_logo.png" alt="Generic placeholder image">
+									<img class="media-object img-recette" width="50px"
+										src="images/cheapmeal_logo.png"
+										alt="Generic placeholder image">
 								</div>
 								<div class="media-body">
 									<h4 class="media-heading">Middle aligned media</h4>
-									<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-									<p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-							  </div>
-							  <div class="media-right media-middle">
-								<button class="btn btn-lg btn-default btn-delete onclick='alert()'" >
-									<span class="glyphicon glyphicon-trash"></span> 
-							  </div>
-						</div>
-						</div>
-						<div class="col-sm-12">
-							<div class="media well">
-								<div class="media-left media-middle">
-										<img class="media-object img-recette" width="50px" src="images/cheapmeal_logo.png" alt="Generic placeholder image">
+									<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
+										metus scelerisque ante sollicitudin commodo. Cras purus odio,
+										vestibulum in vulputate at, tempus viverra turpis. Fusce
+										condimentum nunc ac nisi vulputate fringilla. Donec lacinia
+										congue felis in faucibus.</p>
+									<p>Donec sed odio dui. Nullam quis risus eget urna mollis
+										ornare vel eu leo. Cum sociis natoque penatibus et magnis dis
+										parturient montes, nascetur ridiculus mus.</p>
 								</div>
-								<div class="media-body">
-									<h4 class="media-heading">Middle aligned media</h4>
-									<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-									<p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-							  </div>
-						</div>
-						</div>
-						<div class="col-sm-12">
-							<div class="media well">
-								<div class="media-left media-middle">
-										<img class="media-object img-recette" width="50px" src="images/cheapmeal_logo.png" alt="Generic placeholder image">
+								<div class="media-right media-middle">
+									<button name="abdallah"
+										class="btn btn-lg btn-default btn-delete">
+										<span class="glyphicon glyphicon-trash"></span>
+									</button>
 								</div>
-								<div class="media-body">
-									<h4 class="media-heading">Middle aligned media</h4>
-									<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-									<p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-							  </div>
-						</div>
-						</div>
-						<div class="col-sm-12">
-							<div class="well">Toz</div>
-						</div>
-						<div class="col-sm-12">
-							<div class="well">Toz</div>
-						</div>
-						<div class="col-sm-12">
-							<div class="well">Toz</div>
-						</div>
-						<div class="col-sm-12">
-							<div class="well">Toz</div>
-						</div>
-						<div class="col-sm-12">
-							<div class="well">Toz</div>
+							</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="media well">
+									<div class="media-left media-middle">
+										<img class="media-object img-recette" width="50px"
+											src="images/cheapmeal_logo.png"
+											alt="Generic placeholder image">
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">Middle aligned media</h4>
+										<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
+											metus scelerisque ante sollicitudin commodo. Cras purus odio,
+											vestibulum in vulputate at, tempus viverra turpis. Fusce
+											condimentum nunc ac nisi vulputate fringilla. Donec lacinia
+											congue felis in faucibus.</p>
+										<p>Donec sed odio dui. Nullam quis risus eget urna mollis
+											ornare vel eu leo. Cum sociis natoque penatibus et magnis dis
+											parturient montes, nascetur ridiculus mus.</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="media well">
+									<div class="media-left media-middle">
+										<img class="media-object img-recette" width="50px"
+											src="images/cheapmeal_logo.png"
+											alt="Generic placeholder image">
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">Middle aligned media</h4>
+										<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
+											metus scelerisque ante sollicitudin commodo. Cras purus odio,
+											vestibulum in vulputate at, tempus viverra turpis. Fusce
+											condimentum nunc ac nisi vulputate fringilla. Donec lacinia
+											congue felis in faucibus.</p>
+										<p>Donec sed odio dui. Nullam quis risus eget urna mollis
+											ornare vel eu leo. Cum sociis natoque penatibus et magnis dis
+											parturient montes, nascetur ridiculus mus.</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="well">Toz</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="well">Toz</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="well">Toz</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="well">Toz</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="well">Toz</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </body>
 </html>
