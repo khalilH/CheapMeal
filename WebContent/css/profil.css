@@ -4,3 +4,25 @@
 img {
 	height : 250px;
 }
+
+#leftPanel{
+    text-align: center;
+}
+
+.no-pad {
+	padding :0;
+}
+.pad15{
+	padding-left : 15px;
+	padding-right : 15px;
+}
+
+.bg-blue{
+	background-color : #418bca ;	
+}
+.bg-pink{
+	background-color : #e05d6f ;	
+}
+.bg-green{
+	background-color : #16a085 ;	
+}
