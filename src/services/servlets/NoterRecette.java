@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import services.RecetteService;
+import services.RecetteServices;
 import util.RequestParameter;
 
 public class NoterRecette extends HttpServlet{
@@ -31,7 +31,7 @@ public class NoterRecette extends HttpServlet{
 		else
 			noteValue = -1;
 		try {
-			JSONObject res = RecetteService.noterRecette(cle, idRecette, noteValue);
+			JSONObject res = RecetteServices.noterRecette(cle, idRecette, noteValue);
 			
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();

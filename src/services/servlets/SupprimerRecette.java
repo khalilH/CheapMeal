@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import services.RecetteService;
+import services.RecetteServices;
 import util.RequestParameter;
 
 public class SupprimerRecette extends HttpServlet {
@@ -26,7 +26,7 @@ public class SupprimerRecette extends HttpServlet {
 
 		try {
 			/* Traitement des services */
-			JSONObject res = RecetteService.supprimerRecette(idRecette,cle);
+			JSONObject res = RecetteServices.supprimerRecette(idRecette,cle);
 
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();

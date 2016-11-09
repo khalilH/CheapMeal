@@ -41,7 +41,7 @@ $(function() {
 		console.log("Connexion de " + login + " mdp " + mdp);
 
 		$.ajax({
-			url : 'connexion',
+			url : 'user/connexion',
 			type : 'POST',
 			data : 'login=' + login + "&mdp=" + mdp,
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
@@ -51,8 +51,9 @@ $(function() {
 				var json = JSON.parse(jsonrep);
 				if (rep.erreur == undefined) {
 					console.log("Connexion reussi ",rep);
-					setCookie(C_NAME_KEY,rep.success);
+					setCookie(C_NAME_KEY, rep.cle);
 					setCookie(C_NAME_LOGIN, login);
+					setCookie(C_NAME_ID, rep.id)
 					window.location.href="accueil.html";
 				} else {
 					console.log("Connexion Fail ",rep.message);
@@ -121,8 +122,8 @@ $(function() {
 		console.log("Forgot de "+mail);
 
 		$.ajax({
-			url : 'recupmdp',
-			type : 'get',
+			url : 'user/recupererMdp',
+			type : 'POST',
 			data : 'mail='+mail,
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			dataType : 'json',

@@ -8,11 +8,16 @@ import javax.servlet.http.Part;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.mongodb.MongoClientException;
+
 import exceptions.MyException;
+import exceptions.NonValideException;
+import exceptions.ParametreManquantException;
 import services.fonctions.RecetteFonctions;
+import util.ErrorCode;
 import util.ServiceTools;
 
-public class RecetteService {
+public class RecetteServices {
 
 	public static JSONObject getRecettesAccueil() throws JSONException {
 
@@ -39,11 +44,11 @@ public class RecetteService {
 			List<String> ingredients, 
 			List<Double> quantites, 
 			List<String> mesures, 
-			List<String> preparation,
+			String preparation,
 			Part photo) throws JSONException{
 
 		try {
-			RecetteFonctions.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation,photo);
+			RecetteFonctions.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation, photo);
 			return ServiceTools.serviceAccepted("La recette a ete ajoutee");
 		} catch (MyException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
@@ -77,8 +82,26 @@ public class RecetteService {
 	 */
 	public static JSONObject noterRecette(String cle, String idRecette, int note) throws JSONException{
 			try {
-				RecetteFonctions.noterRecette(cle, idRecette, note);
-				return ServiceTools.serviceAccepted("La recette a ete notee");
+				return RecetteFonctions.noterRecette(cle, idRecette, note);
+				//return ServiceTools.serviceAccepted("La recette a ete notee");
+			} catch (MyException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+			}
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 * @throws JSONException
+	 */
+	public static JSONObject afficherRecette(String id) throws JSONException{
+			try {
+				return RecetteFonctions.afficherRecette(id);
+			} catch (MongoClientException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+			} catch (UnknownHostException e) {
+				return ServiceTools.serviceRefused(e.getMessage(), ErrorCode.MONGO_EXCEPTION);
 			} catch (MyException e) {
 				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 			}

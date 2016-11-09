@@ -149,7 +149,8 @@ $(function (){
 				console.log(JSON.stringify(rep));
 				var jsonrep = JSON.stringify(rep)
 				var json = JSON.parse(jsonrep);
-				destroy_cookie();
+				destroy_cookie(C_NAME_KEY);
+				destroy_cookie(C_NAME_LOGIN);
 				window.location.href="accueil.html";
 				return;
 			},
