@@ -51,8 +51,9 @@ $(function() {
 				var json = JSON.parse(jsonrep);
 				if (rep.erreur == undefined) {
 					console.log("Connexion reussi ",rep);
-					setCookie(C_NAME_KEY,rep.success);
+					setCookie(C_NAME_KEY, rep.cle);
 					setCookie(C_NAME_LOGIN, login);
+					setCookie(C_NAME_ID, rep.id)
 					window.location.href="accueil.html";
 				} else {
 					console.log("Connexion Fail ",rep.message);
@@ -122,7 +123,7 @@ $(function() {
 
 		$.ajax({
 			url : 'user/recupererMdp',
-			type : 'get',
+			type : 'POST',
 			data : 'mail='+mail,
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			dataType : 'json',
@@ -149,13 +150,10 @@ $(function() {
 
 	function alignModal(){
 		var modalDialog = $(this).find(".modal-dialog");
-		// Applying the top margin on modal dialog to align it vertically center
 		modalDialog.css("margin-top", Math.max(0, ($(window).height() - modalDialog.height()) / 4));
 	}
-	// Align modal when it is displayed
 	$(".modal").on("shown.bs.modal", alignModal);
 
-	// Align modal when user resize the window
 	$(window).on("resize", function(){
 		$(".modal:visible").each(alignModal);
 	});   

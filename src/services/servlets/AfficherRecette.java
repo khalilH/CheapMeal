@@ -12,27 +12,30 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.RecetteServices;
+import util.RequestParameter;
 
-public class GetRecettesAccueil extends HttpServlet {
+public class AfficherRecette extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		/* Lecture des parametres */
+		String id = request.getParameter(RequestParameter.ID_RECETTE);
 		
-		/* Traitement du service */
 		try {
-			JSONObject result = RecetteServices.getRecettesAccueil();
-
+			/* Traitement des services */
+			JSONObject res = RecetteServices.afficherRecette(id);
+			
 			/* Ecriture de la reponse */
+			PrintWriter writer = response.getWriter();
 			response.setContentType("application/json");
-			PrintWriter printWriter = response.getWriter();
-			printWriter.println(result);
+			writer.println(res.toString());
+			
 		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
-
+	
 }

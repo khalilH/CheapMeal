@@ -2,6 +2,9 @@ package services.fonctions;
 
 import java.util.Random;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import exceptions.AuthenticationException;
 import exceptions.CleNonActiveException;
 import exceptions.MailException;
@@ -12,7 +15,9 @@ import exceptions.ParametreManquantException;
 import exceptions.SessionExpireeException;
 import util.BCrypt;
 import util.ErrorCode;
+import util.RequestParameter;
 import util.ServiceTools;
+import util.bdTools.MongoFactory;
 import util.bdTools.RequeteStatic;
 import util.hibernate.model.Utilisateurs;
 
@@ -154,9 +159,10 @@ public class UtilisateurFonctions {
 	 * @param mdp
 	 * @return
 	 * @throws MyException
+	 * @throws JSONException 
 	 */
-	public static String Connexion(String login, String mdp) 
-			throws MyException {
+	public static JSONObject connexion(String login, String mdp) 
+			throws MyException, JSONException {
 		
 		//Verification parametre invalides
 		if(login == null || mdp == null)
@@ -171,13 +177,19 @@ public class UtilisateurFonctions {
 		//Verifier si lutilisateur existe
 		if(RequeteStatic.checkIdentifiantsValide(login, mdp)){
 			String cle;
+			int id;
 			if(RequeteStatic.isSessionCree(login)){ 			// Si Lutilisateur est connecte
 				RequeteStatic.updateDateExpirationAvecLogin(login);
 				cle = RequeteStatic.recupererTokenAvecLogin(login); 
 			}else{
 				cle = RequeteStatic.createSessionFromLogin(login);
 			}
-			return cle;
+			
+			id = RequeteStatic.obtenirIdAvecLogin(login);
+
+			return new JSONObject()
+					.put(RequestParameter.CLE, cle)
+					.put(RequestParameter.ID, id);
 		}
 		else{// Identifiants invalide
 			if(!RequeteStatic.isLoginDisponible(login)){

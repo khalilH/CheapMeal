@@ -47,7 +47,7 @@ public class RecetteFonctions {
 		}
 		return list;
 	}
-	
+
 	public static ArrayList<BasicDBObject> getBestRecipes() throws MongoClientException, UnknownHostException {
 		ArrayList<BasicDBObject> list = new ArrayList<>();
 		BasicDBObject sortQuery = new BasicDBObject(MongoFactory.NOTE+"."+MongoFactory.NOTE_MOYENNE,-1);
@@ -62,7 +62,7 @@ public class RecetteFonctions {
 		}
 		return list;
 	}
-	
+
 	public static JSONObject getRecettesAccueil() throws JSONException, MongoClientException, UnknownHostException{
 		JSONObject jb = new JSONObject();
 		JSONArray recentRecipes = new JSONArray(getRecentRecipes());
@@ -72,7 +72,43 @@ public class RecetteFonctions {
 		return jb;
 
 	}
-	
+
+
+	/**
+	 * Permet d'obtenir l'objet Json correspondant a la recette dont l'id est en parametre 
+	 * @param id id de la recette
+	 * @return JSONObject contenant les informations de la recette
+	 * @throws MyException
+	 * @throws MongoClientException
+	 * @throws UnknownHostException
+	 */
+	public static JSONObject afficherRecette(String id) throws MyException {
+		if(id == null)
+			throw new ParametreManquantException("Parametre(s) manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
+		if(id.equals(""))
+			throw new NonValideException("Parametre non valide", ErrorCode.RECETTE_ID_INVALIDE);
+
+		BasicDBObject query = new BasicDBObject("_id", new ObjectId(id));
+		MongoDatabase database;
+		try {
+			database = DBStatic.getMongoConnection();
+		} catch (Exception e) {
+			throw new MongoDBException(ErrorCode.ERREUR_INTERNE, ErrorCode.MONGO_EXCEPTION);
+		}
+		
+		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
+		MongoCursor<BasicDBObject> cursor = col.find(query).iterator();
+		BasicDBObject res = null;
+		if(cursor.hasNext())
+			res = cursor.next();
+
+		if(res != null){
+			// TODO Ajouter le prix calcule via l'API
+		}
+
+		return new JSONObject(res);
+	}
+
 
 	/**
 	 * 
@@ -87,10 +123,9 @@ public class RecetteFonctions {
 	public static void ajouterRecette(String titre, String cle, 
 			List<String> ingredients, 
 			List<Double> quantites, 
-			List<String> mesures, 
-			List<String> preparation,
-			Part photo)
-					throws MyException {
+			List<String> mesures,
+			String preparation,
+			Part photo) throws MyException {
 
 		/* Verification des parametres */
 		if (titre == null || cle == null || ingredients == null || quantites == null || preparation == null || photo == null)
@@ -109,7 +144,7 @@ public class RecetteFonctions {
 				|| ingredients.stream().filter(i -> i.length() == 0).count() > 0 
 				|| quantites.stream().filter(i -> i<=0).count() > 0 
 				|| mesures.stream().filter(i -> !listMesures.contains(i)).count() > 0 
-				|| preparation.stream().filter(p -> p.length() == 0).count() > 0
+				|| preparation.equals("")
 				|| ingredients.size() != mesures.size() 
 				|| ingredients.size() != quantites.size() 
 				|| mesures.size() != quantites.size())
@@ -204,7 +239,7 @@ public class RecetteFonctions {
 	 * @param note
 	 * @throws MyException
 	 */
-	public static void noterRecette(String cle, String idRecette, int note) 
+	public static JSONObject noterRecette(String cle, String idRecette, int note) 
 			throws MyException{
 
 		if(idRecette == null || cle == null || idRecette.equals(""))
@@ -238,15 +273,15 @@ public class RecetteFonctions {
 
 
 		// Noter la recette
-		boolean notation = noterRecetteParId(u, cle, idRecette, note, recettesCollection, notesCollection);
+		BasicDBObject objetNote = noterRecetteParId(u, cle, idRecette, note, recettesCollection, notesCollection);
 
 		// Dire que l'utilisateur a note la recette (ajout dans collection Mongo)
-		if(notation)
-			majNotationRecette(u, idRecette, notesCollection);
-		else
+		if(objetNote == null)
 			throw new RecetteException("Vous avez deja note cette recette", ErrorCode.RECETTE_DEJA_NOTE);
 
 		DBStatic.closeMongoDBConnection();
+
+		return new JSONObject(objetNote);
 	}
 
 	/**
@@ -285,12 +320,13 @@ public class RecetteFonctions {
 	 * @return
 	 * @throws RecetteException
 	 */
-	public static boolean noterRecetteParId(Utilisateurs u, String key, String idRecette, int note, 
+	public static BasicDBObject noterRecetteParId(Utilisateurs u, String key, String idRecette, int note, 
 			MongoCollection<BasicDBObject> recettesCollection,
 			MongoCollection<BasicDBObject> notesCollection ) throws RecetteException {
 
 		/* Notation de la recette */
-		boolean res;
+
+		BasicDBObject res = new BasicDBObject();
 
 		// Query qui recup la recette
 		ObjectId _id = new ObjectId(idRecette); //idRecette au format hex
@@ -301,27 +337,35 @@ public class RecetteFonctions {
 		MongoCursor<BasicDBObject> cursor = recettesCollection.find(query).iterator();
 
 		BasicDBObject recette;
+
 		if(cursor.hasNext())
 			recette = cursor.next();
 		else
 			throw new RecetteException("Cette recette n'existe pas", ErrorCode.RECETTE_INEXISTANTE);
 
-		if(aDejaNote(notesCollection, u, idRecette)){
+		if(!aDejaNote(notesCollection, u, idRecette)){
 			// Modifier la recette 
 			BasicDBObject noteDoc = (BasicDBObject) recette.get(MongoFactory.NOTE);
 			double moyenne = noteDoc.getDouble(MongoFactory.NOTE_MOYENNE);
-			int nbNotes = noteDoc.getInt(MongoFactory.NOMBRE_NOTE) ;		
+			int nbNotes = noteDoc.getInt(MongoFactory.NOMBRE_NOTE);
+			ArrayList<BasicDBObject> usersNotes = (ArrayList<BasicDBObject>) noteDoc.get(MongoFactory.USERS_NOTES);
+			usersNotes.add(new BasicDBObject(MongoFactory.ID_USER, u.getId())
+					.append(MongoFactory.USER_NOTE, note));
 			double newMoyenne = (moyenne*nbNotes+note)/(nbNotes+1);
 			noteDoc.replace(MongoFactory.NOTE_MOYENNE, newMoyenne);
 			noteDoc.replace(MongoFactory.NOMBRE_NOTE, nbNotes+1);
+			noteDoc.replace(MongoFactory.USERS_NOTES, usersNotes);
 			recette.replace(MongoFactory.NOTE, noteDoc);
 
 			BasicDBObject tmp = new BasicDBObject();
 			tmp.put("$set", recette);
 			recettesCollection.updateOne(query, tmp);
-			res = true;
+
+			res.append(MongoFactory.NOTE_MOYENNE, newMoyenne);
+			res.append(MongoFactory.NOMBRE_NOTE, nbNotes+1);
+			res.append(MongoFactory.USERS_NOTES, usersNotes);
 		}else{
-			res = false;
+			res = null;
 		}
 		return res;
 	}
@@ -332,12 +376,13 @@ public class RecetteFonctions {
 	 * @param idRecette
 	 * @param notesCollection
 	 */
-	public static void majNotationRecette(Utilisateurs u, String idRecette,
+	/*public static void majNotationRecette(Utilisateurs u, String idRecette,
 			MongoCollection<BasicDBObject> notesCollection) {
-		
-		/* Dire que l'utilisateur a note la recette (ajout dans la collection Mongo */
+
+		// Dire que l'utilisateur a note la recette
 		BasicDBObject query = new BasicDBObject();
-		query.put(MongoFactory.LOGIN_AUTEUR, u.getLogin());
+		query.put(MongoFactory.ID_RECETTE, arg1)
+		query.put(MongoFactory., u.getLogin());
 		MongoCursor<BasicDBObject> cursor = notesCollection.find(query).iterator();
 		BasicDBObject doc;
 		if(cursor.hasNext()){
@@ -356,31 +401,30 @@ public class RecetteFonctions {
 			doc.append(MongoFactory.IDS_RECETTE, new ArrayList<>());
 			notesCollection.insertOne(doc);
 		}
-	}
+	}*/
 
 	/**
 	 * 
-	 * @param notesCollection
+	 * @param recettes
 	 * @param u
 	 * @param idRecette
 	 * @return
 	 */
-	public static boolean aDejaNote(MongoCollection<BasicDBObject> notesCollection , Utilisateurs u, String idRecette){
+	public static boolean aDejaNote(MongoCollection<BasicDBObject> recettes, Utilisateurs u, String idRecette){
 		BasicDBObject query = new BasicDBObject();
-		query.put(MongoFactory.LOGIN_AUTEUR, u.getLogin()); 
-		MongoCursor<BasicDBObject> cursor = notesCollection.find(query).iterator();
+		query.put(MongoFactory.ID_RECETTE, idRecette); 
+		MongoCursor<BasicDBObject> cursor = recettes.find(query).iterator();
 		BasicDBObject doc;
+		int id = u.getId();
 		if(cursor.hasNext()){
 			doc = cursor.next();
-			ObjectId oid = new ObjectId(idRecette);
-			ArrayList<ObjectId> list = (ArrayList<ObjectId>) doc.get(MongoFactory.IDS_RECETTE);
-			if(list.contains(oid))
-				return true;
-			else
-				return false;
-		}else{
-			return false;
+			ArrayList<BasicDBObject> list = (ArrayList<BasicDBObject>) doc.get(MongoFactory.USERS_NOTES);
+			for(BasicDBObject bdo : list){
+				if(bdo.getInt(MongoFactory.ID_USER) == id)
+					return true;
+			}
 		}
+		return false;
 	}
 
 

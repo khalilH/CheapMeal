@@ -7,6 +7,7 @@ package util;
  */
 public class RequestParameter {
 
+	public static final String ID = "id";
 	public static final String LOGIN = "login";
 	public static final String MOT_DE_PASSE = "mdp";
 	public static final String PRENOM = "prenom";
