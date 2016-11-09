@@ -3,8 +3,14 @@
 }
 #profilPicture {
 	height: 250px;
-	width : 250px;
+	width : 100%;
 	margin-bottom : 10px;
+}
+.btn-delete{
+	color : #DD0000;
+}
+.btn-delete:hover{
+	color : #DD0000;
 }
 .arrow-bottom {
 
