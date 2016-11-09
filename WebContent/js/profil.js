@@ -14,7 +14,7 @@ $(function (){
 		this.id = id;
 		this.auteur = auteur;
 		this.titre = titre;
-		this.photo = "../images"+photo+".png";
+		this.photo = "../images/"+photo+".png";
 		this.ingredients = ingredients;
 	}
 	Recette.prototype.getIngredientsString = function(){
