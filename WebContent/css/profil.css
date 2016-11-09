@@ -21,6 +21,10 @@
 .arrow-bottom:hover {
 	cursor : pointer;
 }
+.btn-default {
+	background-color : transparent;
+	border-color : #ccc;
+}
 .img-recette {
 	height : 120px;
 	width : 120px;
