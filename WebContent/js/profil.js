@@ -1,6 +1,8 @@
 $(function() {
 	var sumNote = 0;
 	var nbRecettes = 0;
+	
+	
 	function Auteur(id, login) {
 		this.id = id;
 		this.login = login;
@@ -38,7 +40,7 @@ $(function() {
 				+ "<p> Ingredients : <div class='text-muted'>"
 				+ this.getIngredientsString() + "</div></p>" + "</div>";
 		if (getCookie(C_NAME_LOGIN) == this.auteur.login) {
-			s += "<div class='media-right media-middle'>" + "<button name='"
+			s += "<div class='media-right media-middle'>" + "<button data-id='"
 					+ this.id + "' class='btn btn-lg btn-default btn-delete'>"
 					+ "<span class='glyphicon glyphicon-trash'></span>"
 					+ "</div>"
@@ -168,6 +170,8 @@ $(function() {
 	}
 
 	/** ** BACK TO NORMAL JAVASCRIPT *** */
+	
+	
 	if ((bool = isConnected()) === 1) {
 		loadNavbarConnected();
 		console.log("connecte")
@@ -184,6 +188,8 @@ $(function() {
 
 	function searchForProfil() {
 		var login = findLoginInURL();
+		if(login == undefined)
+			login = getCookie(C_NAME_LOGIN);
 		$.ajax({
 			url : 'profil/afficher',
 			type : 'GET',
@@ -192,7 +198,8 @@ $(function() {
 			dataType : 'json',
 			success : function(rep) {
 				var jsonrep = JSON.stringify(rep)
-				if (jsonrep.erreur == undefined) {
+				console.log(jsonrep.erreur);
+				if (jsonrep.erreur == "undefined") {
 					var infoProfil = JSON.parse(jsonrep, InfoRevival);
 					console.log(infoProfil);
 					updatePage(infoProfil);
@@ -213,8 +220,10 @@ $(function() {
 		var geturl = window.location.search.substr(1)
 		var regex = new RegExp(/login=(\w+)/);
 		var match = regex.exec(geturl);
-		console.log(match[1]);
-		return match[1];
+		if(match != undefined)
+			return match[1];
+		else
+			return undefined;
 	}
 
 	function readURL(input) {
@@ -248,9 +257,16 @@ $(function() {
 	});
 
 	$("#rightPanel").on('click', ".btn-delete", function(event) {
-		console.log(this.name);
+		console.log($(this).data('id'));
+		var idRecette = $(this).data('id');
 		event.stopPropagation();
 		$('#myModal').modal('show'); 
+		$('#confirmDelete').val(idRecette);
+		
 
+	});
+	
+	$('#confirmDelete').on('click',function(event){
+		console.log("Confirm "+this.value);
 	});
 });

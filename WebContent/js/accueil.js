@@ -120,10 +120,6 @@ $(function (){
 		});
 		
 	}
-	$('.recette').on('click',function(){
-		console.log("J'ai clique sur une recette ",this.id);
-		//TODO Afficher la page de la recette
-	});
 	
 	function updatePage(liste){
 		$("#recentRecipe").html(liste.getHtmlRecent());
@@ -165,19 +161,7 @@ $(function (){
 		
 	});
 	
-
-	
-	$("#connexion").on('click',function(){
-		window.location.href="connexion.html";
-		return;
-	});
-	$("#signup").on('click',function(){
-			window.location.href="inscription.html";
-			return;
-	});
-		
-	
-	$('.recette').on('click',function(){
+	$(document.body).on('click','.recette',function(){
 		console.log("J'ai clique sur une recette ",this.id);
 		//TODO Afficher la page de la recette
 	});
