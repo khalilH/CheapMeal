@@ -8,6 +8,7 @@
 }
 .navbar {
 	margin-bottom : 0;
+	background-color:white;
 }
 .navbar-right:hover span{
 	color: white;	

@@ -9,11 +9,16 @@
 <link rel="stylesheet" type="text/css"
 	href="bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/navbar.css">
+<link rel="stylesheet" type="text/css" href="css/tooltip.css" />
 <link rel="stylesheet" type="text/css" href="css/compte.css">
 
 <script src="js/jquery-3.1.1.min.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/cookie.js"></script>
+<script src="js/compte.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/jquery-validate.bootstrap-tooltip.min.js"></script>
+
 </head>
 
 <body class="compte-body">
@@ -51,52 +56,60 @@
 	</nav>
 
 	<div class="contenu-page">
-		<div class="container col-lg-12">
+		<div class="container col-lg-12 col-md-9 col-sm-9">
 			<div class="partie-mail">
 				<div class="titre-partie">Mes informations</div>
 				<div class="description-partie">Changer mes informations
 					utilisateur</div>
 				<hr>
-				<form id="form-compte" role="form" class="form">
-					<div>
-						<label for="login">Nom d'utilisateur</label><input type="text"
-							name="login" id="login" class="margin-left-15" />
-					</div>
-					<div>
-						<label for="mail">Adresse email</label><input type="text"
-							name="mail" id="mail" class="margin-left-15" />
-					</div>
-					<div>
-						<label for="newMail">Nouvelle adresse email</label><input
-							type="text" name="newMail" id="newMail" class="margin-left-15" />
-					</div>
-					<div>
-						<button class="btn btn-lg btn-primary" id="sauvegarderMail">Sauvegarder</button>
-					</div>
-				</form>
+				<div class="row">
+					<form id="form-compte" role="form"
+						class="form col-lg-4 col-lg-offset-3">
+						<div class="row">
+								<label for="login">Nom d'utilisateur</label>
+								<input type="text" name="login" id="login"/>
+						</div>
+						<!-- <div class="row">
+							<label for="mail">Adresse email</label><input type="text"
+								name="mail" id="mail" />
+						</div class="row"> -->
+						<div class="row">
+							<label for="newMail">Nouvelle adresse email</label><input
+								type="text" name="newMail" id="newMail" />
+						</div>
+						<div class="row">
+							<input type="submit" class="btn btn-lg btn-primary" value="Sauvegarder" id="sauvegarderMail"></input>
+						</div>
+					</form>
+				</div>
 				<hr>
 			</div>
+
+
 			<div class="partie-mdp">
 				<div class="titre-partie">Mot de passe</div>
 				<div class="description-partie">Changer mon mot de passe</div>
 				<hr>
-				<form id="form-mdp" role="form" class="form col-lg-5">
-					<div>
-						<label for="currentMdp">Mot de passe courant</label><input type="password"
-							name="currentMdp" id="currentMdp" class="margin-left-15" />
-					</div>
-					<div>
-						<label for="newMdp">Nouveau mot de passe</label><input type="password"
-							name="newMdp" id="newMdp" class="margin-left-15" />
-					</div>
-					<div>
-						<label for="confirmationMdp">Confirmation</label><input
-							type="password" name="confirmationMdp" id="confirmationMdp" class="margin-left-15" />
-					</div>
-					<div>
-						<button class="btn btn-lg btn-primary" id="sauvegarderMdp">Sauvegarder</button>
-					</div>
-				</form>
+				<div class="row">
+					<form id="form-mdp" role="form"
+						class="form col-lg-4 col-lg-offset-3">
+						<div class="row">
+							<label for="currentMdp">Mot de passe courant</label><input
+								type="password" name="currentMdp" id="currentMdp" />
+						</div>
+						<div class="row">
+							<label for="newMdp">Nouveau mot de passe</label><input
+								type="password" name="newMdp" id="newMdp" />
+						</div>
+						<div class="row">
+							<label for="confirmationMdp">Confirmation</label><input
+								type="password" name="confirmationMdp" id="confirmationMdp" />
+						</div>
+						<div class="row">
+							<input type="submit" class="btn btn-lg btn-primary" value="Sauvegarder" id="sauvegarderMdp"></input>
+						</div>
+					</form>
+				</div>
 				<hr>
 			</div>
 		</div>
