@@ -1,137 +1,107 @@
-//Starrr plugin (https://github.com/dobtco/starrr)
+// Starrr plugin (https://github.com/dobtco/starrr)
 var __slice = [].slice;
 
 (function($, window) {
-	var Starrr;
+  var Starrr;
 
-	Starrr = (function() {
-		Starrr.prototype.defaults = {
-				rating: void 0,
-				numStars: 5,
-				change: function(idRecette, note) {
-					/* A implémenter */
+  Starrr = (function() {
+    Starrr.prototype.defaults = {
+      rating: void 0,
+      numStars: 5,
+      change: function(e, value) {}
+    };
 
-					$.ajax({
-						url : 'recette/noter',
-						type : 'POST',
-						data : "cle="+getCookie(C_NAME_KEY)+"&idRecette="+idRecette+"&note="+note,
-						contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-						dataType : 'json',
-						success : function(rep){
+    function Starrr($el, options) {
+      var i, _, _ref,
+        _this = this;
 
-							console.log("Notation reussie");
-							var obj = JSON.parse(JSON.stringify(rep), Note.revival);
+      this.options = $.extend({}, this.defaults, options);
+      this.$el = $el;
+      _ref = this.defaults;
+      for (i in _ref) {
+        _ = _ref[i];
+        if (this.$el.data(i) != null) {
+          this.options[i] = this.$el.data(i);
+        }
+      }
+      this.createStars();
+      this.syncRating();
+      this.$el.on('mouseover.starrr', 'span', function(e) {
+        return _this.syncRating(_this.$el.find('span').index(e.currentTarget) + 1);
+      });
+      this.$el.on('mouseout.starrr', function() {
+        return _this.syncRating();
+      });
+      this.$el.on('click.starrr', 'span', function(e) {
+        return _this.setRating(_this.$el.find('span').index(e.currentTarget) + 1);
+      });
+      this.$el.on('starrr:change', this.options.change);
+    }
 
-							/* Remplacer la note affichee avec la nouvelle note */
-							$("#noter-recette").html("<span style:'text-align:center'>Vous avez noté cette recette</span>");
-							$("#note").html("<span>"+obj.moyenne+"/5"+" ("+obj.nbNotes+" votes)</span>");
+    Starrr.prototype.createStars = function() {
+      var _i, _ref, _results;
 
-						},
-						error : function(resultat, statut, erreur) {
-							console.log("Bug");
-							console.log(resultat);
-							alert("dawg");
-						}
-					});
+      _results = [];
+      for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
+        _results.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty'></span>"));
+      }
+      return _results;
+    };
 
-					/* Une fois la recette notée, remplacer par un texte "Vous avez note cette recette" */
-					/* Si l'utilisateur a deja note la recette, afficher directement la note qu'il a mise */
-				}
-		};
+    Starrr.prototype.setRating = function(rating) {
+      if (this.options.rating === rating) {
+        rating = void 0;
+      }
+      this.options.rating = rating;
+      this.syncRating();
+      return this.$el.trigger('starrr:change', rating);
+    };
 
-		function Starrr($el, options) {
-			var i, _, _ref,
-			_this = this;
+    Starrr.prototype.syncRating = function(rating) {
+      var i, _i, _j, _ref;
 
-			this.options = $.extend({}, this.defaults, options);
-			this.$el = $el;
-			_ref = this.defaults;
-			for (i in _ref) {
-				_ = _ref[i];
-				if (this.$el.data(i) != null) {
-					this.options[i] = this.$el.data(i);
-				}
-			}
-			this.createStars();
-			this.syncRating();
-			this.$el.on('mouseover.starrr', 'span', function(e) {
-				return _this.syncRating(_this.$el.find('span').index(e.currentTarget) + 1);
-			});
-			this.$el.on('mouseout.starrr', function() {
-				return _this.syncRating();
-			});
-			this.$el.on('click.starrr', 'span', function(e) {
-				return _this.setRating(_this.$el.find('span').index(e.currentTarget) + 1);
-			});
-			this.$el.on('starrr:change', this.options.change);
-		}
+      rating || (rating = this.options.rating);
+      if (rating) {
+        for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+          this.$el.find('span').eq(i).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+        }
+      }
+      if (rating && rating < 5) {
+        for (i = _j = rating; rating <= 4 ? _j <= 4 : _j >= 4; i = rating <= 4 ? ++_j : --_j) {
+          this.$el.find('span').eq(i).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+        }
+      }
+      if (!rating) {
+        return this.$el.find('span').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+      }
+    };
 
-		Starrr.prototype.createStars = function() {
-			var _i, _ref, _results;
+    return Starrr;
 
-			_results = [];
-			for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
-				_results.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty'></span>"));
-			}
-			return _results;
-		};
+  })();
+  return $.fn.extend({
+    starrr: function() {
+      var args, option;
 
-		Starrr.prototype.setRating = function(rating) {
-			if (this.options.rating === rating) {
-				rating = void 0;
-			}
-			this.options.rating = rating;
-			this.syncRating();
-			return this.$el.trigger('starrr:change', rating);
-		};
+      option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      return this.each(function() {
+        var data;
 
-		Starrr.prototype.syncRating = function(rating) {
-			var i, _i, _j, _ref;
-
-			rating || (rating = this.options.rating);
-			if (rating) {
-				for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
-					this.$el.find('span').eq(i).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
-				}
-			}
-			if (rating && rating < 5) {
-				for (i = _j = rating; rating <= 4 ? _j <= 4 : _j >= 4; i = rating <= 4 ? ++_j : --_j) {
-					this.$el.find('span').eq(i).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
-				}
-			}
-			if (!rating) {
-				return this.$el.find('span').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
-			}
-		};
-
-		return Starrr;
-
-	})();
-
-	return $.fn.extend({
-		starrr: function() {
-			var args, option;
-
-			option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-			return this.each(function() {
-				var data;
-
-				data = $(this).data('star-rating');
-				if (!data) {
-					$(this).data('star-rating', (data = new Starrr($(this), option)));
-				}
-				if (typeof option === 'string') {
-					return data[option].apply(data, args);
-				}
-			});
-		}
-	});
+        data = $(this).data('star-rating');
+        if (!data) {
+          $(this).data('star-rating', (data = new Starrr($(this), option)));
+        }
+        if (typeof option === 'string') {
+          return data[option].apply(data, args);
+        }
+      });
+    }
+  });
 })(window.jQuery, window);
 
 $(function() {
-	return $(".starrr").starrr();
+  return $(".starrr").starrr();
 });
-
 
 /***** DOWN HERE CODE FOR PARSING JSON RESPONSE **********/
 function Auteur(id,login){
@@ -158,6 +128,7 @@ function Recette(id,auteur,titre,ingredients,preparation,note,photo,prix){
 	this.ingredients = ingredients;
 	this.preparation = preparation;
 	this.note = note;
+	this.photo = photo;
 	this.prix = prix;
 }
 
@@ -225,18 +196,35 @@ Recette.revival = function(key, value){
 
 Recette.traiteReponseJSON = function(json_text){
 
+	var str = JSON.stringify(json_text);
+	
+	if(str.erreur != undefined && str.erreur == 41){
+		/* deconnexion */
+	}
+	
 	//console.log(JSON.stringify(json_text));
 
 	//obj est une Recette
 	var obj = JSON.parse(JSON.stringify(json_text), Recette.revival);
 
-	console.log(JSON.stringify(obj));
+	//console.log(JSON.stringify(obj));
 	
 	if(obj.erreur == undefined){
 
 		$("#titre-recette").html("<span>"+obj.titre+"</span>");
+		
+		/* photo recette */
+		$("#photo-recette").html("<img class='img-responsive' id='recettePhoto' " +
+		"src='"+"../images/"+obj.photo+".png"+"' alt='Recette Picture'/>");
+		console.log("J'AI AJOUTE LA PHOTO RECETTE");
+		
 		$("#nom-auteur-recette").html("<span>"+obj.auteur.loginAuteur+"</span>");
+
 		/* photo auteur */
+		$("#photo-auteur").html("<img class='img-responsive' id='profilPicture' " +
+		"src='"+"../images/profil/"+obj.auteur.loginAuteur+".png"+"' alt='Profil Picture'/>");
+		console.log("J'AI AJOUTE LA PHOTO PROFILE");
+		
 		$("#note").html("<span>"+obj.note.moyenne+"/5"+" ("+obj.note.nbNotes+" votes)</span>");
 
 		/* si l'utilisateur a deja note la recette, afficher le nombre d'etoile attribue */
@@ -252,11 +240,13 @@ Recette.traiteReponseJSON = function(json_text){
 
 		if(isConnected() === 1){
 			if(getCookie(C_NAME_LOGIN) != obj.auteur.loginAuteur){
+				console.log("cookielogin="+getCookie(C_NAME_LOGIN)+" loginAuteur="+obj.auteur.loginAuteur);
 				if(aNote == false){
 					console.log("JE PASSE ICI");
-					$("#noter-recette").html("<div class='row lead margin-top-20'>"+
+					$("#noter-recette").html(
+							"<div class='row lead margin-top-20'>"+
 							"<p>Notez cette recette:</p>"+
-							"<div id='hearts' class='starrr'></div>"+
+							"<div id='stars' class='starrr'></div>"+
 							"</div>"
 					);
 				}else{
@@ -348,10 +338,14 @@ $(document).ready(function() {
 
 	var idRecette = $.urlParam("idRecette"); /* idRecette = getParameter */
 
+	var cle = "";
+	if(getCookie(C_NAME_KEY) != -1)
+		cle = "&cle="+getCookie(C_NAME_KEY);
+	
 	$.ajax({
 		url : 'recette/afficher',
 		type : 'GET',
-		data : 'idRecette='+idRecette,
+		data : 'idRecette='+idRecette+cle,
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		dataType : 'json',
 		success : Recette.traiteReponseJSON,
