@@ -49,9 +49,6 @@ public class ExternalAPI {
 		return prices;
 	}
 	
-	public static ArrayList<String> getEAN(String nomIngredient) {
-		
-		return null;
-	}
+
 }
 

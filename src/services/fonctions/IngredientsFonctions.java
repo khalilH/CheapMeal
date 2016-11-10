@@ -3,12 +3,15 @@ package services.fonctions;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
 import exceptions.FichierNonTrouveException;
@@ -99,7 +102,7 @@ public class IngredientsFonctions {
 		DBStatic.closeMongoDBConnection();
 	}
 	
-	public static String getIngredient(String nomIngredient) throws MyException {
+	public static JSONObject getIngredient(String nomIngredient) throws MyException, JSONException {
 		MongoDatabase database;
 		try {
 			database = DBStatic.getMongoConnection();
@@ -110,8 +113,10 @@ public class IngredientsFonctions {
 				MongoFactory.COLLECTION_INGREDIENTS, BasicDBObject.class);
 		
 		BasicDBObject o = new BasicDBObject(MongoFactory.NOM_INGREDIENT, nomIngredient);
-		List<BasicDBObject> ingredients = (List<BasicDBObject>) collection.find(o);
-		return null;
+		MongoCursor<BasicDBObject> cursor = collection.find(o).iterator();
+		BasicDBObject ingredient = cursor.next();
+		
+		return new JSONObject(ingredient.toJson());
 	}
 
 }

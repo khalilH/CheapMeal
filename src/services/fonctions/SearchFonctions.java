@@ -49,7 +49,7 @@ public class SearchFonctions {
 					.setIndices("cheapmeal")
 					.setTypes("Recettes")
 					.setSize(50)
-					.setQuery(QueryBuilders.queryStringQuery(query))
+					.setQuery(QueryBuilders.queryStringQuery(query+"~"))
 					.execute()
 					.actionGet();
 		}

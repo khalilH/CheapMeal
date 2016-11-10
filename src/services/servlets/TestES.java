@@ -17,6 +17,12 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import exceptions.MyException;
+import services.fonctions.IngredientsFonctions;
+import util.ServiceTools;
 
 /**
  * Servlet implementation class Test
@@ -24,12 +30,12 @@ import org.elasticsearch.transport.client.PreBuiltTransportClient;
 public class TestES extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * Default constructor. 
-     */
-    public TestES() {
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * Default constructor. 
+	 */
+	public TestES() {
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,38 +44,14 @@ public class TestES extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
 		PrintWriter pw = response.getWriter();
+		String nom = request.getParameter("nom");
 		try {
-			Settings settings = Settings.builder()
-			        .put("client.transport.sniff", true).build();
-			TransportClient client = new PreBuiltTransportClient(settings);
-			client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"),9300));
-//			QueryBuilder qb = queryStringQuery("Chafik");
-
-			SearchResponse res = client.prepareSearch()
-					.setIndices("cheapmeal")
-					.setTypes("ingredients")
-					.setSize(50)
-					.setQuery(QueryBuilders.matchAllQuery())
-					.execute()
-					.actionGet();
-			
-//			SearchResponse response = client.prepareSearch().execute().actionGet();
-
-			pw.println("total Hits = "+res.getHits().getTotalHits()+" ;; ");
-			pw.println("Max score = "+res.getHits().getMaxScore()+" ;; ");
-			int i = 0;
-			for (SearchHit hit : res.getHits()) {
-				i++;
-				pw.print("id = "+hit.getId()+" ;; ");
-				pw.print("score = "+hit.getScore()+ " ;; ");
-				pw.println(hit.getSourceAsString());
-			}
-			pw.println("nombre de hits recupere = "+i );
-			
-			client.close();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JSONObject json = IngredientsFonctions.getIngredient(nom);
+			pw.println(json);
+		} catch (MyException e) {
+			pw.print(e.getMessage());
+		} catch (JSONException e) {
+			pw.println(e.getMessage());
 		}
 
 	}

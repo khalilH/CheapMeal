@@ -11,6 +11,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClientException;
 import com.mongodb.client.MongoCollection;
@@ -24,6 +26,7 @@ import exceptions.ParametreManquantException;
 import exceptions.RecetteException;
 import exceptions.SessionExpireeException;
 import util.ErrorCode;
+import util.ExternalAPI;
 import util.ServiceTools;
 import util.bdTools.DBStatic;
 import util.bdTools.MongoFactory;
@@ -79,10 +82,11 @@ public class RecetteFonctions {
 	 * @param id id de la recette
 	 * @return JSONObject contenant les informations de la recette
 	 * @throws MyException
+	 * @throws JSONException 
 	 * @throws MongoClientException
 	 * @throws UnknownHostException
 	 */
-	public static JSONObject afficherRecette(String id) throws MyException {
+	public static JSONObject afficherRecette(String id) throws MyException, JSONException {
 		if(id == null)
 			throw new ParametreManquantException("Parametre(s) manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
 		if(id.equals(""))
@@ -102,10 +106,29 @@ public class RecetteFonctions {
 		if(cursor.hasNext())
 			res = cursor.next();
 
+		JSONArray ingredients=null;
+		double prix = 0.0;
 		if(res != null){
 			// TODO Ajouter le prix calcule via l'API
+			BasicDBList ing = (BasicDBList) res.get(MongoFactory.INGREDIENTS);
+			
+			for (int i = 0; i<ing.size(); i++) {
+				BasicDBObject o = (BasicDBObject) ing.get(i);
+				JSONObject ref = IngredientsFonctions.getIngredient(o.getString(MongoFactory.NOM_INGREDIENT));
+				if (ref.has(MongoFactory.PRIX_AU_KG)) {
+					prix += o.getDouble(MongoFactory.QUANTITE)*ref.getDouble(MongoFactory.PRIX_AU_KG)/ref.getDouble(MongoFactory.QUANTITE);
+				}
+				else {
+					try {
+						double prixAPI = ExternalAPI.searchPrices(ref.getString(MongoFactory.EAN)).get(0);
+						prix += o.getDouble(MongoFactory.QUANTITE)*prixAPI/ref.getDouble(MongoFactory.QUANTITE);
+					} catch (UnirestException e) {
+						throw new MyException("Erreu appel API", 666);
+					}
+				}
+			}
+			res.put("prix", prix);
 		}
-
 		return new JSONObject(res);
 	}
 
@@ -283,6 +306,8 @@ public class RecetteFonctions {
 
 		return new JSONObject(objetNote);
 	}
+	
+	
 
 	/**
 	 * 
