@@ -187,7 +187,7 @@ $(function() {
 		console.log(form.uploadInput.files[0]);
 		data.append('file', form.uploadInput.files[0]);
 		data.append('titre', titre);
-		data.append('cle', "h4hB309V9S6XQJIY1McmQ7J0wguz9RhR");
+		data.append('cle',getCookie(C_NAME_KEY));
 		data.append("ingredients", ingredients);
 		data.append("quantites", quantites);
 		data.append("mesures", mesures);
@@ -202,7 +202,7 @@ $(function() {
 			type : 'POST',
 			success : function(data) {
 				var jsonrep = JSON.stringify(data);
-				if (jsonrep.erreur == undefined) {
+				if (data.erreur == undefined) {
 					console.log("OK recette cree");
 					console.log(data);
 					window.location.href="accueil.html";
@@ -210,6 +210,7 @@ $(function() {
 				} else {
 					console.log("KO");
 					console.log(data);
+					alert("Probleme lors de la creation de la recette");
 				}
 
 			},

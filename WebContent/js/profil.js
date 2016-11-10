@@ -10,7 +10,7 @@ $(function() {
 	function Profil(bio, login, photo) {
 		this.bio = bio;
 		this.login = login;
-		this.photo = "../images/profil/" + photo + ".png";
+		this.photo = "../images/profil/" + photo + ".png?"+Date.now();
 	}
 	function Recette(id, auteur, titre, photo, ingredients, note) {
 		this.id = id;
@@ -253,7 +253,7 @@ $(function() {
 		data.append('file', this.files[0]);
 		data.append('cle',getCookie(C_NAME_KEY));
 		data.append('login',getCookie(C_NAME_LOGIN));
-		console.log(getCookie(C_NAME_KEY));
+		console.log(this.files[0]);
 		jQuery.ajax({
 	    url: 'profil/uploadImage',
 	    data: data,
@@ -264,8 +264,7 @@ $(function() {
 	    success: function(data){
 	    	console.log(data);
 	    	if(data.erreur == undefined){
-	    		console.log("no error");
-	    		readURL(this);
+	    		readURL(input);
 	    	}
 	    }
 		});

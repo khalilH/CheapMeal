@@ -6,7 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
+import javax.imageio.stream.FileImageOutputStream;
 import javax.servlet.http.Part;
 
 import org.json.JSONException;
@@ -111,9 +116,13 @@ public class ProfilFonctions {
 
 		InputStream inputStream = photo.getInputStream();
 		BufferedImage image = ImageIO.read(inputStream);
-		File f = new File("/var/lib/tomcat8/webapps/images/profil/" + login + ".png");
-		ImageIO.write(image, "png", f);
-
+		JPEGImageWriteParam jpegParams = new JPEGImageWriteParam(null);
+		jpegParams.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+		jpegParams.setCompressionQuality(0.6f);
+		final ImageWriter writer = ImageIO.getImageWritersByFormatName("jpg").next();
+		writer.setOutput(new FileImageOutputStream(
+		  new File("/var/lib/tomcat8/webapps/images/profil/" + login + ".png")));
+		writer.write(null, new IIOImage(image, null, null), jpegParams);
 	}
 
 }
