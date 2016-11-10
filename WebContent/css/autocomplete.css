@@ -7,6 +7,12 @@
 {
     margin-top: 10px;
 }
+.mg-top-18{
+	margin-top : 18px;
+}
+.pd-5{
+	padding : 5%;
+}
 
 /* Il n'y a que cette partie qui est a mettre en fait */
 .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }

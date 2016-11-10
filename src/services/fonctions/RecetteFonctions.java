@@ -33,11 +33,9 @@ import util.hibernate.model.Utilisateurs;
 
 public class RecetteFonctions {
 
-	public static ArrayList<BasicDBObject> getRecentRecipes() throws MongoClientException, UnknownHostException {
+	public static ArrayList<BasicDBObject> getRecentRecipes(MongoCollection<BasicDBObject> col){
 		ArrayList<BasicDBObject> list = new ArrayList<>();
 		BasicDBObject sortQuery = new BasicDBObject("date",-1);
-		MongoDatabase database = DBStatic.getMongoConnection();
-		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
 		MongoCursor<BasicDBObject> cursor = col.find().sort(sortQuery).limit(9).iterator();
 		while(cursor.hasNext()){
 			BasicDBObject obj = cursor.next();
@@ -48,11 +46,10 @@ public class RecetteFonctions {
 		return list;
 	}
 
-	public static ArrayList<BasicDBObject> getBestRecipes() throws MongoClientException, UnknownHostException {
+	public static ArrayList<BasicDBObject> getBestRecipes(MongoCollection<BasicDBObject> col){
 		ArrayList<BasicDBObject> list = new ArrayList<>();
 		BasicDBObject sortQuery = new BasicDBObject(MongoFactory.NOTE+"."+MongoFactory.NOTE_MOYENNE,-1);
-		MongoDatabase database = DBStatic.getMongoConnection();
-		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
+
 		MongoCursor<BasicDBObject> cursor = col.find().sort(sortQuery).limit(9).iterator();
 		while(cursor.hasNext()){
 			BasicDBObject obj = cursor.next();
@@ -63,12 +60,29 @@ public class RecetteFonctions {
 		return list;
 	}
 
-	public static JSONObject getRecettesAccueil() throws JSONException, MongoClientException, UnknownHostException{
+	public static JSONObject getRecettesAccueil(String cle) throws JSONException, NonValideException, SessionExpireeException, MongoDBException{
+		if (cle != null) {
+			if (cle.length() != 32)
+				throw new NonValideException("Cle invalide", ErrorCode.CLE_INVALIDE);
+
+			if (!ServiceTools.isCleActive(cle))
+				throw new SessionExpireeException("Votre session a expiree", ErrorCode.SESSION_EXPIREE);
+		}
+
 		JSONObject jb = new JSONObject();
-		JSONArray recentRecipes = new JSONArray(getRecentRecipes());
-		JSONArray bestRecipes = new JSONArray(getBestRecipes());
+		MongoDatabase database;
+		try {
+			database = DBStatic.getMongoConnection();
+		} catch (Exception e) {
+			throw new MongoDBException(ErrorCode.ERREUR_INTERNE, ErrorCode.MONGO_EXCEPTION);
+		}
+
+		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
+		JSONArray recentRecipes = new JSONArray(getRecentRecipes(col));
+		JSONArray bestRecipes = new JSONArray(getBestRecipes(col));
 		jb.put("recettesRecentes", recentRecipes);
 		jb.put("recettesBest", bestRecipes);
+		DBStatic.closeMongoDBConnection();
 		return jb;
 
 	}
@@ -82,12 +96,18 @@ public class RecetteFonctions {
 	 * @throws MongoClientException
 	 * @throws UnknownHostException
 	 */
-	public static JSONObject afficherRecette(String id) throws MyException {
+	public static JSONObject afficherRecette(String id, String cle) throws MyException {
 		if(id == null)
 			throw new ParametreManquantException("Parametre(s) manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
 		if(id.equals(""))
 			throw new NonValideException("Parametre non valide", ErrorCode.RECETTE_ID_INVALIDE);
+		if (cle != null) {
+			if (cle.length() != 32)
+				throw new NonValideException("Cle invalide", ErrorCode.CLE_INVALIDE);
 
+			if (!ServiceTools.isCleActive(cle))
+				throw new SessionExpireeException("Votre session a expiree", ErrorCode.SESSION_EXPIREE);
+		}
 		BasicDBObject query = new BasicDBObject("_id", new ObjectId(id));
 		MongoDatabase database;
 		try {
@@ -95,7 +115,7 @@ public class RecetteFonctions {
 		} catch (Exception e) {
 			throw new MongoDBException(ErrorCode.ERREUR_INTERNE, ErrorCode.MONGO_EXCEPTION);
 		}
-		
+
 		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
 		MongoCursor<BasicDBObject> cursor = col.find(query).iterator();
 		BasicDBObject res = null;

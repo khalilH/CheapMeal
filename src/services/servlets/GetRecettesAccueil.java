@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.RecetteServices;
+import util.RequestParameter;
 
 public class GetRecettesAccueil extends HttpServlet {
 
@@ -20,10 +21,10 @@ public class GetRecettesAccueil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		/* Lecture des parametres */
-		
+		String cle = request.getParameter(RequestParameter.CLE);
 		/* Traitement du service */
 		try {
-			JSONObject result = RecetteServices.getRecettesAccueil();
+			JSONObject result = RecetteServices.getRecettesAccueil(cle);
 
 			/* Ecriture de la reponse */
 			response.setContentType("application/json");

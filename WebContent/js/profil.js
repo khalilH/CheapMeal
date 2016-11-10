@@ -190,11 +190,14 @@ $(function() {
 		var login = findLoginInURL();
 		if(login == undefined)
 			login = getCookie(C_NAME_LOGIN);
-		console.log(login + "et "+getCookie(C_NAME_KEY));
+		var url = "login="+login;
+		if(getCookie(C_NAME_KEY) != undefined){
+			url+="&cle="+getCookie(C_NAME_KEY);
+		}
 		$.ajax({
 			url : 'profil/afficher',
 			type : 'GET',
-			data : "cle=" + getCookie(C_NAME_KEY) + "&login=" + login,
+			data : url,
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			dataType : 'json',
 			success : function(rep) {
@@ -272,7 +275,7 @@ $(function() {
 
 	$("#rightPanel").on('click', "#addRecette", function() {
 		console.log("add recette");
-		window.location.href="ajouterRecette.html";
+		window.location.href="autocomplete.html";
 	});
 
 	$("#rightPanel").on('click', ".recette", function() {

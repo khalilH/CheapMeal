@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.SearchServices;
+import util.RequestParameter;
 
 public class Search extends HttpServlet {
 
@@ -20,11 +21,12 @@ public class Search extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		/* Lecture des parametres */
-		String query = request.getParameter("query");
-		
+		String query = request.getParameter(RequestParameter.QUERY);
+		String cle = request.getParameter(RequestParameter.CLE);
+
 		/* Traitement du service */
 		try {
-			JSONObject result = SearchServices.search(query);
+			JSONObject result = SearchServices.search(query,cle);
 
 			/* Ecriture de la reponse */
 			response.setContentType("application/json");

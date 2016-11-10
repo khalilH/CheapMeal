@@ -17,6 +17,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import exceptions.NonValideException;
+import exceptions.SessionExpireeException;
+import util.ErrorCode;
+import util.ServiceTools;
+
 public class SearchFonctions {
 
 	/**
@@ -25,9 +30,17 @@ public class SearchFonctions {
 	 * @return un JSONObject contenant les recettes satisfaisant la requete
 	 * @throws JSONException
 	 * @throws UnknownHostException si elasticSearch ne repond pas
+	 * @throws NonValideException 
+	 * @throws SessionExpireeException 
 	 */
-	public static JSONObject search(String query) throws JSONException, UnknownHostException {
+	public static JSONObject search(String query, String cle) throws JSONException, UnknownHostException, NonValideException, SessionExpireeException {
+		if (cle != null) {
+			if (cle.length() != 32)
+				throw new NonValideException("Cle invalide", ErrorCode.CLE_INVALIDE);
 
+			if (!ServiceTools.isCleActive(cle))
+				throw new SessionExpireeException("Votre session a expiree", ErrorCode.SESSION_EXPIREE);
+		}
 		Settings settings = Settings.builder()
 				.put("client.transport.sniff", true).build();
 		TransportClient client = new PreBuiltTransportClient(settings);
@@ -55,22 +68,19 @@ public class SearchFonctions {
 		}
 
 		SearchHits hits = res.getHits();
-		JSONObject results = new JSONObject()
-				.put("TotalHits", hits.getTotalHits())
-				.put("maxScore", hits.getMaxScore());
-		List<JSONObject> list = new ArrayList<>();
+		JSONObject results = new JSONObject();
+  		List<JSONObject> list = new ArrayList<>();
 		for (SearchHit searchHit : hits) {
 			JSONObject hit = new JSONObject()
-					.put("_id", searchHit.getId())
 					.put("score", searchHit.getScore())
-					.put("source", new JSONObject(searchHit.getSourceAsString()));
+					.put("source", new JSONObject(searchHit.getSourceAsString()).put("_id", searchHit.getId()));
 			list.add(hit);
 		}
 
 		client.close();
 		JSONArray array = new JSONArray(list);
-		results.put("hits", array);		
-		return new JSONObject().put("results", results);
+		results.put("recettesBest", array);		
+		return  results;
 
 	}
 	

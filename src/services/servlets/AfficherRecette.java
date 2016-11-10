@@ -21,10 +21,11 @@ public class AfficherRecette extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/* Lecture des parametres */
 		String id = request.getParameter(RequestParameter.ID_RECETTE);
-		
+		String cle = request.getParameter(RequestParameter.CLE);
+
 		try {
 			/* Traitement des services */
-			JSONObject res = RecetteServices.afficherRecette(id);
+			JSONObject res = RecetteServices.afficherRecette(id,cle);
 			
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();
