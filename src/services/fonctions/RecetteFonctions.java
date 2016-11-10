@@ -167,7 +167,7 @@ public class RecetteFonctions {
 			BasicDBObject document = MongoFactory.creerDocumentRecette(titre, u.getId(), u.getLogin(), ingredients, quantites, mesures, preparation,photo);
 			col.insertOne(document);
 		} catch (Exception e) {
-			throw new MongoDBException(ErrorCode.ERREUR_INTERNE, ErrorCode.MONGO_EXCEPTION);
+			throw new MongoDBException(ErrorCode.ERREUR_INTERNE+" "+e.getMessage(), ErrorCode.MONGO_EXCEPTION);
 		}
 		DBStatic.closeMongoDBConnection();
 

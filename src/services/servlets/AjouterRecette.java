@@ -3,7 +3,6 @@ package services.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -48,10 +47,8 @@ public class AjouterRecette extends HttpServlet {
 
 			for(String s : ingr_tmp)
 				ingredients.add(s);
-
 			for(String s : quantites_tmp)
 				quantites.add(Double.parseDouble(s));
-
 			for(String s : mesures_tmp)
 				mesures.add(s);
 

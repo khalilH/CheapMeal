@@ -127,14 +127,16 @@ public class ServiceTools {
 //		return jb;
 //	}
 	/**
-	 * Permet de récupérer les parametre d'un formulaire encode en multipart
+	 * Permet de rï¿½cupï¿½rer les parametre d'un formulaire encode en multipart
 	 * @throws MessagingException 
 	 * @throws IOException 
 	 */
 	
 	public static String getValueFromPart(Part p ) throws IOException, MessagingException{
 		Scanner c = new Scanner(p.getInputStream());
-		return c.nextLine();
+		String ret = c.nextLine();
+		c.close();
+		return ret;
 	}
 	/**
 	 * Code de generation aleatoire d'une cle de session de 32 caracteres
