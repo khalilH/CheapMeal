@@ -22,6 +22,15 @@ va falloir bien reflechir pour ca
               .removeClass('btn-add-ingredient').addClass('btn-remove-ingredient')
               .removeClass('btn-success').addClass('btn-danger')
               .html('<span class="glyphicon glyphicon-minus"></span>');
+              $('.autocomplete').autocomplete({
+                serviceUrl: 'ingredients/autocomplete',
+                noCache: true,
+                maxHeight: 100,
+                onSelect: function (suggestion) {
+                  var thing = "<p>"+suggestion.value+"</p>";
+                  $('#choix').append(thing);
+                }
+              });
       }).on('click', '.btn-remove-ingredient', function(e)
       {
   		$(this).parents('.entry-ingredient:first').remove();
@@ -55,14 +64,16 @@ va falloir bien reflechir pour ca
     	});
     */
 
+/* trouver un moyen pour pas dupliquer le code */
+    $('.autocomplete').autocomplete({
+      serviceUrl: 'ingredients/autocomplete',
+      noCache: true,
+      maxHeight: 100,
+      onSelect: function (suggestion) {
+        var thing = "<p>"+suggestion.value+"</p>";
+        $('#choix').append(thing);
+      }
+    });
 
-  $('.autocomplete').autocomplete({
-    serviceUrl: 'ingredients/autocomplete',
-    noCache: true,
-    maxHeight: 100,
-    onSelect: function (suggestion) {
-      var thing = "<p>"+suggestion.value+"</p>";
-      $('#choix').append(thing);
-    }
-  });
+
 });
