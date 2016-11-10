@@ -18,31 +18,110 @@
 <body>
   <!-- utiliser class="autocomplete" pour chaque input -->
 
-<div class="container-fluid">
-  <div class="container skyblue">
-
+  <div class="container">
     <div class="row">
+      <div class="control-group" id="fields">
+        <label class="control-label" for="field1">Liste d'ingrédients</label>
+        <div class="controls-ingredient">
+          <form role="form" autocomplete="off">
 
-      <article class="col-md-3">
-        <h1>Ingredients</h1>
-        <input type="text" name="abalba" class="autocomplete">
-      </article>
-      <article class="col-md-3">
-        <h1>Ingredients</h1>
-        <input type="text" name="abalba" class="autocomplete">
-      </article>
-      <article class="col-md-3">
-        <h1>Ingredients</h1>
-        <input type="text" name="abalba" class="autocomplete">
-      </article>
-      <article class="col-md-3" id="choix">
-        <h1>Ingredients choisis</h1>
-      </article>
+            <div class="entry-ingredient input-group col-xs-12">
+              <div class="col-xs-3">
+                <input class="form-control autocomplete" name="fields[]" type="text" placeholder="Ingredients" />
+              </div>
+              <div class="col-xs-3">
+                <input class="form-control" name="fields[]" type="text" placeholder="Quantité" />
+              </div>
+              <div class="col-xs-3">
+        <!--        <input class="form-control" name="fields[]" type="text" placeholder="Mesures" /> -->
+                <select class="form-control" name="mesure[]">
+                            <option value="">Rien</option>
+                            <option value="grammes">grammes (g)</option>
+                            <option value="kilogrammes">kilogrammes (kg)</option>
+                            <option value="litres">litres (l)</option>
+                            <option value="millilitres">millilitres (ml)</option>
+                            <option value="centilitres">centilitres (cl)</option>
+                            <option value="c. à café">c. à café</option>
+                            <option value="c. à soupe">c. à soupe</option>
+                            <option value="c. à thé">c. à thé</option>
+                        </select>
+              </div>
+
+              <span class="input-group-btn col-xs-3">
+                <button class="btn btn-success btn-add-ingredient" type="button">
+                  <span class="glyphicon glyphicon-plus"></span>
+                </button>
+              </span>
+            </div>
+
+          </form>
+
+          <br>
+        </div>
+      </div>
     </div>
-
-
   </div>
-</div>
+
+<!-- exemple code autocompletion -->
+<!--
+  <div class="container-fluid">
+    <div class="container skyblue">
+
+      <div class="row">
+
+        <article class="col-md-3">
+          <h1>Ingredients</h1>
+          <input type="text" name="abalba" class="autocomplete">
+        </article>
+        <article class="col-md-3">
+          <h1>Ingredients</h1>
+          <input type="text" name="abalba" class="autocomplete">
+        </article>
+        <article class="col-md-3">
+          <h1>Ingredients</h1>
+          <input type="text" name="abalba" class="autocomplete">
+        </article>
+        <article class="col-md-3" id="choix">
+          <h1>Ingredients choisis</h1>
+        </article>
+      </div>
+
+
+
+    </div>
+  </div>
+-->
+
+<!-- Partie pour la liste des étapes (ca marche)-->
+<!--
+  <div class="container">
+    <div class="row">
+      <div class="control-group" id="fields">
+        <label class="control-label" for="field1">Préparation</label>
+        <div class="controls-etapes">
+          <form role="form" autocomplete="off">
+
+            <div class="entry-etapes input-group col-xs-12">
+              <div class="col-xs-11">
+                  <textarea class="form-control"
+                    placeholder="Veuillez entrer les instructions pour cette étape" rows="3"></textarea>
+              </div>
+
+              <span class="input-group-btn col-xs-1">
+                <button class="btn btn-success btn-add-etapes" type="button">
+                  <span class="glyphicon glyphicon-plus"></span>
+                </button>
+              </span>
+            </div>
+
+          </form>
+
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+-->
 
 </body>
 </html>
