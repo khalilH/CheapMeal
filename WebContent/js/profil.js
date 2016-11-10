@@ -203,6 +203,8 @@ $(function() {
 					var infoProfil = JSON.parse(jsonrep, InfoRevival);
 					console.log(infoProfil);
 					updatePage(infoProfil);
+				}else{
+					errorMessage();
 				}
 			},
 			error : function(resultat, statut, erreur) {
@@ -211,6 +213,9 @@ $(function() {
 				alert("dawg");
 			}
 		});
+	}
+	function errorMessage(){
+		$("#leftPanel").html("<div class='alert alert-danger'><h1><strong>Attention !</strong> Vous tentez d'accéder à une page inconnue.</h1></div>");
 	}
 	function updatePage(infoProfil) {
 		$("#rightPanel").html(infoProfil.getHtmlRecettes());
