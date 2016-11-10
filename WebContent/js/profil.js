@@ -275,7 +275,7 @@ $(function() {
 
 	$("#rightPanel").on('click', "#addRecette", function() {
 		console.log("add recette");
-		window.location.href="ajouterRecette.html";
+		window.location.href="autocomplete.html";
 	});
 
 	$("#rightPanel").on('click', ".recette", function() {

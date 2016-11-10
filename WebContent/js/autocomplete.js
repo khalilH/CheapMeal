@@ -18,9 +18,10 @@ $(function() {
 			reader.readAsDataURL(input.files[0]);
 		}
 	}
-
+	var changedFile = false;
 	$("#uploadInput").change(function() {
 		readURL(this);
+		changedFile = true;
 	});
 
 	$(document)
@@ -140,12 +141,28 @@ $(function() {
 			for (i = 1; i < tmp.length; i++)
 				etapes += "@" + tmp[i].value;
 		}
-		console.log(form.titre);
+		console.log(form.titre.value);
 		console.log(ingredients);
 		console.log(quantites);
 		console.log(mesures);
 		console.log(etapes);
 		console.log("before Creer");
+		if(form.titre.value == "" || ingredients == "" || quantites == "" || mesures == "" || etapes == ""){
+			alert("Il manque des informations");
+			return;
+		}
+		var re = new RegExp("-");
+		if(re.test(quantites)){
+			console.log("no");
+			alert("Vous devez rentre une quantite positive");
+
+			return;
+		}
+		if(!changedFile){
+			console.log("photo");
+			alert("Vous devez rentre une photo");
+			return;
+		}
 		/* requete AJAX */
 		creerRecette(form, form.titre.value, ingredients, quantites, mesures,
 				etapes);
@@ -178,6 +195,8 @@ $(function() {
 				if (jsonrep.erreur == undefined) {
 					console.log("OK recette cree");
 					console.log(data);
+					window.location.href="accueil.html";
+					return;
 				} else {
 					console.log("KO");
 					console.log(data);

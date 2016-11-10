@@ -155,7 +155,7 @@ $(function (){
 	$("#searchForm").on('submit',function(event){
 		event.preventDefault();
 		var query = this.search.value;
-		var url ="query="+query+"~";
+		var url ="query="+query;
 		if(getCookie(C_NAME_KEY) != undefined)
 			url+="&cle="+getCookie(C_NAME_KEY);
 		$.ajax({
