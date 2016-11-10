@@ -1,16 +1,11 @@
-/* .skyblue h1 p seulement pour la page de test autocomplete.html */
-.skyblue {
-  background-color: skyblue;
-  height: 600px;
+.entry-ingredient:not(:first-of-type)
+{
+    margin-top: 10px;
 }
 
-h1 {
-  color: white;
-}
-
-p {
-  padding-left: 20px;
-  color: white;
+.entry-etapes:not(:first-of-type)
+{
+    margin-top: 10px;
 }
 
 /* Il n'y a que cette partie qui est a mettre en fait */
