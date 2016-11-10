@@ -127,9 +127,9 @@ public class RecetteFonctions {
 			String preparation,
 			Part photo) throws MyException {
 
-		/* Verification des parametres, remette photo == null */
-		if (titre == null || cle == null || ingredients == null || quantites == null || preparation == null)
-			throw new ParametreManquantException("Parametres(s) Manquant(s)1", ErrorCode.PARAMETRE_MANQUANT);
+		/* Verification des parametres */
+		if (titre == null || cle == null || ingredients == null || quantites == null || preparation == null || photo == null)
+			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
 
 		/* Mise en place de la liste des mesures compatibles */
 		ArrayList<String> listMesures = new ArrayList<>();
@@ -148,7 +148,7 @@ public class RecetteFonctions {
 				|| ingredients.size() != mesures.size() 
 				|| ingredients.size() != quantites.size() 
 				|| mesures.size() != quantites.size())
-			throw new ParametreManquantException("Parametres(s) Manquant(s)2", ErrorCode.PARAMETRE_MANQUANT);
+			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
 
 		if (cle.length() != 32)
 			throw new NonValideException("Cle invalide", ErrorCode.CLE_INVALIDE);
@@ -167,7 +167,7 @@ public class RecetteFonctions {
 			BasicDBObject document = MongoFactory.creerDocumentRecette(titre, u.getId(), u.getLogin(), ingredients, quantites, mesures, preparation,photo);
 			col.insertOne(document);
 		} catch (Exception e) {
-			throw new MongoDBException(ErrorCode.ERREUR_INTERNE, ErrorCode.MONGO_EXCEPTION);
+			throw new MongoDBException(ErrorCode.ERREUR_INTERNE+" "+e.getMessage(), ErrorCode.MONGO_EXCEPTION);
 		}
 		DBStatic.closeMongoDBConnection();
 

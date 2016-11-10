@@ -10,6 +10,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +33,7 @@ public class AjouterRecette extends HttpServlet {
 			String quant = ServiceTools.getValueFromPart(request.getPart(RequestParameter.QUANTITES));
 			String mesu = ServiceTools.getValueFromPart(request.getPart(RequestParameter.MESURES));
 			String preparation = ServiceTools.getValueFromPart(request.getPart(RequestParameter.PREPARATION));
-//			Part photo = request.getPart(RequestParameter.FILE);
+			Part photo = request.getPart(RequestParameter.FILE);
 
 			/* Ici, parser la liste des ingredients et des etapes de preparation */
 
@@ -46,16 +47,13 @@ public class AjouterRecette extends HttpServlet {
 
 			for(String s : ingr_tmp)
 				ingredients.add(s);
-
 			for(String s : quantites_tmp)
 				quantites.add(Double.parseDouble(s));
-
 			for(String s : mesures_tmp)
 				mesures.add(s);
 
 			/* Traitement des services */
-//			JSONObject res = RecetteServices.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation, photo);
-			JSONObject res = RecetteServices.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation, null);
+			JSONObject res = RecetteServices.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation, photo);
 
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();
