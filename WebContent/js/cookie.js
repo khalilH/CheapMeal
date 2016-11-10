@@ -11,7 +11,6 @@ var C_NAME_ID = "Cheap_Meal_id"
  *            la valeur du cookie
  */
 function setCookie(cname, cvalue) {
-
 	document.cookie = cname + "=" + cvalue;
 }
 /**
@@ -46,43 +45,17 @@ function getCookie(cname) {
 /**
  * Permet de détruire un cookie en mettant sa valeur à -1
  */
-function destroy_cookie(cname) {
-	setCookie(cname, "-1");
+function destroy_cookie() {
+	setCookie(C_NAME_KEY,"-1");
+	setCookie(C_NAME_ID,"-1");
+	setCookie(C_NAME_LOGIN, "-1");
+
 }
 /**
  * Permet de charger une navbar en mode déconnecte
  * 
  */
-function loadNavbarDisconnected() {
-	var leftNavbarHtml = "<li class='active'><a href='accueil.html' class='menu-button'>"
-			+ "<span class='glyphicon glyphicon-home'></span> Accueil</a></li>";
-	$("#leftNavbar").html(leftNavbarHtml);
 
-	var rightNavbarHtml = "<div class='row'><div class='col-xs-5'>"
-			+ "<button id='connexion' type='button' class='btn btn-primary navbar-btn'>"
-			+ "<span class='glyphicon glyphicon-log-in'></span> Connexion</button></div>"
-			+ "<div class='col-xs-5 col-xs-offset-1'><button id='signup' type='button'"
-			+ "class='btn btn-success navbar-btn'>"
-			+ "<span class='glyphicon glyphicon-thumbs-up'></span> S'enregistrer</button></div></div>"
-	$("#rightNavbar").html(rightNavbarHtml);
-}
-
-/**
- * Permet de charger une navbar en mode connecte
- * 
- */
-function loadNavbarConnected() {
-	var leftNavbarHtml = "<li class='active'><a href='accueil.html' class='menu-button'>"
-			+ "<span class='glyphicon glyphicon-home'></span> Accueil</a></li>"
-			+ "<li><a href='profile.html' class='menu-button'>"
-			+ "<span class='glyphicon glyphicon-user'></span> Profile</a></li>"
-			+ "<li><a href='compte.html' class='menu-button'>"
-			+ "<span class='glyphicon glyphicon-cog'></span> Compte</a></li>";
-
-	var rightNavbarHtml = "<button id='deconnexion' type='button' class='btn btn-primary navbar-btn'>"
-			+ "<span class='glyphicon glyphicon-log-out'></span> Déconnexion</button>";
-	$("#rightNavbar").html(rightNavbarHtml);
-}
 
 /**
  * Requete ajax permettant de vérifier si un utilisateur est connecté
@@ -121,4 +94,39 @@ function isConnected() {
 		return res;
 	}
 	return -1;
+}
+
+
+function loadNavbarDisconnected() {
+	console.log("loadDis");
+	var leftNavbarHtml = "<li class='active'><a href='accueil.html' class='menu-button'>"
+			+ "<span class='glyphicon glyphicon-home'></span> Accueil</a></li>";
+	$("#leftNavbar").html(leftNavbarHtml);
+
+	var rightNavbarHtml = "<div class='row'><div class='col-xs-5'>"
+			+ "<button id='connexion' type='button' class='btn btn-primary navbar-btn'>"
+			+ "<span class='glyphicon glyphicon-log-in'></span> Connexion</button></div>"
+			+ "<div class='col-xs-5 col-xs-offset-1'><button id='signup' type='button'"
+			+ "class='btn btn-success navbar-btn'>"
+			+ "<span class='glyphicon glyphicon-thumbs-up'></span> S'enregistrer</button></div></div>"
+	$("#rightNavbar").html(rightNavbarHtml);
+}
+
+/**
+ * Permet de charger une navbar en mode connecte
+ * 
+ */
+function loadNavbarConnected() {
+	console.log("loadCo");
+
+	var leftNavbarHtml = "<li class='active'><a href='accueil.html' class='menu-button'>"
+			+ "<span class='glyphicon glyphicon-home'></span> Accueil</a></li>"
+			+ "<li><a href='profile.html' class='menu-button'>"
+			+ "<span class='glyphicon glyphicon-user'></span> Profile</a></li>"
+			+ "<li><a href='compte.html' class='menu-button'>"
+			+ "<span class='glyphicon glyphicon-cog'></span> Compte</a></li>";
+
+	var rightNavbarHtml = "<button id='deconnexion' type='button' class='btn btn-primary navbar-btn'>"
+			+ "<span class='glyphicon glyphicon-log-out'></span> Déconnexion</button>";
+	$("#rightNavbar").html(rightNavbarHtml);
 }

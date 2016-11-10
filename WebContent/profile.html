@@ -3,24 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Accueil</title>
+<title>Recette</title>
 
-<link rel="icon" type="image/png" href="images/favicon.png" />
 <link rel="stylesheet" type="text/css"
 	href="bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="css/accueil.css">
 <link rel="stylesheet" type="text/css" href="css/navbar.css">
+<link rel="stylesheet" type="text/css" href="css/profil.css">
+
 <script src="js/jquery-3.1.1.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
-<script src="js/navbar.js"></script>
-<script src="js/cookie.js"></script>
-<script src="js/accueil.js"></script>
-<script src="js/require.js"></script>
 
+<script src="js/profil.js"></script>
+<script src="js/cookie.js"></script>
+<script src="js/navbar.js"></script>
 
 </head>
-<body class="accueil_body">
-	<nav class="navbar navbar-default">
+<body>
+<nav class="navbar navbar-default">
 		<div class="container-fluid">
 
 			<div class="navbar-center navbar-brand">
@@ -56,52 +55,39 @@
 		</div>
 	</nav>
 
-	<div class="contenu-page">
-		<div class="searchbar-container">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-6 col-sm-offset-3">
-						<div id="imaginary_container">
-							<div>
-								<h3 class="titre-recherche">Trouver une recette</h3>
-							</div>
-							<form role="form" id="searchForm">
-								<div class="input-group stylish-input-group">
-									<input name="search" type="text" class="form-control rad10"
-										placeholder="Tarte aux pommes, Poulet massala, Loc Lac ...">
-									<span class="input-group-addon rad10">
-										<button type="submit">
-											<span class="glyphicon glyphicon-search"></span>
-										</button>
-									</span>
-
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
+	<div class="body-container">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4 well no-pad" id="leftPanel"></div>
+				<div class="col-sm-8" id="rightPanel"></div>
 			</div>
 		</div>
+		<!-- Modal when deleting -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
 
-		<div class="container-fluid">
-			<div class="container">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Modal Header</h4>
+					</div>
+					<div class="modal-body">
+						<p>Vous êtes sur le point de supprimer une recette.</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" value="" id="confirmDelete"
+							class="btn btn-primary ">Supprimer</button>
 
-				<div class="row">
-					<div class="col-md-12 recettes-recentes categorie">
-						<span class="texte-categorie">Recettes récentes</span>
 					</div>
 				</div>
 
-				<div class="row" id="recentRecipe"></div>
-				<div class="row">
-					<div class="col-md-12 recettes-top categorie">
-						<span class="texte-categorie">Top des recettes</span>
-					</div>
-					<div class="row" id="BestRecipe"></div>
-				</div>
 			</div>
 		</div>
 	</div>
+
+
 
 </body>
 </html>
