@@ -57,7 +57,7 @@ va falloir bien reflechir pour ca
 
 
   $('.autocomplete').autocomplete({
-    serviceUrl: 'autocomplete/ingredients',
+    serviceUrl: 'ingredients/autocomplete',
     noCache: true,
     maxHeight: 100,
     onSelect: function (suggestion) {
