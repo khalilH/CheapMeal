@@ -67,7 +67,7 @@ $(function() {
 		}
 
 		if (this.recettes.length == 0) {
-			s += "<div class='panel panel-primary'>"
+			s += "<div class='panel panel-primary mg-top-50'>"
 					+ "<div class='panel-heading'>"
 					+ "<span class='glyphicon glyphicon-thumbs-down'></span> Dommage"
 					+ "</div>"
@@ -94,13 +94,13 @@ $(function() {
 		s += "</div><div class='row '>"
 				+ "<div class='col-sm-12 white-text mg-top-10'>"
 				+ "<div class='col-sm-4 no-pad bg-blue'>" + "<div class='h4'>"
-				+ "<span class='glyphicon glyphicon-user'></span> Left</div>"
+				+ "<span class='glyphicon glyphicon-user'></span> 0 Amis</div>"
 				+ "</div><div class='col-sm-4 no-pad bg-pink'>"
 				+ "<div class='h4'>"
-				+ "<span class='glyphicon glyphicon-star'></span>" + getStars()
+				+ "<span class='glyphicon glyphicon-star'></span> " + getStars()
 				+ "</div>" + "</div><div class='col-sm-4 no-pad bg-green'>"
-				+ "<div class='h4'>"
-				+ "<span class='glyphicon glyphicon-star'></span>" + nbRecettes
+				+ "<div class='h4'>" 
+				+ "<span class='glyphicon glyphicon-education'></span> " + nbRecettes
 				+ "</div>" + "</div></div></div></div>";
 		return s;
 	}
@@ -190,6 +190,7 @@ $(function() {
 		var login = findLoginInURL();
 		if(login == undefined)
 			login = getCookie(C_NAME_LOGIN);
+		console.log(login + "et "+getCookie(C_NAME_KEY));
 		$.ajax({
 			url : 'profil/afficher',
 			type : 'GET',
@@ -198,8 +199,9 @@ $(function() {
 			dataType : 'json',
 			success : function(rep) {
 				var jsonrep = JSON.stringify(rep)
+				console.log(jsonrep);
 				console.log(jsonrep.erreur);
-				if (jsonrep.erreur == "undefined") {
+				if (jsonrep.erreur == undefined) {
 					var infoProfil = JSON.parse(jsonrep, InfoRevival);
 					console.log(infoProfil);
 					updatePage(infoProfil);
@@ -241,11 +243,27 @@ $(function() {
 		}
 	}
 	$("#leftPanel").on('change',"#inputFile",function() {
-		readURL(this);
-		console.log("toz");
-		//TODO requete ajax
+		event.preventDefault();
+		var data = new FormData();
+		console.log(this.files[0]);
+		data.append('file', this.files[0]);
+		data.append('cle',getCookie(C_NAME_KEY));
+		data.append('login',getCookie(C_NAME_LOGIN));
+		console.log(getCookie(C_NAME_KEY));
+		jQuery.ajax({
+	    url: 'profil/uploadImage',
+	    data: data,
+	    cache: false,
+	    contentType: false,
+	    processData: false,
+	    type: 'POST',
+	    success: function(data){
+	    	console.log(data);
+	    	if(data.erreur == undefined)
+	    		readURL(this.files[0]);
+	    }
+		});
 	});
-
 	
 	$("#leftPanel").on('click', "#connected", function() {
 		console.log("connecte");
@@ -254,11 +272,12 @@ $(function() {
 
 	$("#rightPanel").on('click', "#addRecette", function() {
 		console.log("add recette");
+		window.location.href="ajouterRecette.html";
 	});
 
 	$("#rightPanel").on('click', ".recette", function() {
 		console.log("Clique sur recette " + this.id);
-
+		window.location.href="recette.html?idRecette="+this.id;
 	});
 
 	$("#rightPanel").on('click', ".btn-delete", function(event) {
@@ -273,5 +292,27 @@ $(function() {
 	
 	$('#confirmDelete').on('click',function(event){
 		console.log("Confirm "+this.value);
+		var idRecette = this.value;
+		$('#'+idRecette).fadeOut(300, function(){ $(this).remove();});
+		$.ajax({
+			url : 'recette/supprimer',
+			type : 'POST',
+			data : 'cle='+getCookie(C_NAME_KEY)+"&idRecette="+idRecette,
+			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+			dataType : 'json',
+			success : function(rep) {
+				console.log(JSON.stringify(rep));
+				if(rep.erreur == undefined){
+					$('#'+idRecette).fadeOut(300, function(){ $(this).remove();});
+					$('#myModal').modal('hide');
+				}
+				return;
+			},
+			error : function(resultat, statut, erreur) {
+				console.log("Bug");
+				console.log(resultat);
+				alert("dawg");
+			}
+		});
 	});
 });

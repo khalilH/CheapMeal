@@ -124,6 +124,7 @@ $(function (){
 	function updatePage(liste){
 		$("#recentRecipe").html(liste.getHtmlRecent());
 		$("#BestRecipe").html(liste.getHtmlBest());
+		
 
 	}
 	$("#searchForm").on('submit',function(event){
@@ -163,7 +164,7 @@ $(function (){
 	
 	$(document.body).on('click','.recette',function(){
 		console.log("J'ai clique sur une recette ",this.id);
-		//TODO Afficher la page de la recette
+		window.location.href="recette.html?idRecette="+this.id;
 	});
 
 	

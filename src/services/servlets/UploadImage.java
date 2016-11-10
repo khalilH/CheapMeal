@@ -1,21 +1,21 @@
 package services.servlets;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.Base64;
 
-import javax.imageio.ImageIO;
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import services.ProfilServices;
+import util.ServiceTools;
 
 @MultipartConfig
 
@@ -29,48 +29,25 @@ public class UploadImage extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		/* Lecture des parametres */
-		String path = "";
-		InputStream inputStream = null; // input stream of the upload file
-		// obtains the upload file part in this multipart request
-		Part filePart = request.getPart("file-0");
-		if (filePart != null) {
-			// prints out some information for debugging
-			System.out.println(filePart.getName());
-			System.out.println(filePart.getSize());
-			System.out.println(filePart.getContentType());
-
-			// obtains input stream of the upload file
-			inputStream = filePart.getInputStream();
-			BufferedImage image = ImageIO.read(inputStream);
-			File f = new File("/var/lib/tomcat8/webapps/images/toz.png");
-			ImageIO.write(image, "png", f);
-		}
-		PrintWriter writer = response.getWriter();
-		response.setContentType("plain/text");
-
-		File f = new File("/var/lib/tomcat8/webapps/images/toz.png");
-		String encodstring = encodeFileToBase64Binary(f);
-
-		writer.println(encodstring);
-
-	}
-
-	private static String encodeFileToBase64Binary(File file) {
-		String encodedfile = null;
 		try {
-			FileInputStream fileInputStreamReader = new FileInputStream(file);
-			byte[] bytes = new byte[(int) file.length()];
-			fileInputStreamReader.read(bytes);
-			encodedfile =  Base64.getEncoder().encodeToString(bytes);
-			fileInputStreamReader.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			String cle  = ServiceTools.getValueFromPart(request.getPart("cle"));
+			String login  = ServiceTools.getValueFromPart(request.getPart("login"));
+			Part photo = request.getPart("file");
+			
+		
+			JSONObject res = ProfilServices.uploadImage(cle,login,photo);
+			
+			/* Ecriture de la reponse */
+			PrintWriter writer = response.getWriter();
+			response.setContentType("application/json");
+			writer.println(res.toString());
+
+
+		} catch (MessagingException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
-		return encodedfile;
 	}
+
 }

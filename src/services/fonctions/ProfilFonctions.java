@@ -1,7 +1,13 @@
 package services.fonctions;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.Part;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,7 +78,7 @@ public class ProfilFonctions {
 		String bio = RequeteStatic.recupBio(login);
 		profil.put("bio",bio );
 		profil.put("login", login);
-		File f = new File("/var/lib/tomcat8/webapps/images/profil"+login+".png");
+		File f = new File("/var/lib/tomcat8/webapps/images/profil/"+login+".png");
 		if(f.exists())
 			profil.put("photo", login);
 		else
@@ -86,6 +92,23 @@ public class ProfilFonctions {
 		jb.put("recettes",recettes);
 		jb.put("profil", profil);
 		return jb;
+	}
+
+	public static void uploadImage(String cle,String login, Part photo) throws ParametreManquantException, NonValideException, SessionExpireeException, IOException {
+		if (cle == null || photo == null || login == null || login.equals("") || cle.equals("")) 
+			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
+
+		if (cle.length() != 32)
+			throw new NonValideException("Cle invalide", ErrorCode.CLE_INVALIDE);
+
+		if (!ServiceTools.isCleActive(cle)) 
+			throw new SessionExpireeException("Votre session a expiree", ErrorCode.SESSION_EXPIREE);
+		
+			InputStream inputStream = photo.getInputStream();
+			BufferedImage image = ImageIO.read(inputStream);
+			File f = new File("/var/lib/tomcat8/webapps/images/profil/"+login+".png");
+			ImageIO.write(image, "png", f);
+		
 	}
 
 }

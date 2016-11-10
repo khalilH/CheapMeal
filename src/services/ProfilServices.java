@@ -1,5 +1,9 @@
 package services;
 
+import java.io.IOException;
+
+import javax.servlet.http.Part;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,9 +33,9 @@ public class ProfilServices {
 	}
 
 	/**
-	 * 
-	 * @param cle
-	 * @param login
+	 *  Permet d'affiche le profil d'un utilisateur
+	 * @param cle de l'utilisateur
+	 * @param login de la personne dont on souhaite afficher le profil
 	 * @return
 	 * @throws JSONException
 	 */
@@ -44,5 +48,16 @@ public class ProfilServices {
 		}
 
 	}
-
+	
+	public static JSONObject uploadImage(String cle ,String login, Part photo) throws JSONException {
+		try {
+			ProfilFonctions.uploadImage(cle,login, photo);
+			return ServiceTools.serviceAccepted("Image ajouté");
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+		} catch (IOException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), 100);
+			//TODO Change code
+		}
+	}
 }
