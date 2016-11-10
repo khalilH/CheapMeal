@@ -8,29 +8,33 @@ var __slice = [].slice;
 		Starrr.prototype.defaults = {
 				rating: void 0,
 				numStars: 5,
-				change: function(idRecette, note) {
-					/* A implémenter */
+				change: function(e, value) {
+
+					var idRecette = $.urlParam("idRecette"); 
 
 					$.ajax({
 						url : 'recette/noter',
 						type : 'POST',
-						data : "cle="+getCookie(C_NAME_KEY)+"&idRecette="+idRecette+"&note="+note,
+						data : "cle="+getCookie(C_NAME_KEY)+"&idRecette="+idRecette+"&note="+value,
 						contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 						dataType : 'json',
 						success : function(rep){
 
 							console.log("Notation reussie");
+							console.log(JSON.stringify(rep));
 							var obj = JSON.parse(JSON.stringify(rep), Note.revival);
 
-							/* Remplacer la note affichee avec la nouvelle note */
-							$("#noter-recette").html("<span style:'text-align:center'>Vous avez noté cette recette</span>");
-							$("#note").html("<span>"+obj.moyenne+"/5"+" ("+obj.nbNotes+" votes)</span>");
+							if(obj.erreur == undefined){
+								/* Remplacer la note affichee avec la nouvelle note */
+								$("#noter-recette").html("<span style:'text-align:center'>Vous avez noté cette recette</span>");
+								$("#note").html("<span>"+(obj.moyenne).toFixed(2)+"/5"+" ("+obj.nbNotes+" vote(s))</span>");
+							}
 
 						},
 						error : function(resultat, statut, erreur) {
 							console.log("Bug");
 							console.log(resultat);
-							alert("dawg");
+							alert("Erreur Ajax");
 						}
 					});
 
@@ -107,7 +111,6 @@ var __slice = [].slice;
 		return Starrr;
 
 	})();
-
 	return $.fn.extend({
 		starrr: function() {
 			var args, option;
@@ -131,7 +134,6 @@ var __slice = [].slice;
 $(function() {
 	return $(".starrr").starrr();
 });
-
 
 /***** DOWN HERE CODE FOR PARSING JSON RESPONSE **********/
 function Auteur(id,login){
@@ -158,6 +160,7 @@ function Recette(id,auteur,titre,ingredients,preparation,note,photo,prix){
 	this.ingredients = ingredients;
 	this.preparation = preparation;
 	this.note = note;
+	this.photo = photo;
 	this.prix = prix;
 }
 
@@ -177,11 +180,13 @@ Note.revival = function(key, value){
 		var n;
 		if((value.Erreur == undefined) || (value.Erreur == 0)){ 
 			// Si l'on trouve pas un champs Erreur dans le JSON
-			n = new Note(value.moyenne, value.nbNotes);
+			n = new Note(value.moyenne, value.nbNotes, value.usersNotes);
+			return n;
 		}
 		else{
 			n = new Object();
 			n.Erreur = value.Erreur;
+			return n;
 		}
 	}else{
 		return value;
@@ -230,13 +235,24 @@ Recette.traiteReponseJSON = function(json_text){
 	//obj est une Recette
 	var obj = JSON.parse(JSON.stringify(json_text), Recette.revival);
 
-	console.log(JSON.stringify(obj));
-	
+	//console.log(JSON.stringify(obj));
+
 	if(obj.erreur == undefined){
 
 		$("#titre-recette").html("<span>"+obj.titre+"</span>");
+
+		/* photo recette */
+		$("#photo-recette").html("<img class='img-responsive' id='recettePhoto' " +
+				"src='"+"../images/"+obj.photo+".png"+"' alt='Recette Picture'/>");
+		console.log("J'AI AJOUTE LA PHOTO RECETTE");
+
 		$("#nom-auteur-recette").html("<span>"+obj.auteur.loginAuteur+"</span>");
+
 		/* photo auteur */
+		$("#photo-auteur").html("<img class='img-responsive' id='profilPicture' " +
+				"src='"+"../images/profil/"+obj.auteur.loginAuteur+".png"+"' alt='Profil Picture'/>");
+		console.log("J'AI AJOUTE LA PHOTO PROFILE");
+
 		$("#note").html("<span>"+obj.note.moyenne+"/5"+" ("+obj.note.nbNotes+" votes)</span>");
 
 		/* si l'utilisateur a deja note la recette, afficher le nombre d'etoile attribue */
@@ -252,20 +268,31 @@ Recette.traiteReponseJSON = function(json_text){
 
 		if(isConnected() === 1){
 			if(getCookie(C_NAME_LOGIN) != obj.auteur.loginAuteur){
+				console.log("cookielogin="+getCookie(C_NAME_LOGIN)+" loginAuteur="+obj.auteur.loginAuteur);
 				if(aNote == false){
 					console.log("JE PASSE ICI");
-					$("#noter-recette").html("<div class='row lead margin-top-20'>"+
-							"<p>Notez cette recette:</p>"+
-							"<div id='hearts' class='starrr'></div>"+
-							"</div>"
-					);
+					$("#notez").html("Notez cette recette:");
+					$("#stars").show();
+//					$("#noter-recette").html(
+//					"<div class='row lead margin-top-20'>"+
+//					"<p>Notez cette recette:</p>"+
+//					"<div id='stars' class='starrr'></div>"+
+//					"</div>"
+//					);
 				}else{
-					$("#noter-recette").html("<div class='row lead margin-top-20'>"+
-							"<p>Vous avez donné"+varUsersNotes[i].noteUser+" étoile(s) à cette recette.</p>"+
-							"</div>"
-					);
+					console.log("JE PASSE DANS ELSE");
+					$("#stars").hide();
+					$("#notez").html("<p>Vous avez donné"+varUsersNotes[i].noteUser+" étoile(s) à cette recette.</p>");
+//					$("#noter-recette").html("<div class='row lead margin-top-20'>"+
+//					"<p>Vous avez donné"+varUsersNotes[i].noteUser+" étoile(s) à cette recette.</p>"+
+//					"</div>"
+//					);
 				}
+			}else{
+				$("#stars").hide();
 			}
+		}else{
+			$("#stars").hide();
 		}
 
 		var s = "<ul>";
@@ -346,12 +373,16 @@ $(document).ready(function() {
 
 	console.log(Recette.traiteReponseJSON(json_text));*/
 
-	var idRecette = $.urlParam("idRecette"); /* idRecette = getParameter */
+	var idRecette = $.urlParam("idRecette"); 
+
+	var cle = "";
+	if(getCookie(C_NAME_KEY) != -1)
+		cle = "&cle="+getCookie(C_NAME_KEY);
 
 	$.ajax({
 		url : 'recette/afficher',
 		type : 'GET',
-		data : 'idRecette='+idRecette,
+		data : 'idRecette='+idRecette+cle,
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		dataType : 'json',
 		success : Recette.traiteReponseJSON,
@@ -363,4 +394,3 @@ $(document).ready(function() {
 	});
 
 });
-

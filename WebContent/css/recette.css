@@ -101,9 +101,9 @@
 }
 
 .photo-recette{
-	height: 375px;
+	height: 100%;
 	width: 100%;
-	background-color: silver;
+	background-color: white;
 }
 
 .nom-auteur-recette{
@@ -115,8 +115,8 @@
 }
 
 .photo-auteur-recette{
-	height: 150px;
-	width: 150px;
+	height: 100%;
+	width: 100%;
 	margin: 0 auto;
 	background-color: lime;
 }
@@ -153,8 +153,8 @@
 	margin-top: 10px;
 }
 
-#hearts { color: #1d7abc;}
-#hearts-existing { color: #1d7abc;}
+#stars { color: #1d7abc;}
+#stars-existing { color: #1d7abc;}
 
 .note-recette{
 	text-align: center;
