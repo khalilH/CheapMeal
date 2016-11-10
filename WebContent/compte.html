@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compte</title>
+
+<link rel="icon" type="image/png" href="images/favicon.png" />
+<link rel="stylesheet" type="text/css"
+	href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/navbar.css">
+<link rel="stylesheet" type="text/css" href="css/tooltip.css" />
+<link rel="stylesheet" type="text/css" href="css/compte.css">
+
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/jquery-validate.bootstrap-tooltip.min.js"></script>
+<script src="js/compte.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/cookie.js"></script>
+
+</head>
+
+<body class="compte-body">
+
+	<!-- Navbar -->
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-center navbar-brand">
+				<a id="brandLogo" class="navbar-brand"> </a>
+			</div>
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul id="leftNavbar" class="nav navbar-nav">
+					<li class="active"><a href="accueil.html" class="menu-button"><span
+							class="glyphicon glyphicon-home"></span> Accueil</a></li>
+					<li><a href="profile.html" class="menu-button"><span
+							class="glyphicon glyphicon-user"></span> Profile</a></li>
+					<li><a href="compte.html" class="menu-button"><span
+							class="glyphicon glyphicon-cog"></span> Compte</a></li>
+				</ul>
+				<div id="rightNavbar" class="nav navbar-nav navbar-right">
+					<button id="deconnexion" type="button"
+						class="btn btn-primary navbar-btn">
+						<span class="glyphicon glyphicon-log-out"></span> Déconnexion
+					</button>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<div class="contenu-page">
+		<div class="container col-lg-12 col-md-9 col-sm-9">
+			<div class="partie-mail">
+				<div class="titre-partie">Mes informations</div>
+				<div class="description-partie">Changer mes informations
+					utilisateur</div>
+				<hr>
+				<div class="row">
+					<form id="form_compte" role="form"
+						class="form col-lg-6 col-lg-offset-3" >
+						<div class="row">
+							<label for="login">Nom d'utilisateur</label> <input type="text"
+								name="login" id="login" />
+						</div>
+						<!-- <div class="row">
+							<label for="mail">Adresse email</label><input type="text"
+								name="mail" id="mail" />
+						</div class="row"> -->
+						<div class="row">
+							<label for="newMail">Nouvelle adresse email</label><input
+								type="text" name="newMail" id="newMail" />
+						</div>
+						<div class="row">
+							<input type="submit" class="btn btn-lg btn-primary"
+								value="Sauvegarder" id="sauvegarderMail"></input>
+						</div>
+					</form>
+				</div>
+				<hr>
+			</div>
+
+
+			<div class="partie-mdp">
+				<div class="titre-partie">Mot de passe</div>
+				<div class="description-partie">Changer mon mot de passe</div>
+				<hr>
+				<div class="row">
+					<form id="form-mdp" role="form"
+						class="form col-lg-6 col-lg-offset-3">
+						<div class="row">
+							<label for="currentMdp">Mot de passe courant</label><input
+								type="password" name="currentMdp" id="currentMdp" />
+						</div>
+						<div class="row">
+							<label for="newMdp">Nouveau mot de passe</label><input
+								type="password" name="newMdp" id="newMdp" />
+						</div>
+						<div class="row">
+							<label for="confirmationMdp">Confirmation</label><input
+								type="password" name="confirmationMdp" id="confirmationMdp" />
+						</div>
+						<div class="row">
+							<input type="submit" class="btn btn-lg btn-primary"
+								value="Sauvegarder" id="sauvegarderMdp"></input>
+						</div>
+					</form>
+				</div>
+				<hr>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
