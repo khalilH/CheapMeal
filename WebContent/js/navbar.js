@@ -1,4 +1,5 @@
 $(function(){
+	
 $("#deconnexion").on('click',function(){
 		// TODO Delete cookie + verifier sil existe (erreur)
 		var key = getCookie(C_NAME_KEY);
@@ -14,7 +15,9 @@ $("#deconnexion").on('click',function(){
 				console.log(JSON.stringify(rep));
 				var jsonrep = JSON.stringify(rep)
 				var json = JSON.parse(jsonrep);
-				destroy_cookie();
+				destroy_cookie(C_NAME_KEY);
+				destroy_cookie(C_NAME_ID);
+				destroy_cookie(C_NAME_LOGIN);
 				window.location.href="accueil.html";
 				return;
 			},
