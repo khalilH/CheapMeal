@@ -19,13 +19,14 @@ public class RequeteStatic {
 	 * @param cle la cle de session
 	 */
 	public static void supprimerSessionAvecCle(String cle){
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		s.createQuery("delete from Sessions where cleSession = :cleSession")
 						.setParameter("cleSession", cle)
 						.executeUpdate();
 	
 		s.getTransaction().commit();
+		s.close();
 	}
 
 	
@@ -36,12 +37,13 @@ public class RequeteStatic {
 	 */
 	public static boolean isLoginDisponible(String login)  {
 		
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		Utilisateurs user =(Utilisateurs) s.createQuery("from Utilisateurs u where login = :login")
 					.setParameter("login", login)
 					.uniqueResult();
 		s.getTransaction().commit();
+		s.close();
 		return user == null;
 	}
 
@@ -52,12 +54,13 @@ public class RequeteStatic {
 	 * @return true si le couple existe, false sinon
 	 */
 	public static boolean checkIdentifiantsValide(String login,String mdp)  {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		Utilisateurs user = (Utilisateurs) s.createQuery("from Utilisateurs u where login = :login")
 					.setParameter("login", login)
 					.uniqueResult();
 		s.getTransaction().commit();
+		s.close();
 		boolean bonmdp = BCrypt.checkpw(mdp, user.getMdp());
 		return (user != null) && bonmdp;
 	}
@@ -68,12 +71,13 @@ public class RequeteStatic {
 	 * @return true si une cle de session existe, false sinon 
 	 */
 	public static boolean isSessionCree(String login)  {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		Sessions session =(Sessions) s.createQuery("select s from Utilisateurs u,Sessions s where u.login = :login and u.id = s.idSession")
 					.setParameter("login", login)
 					.uniqueResult();
 		s.getTransaction().commit();
+		s.close();
 		return session != null;
 	}
 
@@ -83,7 +87,7 @@ public class RequeteStatic {
 	 * @param login
 	 */
 	public static void updateDateExpirationAvecLogin(String login)  {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		Timestamp time = new Timestamp(System.currentTimeMillis()+30*60*1000);
 		s.beginTransaction();
 		s.createSQLQuery("update SESSIONS s, UTILISATEURS u set s.dateExpiration = :time where s.idSession = u.id and u.login = :u_login")
@@ -91,6 +95,7 @@ public class RequeteStatic {
 						.setParameter("time", time)
 						.executeUpdate();
 		s.getTransaction().commit();
+		s.close();
 	}
 	
 	/**
@@ -100,12 +105,13 @@ public class RequeteStatic {
 	 * @return la cle de session associe a login
 	 */
 	public static String recupererTokenAvecLogin(String login)  {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		String session_token =(String) s.createQuery("select s.cleSession from Utilisateurs u,Sessions s where u.login = :login and u.id = s.idSession")
 					.setParameter("login", login)
 					.uniqueResult();
 		s.getTransaction().commit();
+		s.close();
 		return session_token;
 	}
 
@@ -120,13 +126,14 @@ public class RequeteStatic {
 		Timestamp time = new Timestamp(System.currentTimeMillis()+30*60*1000);
 		String cle = ServiceTools.createKey();
 		
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		Utilisateurs user = (Utilisateurs) s.load(Utilisateurs.class, id);
 		Sessions s1 = new Sessions(id, cle, time);
 		s1.setUtilisateur(user);
 		s.save(s1);
 		s.getTransaction().commit();
+		s.close();
 		return cle;
 	}
 
@@ -136,12 +143,13 @@ public class RequeteStatic {
 	 * @param cle
 	 */
 	public static void updateDateExpirationAvecCle(String cle)  {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		s.createSQLQuery("update SESSIONS set dateExpiration=date_add(now(), INTERVAL 30 MINUTE) where cleSession = :cle")
 						.setParameter("cle", cle)
 						.executeUpdate();
 		s.getTransaction().commit();
+		s.close();
 	}
 	
 	/**
@@ -156,11 +164,12 @@ public class RequeteStatic {
 	 * dans la base de donnee
 	 */
 	public static Integer ajoutUtilisateur(String login, String mdp, String nom, String prenom, String email) {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		Integer id = (Integer) s.save(new Utilisateurs(login, mdp, prenom, nom, email));
 		s.getTransaction().commit();
 		ajouterProfil(id);
+		s.close();
 		return id;
 	}
 	
@@ -170,13 +179,14 @@ public class RequeteStatic {
 	 * @param id l'identifiant de l'utilisateur
 	 */
 	private static void ajouterProfil(int id) {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		Utilisateurs user = (Utilisateurs) s.load(Utilisateurs.class, id);
 		Profils p1 = new Profils(id, null);
 		p1.setUtilisateur(user);
 		s.save(p1);
 		s.getTransaction().commit();
+		s.close();
 	}
 
 	/**
@@ -185,12 +195,13 @@ public class RequeteStatic {
 	 * @return true si l'adresse mail est disponible, false sinon
 	 */
 	public static boolean isEmailDisponible(String email) {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		String u_mail =(String) s.createQuery("select u.mail from Utilisateurs u where u.mail= :mail")
 					.setParameter("mail", email)
 					.uniqueResult();
 		s.getTransaction().commit();
+		s.close();
 		return u_mail == null;
 	}
 	
@@ -201,12 +212,13 @@ public class RequeteStatic {
 	 * @return l'id de l'utilisateur si l'utilisateur existe, -1 sinon
 	 */
 	public static int obtenirIdAvecLogin(String login) {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		Integer u_id =(Integer) s.createQuery("select u.id from Utilisateurs u where u.login= :login")
 					.setParameter("login", login)
 					.uniqueResult();
 		s.getTransaction().commit();
+		s.close();
 		if(u_id == null)
 			return -1;
 		else
@@ -220,12 +232,13 @@ public class RequeteStatic {
 	 * @return le mot de passe de l'utilisateur s'il existe
 	 */
 	public static String obtenirMdpAvecLogin(String login) {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		String u_mdp =(String) s.createQuery("select u.mdp from Utilisateurs u where u.login= :login")
 					.setParameter("login", login)
 					.uniqueResult();
 		s.getTransaction().commit();
+		s.close();
 		return u_mdp;
 	}
 	
@@ -235,23 +248,25 @@ public class RequeteStatic {
 	 * @param mdp le nouveau mot de passe
 	 */
 	public static void changerMdpAvecId(int id, String mdp) {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		s.createQuery("update Utilisateurs u set u.mdp = :mdp where u.id = :id")
 					.setParameter("mdp", BCrypt.hashpw(mdp, BCrypt.gensalt()))
 					.setParameter("id", id)
 					.executeUpdate();
 		s.getTransaction().commit();
+		s.close();
 	}
 	
 	public static void ajouterBioProfil(int id, String bio) {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		s.createQuery("update Profils p set p.bio = :bio where p.id = :id")
 		.setParameter("bio", bio)
 		.setParameter("id", id)
 		.executeUpdate();
 		s.getTransaction().commit();
+		s.close();
 		
 	}
 	
@@ -263,12 +278,13 @@ public class RequeteStatic {
 	 * false sinon
 	 */
 	public static int obtenirIdSessionAvecCle(String cle) {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		Integer s_id =(Integer) s.createQuery("select s.idSession from Sessions s where s.cleSession = :cle")
 					.setParameter("cle", cle)
 					.uniqueResult();
 		s.getTransaction().commit();
+		s.close();
 		if(s_id == null)
 			return -1;
 		else
@@ -282,38 +298,41 @@ public class RequeteStatic {
 	 * @param email la nouvelle adresse mail
 	 */
 	public static void changerEmailAvecId(int id, String mail) {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		s.createQuery("update Utilisateurs u set u.mail = :mail where u.id = :id")
 					.setParameter("mail", mail)
 					.setParameter("id", id)
 					.executeUpdate();
 		s.getTransaction().commit();
+		s.close();
 	}
 	
 
 	public static String obtenirLoginAvecMail(String email){
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		String u_mail =(String) s.createQuery("select u.login from Utilisateurs u where u.mail= :email")
 					.setParameter("email", email)
 					.uniqueResult();
 		s.getTransaction().commit();
+		s.close();
 		return u_mail;
 	}
 	
 	public static Sessions obtenirSession(String key){
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		Sessions res = (Sessions) s.createQuery("select s from Sessions s where s.cleSession = :cle")
 				.setParameter("cle", key)
 				.uniqueResult();
 		s.getTransaction().commit();
+		s.close();
 		return res;
 	}
 	
 	public static Utilisateurs obtenirUtilisateur(Integer id, String login){
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		Utilisateurs res = null;
 		if(id != null && login != null){
@@ -331,6 +350,7 @@ public class RequeteStatic {
 					.uniqueResult();
 		}
 		s.getTransaction().commit();
+		s.close();
 		/* Si pas de parametre ou resultat n'existe pas, alors le resultat renvoye est null */
 		return res;
 	}
@@ -338,11 +358,12 @@ public class RequeteStatic {
 
 	public static String recupBio(String login) {
 		Utilisateurs u = obtenirUtilisateur(null, login);
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
 		String p = (String) s.createQuery("select p.bio from Profils p where idProfil = :idProfil ")
 					.setParameter("idProfil",u.getId())
 					.uniqueResult();
+		s.close();
 		return p;
 	}
 
