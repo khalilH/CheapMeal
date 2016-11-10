@@ -3,6 +3,7 @@ package services.fonctions;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -96,6 +97,21 @@ public class IngredientsFonctions {
 		}
 
 		DBStatic.closeMongoDBConnection();
+	}
+	
+	public static String getIngredient(String nomIngredient) throws MyException {
+		MongoDatabase database;
+		try {
+			database = DBStatic.getMongoConnection();
+		} catch (Exception e) {
+			throw new exceptions.MongoDBException(ErrorCode.ERREUR_INTERNE, ErrorCode.MONGO_EXCEPTION);
+		}
+		MongoCollection<BasicDBObject> collection = database.getCollection(
+				MongoFactory.COLLECTION_INGREDIENTS, BasicDBObject.class);
+		
+		BasicDBObject o = new BasicDBObject(MongoFactory.NOM_INGREDIENT, nomIngredient);
+		List<BasicDBObject> ingredients = (List<BasicDBObject>) collection.find(o);
+		return null;
 	}
 
 }
