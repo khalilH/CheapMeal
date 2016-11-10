@@ -13,7 +13,7 @@ public class DBStatic {
 	private static MongoClient mongoClient;
 	
 	/**
-	 * 
+	 * Creer une connection mongo
 	 * @return
 	 * @throws UnknownHostException
 	 * @throws MongoClientException

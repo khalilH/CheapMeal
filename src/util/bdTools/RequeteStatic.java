@@ -257,7 +257,11 @@ public class RequeteStatic {
 		s.getTransaction().commit();
 		s.close();
 	}
-	
+	/**
+	 * Permet d'ajouter une bio à un profil
+	 * @param id de l'utilisateur 
+	 * @param bio 
+	 */
 	public static void ajouterBioProfil(int id, String bio) {
 		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
@@ -308,7 +312,11 @@ public class RequeteStatic {
 		s.close();
 	}
 	
-
+	/**
+	 * Permet d'obtenir le login avec le mail d'un utilisateur
+	 * @param email
+	 * @return
+	 */
 	public static String obtenirLoginAvecMail(String email){
 		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
@@ -319,7 +327,11 @@ public class RequeteStatic {
 		s.close();
 		return u_mail;
 	}
-	
+	/**
+	 * Permet d'obtenir la Session (correspond a la table SESSION en SQL) à partir de la cle
+	 * @param key
+	 * @return
+	 */
 	public static Sessions obtenirSession(String key){
 		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
@@ -330,7 +342,12 @@ public class RequeteStatic {
 		s.close();
 		return res;
 	}
-	
+	/**
+	 * Permet d'obtenir un utilisateur avec ses identifiants
+	 * @param id
+	 * @param login
+	 * @return
+	 */
 	public static Utilisateurs obtenirUtilisateur(Integer id, String login){
 		Session s = HibernateUtil.getSessionFactory().openSession();
 		s.beginTransaction();
@@ -355,7 +372,11 @@ public class RequeteStatic {
 		return res;
 	}
 
-
+	/**
+	 * Permet d'obtyenir la bio d'un utilisateur avec son login
+	 * @param login
+	 * @return
+	 */
 	public static String recupBio(String login) {
 		Utilisateurs u = obtenirUtilisateur(null, login);
 		Session s = HibernateUtil.getSessionFactory().openSession();

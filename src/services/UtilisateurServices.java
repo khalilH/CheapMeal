@@ -10,7 +10,7 @@ import util.ServiceTools;
 public class UtilisateurServices {
 
 	/**
-	 * 
+	 * Permet d'inscrire un utilisateur
 	 * @param login
 	 * @param mdp
 	 * @param prenom
@@ -29,7 +29,7 @@ public class UtilisateurServices {
 	}
 	
 	/**
-	 * 
+	 * Permet à un utilisateur de changer de mot de passe
 	 * @param cle
 	 * @param oldMdp
 	 * @param newMdp
@@ -46,7 +46,7 @@ public class UtilisateurServices {
 	}
 
 	/**
-	 * 
+	 * Permet à un utilisateur de changer de mail
 	 * @param cle
 	 * @param newEmail
 	 * @return
@@ -77,7 +77,7 @@ public class UtilisateurServices {
 	}
 
 	/**
-	 * 
+	 * Permet à un utilisateur de recupere un mot de passe
 	 * @param email
 	 * @return
 	 * @throws JSONException

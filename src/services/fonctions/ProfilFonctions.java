@@ -61,7 +61,7 @@ public class ProfilFonctions {
 	}
 
 	/**
-	 * 
+	 * Recupere les informations d'un utilisateur
 	 * @param cle
 	 * @param login
 	 * @return
@@ -102,7 +102,16 @@ public class ProfilFonctions {
 		jb.put("profil", profil);
 		return jb;
 	}
-
+	/**
+	 * Permet d'ajouter une photo de profil à un utilisateur
+	 * @param cle
+	 * @param login
+	 * @param photo
+	 * @throws ParametreManquantException
+	 * @throws NonValideException
+	 * @throws SessionExpireeException
+	 * @throws IOException
+	 */
 	public static void uploadImage(String cle, String login, Part photo)
 			throws ParametreManquantException, NonValideException, SessionExpireeException, IOException {
 		if (cle == null || photo == null || login == null || login.equals("") || cle.equals(""))

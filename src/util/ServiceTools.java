@@ -33,7 +33,7 @@ import util.hibernate.HibernateUtil;
 public class ServiceTools {
 	
 	/**
-	 * 
+	 * Message de refus lorsqu'il ya erreur dans un service
 	 * @param message
 	 * @param codeErreur
 	 * @return
@@ -47,7 +47,7 @@ public class ServiceTools {
 	}
 	
 	/**
-	 * 
+	 * Message de validation lorsqu'un service ofnctionne
 	 * @param message
 	 * @return
 	 * @throws JSONException
@@ -67,7 +67,7 @@ public class ServiceTools {
 	}
 	
 	/**
-	 * 
+	 * Regex permettant de savoir si le parametre est un mail
 	 * @param email
 	 * @return
 	 */
@@ -78,7 +78,7 @@ public class ServiceTools {
 	}
 	
 	/**
-	 * 
+	 * Permet d'envoyer un email a un utilisateur
 	 * @param body
 	 * @param subject
 	 * @param email
@@ -110,24 +110,8 @@ public class ServiceTools {
 		Transport.send(message);
 	}
 
-//	public static JSONObject GestionDesErreur(Exception e){
-//		JSONObject jb=null;
-//		if(e instanceof MessagingException){
-//			jb=ServiceTools.serviceRefused(""+e.toString(),10000);
-//		}else{
-//			if(e instanceof InstantiationException || e instanceof IllegalAccessException || e instanceof ClassNotFoundException || e instanceof SQLException){
-//				jb=ServiceTools.serviceRefused(""+e.toString(),1000);
-//			}else{
-//				if(e instanceof JSONException){
-//					jb=ServiceTools.serviceRefused(""+e.toString(),100);
-//				}
-//			}
-//		}	
-//		jb=ServiceTools.serviceRefused(""+e.toString(),100);
-//		return jb;
-//	}
 	/**
-	 * Permet de rï¿½cupï¿½rer les parametre d'un formulaire encode en multipart
+	 * Permet de récupérer les parametre d'un formulaire encode en multipart
 	 * @throws MessagingException 
 	 * @throws IOException 
 	 */

@@ -57,7 +57,7 @@ public class MongoFactory {
 	public static final String COLLECTION_UTILISATEUR_NOTES = "UtilisateurNotes";
 
 	/**
-	 * 
+	 * Creer une recette l'ajoute dans mongo
 	 * @param titre
 	 * @param idAuteur
 	 * @param loginAuteur
@@ -107,7 +107,7 @@ public class MongoFactory {
 	}
 
 	/**
-	 * 
+	 * Creer un utilisateur en JSON
 	 * @param idAuteur
 	 * @param login
 	 * @return
@@ -132,7 +132,7 @@ public class MongoFactory {
 	}
 	
 	/**
-	 * 
+	 * Creer un JSON ingredient
 	 * @param nomIngredient
 	 * @param quantite
 	 * @param mesure
