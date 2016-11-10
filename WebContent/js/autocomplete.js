@@ -13,7 +13,7 @@ va falloir bien reflechir pour ca
       {
           e.preventDefault();
 
-          var controlForm = $('.controls-ingredient form:first'),
+          var controlForm = $('.controls-ingredient:first'),
               currentEntry = $(this).parents('.entry-ingredient:first'),
               newEntry = $(currentEntry.clone()).appendTo(controlForm);
 
@@ -27,12 +27,15 @@ va falloir bien reflechir pour ca
                 noCache: true,
                 maxHeight: 100,
                 onSelect: function (suggestion) {
+                  /* traiter selection ingredients */
                   var thing = "<p>"+suggestion.value+"</p>";
                   $('#choix').append(thing);
                 }
               });
       }).on('click', '.btn-remove-ingredient', function(e)
       {
+        /* trouver comment supprimer l'ingredient du input (si il y en a un)
+        de la liste des ingredients a envoyer au serveur */
   		$(this).parents('.entry-ingredient:first').remove();
 
   		e.preventDefault();
@@ -41,12 +44,12 @@ va falloir bien reflechir pour ca
 
 
     /* Code pour la liste des étapes (ca marche)*/
-    /*
+
     $(document).on('click', '.btn-add-etapes', function(e)
         {
             e.preventDefault();
 
-            var controlForm = $('.controls-etapes form:first'),
+            var controlForm = $('.controls-etapes'),
                 currentEntry = $(this).parents('.entry-etapes:first'),
                 newEntry = $(currentEntry.clone()).appendTo(controlForm);
 
@@ -62,14 +65,15 @@ va falloir bien reflechir pour ca
     		e.preventDefault();
     		return false;
     	});
-    */
 
-/* trouver un moyen pour pas dupliquer le code */
+
+/* trouver comment faire pour pas dupliquer le code */
     $('.autocomplete').autocomplete({
       serviceUrl: 'ingredients/autocomplete',
       noCache: true,
       maxHeight: 100,
       onSelect: function (suggestion) {
+        /* traiter selection ingredient */
         var thing = "<p>"+suggestion.value+"</p>";
         $('#choix').append(thing);
       }
