@@ -29,7 +29,7 @@ public class RecetteServices {
 	}
 	
 	/**
-	 * 
+ 	 * Permet à un utilisateur d'ajouter une recette
 	 * @param titre
 	 * @param cle
 	 * @param ingredients
@@ -55,7 +55,7 @@ public class RecetteServices {
 	}
 
 	/**
-	 * 
+	 * Permet à un utilisateur de supprimer une recette
 	 * @param idRecette
 	 * @param cle
 	 * @return
@@ -72,7 +72,7 @@ public class RecetteServices {
 
 
 	/**
-	 * 
+	 * Permet à un utilisateur de noter une recette
 	 * @param cle
 	 * @param idRecette
 	 * @param note
@@ -89,8 +89,9 @@ public class RecetteServices {
 	}
 	
 	/**
-	 * 
+	 * Permet à un utilisateur d'afficher les informations d'une recette
 	 * @param id
+	 * @param cle
 	 * @return
 	 * @throws JSONException
 	 */

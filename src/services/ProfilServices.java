@@ -48,7 +48,14 @@ public class ProfilServices {
 		}
 
 	}
-	
+	/**
+	 * Permet d'ajouter une photo de profil
+	 * @param cle
+	 * @param login
+	 * @param photo
+	 * @return
+	 * @throws JSONException
+	 */
 	public static JSONObject uploadImage(String cle ,String login, Part photo) throws JSONException {
 		try {
 			ProfilFonctions.uploadImage(cle,login, photo);

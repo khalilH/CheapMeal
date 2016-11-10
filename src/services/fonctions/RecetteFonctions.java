@@ -32,7 +32,11 @@ import util.hibernate.model.Sessions;
 import util.hibernate.model.Utilisateurs;
 
 public class RecetteFonctions {
-
+	/**
+	 * Recupere les 9 recette les plus recentes
+	 * @param col
+	 * @return
+	 */
 	public static ArrayList<BasicDBObject> getRecentRecipes(MongoCollection<BasicDBObject> col){
 		ArrayList<BasicDBObject> list = new ArrayList<>();
 		BasicDBObject sortQuery = new BasicDBObject("date",-1);
@@ -45,7 +49,11 @@ public class RecetteFonctions {
 		}
 		return list;
 	}
-
+	/**
+	 * Recupere les 9 recettes les mieux note
+	 * @param col
+	 * @return
+	 */
 	public static ArrayList<BasicDBObject> getBestRecipes(MongoCollection<BasicDBObject> col){
 		ArrayList<BasicDBObject> list = new ArrayList<>();
 		BasicDBObject sortQuery = new BasicDBObject(MongoFactory.NOTE+"."+MongoFactory.NOTE_MOYENNE,-1);
@@ -59,7 +67,15 @@ public class RecetteFonctions {
 		}
 		return list;
 	}
-
+	/**
+	 * Permet de recuperer les 9 recette les mieux notées et les 9 plus récentes
+	 * @param cle
+	 * @return
+	 * @throws JSONException
+	 * @throws NonValideException
+	 * @throws SessionExpireeException
+	 * @throws MongoDBException
+	 */
 	public static JSONObject getRecettesAccueil(String cle) throws JSONException, NonValideException, SessionExpireeException, MongoDBException{
 		if (cle != null) {
 			if (cle.length() != 32)
@@ -131,7 +147,7 @@ public class RecetteFonctions {
 
 
 	/**
-	 * 
+	 * Permet d'jaouter une recette
 	 * @param titre
 	 * @param cle
 	 * @param ingredients
@@ -194,7 +210,7 @@ public class RecetteFonctions {
 	}
 
 	/**
-	 * 
+	 * Permet de supprimer une recette
 	 * @param idRecette
 	 * @param cle
 	 * @throws MyException
@@ -236,7 +252,7 @@ public class RecetteFonctions {
 	}
 
 	/**
-	 * 
+	 * Permete de savoir si l'utilisateur est l'auteur de la recette
 	 * @param id_auteur
 	 * @param login
 	 * @param idRecette
@@ -253,7 +269,7 @@ public class RecetteFonctions {
 	}
 
 	/**
-	 * 
+	 * Permet de noter une recette
 	 * @param cle
 	 * @param idRecette
 	 * @param note
@@ -305,7 +321,7 @@ public class RecetteFonctions {
 	}
 
 	/**
-	 * 
+	 * Permet de récuperer les recette d'un utilisateur
 	 * @param login
 	 * @return
 	 * @throws MongoDBException
@@ -330,7 +346,7 @@ public class RecetteFonctions {
 	}
 
 	/**
-	 * 
+	 * Permet de noter une recette par son id
 	 * @param u
 	 * @param key
 	 * @param idRecette
@@ -424,7 +440,7 @@ public class RecetteFonctions {
 	}*/
 
 	/**
-	 * 
+	 * Permet de savoir si un utilisateur a deja note une recette
 	 * @param recettes
 	 * @param u
 	 * @param idRecette
