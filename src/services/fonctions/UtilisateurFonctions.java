@@ -24,7 +24,7 @@ import util.hibernate.model.Utilisateurs;
 public class UtilisateurFonctions {
 	
 	/**
-	 * 
+	 * Permet d'inscrire un utilisateur
 	 * @param login
 	 * @param mdp
 	 * @param prenom
@@ -71,7 +71,7 @@ public class UtilisateurFonctions {
 
 	//TODO verifier pas de soucis changement d'ordre des parametres
 	/**
-	 * 
+	 * Permet de changer le mot de passe d'un utilisateur
 	 * @param cle
 	 * @param currentMdp
 	 * @param newMdp
@@ -120,7 +120,7 @@ public class UtilisateurFonctions {
 	}
 
 	/**
-	 * 
+	 * Permet de changer le mail d'un utilisateur
 	 * @param cle
 	 * @param newEmail
 	 * @throws MyException
@@ -154,7 +154,7 @@ public class UtilisateurFonctions {
 	}
 	
 	/**
-	 * 
+	 * Permet de connecter un utilisateur en lui créeant une session
 	 * @param login
 	 * @param mdp
 	 * @return
@@ -201,7 +201,7 @@ public class UtilisateurFonctions {
 	}
 	
 	/**
-	 * Permet de deconnecter un utilisateur en supprimant sa cle de session
+	 * Permet de deconnecter un utilisateur en supprimant sa session
 	 * de la base de donnee
 	 * @param cle la cle de session
 	 * @throws MyException
@@ -223,7 +223,7 @@ public class UtilisateurFonctions {
 
 
 	/**
-	 * 
+	 * Permet de savoir si un utilisateur est connecte
 	 * @param cle
 	 * @return
 	 * @throws MyException
@@ -245,7 +245,7 @@ public class UtilisateurFonctions {
 	}
 	
 	/**
-	 * 
+	 * Permet à un utilisateur de récuperer son mot de passe perdu par mail
 	 * @param email
 	 * @return
 	 * @throws MyException
@@ -284,7 +284,7 @@ public class UtilisateurFonctions {
 	}
 
 	/**
-	 * 
+	 * Genrere un mot de passe aléatoire
 	 * @return
 	 */
 	public static String genererRandomMDP(){

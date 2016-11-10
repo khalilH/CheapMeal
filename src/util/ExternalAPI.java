@@ -24,7 +24,7 @@ public class ExternalAPI {
 	public static final String PRICE_KEY = "price";
 	
 	/**
-	 * 
+	 * Permet de chercher le prix d'un produit
 	 * @param ean
 	 * @return
 	 * @throws UnirestException

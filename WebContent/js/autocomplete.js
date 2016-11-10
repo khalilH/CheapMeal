@@ -167,9 +167,19 @@ $(function() {
 		creerRecette(form, form.titre.value, ingredients, quantites, mesures,
 				etapes);
 
-	}
-	;
+	};
+	if ((bool = isConnected()) === 1) {
+		loadNavbarConnected();
+		console.log("connecte")
 
+	} else if (bool === -1) { // User doesnt have a cookie let him browse
+		console.log("Lutilisateur ne devrait pas etre la");
+		window.location.href="accueil.html"
+	} else { // User have an expirated key let him reconnect
+		console.log("Invalide")
+		window.location.href = "connexion.html";
+		return;
+	}
 	function creerRecette(form, titre, ingredients, quantites, mesures,
 			preparation) {
 
@@ -177,7 +187,7 @@ $(function() {
 		console.log(form.uploadInput.files[0]);
 		data.append('file', form.uploadInput.files[0]);
 		data.append('titre', titre);
-		data.append('cle', "h4hB309V9S6XQJIY1McmQ7J0wguz9RhR");
+		data.append('cle',getCookie(C_NAME_KEY));
 		data.append("ingredients", ingredients);
 		data.append("quantites", quantites);
 		data.append("mesures", mesures);
@@ -192,7 +202,7 @@ $(function() {
 			type : 'POST',
 			success : function(data) {
 				var jsonrep = JSON.stringify(data);
-				if (jsonrep.erreur == undefined) {
+				if (data.erreur == undefined) {
 					console.log("OK recette cree");
 					console.log(data);
 					window.location.href="accueil.html";
@@ -200,6 +210,7 @@ $(function() {
 				} else {
 					console.log("KO");
 					console.log(data);
+					alert("Probleme lors de la creation de la recette");
 				}
 
 			},
