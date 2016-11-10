@@ -248,6 +248,7 @@ $(function() {
 	$("#leftPanel").on('change',"#inputFile",function() {
 		event.preventDefault();
 		var data = new FormData();
+		var input = this;
 		console.log(this.files[0]);
 		data.append('file', this.files[0]);
 		data.append('cle',getCookie(C_NAME_KEY));
@@ -262,8 +263,10 @@ $(function() {
 	    type: 'POST',
 	    success: function(data){
 	    	console.log(data);
-	    	if(data.erreur == undefined)
-	    		readURL(this.files[0]);
+	    	if(data.erreur == undefined){
+	    		console.log("no error");
+	    		readURL(this);
+	    	}
 	    }
 		});
 	});
