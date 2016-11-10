@@ -167,9 +167,19 @@ $(function() {
 		creerRecette(form, form.titre.value, ingredients, quantites, mesures,
 				etapes);
 
-	}
-	;
+	};
+	if ((bool = isConnected()) === 1) {
+		loadNavbarConnected();
+		console.log("connecte")
 
+	} else if (bool === -1) { // User doesnt have a cookie let him browse
+		console.log("Lutilisateur ne devrait pas etre la");
+		window.location.href="accueil.html"
+	} else { // User have an expirated key let him reconnect
+		console.log("Invalide")
+		window.location.href = "connexion.html";
+		return;
+	}
 	function creerRecette(form, titre, ingredients, quantites, mesures,
 			preparation) {
 
