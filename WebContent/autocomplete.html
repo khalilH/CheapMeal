@@ -18,31 +18,119 @@
 <body>
   <!-- utiliser class="autocomplete" pour chaque input -->
 
-<div class="container-fluid">
-  <div class="container skyblue">
+  <div class="container">
+    <form role="form" autocomplete="off"
+      action="javascript:function(){}"
+      id="formulaire_recette">
 
-    <div class="row">
+      <div class="row">
+        <h1>Ajouter une nouvelle recette</h1>
+        <p>
+          Utilisez ce formulaire pour sauvegarder et partager vos recettes avec votre famille, vos amis et les autres membres de CheapMeal. Essayez d'�tre pr�cis et clair pour que tous nos utilisateurs puissent r�aliser votre recette sans probl�me !
 
-      <article class="col-md-3">
-        <h1>Ingredients</h1>
-        <input type="text" name="abalba" class="autocomplete">
-      </article>
-      <article class="col-md-3">
-        <h1>Ingredients</h1>
-        <input type="text" name="abalba" class="autocomplete">
-      </article>
-      <article class="col-md-3">
-        <h1>Ingredients</h1>
-        <input type="text" name="abalba" class="autocomplete">
-      </article>
-      <article class="col-md-3" id="choix">
-        <h1>Ingredients choisis</h1>
-      </article>
-    </div>
 
+En savoir plus sur http://www.cuisineaz.com/communaute/saisie_recette.aspx#ZOyHTm2h5FayTZLD.99
+        </p>
+      </div>
+
+      <div class="row">
+        <h2>Titre de la recette</h2>
+        <input class="form-control" name="titre" type="text"
+        placeholder="Choisissez un titre pour votre recette" />
+      </div>
+
+      <br>
+      
+      <div class="row">
+      <div class="media">
+			<a class="media-left media-middle" href="#"> <img
+				id="previewImage" width="140px" height="140px" class="media-object"
+				src="images/cheapmeal_logo.png" alt="Toz" />
+			</a>
+			<div class="media-body media-middle">
+				<label class="btn btn-primary btn-file">Ajouter une image <input
+					id="uploadInput" type="file" style="display: none;">
+				</label>
+			</div>
+		</div>
+      </div>
+
+      <div class="row">
+        <div class="control-group" id="ingredients-fields">
+          <label class="control-label" for="field">Liste d'ingredients</label>
+          <div class="controls-ingredient">
+            <div class="entry-ingredient input-group col-xs-12">
+              <div class="col-xs-3">
+                <label>Ingredient</label>
+                <input class="form-control autocomplete" name="ingredients[]" type="text" placeholder="Ingredients" />
+              </div>
+              <div class="col-xs-3">
+                <label>Quantite</label>
+                <input class="form-control" name="quantites[]" type="number" placeholder="Quantite" />
+              </div>
+              <div class="col-xs-3">
+                <label>Mesure</label>
+                <select class="form-control" name="mesures[]">
+                  <option value=""></option>
+                  <option value="unite(s)">Rien</option>
+                  <option value="g">grammes (g)</option>
+                  <option value="kg">kilogrammes (kg)</option>
+                  <option value="l">litres (l)</option>
+                  <option value="ml">millilitres (ml)</option>
+                  <option value="cl">centilitres (cl)</option>
+          	<!-- 
+                  <option value="c. à café">c. à café</option>
+                  <option value="c. à soupe">c. à soupe</option>
+                  <option value="c. à thé">c. à thé</option>
+                   -->
+                </select>
+              </div>
+
+              <span class="input-group-btn col-xs-3">
+                <button class="btn btn-success btn-add-ingredient" type="button">
+                  <span class="glyphicon glyphicon-plus"></span>
+                </button>
+              </span>
+            </div>
+
+
+
+            <br>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="control-group" id="etapes-fields">
+          <label class="control-label" for="field1">Preparation</label>
+          <div class="controls-etapes">
+
+            <div class="entry-etapes input-group col-xs-12">
+              <div class="col-xs-11">
+                <textarea class="form-control" name="etapes[]"
+                placeholder="Veuillez entrer les instructions pour cette etape" rows="3"></textarea>
+              </div>
+
+              <span class="input-group-btn col-xs-1">
+                <button class="btn btn-success btn-add-etapes" type="button">
+                  <span class="glyphicon glyphicon-plus"></span>
+                </button>
+              </span>
+            </div>
+
+
+            <br>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <button type="submit" class="btn btn-primary" name="button">Publier recette</button>
+      </div>
+
+    </form>
 
   </div>
-</div>
 
 </body>
 </html>

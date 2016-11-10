@@ -82,14 +82,17 @@ public class MongoFactory {
 		BasicDBObject note = creerDocumentNote(0, 0);
 		document.append(NOTE, note);
 		document.append(DATE, d.getTime());
+		
 
 		if(photo !=null){
 			InputStream inputStream = photo.getInputStream();
 			BufferedImage image = ImageIO.read(inputStream);
-			String oid = document.get("_id").toString();
-			File f = new File("/var/lib/tomcat8/webapps/images/"+oid+".png");
+//			String oid = document.get("_id").toString();
+			ObjectId oid = new ObjectId().get();
+			document.put("_id", oid);
+			File f = new File("/var/lib/tomcat8/webapps/images/"+oid.toString()+".png");
 			ImageIO.write(image, "png", f);
-			document.append(PHOTO,oid );
+			document.append(PHOTO,oid.toString());
 		}
 		return document;
 	}

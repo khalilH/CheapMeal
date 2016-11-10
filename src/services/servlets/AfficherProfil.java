@@ -25,7 +25,6 @@ public class AfficherProfil extends  HttpServlet {
 		/* Lecture des parametres */
 		String cle = request.getParameter(RequestParameter.CLE);
 		String login = request.getParameter(RequestParameter.LOGIN);
-		
 		try {
 			/* Traitement des services */
 			JSONObject res = ProfilServices.afficherProfil(cle, login);
