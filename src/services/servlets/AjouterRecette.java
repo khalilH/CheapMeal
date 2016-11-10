@@ -3,7 +3,6 @@ package services.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -11,7 +10,6 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +32,7 @@ public class AjouterRecette extends HttpServlet {
 			String quant = ServiceTools.getValueFromPart(request.getPart(RequestParameter.QUANTITES));
 			String mesu = ServiceTools.getValueFromPart(request.getPart(RequestParameter.MESURES));
 			String preparation = ServiceTools.getValueFromPart(request.getPart(RequestParameter.PREPARATION));
-			Part photo = request.getPart(RequestParameter.FILE);
+//			Part photo = request.getPart(RequestParameter.FILE);
 
 			/* Ici, parser la liste des ingredients et des etapes de preparation */
 
@@ -56,7 +54,8 @@ public class AjouterRecette extends HttpServlet {
 				mesures.add(s);
 
 			/* Traitement des services */
-			JSONObject res = RecetteServices.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation, photo);
+//			JSONObject res = RecetteServices.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation, photo);
+			JSONObject res = RecetteServices.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation, null);
 
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();
