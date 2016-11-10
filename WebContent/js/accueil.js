@@ -114,9 +114,15 @@ $(function (){
 	function searchForHomePage(){
 		//TODO remplacer par la bonne requete
 		console.log("Loading home page")
+		var query = "";
+		if(getCookie(C_NAME_KEY) != undefined){
+			query = "cle="+getCookie(C_NAME_KEY);
+		}
+		
 		$.ajax({
 			url : 'recette/getAccueil',
 			type : 'GET',
+			data : query,
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			dataType : 'json',
 			success : function(rep) {
@@ -149,10 +155,13 @@ $(function (){
 	$("#searchForm").on('submit',function(event){
 		event.preventDefault();
 		var query = this.search.value;
+		var url ="query="+query+"~";
+		if(getCookie(C_NAME_KEY) != undefined)
+			url+="&cle="+getCookie(C_NAME_KEY);
 		$.ajax({
 			url : 'search',
 			type : 'GET',
-			data : 'query='+query+"~&cle="+getCookie(C_NAME_KEY),
+			data : url,
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			dataType : 'json',
 			success : function(rep) {

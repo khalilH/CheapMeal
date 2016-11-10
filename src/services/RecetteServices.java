@@ -11,17 +11,19 @@ import org.json.JSONObject;
 import com.mongodb.MongoClientException;
 
 import exceptions.MyException;
+import exceptions.NonValideException;
+import exceptions.SessionExpireeException;
 import services.fonctions.RecetteFonctions;
 import util.ServiceTools;
 
 public class RecetteServices {
 
-	public static JSONObject getRecettesAccueil() throws JSONException {
+	public static JSONObject getRecettesAccueil(String cle) throws JSONException {
 
 		try {
-			return RecetteFonctions.getRecettesAccueil();
-		} catch (UnknownHostException e) {
-			return ServiceTools.serviceRefused(e.getMessage(), -1);
+			return RecetteFonctions.getRecettesAccueil(cle);
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 		}
 
 	}
@@ -92,9 +94,9 @@ public class RecetteServices {
 	 * @return
 	 * @throws JSONException
 	 */
-	public static JSONObject afficherRecette(String id) throws JSONException{
+	public static JSONObject afficherRecette(String id,String cle) throws JSONException{
 			try {
-				return RecetteFonctions.afficherRecette(id);
+				return RecetteFonctions.afficherRecette(id,cle);
 			} catch (MongoClientException e) {
 				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 			} catch (MyException e) {
