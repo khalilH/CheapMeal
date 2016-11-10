@@ -17,9 +17,12 @@
 </head>
 <body>
   <!-- utiliser class="autocomplete" pour chaque input -->
-    
+
   <div class="container">
-    <form role="form" autocomplete="off">
+    <form role="form" autocomplete="off"
+      action="javascript:function(){}"
+      id="formulaire_recette"
+      onsubmit="return publierRecette(this)" >
 
       <div class="row">
         <h1>Ajouter une nouvelle recette</h1>
@@ -37,20 +40,24 @@
       <br>
 
       <div class="row">
-        <div class="control-group" id="fields">
-          <label class="control-label" for="field1">Liste d'ingrédients</label>
+        <div class="control-group" id="ingredients-fields">
+          <label class="control-label" for="field">Liste d'ingrédients</label>
           <div class="controls-ingredient">
             <div class="entry-ingredient input-group col-xs-12">
               <div class="col-xs-3">
-                <input class="form-control autocomplete" name="fields[]" type="text" placeholder="Ingredients" />
+                <label>Ingrédient</label>
+                <input class="form-control autocomplete" name="ingredients[]" type="text" placeholder="Ingredients" />
               </div>
               <div class="col-xs-3">
-                <input class="form-control" name="fields[]" type="text" placeholder="Quantité" />
+                <label>Quantité</label>
+                <input class="form-control" name="quantites[]" type="text" placeholder="Quantité" />
               </div>
               <div class="col-xs-3">
                 <!--        <input class="form-control" name="fields[]" type="text" placeholder="Mesures" /> -->
-                <select class="form-control" name="mesure[]">
-                  <option value="">Rien</option>
+                <label>Mesure</label>
+                <select class="form-control" name="mesures[]">
+                  <option value=""></option>
+                  <option value="nombre">Rien</option>
                   <option value="grammes">grammes (g)</option>
                   <option value="kilogrammes">kilogrammes (kg)</option>
                   <option value="litres">litres (l)</option>
@@ -77,13 +84,13 @@
       </div>
 
       <div class="row">
-        <div class="control-group" id="fields">
+        <div class="control-group" id="etapes-fields">
           <label class="control-label" for="field1">Préparation</label>
           <div class="controls-etapes">
 
             <div class="entry-etapes input-group col-xs-12">
               <div class="col-xs-11">
-                <textarea class="form-control"
+                <textarea class="form-control" name="etapes[]"
                 placeholder="Veuillez entrer les instructions pour cette étape" rows="3"></textarea>
               </div>
 
@@ -99,6 +106,11 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <button type="submit" class="btn btn-primary" name="button">Publier recette</button>
+      </div>
+
     </form>
 
   </div>
