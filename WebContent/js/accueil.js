@@ -38,7 +38,16 @@ $(function (){
 	RecetteList.prototype.getHtmlBest = function(){
 		var s ="";
 		for(var i = 0 ; i < this.recettesBest.length; i++){
+			console.log(this.recettesBest[i]);
 			s+=this.recettesBest[i].getHtml()+"\n \n";
+		}
+		if(this.recettesBest.length == 0){
+			s += "<div class='panel panel-danger mg-top-50'>"
+					+ "<div class='panel-heading'>"
+					+ "<span class='glyphicon glyphicon-thumbs-down'></span> Dommage"
+					+ "</div>"
+					+ "<div class='panel-body'><h1> Votre recherche n'a abouti à aucun résultats.</h1></div>"
+					+ "</div>";
 		}
 		return s;
 	}
@@ -61,6 +70,12 @@ $(function (){
 			}
 			else if((isNumber(key)) && (value.auteur instanceof Auteur)) { // Si l'on est dans une case du tableau et que l'auteur est un objet de la classe auteur
 				var recette = new Recette(value._id, value.auteur, value.titre, value.photo);
+				console.log("J'ai cree une recette");
+				return recette;
+			}
+			else if((isNumber(key)) && (value.source != undefined) && (value.source.auteur instanceof Auteur)){
+				var recette = new Recette(value.source._id, value.source.auteur, value.source.titre, value.source.photo);
+				console.log("J'ai cree une recette lol");
 				return recette;
 			}
 			else if(key == "auteur") { // Lorsquon doit crée un utilisateur
@@ -124,13 +139,39 @@ $(function (){
 	function updatePage(liste){
 		$("#recentRecipe").html(liste.getHtmlRecent());
 		$("#BestRecipe").html(liste.getHtmlBest());
-		
-
 	}
+	
+	function updatePageSearch(liste){
+		console.log("Toz");
+		$("#recettes-Container").html(liste.getHtmlBest());
+	}
+	
 	$("#searchForm").on('submit',function(event){
 		event.preventDefault();
 		var query = this.search.value;
-		console.log(query);
+		$.ajax({
+			url : 'search',
+			type : 'GET',
+			data : 'query='+query+"~&cle="+getCookie(C_NAME_KEY),
+			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+			dataType : 'json',
+			success : function(rep) {
+				var jsonrep = JSON.stringify(rep);
+				console.log(jsonrep);
+				if(jsonrep.erreur == undefined){
+					var recetteListe = JSON.parse(jsonrep,recetteRevival);
+					console.log(recetteListe);
+					updatePageSearch(recetteListe);
+				}else{
+					//TODO Error message
+				}
+			},
+			error : function(resultat, statut, erreur) {
+				console.log("Bug");
+				console.log(resultat);
+				alert("dawg");
+			}
+		});
 	});
 	
 	$("#deconnexion").on('click',function(){

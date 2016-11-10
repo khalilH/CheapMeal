@@ -55,22 +55,19 @@ public class SearchFonctions {
 		}
 
 		SearchHits hits = res.getHits();
-		JSONObject results = new JSONObject()
-				.put("TotalHits", hits.getTotalHits())
-				.put("maxScore", hits.getMaxScore());
-		List<JSONObject> list = new ArrayList<>();
+		JSONObject results = new JSONObject();
+  		List<JSONObject> list = new ArrayList<>();
 		for (SearchHit searchHit : hits) {
 			JSONObject hit = new JSONObject()
-					.put("_id", searchHit.getId())
 					.put("score", searchHit.getScore())
-					.put("source", new JSONObject(searchHit.getSourceAsString()));
+					.put("source", new JSONObject(searchHit.getSourceAsString()).put("_id", searchHit.getId()));
 			list.add(hit);
 		}
 
 		client.close();
 		JSONArray array = new JSONArray(list);
-		results.put("hits", array);		
-		return new JSONObject().put("results", results);
+		results.put("recettesBest", array);		
+		return  results;
 
 	}
 	
