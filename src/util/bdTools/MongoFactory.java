@@ -8,7 +8,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
+import javax.imageio.stream.FileImageOutputStream;
 import javax.servlet.http.Part;
 
 import org.bson.types.ObjectId;
@@ -87,11 +92,15 @@ public class MongoFactory {
 		if(photo !=null){
 			InputStream inputStream = photo.getInputStream();
 			BufferedImage image = ImageIO.read(inputStream);
-//			String oid = document.get("_id").toString();
 			ObjectId oid = new ObjectId().get();
 			document.put("_id", oid);
-			File f = new File("/var/lib/tomcat8/webapps/images/"+oid.toString()+".png");
-			ImageIO.write(image, "png", f);
+			JPEGImageWriteParam jpegParams = new JPEGImageWriteParam(null);
+			jpegParams.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+			jpegParams.setCompressionQuality(0.6f);
+			final ImageWriter writer = ImageIO.getImageWritersByFormatName("jpg").next();
+			writer.setOutput(new FileImageOutputStream(
+			  new File("/var/lib/tomcat8/webapps/images/"+oid.toString()+".png")));
+			writer.write(null, new IIOImage(image, null, null), jpegParams);
 			document.append(PHOTO,oid.toString());
 		}
 		return document;
