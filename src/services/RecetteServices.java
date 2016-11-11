@@ -1,6 +1,5 @@
 package services;
 
-import java.net.UnknownHostException;
 import java.util.List;
 
 import javax.servlet.http.Part;
@@ -11,8 +10,6 @@ import org.json.JSONObject;
 import com.mongodb.MongoClientException;
 
 import exceptions.MyException;
-import exceptions.NonValideException;
-import exceptions.SessionExpireeException;
 import services.fonctions.RecetteFonctions;
 import util.ServiceTools;
 
@@ -27,9 +24,9 @@ public class RecetteServices {
 		}
 
 	}
-	
+
 	/**
- 	 * Permet à un utilisateur d'ajouter une recette
+	 * Permet à un utilisateur d'ajouter une recette
 	 * @param titre
 	 * @param cle
 	 * @param ingredients
@@ -80,14 +77,14 @@ public class RecetteServices {
 	 * @throws JSONException
 	 */
 	public static JSONObject noterRecette(String cle, String idRecette, int note) throws JSONException{
-			try {
-				return RecetteFonctions.noterRecette(cle, idRecette, note);
-				//return ServiceTools.serviceAccepted("La recette a ete notee");
-			} catch (MyException e) {
-				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
-			}
+		try {
+			return RecetteFonctions.noterRecette(cle, idRecette, note);
+			//return ServiceTools.serviceAccepted("La recette a ete notee");
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+		}
 	}
-	
+
 	/**
 	 * Permet à un utilisateur d'afficher les informations d'une recette
 	 * @param id
@@ -96,12 +93,12 @@ public class RecetteServices {
 	 * @throws JSONException
 	 */
 	public static JSONObject afficherRecette(String id,String cle) throws JSONException{
-			try {
-				return RecetteFonctions.afficherRecette(id,cle);
-			} catch (MongoClientException e) {
-				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
-			} catch (MyException e) {
-				return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
-			}
+		try {
+			return RecetteFonctions.afficherRecette(id,cle);
+		} catch (MongoClientException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+		}
 	}
 }
