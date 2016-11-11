@@ -40,7 +40,7 @@ public class RecetteServices {
 			List<String> ingredients, 
 			List<Double> quantites, 
 			List<String> mesures, 
-			String preparation,
+			List<String> preparation, 
 			Part photo) throws JSONException{
 
 		try {

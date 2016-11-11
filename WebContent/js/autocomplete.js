@@ -208,9 +208,18 @@ $(function() {
 					window.location.href="accueil.html";
 					return;
 				} else {
-					console.log("KO");
-					console.log(data);
-					alert("Probleme lors de la creation de la recette");
+					
+					if(obj.erreur == 41){
+						alert("Votre session a expiré");
+						/* dans navbnar.js */
+						deconnexion();
+					}else{
+						alert("Erreur: "+obj.message);
+					}
+					
+//					console.log("KO");
+//					console.log(data);
+//					alert("Probleme lors de la creation de la recette");
 				}
 
 			},

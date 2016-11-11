@@ -23,7 +23,7 @@
 
 <body class="compte-body">
 
-	<!-- Navbar -->
+	<!-- Nav Bar -->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-center navbar-brand">
@@ -38,11 +38,11 @@
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul id="leftNavbar" class="nav navbar-nav">
-					<li class="active"><a href="accueil.html" class="menu-button"><span
+					<li><a href="accueil.html" class="menu-button"><span
 							class="glyphicon glyphicon-home"></span> Accueil</a></li>
 					<li><a href="profile.html" class="menu-button"><span
 							class="glyphicon glyphicon-user"></span> Profile</a></li>
-					<li><a href="compte.html" class="menu-button"><span
+					<li class="active"><a href="compte.html" class="menu-button"><span
 							class="glyphicon glyphicon-cog"></span> Compte</a></li>
 				</ul>
 				<div id="rightNavbar" class="nav navbar-nav navbar-right">
@@ -78,7 +78,7 @@
 								type="text" name="newMail" id="newMail" />
 						</div>
 						<div class="row">
-							<input type="submit" class="btn btn-lg btn-primary"
+							<input type="submit" class="btn-custom btn btn-lg btn-primary"
 								value="Sauvegarder" id="sauvegarderMail"></input>
 						</div>
 					</form>
@@ -107,7 +107,27 @@
 								type="password" name="confirmationMdp" id="confirmationMdp" />
 						</div>
 						<div class="row">
-							<input type="submit" class="btn btn-lg btn-primary"
+							<input type="submit" class="btn-custom btn btn-lg btn-primary"
+								value="Sauvegarder" id="sauvegarderMdp"></input>
+						</div>
+					</form>
+				</div>
+				<hr>
+			</div>
+			
+			<div class="partie-bio">
+				<div class="titre-partie">Quelques mots sur vous</div>
+				<div class="description-partie">Changer sa bio</div>
+				<hr>
+				<div class="row">
+					<form id="form-bio" role="form"
+						class="form col-xs-6 col-xs-offset-3">
+						<div class="col-xs-9 col-xs-offset-2">
+						<label for="bio">Parlez nous de vous</label>
+							<textarea required placeholder="Présentez vous en quelques mot : d'où venez vous, quels sont vos plats préférés, les recettes que vous avez envie de cuisiner..." name="bio" id="bio" rows="4" cols="50"></textarea>
+						</div>
+						<div class="row">
+							<input type="submit" class="btn-custom btn btn-lg btn-primary"
 								value="Sauvegarder" id="sauvegarderMdp"></input>
 						</div>
 					</form>

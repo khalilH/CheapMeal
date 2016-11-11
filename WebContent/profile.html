@@ -18,14 +18,13 @@
 <script src="js/navbar.js"></script>
 
 </head>
-<body>
-<nav class="navbar navbar-default">
+<body class="body_profil">
+	<!-- Nav Bar -->
+	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-
 			<div class="navbar-center navbar-brand">
 				<a id="brandLogo" class="navbar-brand"> </a>
 			</div>
-
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target=".navbar-collapse">
@@ -33,18 +32,15 @@
 						class="icon-bar"></span>
 				</button>
 			</div>
-
-
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul id="leftNavbar" class="nav navbar-nav">
-					<li class="active"><a href="accueil.html" class="menu-button"><span
+					<li><a href="accueil.html" class="menu-button"><span
 							class="glyphicon glyphicon-home"></span> Accueil</a></li>
-					<li><a href="profile.html" class="menu-button"><span
+					<li id="profile-menu"><a href="profile.html" class="menu-button"><span
 							class="glyphicon glyphicon-user"></span> Profile</a></li>
 					<li><a href="compte.html" class="menu-button"><span
 							class="glyphicon glyphicon-cog"></span> Compte</a></li>
 				</ul>
-
 				<div id="rightNavbar" class="nav navbar-nav navbar-right">
 					<button id="deconnexion" type="button"
 						class="btn btn-primary navbar-btn">

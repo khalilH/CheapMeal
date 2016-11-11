@@ -28,6 +28,14 @@ var __slice = [].slice;
 								/* Remplacer la note affichee avec la nouvelle note */
 								$("#noter-recette").html("<span style:'text-align:center'>Vous avez noté cette recette</span>");
 								$("#note").html("<span>"+(obj.moyenne).toFixed(2)+"/5"+" ("+obj.nbNotes+" vote(s))</span>");
+							}else{
+								if(obj.erreur == 41){
+									alert("Votre session a expiré");
+									/* dans navbnar.js */
+									deconnexion();
+								}else{
+									alert("Erreur: "+obj.message);
+								}
 							}
 
 						},
@@ -246,8 +254,8 @@ Recette.traiteReponseJSON = function(json_text){
 				"src='"+"../images/"+obj.photo+".png"+"' alt='Recette Picture'/>");
 		console.log("J'AI AJOUTE LA PHOTO RECETTE");
 
-		$("#nom-auteur-recette").html("<span>"+obj.auteur.loginAuteur+"</span>");
-
+		$("#nom-auteur-recette").html("<a href='profile.html?login="+obj.auteur.loginAuteur+"'>"+obj.auteur.loginAuteur+"</a>");
+		
 		/* photo auteur */
 		$("#photo-auteur").html("<img class='img-responsive' id='profilPicture' " +
 				"src='"+"../images/profil/"+obj.auteur.loginAuteur+".png"+"' alt='Profil Picture'/>");
@@ -303,8 +311,17 @@ Recette.traiteReponseJSON = function(json_text){
 		s+="</ul>";
 		$("#ingr").html(s);
 		$("#prix").html("<span class='txt-size-35'>Prix estimé: </span><span class='txt-size-25'>"+obj.prix+"€</span>");
-		$("#prep").html("<span class='txt-size-25'>"+obj.preparation+"</span>");
-
+		
+		//$("#prep").html("<span class='txt-size-25'>"+obj.preparation+"</span>");
+		
+		var p = "<ul>";
+		for(i=0; i<obj.preparation.length; i++){
+			var prep = obj.preparation[i];
+			p+="<li><span class='txt-size-25'>"+prep+"</span></li>";
+		}
+		p+="</ul>";
+		$("#prep").html(p);
+		
 	}else{
 		alert(obj.erreur)
 	}

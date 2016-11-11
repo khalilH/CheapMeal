@@ -72,7 +72,7 @@ public class MongoFactory {
 			List<String> listIng, 
 			List<Double> quantites, 
 			List<String> mesures, 
-			String preparation,
+			List<String> preparation, 
 			Part photo) throws IOException {
 		
 		Date d = new Date();
@@ -88,7 +88,6 @@ public class MongoFactory {
 		document.append(NOTE, note);
 		document.append(DATE, d.getTime());
 		
-
 		if(photo !=null){
 			InputStream inputStream = photo.getInputStream();
 			BufferedImage image = ImageIO.read(inputStream);
