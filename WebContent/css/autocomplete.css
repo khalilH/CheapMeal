@@ -24,9 +24,18 @@
 .pd-5 {
 	padding: 5%;
 }
+
+.control-group{
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
 textarea{
 resize : none;
+margin-top: 5px;
+margin-bottom: 5px;
 }
+
 /* Il n'y a que cette partie qui est a mettre en fait */
 .autocomplete-suggestions {
 	border: 1px solid #999;
@@ -56,4 +65,8 @@ resize : none;
 .autocomplete-group strong {
 	display: block;
 	border-bottom: 1px solid #000;
+}
+
+#submit-button{
+	margin-top: 20px;
 }

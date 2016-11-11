@@ -80,7 +80,7 @@ $(function() {
 								this).parents('.entry-etapes:first'), newEntry = $(
 								currentEntry.clone()).appendTo(controlForm);
 
-						newEntry.find('input').val('');
+						newEntry.find('textarea').val('');
 						controlForm
 								.find(
 										'.entry-etapes:not(:last) .btn-add-etapes')
