@@ -25,12 +25,12 @@ public class UtilisateurFonctions {
 	
 	/**
 	 * Permet d'inscrire un utilisateur
-	 * @param login
-	 * @param mdp
-	 * @param prenom
-	 * @param nom
-	 * @param email
-	 * @throws MyException
+	 * @param login le nom d'utilisateur
+	 * @param mdp le mot de passe de l'utilisateur
+	 * @param prenom le prenom de l'utilisateur
+	 * @param nom le nom de l'utilisateur
+	 * @param email l'adresse email de l'utilisateur
+	 * @throws MyException lorsqu'il y une erreur
 	 */
 	public static void inscription(String login, String mdp, String confirmationMdp, String prenom, String nom, String email) 
 			throws MyException {
@@ -69,14 +69,13 @@ public class UtilisateurFonctions {
 
 	}
 
-	//TODO verifier pas de soucis changement d'ordre des parametres
 	/**
 	 * Permet de changer le mot de passe d'un utilisateur
-	 * @param cle
-	 * @param currentMdp
-	 * @param newMdp
-	 * @param confirmationMdp
-	 * @throws MyException
+	 * @param cle la cle session de l'utilisateur
+	 * @param currentMdp le mot de passe courant de l'utilisateur
+	 * @param newMdp le nouveau mot de passe 
+	 * @param confirmationMdp la confirmation du mot de passe 
+	 * @throws MyException lorsqu'il y a une erreur
 	 */
 	public static void changerMotDePasse(String cle, String currentMdp, String newMdp, String confirmationMdp) 
 			throws MyException {
@@ -121,9 +120,9 @@ public class UtilisateurFonctions {
 
 	/**
 	 * Permet de changer le mail d'un utilisateur
-	 * @param cle
-	 * @param newEmail
-	 * @throws MyException
+	 * @param cle la cle session utilsiateur 
+	 * @param newEmail la nouvelle adresse email de l'utilisateur
+	 * @throws MyException lorsqu'il y a uen erreur
 	 */
 	public static void changerEmail(String cle, String newEmail) 
 			throws MyException {
@@ -154,12 +153,12 @@ public class UtilisateurFonctions {
 	}
 	
 	/**
-	 * Permet de connecter un utilisateur en lui créeant une session
-	 * @param login
-	 * @param mdp
-	 * @return
-	 * @throws MyException
-	 * @throws JSONException 
+	 * Permet de connecter un utilisateur en lui creant une session
+	 * @param login le nom d'utilisateur
+	 * @param mdp le mot de passe
+	 * @return JSONObject  contenant la reponse formatee 
+	 * @throws MyException lorsqu'il y a une erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
 	 */
 	public static JSONObject connexion(String login, String mdp) 
 			throws MyException, JSONException {
@@ -203,8 +202,8 @@ public class UtilisateurFonctions {
 	/**
 	 * Permet de deconnecter un utilisateur en supprimant sa session
 	 * de la base de donnee
-	 * @param cle la cle de session
-	 * @throws MyException
+	 * @param cle la cle de session utilisateur
+	 * @throws MyException lorsqu'il y a une erreur
 	 */
 	public static void deconnexion(String cle) 
 			throws MyException {
@@ -224,9 +223,9 @@ public class UtilisateurFonctions {
 
 	/**
 	 * Permet de savoir si un utilisateur est connecte
-	 * @param cle
-	 * @return
-	 * @throws MyException
+	 * @param cle la cle de session utilsiateur
+	 * @return int l'id de l'utilisateur
+	 * @throws MyException lorsqu'il y une erreur
 	 */
 	public static int isConnecte(String cle) 
 			throws MyException {
@@ -246,9 +245,9 @@ public class UtilisateurFonctions {
 	
 	/**
 	 * Permet à un utilisateur de récuperer son mot de passe perdu par mail
-	 * @param email
-	 * @return
-	 * @throws MyException
+	 * @param email l'email de l'utilisateur
+	 * @return string la chaine de caracteres contenant la confirmation d'envoi de mail
+	 * @throws MyException lorsqu'il y une erreur
 	 */
 	public static String recupererMdp(String email) 
 			throws MyException {
@@ -285,7 +284,7 @@ public class UtilisateurFonctions {
 
 	/**
 	 * Genrere un mot de passe aléatoire
-	 * @return
+	 * @return la chaine de caractere contenant le mot de passe genere
 	 */
 	public static String genererRandomMDP(){
 		String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

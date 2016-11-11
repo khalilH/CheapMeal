@@ -15,8 +15,13 @@ import util.ServiceTools;
 
 public class RecetteServices {
 
+	/**
+	 * Permet d'obtenur les recettes a afficher sur la page d'accueil
+	 * @param cle la cle session utilisateur
+	 * @return JSONObject contenant la reponse formatee ou "error" avec un message d'erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
+	 */
 	public static JSONObject getRecettesAccueil(String cle) throws JSONException {
-
 		try {
 			return RecetteFonctions.getRecettesAccueil(cle);
 		} catch (MyException e) {
@@ -27,14 +32,14 @@ public class RecetteServices {
 
 	/**
 	 * Permet à un utilisateur d'ajouter une recette
-	 * @param titre
-	 * @param cle
-	 * @param ingredients
-	 * @param quantites
-	 * @param mesures
-	 * @param preparation
-	 * @return
-	 * @throws JSONException
+	 * @param titre le titre de la recette
+	 * @param cle la cle session utilisateur
+	 * @param ingredients la liste d'ingredients de la recette
+	 * @param quantites la liste des quantites correspondant aux ingredients de la recette
+	 * @param mesures la liste des mesures utilises pour exprimer les quantites
+	 * @param preparation la liste des etapes de preparation
+	 * @return JSONObject contenant la reponse formatee ou "error" avec un message d'erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
 	 */
 	public static JSONObject ajouterRecette(String titre, String cle, 
 			List<String> ingredients, 
@@ -53,10 +58,10 @@ public class RecetteServices {
 
 	/**
 	 * Permet à un utilisateur de supprimer une recette
-	 * @param idRecette
-	 * @param cle
-	 * @return
-	 * @throws JSONException
+	 * @param idRecette l'id de la recette a supprimer
+	 * @param cle la cle session utilisateur
+	 * @return JSONObject contenant la reponse formatee ou "error" avec un message d'erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
 	 */
 	public static JSONObject supprimerRecette(String idRecette, String cle) throws JSONException {
 		try {
@@ -70,11 +75,11 @@ public class RecetteServices {
 
 	/**
 	 * Permet à un utilisateur de noter une recette
-	 * @param cle
-	 * @param idRecette
-	 * @param note
-	 * @return
-	 * @throws JSONException
+	 * @param cle la cle session utilisateur
+	 * @param idRecette l'id de la recette a noter
+	 * @param note la note donnee a la recette
+	 * @return JSONObject contenant la reponse formatee ou "error" avec un message d'erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
 	 */
 	public static JSONObject noterRecette(String cle, String idRecette, int note) throws JSONException{
 		try {
@@ -87,10 +92,10 @@ public class RecetteServices {
 
 	/**
 	 * Permet à un utilisateur d'afficher les informations d'une recette
-	 * @param id
-	 * @param cle
-	 * @return
-	 * @throws JSONException
+	 * @param id l'id de la recette a afficher
+	 * @param cle la cle session utilisateur
+	 * @return JSONObject contenant la reponse formatee ou "error" avec un message d'erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
 	 */
 	public static JSONObject afficherRecette(String id,String cle) throws JSONException{
 		try {

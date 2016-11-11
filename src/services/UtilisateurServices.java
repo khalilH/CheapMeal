@@ -11,13 +11,13 @@ public class UtilisateurServices {
 
 	/**
 	 * Permet d'inscrire un utilisateur
-	 * @param login
-	 * @param mdp
-	 * @param prenom
-	 * @param nom
-	 * @param email
-	 * @return
-	 * @throws JSONException
+	 * @param login le nom d'utilisateur
+	 * @param mdp le mot de passe de l'utilisateur
+	 * @param prenom le prenom de l'utilisateur
+	 * @param nom le nom de l'utilisateur
+	 * @param email l'adresse email de l'utilisateur
+	 * @return JSONObject contenant la reponse formatee ou "error" avec un message d'erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
 	 */
 	public static JSONObject inscription(String login, String mdp, String confirmationMdp, String prenom, String nom, String email) throws JSONException {
 		try {
@@ -27,18 +27,19 @@ public class UtilisateurServices {
 			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 		}	
 	}
-	
+
 	/**
-	 * Permet à un utilisateur de changer de mot de passe
-	 * @param cle
-	 * @param oldMdp
-	 * @param newMdp
-	 * @return
-	 * @throws JSONException
+	 * Permet a un utilisateur de changer de mot de passe
+	 * @param cle la cle session de l'utilisateur
+	 * @param currentMdp le mot de passe courant de l'utilisateur
+	 * @param newMdp le nouveau mot de passe 
+	 * @param confirmationMdp la confirmation du mot de passe 
+	 * @return  JSONObject contenant la reponse formatee ou "error" avec un message d'erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
 	 */
-	public static JSONObject changerMotDePasse(String cle, String currentMdp, String oldMdp, String newMdp) throws JSONException{
+	public static JSONObject changerMotDePasse(String cle, String currentMdp, String newMdp, String confirmationMdp) throws JSONException{
 		try {
-			UtilisateurFonctions.changerMotDePasse(cle, currentMdp, oldMdp, newMdp);
+			UtilisateurFonctions.changerMotDePasse(cle, currentMdp, newMdp, confirmationMdp);
 			return ServiceTools.serviceAccepted("Mot de passe modifie");
 		} catch (MyException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
@@ -47,10 +48,10 @@ public class UtilisateurServices {
 
 	/**
 	 * Permet à un utilisateur de changer de mail
-	 * @param cle
-	 * @param newEmail
-	 * @return
-	 * @throws JSONException
+	 * @param cle la cle session utilsiateur 
+	 * @param newEmail la nouvelle adresse email de l'utilisateur
+	 * @return JSONObject contenant la reponse formatee ou "error" avec un message d'erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
 	 */
 	public static JSONObject changerEmail(String cle, String newEmail) throws JSONException{
 		try {
@@ -65,7 +66,7 @@ public class UtilisateurServices {
 	 * Permet de faire appel aux fonction constituant le service "Deconnexion"
 	 * @param key la cle de session de l'utilisateur a deconnecter
 	 * @return JSONObject contenant "success" ou "error" avec un message d'erreur
-	 * @throws JSONException : s'il y a eut une erreur a la creation ou manipulation du JSONObject 
+	 * @throws JSONException s'il y a eut une erreur a la creation ou manipulation du JSONObject 
 	 */
 	public static JSONObject deconnexion(String key) throws JSONException {
 		try {
@@ -78,9 +79,9 @@ public class UtilisateurServices {
 
 	/**
 	 * Permet à un utilisateur de recupere un mot de passe
-	 * @param email
-	 * @return
-	 * @throws JSONException
+	 * @param email l'email de l'utilisateurs
+	 * @return JSONObject contenant la reponse formatee ou "error" avec un message d'erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
 	 */
 	public static JSONObject recupererMdp(String email) throws JSONException {
 		try {
@@ -92,11 +93,11 @@ public class UtilisateurServices {
 	}
 
 	/**
-	 * 
-	 * @param login
-	 * @param mdp
-	 * @return
-	 * @throws JSONException
+	 * Permet de connecter un utilisateur en lui creant une session
+	 * @param login le nom d'utilisateur
+	 * @param mdp le mot de passe
+	 * @return JSONObject contenant la reponse formatee ou "error" avec un message d'erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
 	 */
 	public static JSONObject connexion(String login, String mdp) throws JSONException {
 		JSONObject result;
@@ -110,10 +111,10 @@ public class UtilisateurServices {
 	}
 
 	/**
-	 * 
-	 * @param cle
-	 * @return
-	 * @throws JSONException
+	 * Permet de savoir si un utilisateur est connecte
+	 * @param cle la cle de session utilsiateur
+	 * @return JSONObject contenant la reponse formatee ou "error" avec un message d'erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
 	 */
 	public static JSONObject isConnecte(String cle) throws JSONException{
 		try {

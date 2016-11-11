@@ -261,7 +261,7 @@ Recette.traiteReponseJSON = function(json_text){
 				"src='"+"../images/profil/"+obj.auteur.loginAuteur+".png"+"' alt='Profil Picture'/>");
 		console.log("J'AI AJOUTE LA PHOTO PROFILE");
 
-		$("#note").html("<span>"+obj.note.moyenne+"/5"+" ("+obj.note.nbNotes+" votes)</span>");
+		$("#note").html("<span>"+obj.note.moyenne.toFixed(2)+"/5"+" ("+obj.note.nbNotes+" votes)</span>");
 
 		/* si l'utilisateur a deja note la recette, afficher le nombre d'etoile attribue */
 		var varUsersNotes = obj.note.usersNotes;
