@@ -99,7 +99,7 @@ $(function (){
 	if((bool = isConnected()) === 1){
 		loadNavbarConnected();
 		console.log("connecte")
-
+		$("#rightNavbar").prepend("<button id='addRecette' type='button' class='btn btn-primary navbar-btn'><span class='glyphicon glyphicon-plus'></span> Ajouter Recette</button>");
 	}
 	else if(bool === -1){ //User doesnt have a cookie let him browse
 		loadNavbarDisconnected();
@@ -110,6 +110,9 @@ $(function (){
 		return;
 	}
 	searchForHomePage();
+	$("#addRecette").on('click',function(){
+		window.location.href="autocomplete.html";
+	});
 	
 	function searchForHomePage(){
 		//TODO remplacer par la bonne requete
