@@ -31,7 +31,7 @@ $(function(){
 
 	}
 
-	$("#deconnexion").on('click', deconnexion);
+	$(document.body).on('click',"#deconnexion", deconnexion);
 
 	$(document.body).on('click',"#connexion", function() {
 		window.location.href = "connexion.html";
