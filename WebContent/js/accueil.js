@@ -176,12 +176,12 @@ $(function (){
 					console.log(recetteListe);
 					updatePageSearch(recetteListe);
 				}else{
-					if(obj.erreur == 41){
+					if(rep.erreur == 40){
 						alert("Votre session a expiré");
 						/* dans navbnar.js */
 						deconnexion();
 					}else{
-						alert("Erreur: "+obj.message);
+						alert("Erreur: "+rep.message);
 					}
 				}
 			},

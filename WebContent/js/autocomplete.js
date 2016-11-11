@@ -209,7 +209,7 @@ $(function() {
 					return;
 				} else {
 					
-					if(data.erreur == 41){
+					if(data.erreur == 40){
 						alert("Votre session a expiré");
 						/* dans navbnar.js */
 						deconnexion();

@@ -295,7 +295,7 @@ $(function() {
 					$('#'+idRecette).fadeOut(300, function(){ $(this).remove();});
 					$('#myModal').modal('hide');
 				}else{
-					if(obj.erreur == 41){
+					if(obj.erreur == 40){
 						alert("Votre session a expiré");
 						/* dans navbnar.js */
 						deconnexion();

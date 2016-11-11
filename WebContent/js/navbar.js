@@ -13,9 +13,8 @@ $(function(){
 			dataType : 'json',
 			success : function(rep) {
 				console.log(JSON.stringify(rep));
-				var jsonrep = JSON.stringify(rep)
-				var json = JSON.parse(jsonrep);
-
+//				var jsonrep = JSON.stringify(rep)
+//				var json = JSON.parse(jsonrep);
 				destroy_cookie(C_NAME_KEY);
 				destroy_cookie(C_NAME_ID);
 				destroy_cookie(C_NAME_LOGIN);

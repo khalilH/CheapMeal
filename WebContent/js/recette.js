@@ -29,7 +29,7 @@ var __slice = [].slice;
 								$("#noter-recette").html("<span style:'text-align:center'>Vous avez noté cette recette</span>");
 								$("#note").html("<span>"+(obj.moyenne).toFixed(2)+"/5"+" ("+obj.nbNotes+" vote(s))</span>");
 							}else{
-								if(obj.erreur == 41){
+								if(obj.erreur == 40){
 									alert("Votre session a expiré");
 									/* dans navbnar.js */
 									deconnexion();

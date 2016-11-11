@@ -97,12 +97,12 @@ $(function() {
 				if (rep.erreur == undefined) {
 					alert("Succès: votre adresse email a été modifiée");
 				}else{
-					if(obj.erreur == 41){
+					if(rep.erreur == 40){
 						alert("Votre session a expiré");
 						/* dans navbnar.js */
 						deconnexion();
 					}else{
-						alert("Erreur: "+obj.message);
+						alert("Erreur: "+rep.message);
 					}
 				}
 			},
@@ -140,12 +140,12 @@ $(function() {
 				if (rep.erreur != undefined) {
 					alert("Succès: votre mot de passe a été modifiée");
 				}else{
-					if(obj.erreur == 41){
+					if(rep.erreur == 40){
 						alert("Votre session a expiré");
 						/* dans navbnar.js */
 						deconnexion();
 					}else{
-						alert("Erreur: "+obj.message);
+						alert("Erreur: "+rep.message);
 					}
 				}
 			},
@@ -174,13 +174,15 @@ $(function() {
 				if (rep.erreur != undefined) {
 					alert("Succès: votre bio a été modifiée");
 				}else{
-					if(obj.erreur == 41){
+					if(rep.erreur == 40){
 						alert("Votre session a expiré");
 						/* dans navbnar.js */
 						deconnexion();
-					}else{
-						alert("Erreur: "+obj.message);
 					}
+					/*else{
+						console.log("erreur ajax bio: "+rep.message);
+						alert("Erreur: "+rep.message);
+					}*/
 				}
 			},
 			error:function(jaXHR, textStatus, errorThrown) {
