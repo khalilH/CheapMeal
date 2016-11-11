@@ -12,11 +12,8 @@ public class TestAPI {
 
 	public static void main(String[] args) {
 		try {
-			ArrayList<Double> prix = ExternalAPI.searchPrices("3451790941610");
-			System.out.println("TAILLE = "+prix.size());
-			for (Double d : prix) {
-				System.out.println(d.toString());
-			}
+			Double prix = ExternalAPI.searchMinPrice("3451790941610");
+			System.out.println("TAILLE = "+prix);
 		} catch (UnirestException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {

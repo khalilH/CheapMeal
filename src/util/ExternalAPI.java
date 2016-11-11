@@ -29,23 +29,24 @@ public class ExternalAPI {
 	 * @throws UnirestException
 	 * @throws JSONException
 	 */
-	public static ArrayList<Double> searchPrices(String ean) throws UnirestException, JSONException {
+	public static Double searchMinPrice(String ean) throws UnirestException, JSONException {
 		String urlRequest = BASE_URL+"?ean="+ean+"&zipcode="+ZIPCODE;
 		HttpResponse<String> response = Unirest.get(urlRequest)
 				.header("X-Mashape-Key", X_MASHAPE_KEY)
 				.header("Accept", "application/json")
 				.asString();
-		
+		Double minPrice = Double.MAX_VALUE;
 		JSONObject results = new JSONObject(response.getBody());
 		JSONArray tab = results.getJSONArray(LOCAL_PRODUCT_KEY);
-		ArrayList<Double> prices = new ArrayList<>();
 		for (int i = 0; i<tab.length(); i++) {
 			JSONObject it = tab.getJSONObject(i);
 			if (it.has(PRICE_KEY)) {
-				prices.add(it.getDouble(PRICE_KEY));
+				Double res = it.getDouble(PRICE_KEY);
+				if(res < minPrice)
+					minPrice = res;
 			}
 		}
-		return prices;
+		return minPrice;
 	}
 	
 }

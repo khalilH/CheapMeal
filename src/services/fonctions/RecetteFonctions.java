@@ -190,7 +190,7 @@ public class RecetteFonctions {
 				}
 				else {
 					try {
-						double prixAPI = ExternalAPI.searchPrices(ref.getString(MongoFactory.EAN)).get(0);
+						double prixAPI = ExternalAPI.searchMinPrice(ref.getString(MongoFactory.EAN));
 						prix += o.getDouble(MongoFactory.QUANTITE)*prixAPI/ref.getDouble(MongoFactory.QUANTITE);
 					} catch (UnirestException e) {
 						throw new MyException("Erreu appel API", 666);
