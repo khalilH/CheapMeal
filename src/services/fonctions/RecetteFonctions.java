@@ -3,6 +3,10 @@ package services.fonctions;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 import javax.servlet.http.Part;
 
@@ -27,6 +31,7 @@ import exceptions.RecetteException;
 import exceptions.SessionExpireeException;
 import util.ErrorCode;
 import util.ExternalAPI;
+import util.MyPriceCallable;
 import util.ServiceTools;
 import util.bdTools.DBStatic;
 import util.bdTools.MongoFactory;
@@ -177,7 +182,9 @@ public class RecetteFonctions {
 		BasicDBObject res = null;
 		if(cursor.hasNext())
 			res = cursor.next();
-
+		
+		ExecutorService executorService = Executors.newFixedThreadPool(10);
+		ArrayList<FutureTask<Double>> listOfResults = new ArrayList<>();
 		double prix = 0.0;
 		if(res != null){
 			BasicDBList ing = (BasicDBList) res.get(MongoFactory.INGREDIENTS);
@@ -189,14 +196,28 @@ public class RecetteFonctions {
 					prix += o.getDouble(MongoFactory.QUANTITE)*ref.getDouble(MongoFactory.PRIX_AU_KG)/ref.getDouble(MongoFactory.QUANTITE);
 				}
 				else {
-					try {
-						double prixAPI = ExternalAPI.searchMinPrice(ref.getString(MongoFactory.EAN));
-						prix += o.getDouble(MongoFactory.QUANTITE)*prixAPI/ref.getDouble(MongoFactory.QUANTITE);
-					} catch (UnirestException e) {
-						throw new MyException("Erreu appel API", 666);
-					}
+//					try {
+//						double prixAPI = ExternalAPI.searchMinPrice(ref.getString(MongoFactory.EAN));
+//						prix += o.getDouble(MongoFactory.QUANTITE)*prixAPI/ref.getDouble(MongoFactory.QUANTITE);
+						String ean = ref.getString(MongoFactory.EAN);
+						Double quantiteRef = ref.getDouble(MongoFactory.QUANTITE);
+						Double quantiteProduit = o.getDouble(MongoFactory.QUANTITE);
+
+						FutureTask<Double> future = new FutureTask<>(new MyPriceCallable(ean,quantiteRef,quantiteProduit));
+						executorService.execute(future);
+						listOfResults.add(future);
+//					} catch (UnirestException e) {
+//						throw new MyException("Erreu appel API", 666);
+//					}
 				}
 			}
+				for(FutureTask<Double> task : listOfResults){
+					try {
+						prix += task.get();
+					} catch (InterruptedException | ExecutionException e) {
+						throw new MyException("Erreur futureTask", 666);
+					}
+				}
 		}
 
 		return prix;
