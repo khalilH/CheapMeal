@@ -162,7 +162,8 @@ public class RecetteFonctions {
 					}
 				}
 			}
-			res.put("prix", prix);
+			
+			res.put("prix", prix); 
 		}
 
 		return new JSONObject(res);
