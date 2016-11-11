@@ -94,7 +94,7 @@ $(function() {
 			data: "cle="+getCookie(C_NAME_KEY)+"&newemail="+newEmail,
 			dataType: "json",
 			success: function(rep){
-				if (rep.erreur != undefined) {
+				if (rep.erreur == undefined) {
 					alert("Succès: votre adresse email a été modifiée");
 				}else{
 					if(obj.erreur == 41){
