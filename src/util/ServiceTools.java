@@ -119,6 +119,8 @@ public class ServiceTools {
 	public static String getValueFromPart(Part p ) throws IOException, MessagingException{
 		Scanner c = new Scanner(p.getInputStream());
 		String ret = c.nextLine();
+		while(c.hasNextLine())
+			ret+= c.nextLine()+"\n";
 		c.close();
 		return ret;
 	}

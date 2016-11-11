@@ -58,7 +58,6 @@ public class AjouterRecette extends HttpServlet {
 
 			/* Traitement des services */
 			JSONObject res = RecetteServices.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation, photo);
-
 			/* Ecriture de la reponse */
 			PrintWriter writer = response.getWriter();
 			response.setContentType("application/json");
