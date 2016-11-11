@@ -209,12 +209,12 @@ $(function() {
 					return;
 				} else {
 					
-					if(obj.erreur == 41){
+					if(data.erreur == 41){
 						alert("Votre session a expiré");
 						/* dans navbnar.js */
 						deconnexion();
 					}else{
-						alert("Erreur: "+obj.message);
+						alert("Erreur: "+data.message);
 					}
 					
 //					console.log("KO");

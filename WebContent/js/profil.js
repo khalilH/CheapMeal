@@ -199,7 +199,7 @@ $(function() {
 			error : function(resultat, statut, erreur) {
 				console.log("Bug");
 				console.log(resultat);
-				alert("Erreur Ajax");
+				consol.log("Erreur Ajax Affichage Prix");
 			}
 		});
 	}
