@@ -250,15 +250,15 @@ Recette.traiteReponseJSON = function(json_text){
 		$("#titre-recette").html("<span>"+obj.titre+"</span>");
 
 		/* photo recette */
-		$("#photo-recette").html("<img class='img-responsive' id='recettePhoto' " +
-				"src='"+"../images/"+obj.photo+".png"+"' alt='Recette Picture'/>");
+		$("#photo-recette").html("<center><img class='img-responsive' id='recettePhoto' " +
+				"src='"+"../images/"+obj.photo+".png"+"' alt='Recette Picture'/></center>");
 		console.log("J'AI AJOUTE LA PHOTO RECETTE");
 
 		$("#nom-auteur-recette").html("<a href='profile.html?login="+obj.auteur.loginAuteur+"'>"+obj.auteur.loginAuteur+"</a>");
 		
 		/* photo auteur */
-		$("#photo-auteur").html("<img class='img-responsive' id='profilPicture' " +
-				"src='"+"../images/profil/"+obj.auteur.loginAuteur+".png"+"' alt='Profil Picture' onerror=\"this.onerror=null;this.src='../images/profil/genericImage.png'\"/>");
+		$("#photo-auteur").html("<center><img class='img-responsive' id='profilPicture' " +
+				"src='"+"../images/profil/"+obj.auteur.loginAuteur+".png"+"' alt='Profil Picture' onerror=\"this.onerror=null;this.src='../images/profil/genericImage.png'\"/></center>");
 		console.log("J'AI AJOUTE LA PHOTO PROFILE");
 
 		$("#note").html("<span>"+obj.note.moyenne.toFixed(2)+"/5"+" ("+obj.note.nbNotes+" votes)</span>");
