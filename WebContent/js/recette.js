@@ -333,7 +333,7 @@ Recette.afficherPrix = function(json_text){
 
 	var obj = JSON.parse(JSON.stringify(json_text));
 	console.log(obj.success);
-	$("#prix").html("<span class='txt-size-35'>Prix estimé: </span><span class='txt-size-25'>"+obj.success.toFixed(2)+"€</span>");
+	$("#prix").html("<span class='txt-size-35'>Prix estimé: </span><span class='txt-size-25'>"+obj.success+"€</span>");
 		
 }
 

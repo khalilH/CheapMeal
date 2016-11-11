@@ -115,10 +115,10 @@ public class RecetteServices {
 	 * @throws JSONException
 	 */
 	public static JSONObject afficherPrixRecette(String id, String cle) throws JSONException {
-		double prix;
 		try {
-			prix = RecetteFonctions.afficherPrixRecette(id, cle);
-			return ServiceTools.serviceAccepted(prix+"");
+			java.text.DecimalFormat df = new java.text.DecimalFormat("0.##");
+			double prix = RecetteFonctions.afficherPrixRecette(id, cle);
+			return ServiceTools.serviceAccepted(df.format(prix)+"");
 		} catch (MyException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 		}
