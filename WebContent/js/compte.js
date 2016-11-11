@@ -148,6 +148,34 @@ $(function() {
 		e.preventDefault();
 		changerMdp();
 	});
+	
+	function changerBio(){
+		
+		var newBio = $("#bio").val();
+		console.log(newBio);
+		$.ajax({
+			type: "POST",
+			url: "profil/ajouterBio",
+			data: "cle="+getCookie(C_NAME_KEY)+"&bio="+newBio,
+			dataType: "json",
+			success: function(rep){
+				if (rep.erreur != undefined) {
+					alert("Succès: votre bio a été modifiée");
+				}else{
+					alert("Erreur: "+rep.message);
+				}
+			},
+			error:function(jaXHR, textStatus, errorThrown) {
+				alert(jaXHR+" "+textStatus+" "+errorThrown);
+			}
+		});
+		return;
+	}
+	
+	$("#form-bio").on('submit', function(e){
+		e.preventDefault();
+		changerBio();
+	});
 		
 		
 });
