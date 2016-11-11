@@ -120,7 +120,7 @@ public class ServiceTools {
 		Scanner c = new Scanner(p.getInputStream());
 		String ret = c.nextLine();
 		while(c.hasNextLine())
-			ret+= c.nextLine()+"\n";
+			ret+= c.nextLine()+" ";
 		c.close();
 		return ret;
 	}
