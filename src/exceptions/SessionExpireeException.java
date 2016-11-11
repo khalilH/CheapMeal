@@ -1,9 +1,7 @@
 package exceptions;
 
 /**
- * 
- * @author khalil
- *
+ * Exception levee lors qu'une session a expiree
  */
 public class SessionExpireeException extends MyException {
 

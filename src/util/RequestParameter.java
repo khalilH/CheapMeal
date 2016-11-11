@@ -1,9 +1,7 @@
 package util;
 
 /**
- * 
- * @author khalil
- *
+ * Classe contenant tout les parametres des servlets
  */
 public class RequestParameter {
 

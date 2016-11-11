@@ -1,9 +1,8 @@
 package exceptions;
 
 /**
- * 
- * @author khalil
- *
+ * Excpetion levee lorsque le mot de passe d'un utilisateur tentant de se 
+ * connecter n'est pas correct
  */
 public class AuthenticationException extends MyException {
 

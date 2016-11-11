@@ -1,9 +1,7 @@
 package exceptions;
 
 /**
- * 
- * @author khalil
- *
+ * Exception levee lorsqu'un champ n'est pas valide
  */
 public class NonValideException extends MyException {
 

@@ -9,9 +9,10 @@ import com.mongodb.client.MongoDatabase;
 /**
  */
 public class DBStatic {
-	
-	private static MongoClient mongoClient;
-	
+
+	private static MongoClient mongoClient = null;
+	private static MongoDatabase res = null;
+
 	/**
 	 * Creer une connection mongo
 	 * @return
@@ -19,11 +20,13 @@ public class DBStatic {
 	 * @throws MongoClientException
 	 */
 	public static MongoDatabase getMongoConnection() throws UnknownHostException, MongoClientException{
- 		mongoClient = new MongoClient("localhost", 27130);
- 		MongoDatabase res = mongoClient.getDatabase(MongoFactory.DATABASE_NAME);
- 		return res;
- 	}
-	
+		if (res == null) {
+			mongoClient = new MongoClient("localhost", 27130);
+			res = mongoClient.getDatabase(MongoFactory.DATABASE_NAME);
+		}
+		return res;
+	}
+
 	/**
 	 * 
 	 */
@@ -33,6 +36,6 @@ public class DBStatic {
 		} catch (Exception e) {
 			System.err.println("Error in terminating connection");
 		}
-		
+
 	}
 }

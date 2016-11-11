@@ -1,9 +1,7 @@
 package exceptions;
 
 /**
- * 
- * @author khalil
- *
+ * Exception levee si une cle de session a expiree
  */
 public class CleNonActiveException extends MyException {
 

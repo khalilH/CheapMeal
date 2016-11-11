@@ -17,7 +17,7 @@ public class IngredientsServices {
 	 * du plugin Ajax AutoComplete for jQuery
 	 * @param query la sous-chaine a utiliser pour l'autocompletion
 	 * @return JSONObject contenant la reponse formatee ou "error" avec un message d'erreur
-	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
+	 * @throws JSONException s'il y a eu une erreur a la creation du JSONObject 
 	 */
 	public static JSONObject getListeIngredients(String query) throws JSONException {
 		try {
@@ -34,7 +34,7 @@ public class IngredientsServices {
 	}
 
 	/**
-	 * Permer de faire appel aux fonctions constituant le service "Put Ingredients"
+	 * Permet de faire appel aux fonctions constituant le service "Put Ingredients"
 	 * @param fileName le nom du fichier contenant la liste des ingredients
 	 * @return JSONObject contenant "success" ou "error" avec un message d'erreur
 	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 

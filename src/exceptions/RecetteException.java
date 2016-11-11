@@ -1,9 +1,7 @@
 package exceptions;
 
 /**
- * 
- * @author khalil
- *
+ * Exception levee lors d'une demande d'acces a une recette inexistante
  */
 public class RecetteException extends MyException{
 

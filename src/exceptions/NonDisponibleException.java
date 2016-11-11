@@ -1,9 +1,8 @@
 package exceptions;
 
 /**
- * 
- * @author khalil
- *
+ * Exception levee lorsqu'un login ou une adresse mail sont deja utilise par 
+ * un autre utilisateur
  */
 public class NonDisponibleException extends MyException {
 

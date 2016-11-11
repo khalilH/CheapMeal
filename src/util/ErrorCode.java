@@ -26,6 +26,7 @@ package util;
 //90 Erreur de MONGO
 //91 FileNotFoundException (ingredients.csv, *.png)
 //92 Mail Exception (erreurs javax.mail)
+//100 Erreur ElasticSearch
 //10000 Erreur de JAVA
 //100000 Erreur de JSON
 
@@ -67,6 +68,8 @@ public class ErrorCode {
 	public static final int MONGO_EXCEPTION = 90;
 	public static final int FILE_NOT_FOUND_EXCEPTION = 91;
 	public static final int MAIL_EXCEPTION = 92;
+	
+	public static final int ELASTIC_SEARCH_EXCEPTION = 92;
 	
 	
 	

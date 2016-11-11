@@ -1,9 +1,7 @@
 package exceptions;
 
 /**
- * 
- * @author khalil
- *
+ * Exception levee lors d'interaction avec notre base de donne SQL
  */
 public class SQLException extends MyException {
 

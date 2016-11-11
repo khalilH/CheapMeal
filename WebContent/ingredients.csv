@@ -9,6 +9,8 @@ i,levure,8722700030027,7
 i,sucre vanille,3564700029879,10
 i,pate brisee,3248830690627,1
 i,huile assaisonnement,3265479186007,200
+i,huile friture,3265479358008,200
+i,huile d'olive,8002470010444,75
 i,sel,3252378001319,500
 i,poivre,3560070762101,42
 i,mascarpone,3760056260502,500
@@ -46,7 +48,12 @@ i,confiture de fraise,3560070369690,370
 i,mozzarella,8000430133035,125
 i,cornichons,4012200040263,850
 i,filet de poulet,3266980123994,720
-f,tomate,2.25,1000
-f,fraise,11.2,1000
-f,pomme,2.34,1000
-f,carotte,0.93,1000
+f,tomate,0.225,1
+f,fraise,0.134939759,1
+f,pomme,0.3342857143,1
+f,carotte,0.93,1
+i,levure boulangere,3179141393719,8
+f,gousse d'ail,0.05,1
+f,oignons,0.18,1
+f,céléri,0.07,1
+f,pomme de terre,0.4,1
