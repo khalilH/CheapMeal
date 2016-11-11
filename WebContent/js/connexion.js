@@ -124,7 +124,7 @@ $(function() {
 		$.ajax({
 			url : 'user/recupererMdp',
 			type : 'POST',
-			data : 'mail='+mail,
+			data : 'email='+mail,
 			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 			dataType : 'json',
 			success : function(rep) {
