@@ -404,7 +404,7 @@ $(document).ready(function() {
 	var idRecette = $.urlParam("idRecette"); 
 
 	var cle = "";
-	if(getCookie(C_NAME_KEY) != -1)
+	if(getCookie(C_NAME_KEY) != undefined)
 		cle = "&cle="+getCookie(C_NAME_KEY);
 
 	$.ajax({
