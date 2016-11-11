@@ -1,11 +1,11 @@
 $(function (){
-	
+
 	/***** DOWN HERE CODE FOR PARSING JSON RESPONSE **********/
 	function Auteur(id,login){
 		this.id = id;
 		this.login = login;
 	}
-	
+
 	function Recette(id,auteur, titre,photo){
 		this.id = id;
 		this.auteur = auteur;
@@ -16,13 +16,13 @@ $(function (){
 		var s ="<div  class='col-md-6 col-lg-4'>"+
 		"<div class='recette-container recette' id='"+this.id+"' >"+
 		"<div class='recette-img'>"+
-			"<img width='100%' height='100%' src='"+this.photo+"'</img></div>"+
+		"<img width='100%' height='100%' src='"+this.photo+"'</img></div>"+
 		"<div class='recette-footer'>"+
 		"<h3 class='titre-recette'>"+this.titre+"</h3>"+
 		"</div></div></div>";
 		return s;
 	}
-	
+
 	function RecetteList(recetteRecente, recetteBest){
 		this.recettesRecentes = recetteRecente;
 		this.recettesBest = recetteBest;
@@ -33,7 +33,7 @@ $(function (){
 			s+=this.recettesRecentes[i].getHtml()+"\n \n";
 		}
 		return s;
-		
+
 	}
 	RecetteList.prototype.getHtmlBest = function(){
 		var s ="";
@@ -43,56 +43,56 @@ $(function (){
 		}
 		if(this.recettesBest.length == 0){
 			s += "<div class='panel panel-danger mg-top-50'>"
-					+ "<div class='panel-heading'>"
-					+ "<span class='glyphicon glyphicon-thumbs-down'></span> Dommage"
-					+ "</div>"
-					+ "<div class='panel-body'><h1> Votre recherche n'a abouti à aucun résultats.</h1></div>"
-					+ "</div>";
+				+ "<div class='panel-heading'>"
+				+ "<span class='glyphicon glyphicon-thumbs-down'></span> Dommage"
+				+ "</div>"
+				+ "<div class='panel-body'><h1> Votre recherche n'a abouti à aucun résultats.</h1></div>"
+				+ "</div>";
 		}
 		return s;
 	}
-	
+
 	function isNumber(s){
 		return ! isNaN (s-0);
 	}
-	 function recetteRevival(key, value) {
-			if(key.length == 0) /* "haut" du JSON ==fin */
-			{
-				var r;
-				if((value.Erreur == undefined) || (value.Erreur == 0)){ // Si l'on trouve pas un champs Erreur dans le JSON
-					r = new RecetteList(value.recettesRecentes, value.recettesBest);
-				}
-				else {
-					r = new Object();
-					r.Erreur = value.Erreur;
-				}
-				return (r);
+	function recetteRevival(key, value) {
+		if(key.length == 0) /* "haut" du JSON ==fin */
+		{
+			var r;
+			if((value.Erreur == undefined) || (value.Erreur == 0)){ // Si l'on trouve pas un champs Erreur dans le JSON
+				r = new RecetteList(value.recettesRecentes, value.recettesBest);
 			}
-			else if((isNumber(key)) && (value.auteur instanceof Auteur)) { // Si l'on est dans une case du tableau et que l'auteur est un objet de la classe auteur
-				var recette = new Recette(value._id, value.auteur, value.titre, value.photo);
-				console.log("J'ai cree une recette");
-				return recette;
+			else {
+				r = new Object();
+				r.Erreur = value.Erreur;
 			}
-			else if((isNumber(key)) && (value.source != undefined) && (value.source.auteur instanceof Auteur)){
-				var recette = new Recette(value.source._id, value.source.auteur, value.source.titre, value.source.photo);
-				console.log("J'ai cree une recette lol");
-				return recette;
-			}
-			else if(key == "auteur") { // Lorsquon doit crée un utilisateur
-				var auteur;
-				auteur = new Auteur(value.idAuteur, value.loginAuteur);
-
-				return auteur;
-			}
-			else{
-				return (value);
-			}
+			return (r);
 		}
-		
-		
-		/**** BACK TO NORMAL JAVASCRIPT ****/
-		
-		
+		else if((isNumber(key)) && (value.auteur instanceof Auteur)) { // Si l'on est dans une case du tableau et que l'auteur est un objet de la classe auteur
+			var recette = new Recette(value._id, value.auteur, value.titre, value.photo);
+			console.log("J'ai cree une recette");
+			return recette;
+		}
+		else if((isNumber(key)) && (value.source != undefined) && (value.source.auteur instanceof Auteur)){
+			var recette = new Recette(value.source._id, value.source.auteur, value.source.titre, value.source.photo);
+			console.log("J'ai cree une recette lol");
+			return recette;
+		}
+		else if(key == "auteur") { // Lorsquon doit crée un utilisateur
+			var auteur;
+			auteur = new Auteur(value.idAuteur, value.loginAuteur);
+
+			return auteur;
+		}
+		else{
+			return (value);
+		}
+	}
+
+
+	/**** BACK TO NORMAL JAVASCRIPT ****/
+
+
 	/**
 	 *  CODE FIRING WHEN JQUERY IS READY 
 	 */	
@@ -110,7 +110,7 @@ $(function (){
 		return;
 	}
 	searchForHomePage();
-	
+
 	function searchForHomePage(){
 		//TODO remplacer par la bonne requete
 		console.log("Loading home page")
@@ -118,7 +118,7 @@ $(function (){
 		if(getCookie(C_NAME_KEY) != undefined){
 			query = "cle="+getCookie(C_NAME_KEY);
 		}
-		
+
 		$.ajax({
 			url : 'recette/getAccueil',
 			type : 'GET',
@@ -139,19 +139,19 @@ $(function (){
 				alert("dawg");
 			}
 		});
-		
+
 	}
-	
+
 	function updatePage(liste){
 		$("#recentRecipe").html(liste.getHtmlRecent());
 		$("#BestRecipe").html(liste.getHtmlBest());
 	}
-	
+
 	function updatePageSearch(liste){
 		console.log("Toz");
 		$("#recettes-Container").html(liste.getHtmlBest());
 	}
-	
+
 	$("#searchForm").on('submit',function(event){
 		event.preventDefault();
 		var query = this.search.value;
@@ -172,7 +172,13 @@ $(function (){
 					console.log(recetteListe);
 					updatePageSearch(recetteListe);
 				}else{
-					//TODO Error message
+					if(obj.erreur == 41){
+						alert("Votre session a expiré");
+						/* dans navbnar.js */
+						deconnexion();
+					}else{
+						alert("Erreur: "+obj.message);
+					}
 				}
 			},
 			error : function(resultat, statut, erreur) {
@@ -182,45 +188,17 @@ $(function (){
 			}
 		});
 	});
-	
-	$("#deconnexion").on('click',function(){
-		// TODO Delete cookie + verifier sil existe (erreur)
-		var key = getCookie(C_NAME_KEY);
-		console.log("DeConnexion de "+key);
-		
-		$.ajax({
-			url : 'user/deconnexion',
-			type : 'POST',
-			data : 'cle='+key,
-			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
-			dataType : 'json',
-			success : function(rep) {
-				console.log(JSON.stringify(rep));
-				var jsonrep = JSON.stringify(rep)
-				var json = JSON.parse(jsonrep);
-				destroy_cookie(C_NAME_KEY);
-				destroy_cookie(C_NAME_LOGIN);
-				window.location.href="accueil.html";
-				return;
-			},
-			error : function(resultat, statut, erreur) {
-				console.log("Bug");
-				console.log(resultat);
-				alert("dawg");
-			}
-		});
-		
-	});
-	
+
+
 	$(document.body).on('click','.recette',function(){
 		console.log("J'ai clique sur une recette ",this.id);
 		window.location.href="recette.html?idRecette="+this.id;
 	});
 
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 });

@@ -311,6 +311,14 @@ $(function() {
 				if(rep.erreur == undefined){
 					$('#'+idRecette).fadeOut(300, function(){ $(this).remove();});
 					$('#myModal').modal('hide');
+				}else{
+					if(obj.erreur == 41){
+						alert("Votre session a expiré");
+						/* dans navbnar.js */
+						deconnexion();
+					}else{
+						alert("Erreur: "+obj.message);
+					}
 				}
 				return;
 			},

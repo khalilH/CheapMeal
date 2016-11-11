@@ -1,6 +1,6 @@
 $(function(){
-	
-$("#deconnexion").on('click',function(){
+
+	function deconnexion(){
 		// TODO Delete cookie + verifier sil existe (erreur)
 		var key = getCookie(C_NAME_KEY);
 		console.log("DeConnexion de " + key);
@@ -29,8 +29,10 @@ $("#deconnexion").on('click',function(){
 			}
 		});
 
-	});
-	
+	}
+
+	$("#deconnexion").on('click', deconnexion);
+
 	$(document.body).on('click',"#connexion", function() {
 		window.location.href = "connexion.html";
 		return;
@@ -39,10 +41,6 @@ $("#deconnexion").on('click',function(){
 		window.location.href = "inscription.html";
 		return;
 	});
-
-
-
-
 
 });
 

@@ -97,7 +97,13 @@ $(function() {
 				if (rep.erreur != undefined) {
 					alert("Succès: votre adresse email a été modifiée");
 				}else{
-					alert("Erreur: "+rep.message);
+					if(obj.erreur == 41){
+						alert("Votre session a expiré");
+						/* dans navbnar.js */
+						deconnexion();
+					}else{
+						alert("Erreur: "+obj.message);
+					}
 				}
 			},
 			error:function(jaXHR, textStatus, errorThrown) {
@@ -134,7 +140,13 @@ $(function() {
 				if (rep.erreur != undefined) {
 					alert("Succès: votre mot de passe a été modifiée");
 				}else{
-					alert("Erreur: "+rep.message);
+					if(obj.erreur == 41){
+						alert("Votre session a expiré");
+						/* dans navbnar.js */
+						deconnexion();
+					}else{
+						alert("Erreur: "+obj.message);
+					}
 				}
 			},
 			error:function(jaXHR, textStatus, errorThrown) {
@@ -162,7 +174,13 @@ $(function() {
 				if (rep.erreur != undefined) {
 					alert("Succès: votre bio a été modifiée");
 				}else{
-					alert("Erreur: "+rep.message);
+					if(obj.erreur == 41){
+						alert("Votre session a expiré");
+						/* dans navbnar.js */
+						deconnexion();
+					}else{
+						alert("Erreur: "+obj.message);
+					}
 				}
 			},
 			error:function(jaXHR, textStatus, errorThrown) {
