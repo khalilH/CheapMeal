@@ -205,7 +205,7 @@
 	</servlet-mapping>
 	
 	<welcome-file-list>
-		<welcome-file>connexion.html</welcome-file>
+		<welcome-file>accueil.html</welcome-file>
 	</welcome-file-list>
 
 	<resource-ref>
