@@ -61,6 +61,7 @@ $(function() {
 					+ "class='btn btn-primary form-control mg-bottom-20'>"
 					+ "<span class='glyphicon glyphicon-plus'></span> Ajouter une recette"
 					+ "</button></div>";
+			
 		}
 		for (var i = 0; i < this.recettes.length; i++) {
 			s += this.recettes[i].getHtml();
@@ -97,7 +98,7 @@ $(function() {
 				+ "<span class='glyphicon glyphicon-user'></span> 0 Amis</div>"
 				+ "</div><div class='col-sm-4 no-pad bg-pink'>"
 				+ "<div class='h4'>"
-				+ "<span class='glyphicon glyphicon-star'></span> " + getStars()
+				+ "<span class='glyphicon glyphicon-star'></span> " + getStars()+"/5"
 				+ "</div>" + "</div><div class='col-sm-4 no-pad bg-green'>"
 				+ "<div class='h4'>" 
 				+ "<span class='glyphicon glyphicon-education'></span> " + nbRecettes

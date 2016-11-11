@@ -160,7 +160,7 @@ public class RecetteFonctions {
 			List<String> ingredients, 
 			List<Double> quantites, 
 			List<String> mesures,
-			String preparation,
+			List<String> preparation, 
 			Part photo) throws MyException {
 
 		/* Verification des parametres */
@@ -177,10 +177,13 @@ public class RecetteFonctions {
 		listMesures.add("ml");
 
 		if (titre.equals("") 
+				|| preparation.size() == 0
+				|| ingredients.size() == 0
+				|| mesures.size() == 0
+				|| quantites.size() == 0
 				|| ingredients.stream().filter(i -> i.length() == 0).count() > 0 
 				|| quantites.stream().filter(i -> i<=0).count() > 0 
 				|| mesures.stream().filter(i -> !listMesures.contains(i)).count() > 0 
-				|| preparation.equals("")
 				|| ingredients.size() != mesures.size() 
 				|| ingredients.size() != quantites.size() 
 				|| mesures.size() != quantites.size())

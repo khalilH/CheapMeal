@@ -303,8 +303,17 @@ Recette.traiteReponseJSON = function(json_text){
 		s+="</ul>";
 		$("#ingr").html(s);
 		$("#prix").html("<span class='txt-size-35'>Prix estimé: </span><span class='txt-size-25'>"+obj.prix+"€</span>");
-		$("#prep").html("<span class='txt-size-25'>"+obj.preparation+"</span>");
-
+		
+		//$("#prep").html("<span class='txt-size-25'>"+obj.preparation+"</span>");
+		
+		var p = "<ul>";
+		for(i=0; i<obj.preparation.length; i++){
+			var prep = obj.preparation[i];
+			p+="<li><span class='txt-size-25'>"+prep+"</span></li>";
+		}
+		p+="</ul>";
+		$("#prep").html(p);
+		
 	}else{
 		alert(obj.erreur)
 	}

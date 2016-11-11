@@ -102,17 +102,6 @@ h3 {
 }
 
 
-.menu-button{
-	font-size: 18px;
-	margin-top:3px;
-}
-
-.menu-button:hover span{
-	color: #1d7abc;
-}
-
-
-
 .categorie{
 	text-align:center;
 	border-radius: 5px;

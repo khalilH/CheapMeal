@@ -1,3 +1,14 @@
+@font-face {
+	font-family: 'Gidole-Regular';
+	src: url('../fonts/Gidole-Regular.otf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.body_profil{
+	font-family: 'Gidole-Regular';
+}
+
 .body-container{
 	margin-top:20px;
 }

@@ -106,7 +106,7 @@ function loadNavbarDisconnected() {
 	var rightNavbarHtml = "<div class='row'><div class='col-xs-5'>"
 			+ "<button id='connexion' type='button' class='btn btn-primary navbar-btn'>"
 			+ "<span class='glyphicon glyphicon-log-in'></span> Connexion</button></div>"
-			+ "<div class='col-xs-5 col-xs-offset-1'><button id='signup' type='button'"
+			+ "<div class='col-xs-5 '><button id='signup' type='button'"
 			+ "class='btn btn-success navbar-btn'>"
 			+ "<span class='glyphicon glyphicon-thumbs-up'></span> S'enregistrer</button></div></div>"
 	$("#rightNavbar").html(rightNavbarHtml);

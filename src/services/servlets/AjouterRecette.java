@@ -32,7 +32,7 @@ public class AjouterRecette extends HttpServlet {
 			String ingr = ServiceTools.getValueFromPart(request.getPart(RequestParameter.INGREDIENTS));
 			String quant = ServiceTools.getValueFromPart(request.getPart(RequestParameter.QUANTITES));
 			String mesu = ServiceTools.getValueFromPart(request.getPart(RequestParameter.MESURES));
-			String preparation = ServiceTools.getValueFromPart(request.getPart(RequestParameter.PREPARATION));
+			String prepa = ServiceTools.getValueFromPart(request.getPart(RequestParameter.PREPARATION));
 			Part photo = request.getPart(RequestParameter.FILE);
 
 			/* Ici, parser la liste des ingredients et des etapes de preparation */
@@ -40,10 +40,12 @@ public class AjouterRecette extends HttpServlet {
 			ArrayList<String> ingredients = new ArrayList<String>();
 			ArrayList<Double> quantites = new ArrayList<Double>();
 			ArrayList<String> mesures = new ArrayList<String>();
+			ArrayList<String> preparation = new ArrayList<String>();
 
 			String[] ingr_tmp = ingr.split(",");
 			String[] quantites_tmp = quant.split(",");
 			String[] mesures_tmp = mesu.split(",");
+			String[] preparation_tmp = prepa.split("@");
 
 			for(String s : ingr_tmp)
 				ingredients.add(s);
@@ -51,6 +53,8 @@ public class AjouterRecette extends HttpServlet {
 				quantites.add(Double.parseDouble(s));
 			for(String s : mesures_tmp)
 				mesures.add(s);
+			for(String s : preparation_tmp)
+				preparation.add(s);
 
 			/* Traitement des services */
 			JSONObject res = RecetteServices.ajouterRecette(titre, cle, ingredients, quantites, mesures, preparation, photo);
