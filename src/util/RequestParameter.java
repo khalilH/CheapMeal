@@ -1,7 +1,7 @@
 package util;
 
 /**
- * Classe contenant tout les parametres des servlets
+ * Classe contenant tout les parametres possibles des services
  */
 public class RequestParameter {
 

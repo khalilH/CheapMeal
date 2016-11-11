@@ -140,6 +140,16 @@
 		<url-pattern>/recette/supprimer</url-pattern>
 	</servlet-mapping>
 
+<servlet>
+<servlet-name>AfficherPrixRecette</servlet-name>
+		<servlet-class>services.servlets.AfficherPrixRecette</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AfficherPrixRecette</servlet-name>
+		<url-pattern>/recette/prix</url-pattern>
+	</servlet-mapping>
+
+
 	<servlet>
 		<servlet-name>AfficherProfil</servlet-name>
 		<servlet-class>services.servlets.AfficherProfil</servlet-class>

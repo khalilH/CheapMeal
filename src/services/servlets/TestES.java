@@ -19,7 +19,7 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
 /**
- * Servlet implementation class Test
+ * Servlet de test pour faire un test rapide
  */
 public class TestES extends HttpServlet {
 	private static final long serialVersionUID = 1L;

@@ -31,9 +31,7 @@ package util;
 //100000 Erreur de JSON
 
 /**
- * 
- * @author khalil
- *
+ * Classe contenant les codes d'erreurs pouvant etre envoyes par l'application
  */
 public class ErrorCode {
 	
