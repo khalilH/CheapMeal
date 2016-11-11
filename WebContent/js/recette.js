@@ -258,7 +258,7 @@ Recette.traiteReponseJSON = function(json_text){
 		
 		/* photo auteur */
 		$("#photo-auteur").html("<img class='img-responsive' id='profilPicture' " +
-				"src='"+"../images/profil/"+obj.auteur.loginAuteur+".png"+"' alt='Profil Picture'/>");
+				"src='"+"../images/profil/"+obj.auteur.loginAuteur+".png"+"' alt='Profil Picture' onerror=\"this.onerror=null;this.src='/var/lib/tomcat8/webapps/images/profil/genericImage.png'\"/>");
 		console.log("J'AI AJOUTE LA PHOTO PROFILE");
 
 		$("#note").html("<span>"+obj.note.moyenne.toFixed(2)+"/5"+" ("+obj.note.nbNotes+" votes)</span>");

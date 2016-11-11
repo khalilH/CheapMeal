@@ -134,24 +134,7 @@ $(function() {
 				r.Erreur = value.Erreur;
 			}
 			return (r);
-		} else if ((isNumber(key)) && (value.auteur instanceof Auteur)) { // Si
-																			// l'on
-																			// est
-																			// dans
-																			// une
-																			// case
-																			// du
-																			// tableau
-																			// et
-																			// que
-																			// l'auteur
-																			// est
-																			// un
-																			// objet
-																			// de
-																			// la
-																			// classe
-																			// auteur
+		} else if ((isNumber(key)) && (value.auteur instanceof Auteur)) {
 			var recette = new Recette(value._id, value.auteur, value.titre,
 					value.photo, value.ingredients, value.note.moyenne);
 			sumNote += recette.note;
