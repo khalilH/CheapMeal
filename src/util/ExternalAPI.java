@@ -11,9 +11,8 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 /**
- * 
- * @author khalil
- *
+ * Classe permettant de faire appel a l'API Datagram afin de recuperer
+ * les prix d'un produit a partir de son code barre
  */
 public class ExternalAPI {
 
@@ -49,9 +48,5 @@ public class ExternalAPI {
 		return prices;
 	}
 	
-	public static ArrayList<String> getEAN(String nomIngredient) {
-		
-		return null;
-	}
 }
 

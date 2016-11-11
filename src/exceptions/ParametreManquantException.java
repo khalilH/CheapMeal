@@ -1,9 +1,8 @@
 package exceptions;
 
 /**
- * 
- * @author khalil
- *
+ * Exception levee lorsque les parametres obligatoires d'une requete 
+ * ne sont pas transmis ou sont vide
  */
 public class ParametreManquantException extends MyException {
 

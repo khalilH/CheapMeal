@@ -5,9 +5,9 @@ import java.net.UnknownHostException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import exceptions.NonValideException;
-import exceptions.SessionExpireeException;
+import exceptions.MyException;
 import services.fonctions.SearchFonctions;
+import util.ErrorCode;
 import util.ServiceTools;
 
 public class SearchServices {
@@ -15,8 +15,9 @@ public class SearchServices {
 	/**
 	 * Permet de faire appel aux fonctions constituant le service du moteur de recherche
 	 * @param query la requete de la recherche
-	 * @return un JSONObject contenant les recettes satisfaisant la requete, ou
-	 * "error" avec un message d'erreur
+	 * @param cle la cle de session d'un utilisateur connecte
+	 * @return un JSONObject contenant les 20 premieres recettes satisfaisant 
+	 * la requete, ou "error" avec un message d'erreur
 	 * @throws JSONException
 	 */
 	public static JSONObject search(String query, String cle) throws JSONException {
@@ -24,12 +25,11 @@ public class SearchServices {
 		try {
 			return SearchFonctions.search(query, cle);
 		} catch (UnknownHostException e) {
-			return ServiceTools.serviceRefused(e.getMessage(), -1);
-		} catch (NonValideException e) {
-			return ServiceTools.serviceRefused(e.getMessage(), -1);
-		} catch (SessionExpireeException e) {
-			return ServiceTools.serviceRefused(e.getMessage(), -1);
-		}
+			return ServiceTools.serviceRefused(ErrorCode.ERREUR_INTERNE, ErrorCode.ELASTIC_SEARCH_EXCEPTION);
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+		} 
+		
 	}
 
 	

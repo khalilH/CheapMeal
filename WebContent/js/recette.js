@@ -206,7 +206,7 @@ Recette.revival = function(key, value){
 		var r;
 		if((value.Erreur == undefined) || (value.Erreur == 0)){ 
 			// Si l'on trouve pas un champs Erreur dans le JSON
-			r = new Recette(value._id, value.auteur, value.titre, value.ingredients, value.preparation, value.note, value.photo, value.prix);
+			r = new Recette(value._id, value.auteur, value.titre, value.ingredients, value.preparation, value.note, value.photo, value.prix.toFixed(2));
 		}
 		else {
 			r = new Object();
@@ -327,6 +327,17 @@ Recette.traiteReponseJSON = function(json_text){
 	}
 }
 
+Recette.afficherPrix = function(json_text){
+
+	console.log(JSON.stringify(json_text));
+
+	var obj = JSON.parse(JSON.stringify(json_text));
+	console.log(obj.success);
+	$("#prix").html("<span class='txt-size-35'>Prix estimé: </span><span class='txt-size-25'>"+obj.success+"€</span>");
+		
+}
+
+
 function isNumber(s){
 	return ! isNaN (s-0);
 }
@@ -403,6 +414,20 @@ $(document).ready(function() {
 		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
 		dataType : 'json',
 		success : Recette.traiteReponseJSON,
+		error : function(resultat, statut, erreur) {
+			console.log("Bug");
+			console.log(resultat);
+			alert("Erreur Ajax");
+		}
+	});
+	
+	$.ajax({
+		url : 'recette/prix',
+		type : 'GET',
+		data : 'idRecette='+idRecette+cle,
+		contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+		dataType : 'json',
+		success : Recette.afficherPrix,
 		error : function(resultat, statut, erreur) {
 			console.log("Bug");
 			console.log(resultat);

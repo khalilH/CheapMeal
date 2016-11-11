@@ -1,9 +1,7 @@
 package exceptions;
 
 /**
- * 
- * @author khalil
- *
+ * Exception levee lors d'une erreur lors de l'envoie d'un mail
  */
 public class MailException extends MyException {
 

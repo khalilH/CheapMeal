@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import exceptions.MyException;
 import exceptions.NonValideException;
 import exceptions.SessionExpireeException;
 import util.ErrorCode;
@@ -27,13 +28,14 @@ public class SearchFonctions {
 	/**
 	 * Recherche les Recettes satisfaisant la recherche
 	 * @param query requete de la recherche, optionel
-	 * @return un JSONObject contenant les recettes satisfaisant la requete
+	 * @param cle la cle de session d'un utilisateur connecte
+	 * @return un JSONObject contenant les 20 recettes satisfaisant la requete
 	 * @throws JSONException
 	 * @throws UnknownHostException si elasticSearch ne repond pas
 	 * @throws NonValideException 
 	 * @throws SessionExpireeException 
 	 */
-	public static JSONObject search(String query, String cle) throws JSONException, UnknownHostException, NonValideException, SessionExpireeException {
+	public static JSONObject search(String query, String cle) throws JSONException, MyException, UnknownHostException {
 		if (cle != null) {
 			if (cle.length() != 32)
 				throw new NonValideException("Cle invalide", ErrorCode.CLE_INVALIDE);
@@ -52,7 +54,7 @@ public class SearchFonctions {
 			res = client.prepareSearch()
 					.setIndices("cheapmeal")
 					.setTypes("Recettes")
-					.setSize(50)
+					.setSize(20)
 					.setQuery(QueryBuilders.matchAllQuery())
 					.execute()
 					.actionGet();
@@ -61,8 +63,8 @@ public class SearchFonctions {
 			res = client.prepareSearch()
 					.setIndices("cheapmeal")
 					.setTypes("Recettes")
-					.setSize(50)
-					.setQuery(QueryBuilders.queryStringQuery(query))
+					.setSize(20)
+					.setQuery(QueryBuilders.queryStringQuery(query+"~"))
 					.execute()
 					.actionGet();
 		}

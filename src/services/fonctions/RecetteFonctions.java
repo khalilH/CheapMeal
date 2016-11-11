@@ -141,10 +141,46 @@ public class RecetteFonctions {
 		BasicDBObject res = null;
 		if(cursor.hasNext())
 			res = cursor.next();
+		res.put("prix", 0.0);
+		return new JSONObject(res);
+	}
+
+	/**
+	 * Permet d'obtenir le prix d'une recette
+	 * @param id
+	 * @param cle
+	 * @return
+	 * @throws MyException
+	 * @throws JSONException
+	 */
+	public static double afficherPrixRecette(String id, String cle) throws MyException, JSONException {
+		if(id == null)
+			throw new ParametreManquantException("Parametre(s) manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
+		if(id.equals(""))
+			throw new NonValideException("Parametre non valide", ErrorCode.RECETTE_ID_INVALIDE);
+		if (cle != null) {
+			if (cle.length() != 32)
+				throw new NonValideException("Cle invalide", ErrorCode.CLE_INVALIDE);
+
+			if (!ServiceTools.isCleActive(cle))
+				throw new SessionExpireeException("Votre session a expiree", ErrorCode.SESSION_EXPIREE);
+		}
+		BasicDBObject query = new BasicDBObject("_id", new ObjectId(id));
+		MongoDatabase database;
+		try {
+			database = DBStatic.getMongoConnection();
+		} catch (Exception e) {
+			throw new MongoDBException(ErrorCode.ERREUR_INTERNE, ErrorCode.MONGO_EXCEPTION);
+		}
+
+		MongoCollection<BasicDBObject> col = database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
+		MongoCursor<BasicDBObject> cursor = col.find(query).iterator();
+		BasicDBObject res = null;
+		if(cursor.hasNext())
+			res = cursor.next();
 
 		double prix = 0.0;
 		if(res != null){
-			// TODO Ajouter le prix calcule via l'API
 			BasicDBList ing = (BasicDBList) res.get(MongoFactory.INGREDIENTS);
 
 			for (int i = 0; i<ing.size(); i++) {
@@ -162,12 +198,12 @@ public class RecetteFonctions {
 					}
 				}
 			}
-			res.put("prix", prix);
 		}
 
-		return new JSONObject(res);
+		return prix;
 	}
 
+	
 
 	/**
 	 * Permet d'jaouter une recette

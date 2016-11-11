@@ -101,4 +101,22 @@ public class RecetteServices {
 			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 		}
 	}
+
+	/**
+	 * Permet d'interroger l'API Datagram pour estimer le prix d'une recette
+	 * @param id l'identifiant de la recette
+	 * @param cle la cle de session d'un utilsateur connecte
+	 * @return {Success: prixEstime}
+	 * @throws JSONException
+	 */
+	public static JSONObject afficherPrixRecette(String id, String cle) throws JSONException {
+		double prix;
+		try {
+			prix = RecetteFonctions.afficherPrixRecette(id, cle);
+			return ServiceTools.serviceAccepted(prix+"");
+		} catch (MyException e) {
+			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
+		}
+	
+	}
 }

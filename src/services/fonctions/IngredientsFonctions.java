@@ -24,9 +24,10 @@ import util.bdTools.MongoFactory;
 public class IngredientsFonctions {
 
 	/**
-	 * Permet de recuperer la liste ingredients utilisables matchant la query
-	 * @param query de l'autocomplete
-	 * @return la liste des ingredients utilisables sous forme de String
+	 * Permet de recuperer la liste ingredients utilisables contenant la 
+	 * sous-chaine de caracteres  
+	 * @param query sous chaine de caracteres
+	 * @return la liste des ingredients (String) utilisables
 	 * @throws MyException 
 	 */
 	public static ArrayList<String> getListeIngredients(String query) 
@@ -57,11 +58,10 @@ public class IngredientsFonctions {
 
 	/**
 	 * Permet de reconstruire la liste des ingredients utilisables et de les stocker
-	 * dans la collection ingredients dans MongoDB
+	 * dans la collection ingredients dans la base MongoDB
 	 * @param fileName le fichier contenant la liste des ingredients
 	 * @throws MyException 
 	 */
-	//TODO essayer GoogleDrive API
 	public static void putListeIngredients(String fileName) 
 			throws MyException {
 
@@ -82,8 +82,10 @@ public class IngredientsFonctions {
 				String line = scanner.nextLine();
 				String[] tab = line.split(",");
 				BasicDBObject document;
+				
 				String nomIngredient = tab[1];
 				double quantite = Double.parseDouble(tab[3]);
+				
 				if (tab[0].equals("i")) {
 					String ean = tab[2];
 					document = MongoFactory.creerDocumentListeIngredient(nomIngredient, ean, quantite);
@@ -97,11 +99,19 @@ public class IngredientsFonctions {
 			scanner.close();
 		} catch (FileNotFoundException e) {
 			throw new FichierNonTrouveException(ErrorCode.ERREUR_INTERNE, ErrorCode.FILE_NOT_FOUND_EXCEPTION);
+		} finally {
+			DBStatic.closeMongoDBConnection();
 		}
-
-		DBStatic.closeMongoDBConnection();
 	}
 	
+	
+	/**
+	 * Permet d'obtenir le code barre(prix pour un fruit ou un legume) et la quantite d'un produit
+	 * @param nomIngredient le nom du produit/ingredient/fruit 
+	 * @return document ingredient de la collection ingredients
+	 * @throws MyException
+	 * @throws JSONException
+	 */
 	public static JSONObject getIngredient(String nomIngredient) throws MyException, JSONException {
 		MongoDatabase database;
 		try {
@@ -116,7 +126,9 @@ public class IngredientsFonctions {
 		MongoCursor<BasicDBObject> cursor = collection.find(o).iterator();
 		BasicDBObject ingredient = cursor.next();
 		
-		return new JSONObject(ingredient.toJson());
+		JSONObject  ret = new JSONObject(ingredient.toJson());
+		DBStatic.closeMongoDBConnection();
+		return ret;
 	}
 
 }

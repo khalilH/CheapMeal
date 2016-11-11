@@ -1,9 +1,7 @@
 package exceptions;
 
 /**
- * 
- * @author khalil
- *
+ * Exception levee en reponse a une MongoConnexionException ou une UnknownHostException
  */
 public class MongoDBException extends MyException {
 

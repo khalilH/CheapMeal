@@ -1,9 +1,8 @@
 package exceptions;
 
 /**
- * 
- * @author khalil
- *
+ * Exception levee si le fichier ingredients.csv contenant la liste
+ * des ingredients disponible n'est pas present dans WebContent
  */
 public class FichierNonTrouveException extends MyException {
 

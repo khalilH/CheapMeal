@@ -1,9 +1,7 @@
 package util;
 
 /**
- * 
- * @author khalil
- *
+ * Classe contenant tout les parametres possibles des services
  */
 public class RequestParameter {
 
