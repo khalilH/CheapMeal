@@ -25,7 +25,7 @@ $(function(){
 			error : function(resultat, statut, erreur) {
 				console.log("Bug");
 				console.log(resultat);
-				alert("dawg");
+				alert("Erreur Ajax");
 			}
 		});
 
