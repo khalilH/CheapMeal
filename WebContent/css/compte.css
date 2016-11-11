@@ -65,6 +65,10 @@ input {
     width: 200px;
 }
 
+.label-bio{
+	margin-right: 50px;
+}
+
 button{
 	margin-top: 10px;
 }
