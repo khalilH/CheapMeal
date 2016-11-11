@@ -37,8 +37,8 @@ import util.hibernate.model.Utilisateurs;
 public class RecetteFonctions {
 	/**
 	 * Recupere les 9 recette les plus recentes
-	 * @param col
-	 * @return
+	 * @param col la collection Mongo dans laquelle les recettes sont stockees
+	 * @return ArrayList<BasicDBObject> la liste dont chaque element est un objet representant une recette
 	 */
 	public static ArrayList<BasicDBObject> getRecentRecipes(MongoCollection<BasicDBObject> col){
 		ArrayList<BasicDBObject> list = new ArrayList<>();
@@ -53,9 +53,9 @@ public class RecetteFonctions {
 		return list;
 	}
 	/**
-	 * Recupere les 9 recettes les mieux note
-	 * @param col
-	 * @return
+	 * Recupere les 9 recettes les mieux notes
+	 * @param col la collection Mongo dans laquelle les recettes sont stockees 
+	 * @return ArrayList<BasicDBObject> la liste dont chaque element est un objet representant une recette
 	 */
 	public static ArrayList<BasicDBObject> getBestRecipes(MongoCollection<BasicDBObject> col){
 		ArrayList<BasicDBObject> list = new ArrayList<>();
@@ -72,12 +72,12 @@ public class RecetteFonctions {
 	}
 	/**
 	 * Permet de recuperer les 9 recette les mieux notées et les 9 plus récentes
-	 * @param cle
-	 * @return
-	 * @throws JSONException
-	 * @throws NonValideException
-	 * @throws SessionExpireeException
-	 * @throws MongoDBException
+	 * @param cle la cle session utilisateur
+	 * @return JSONObject contenant les recettes a afficher sur la page d'accueil
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
+	 * @throws NonValideException si la cle session n'a pas un format valide 
+	 * @throws SessionExpireeException si la session utilisateur a expire
+	 * @throws MongoDBException s'il y eut une lors de l'acces a la base Mongo
 	 */
 	public static JSONObject getRecettesAccueil(String cle) throws JSONException, NonValideException, SessionExpireeException, MongoDBException{
 		if (cle != null) {
@@ -110,11 +110,10 @@ public class RecetteFonctions {
 	/**
 	 * Permet d'obtenir l'objet Json correspondant a la recette dont l'id est en parametre 
 	 * @param id id de la recette
+	 * @param cle la cle session utilisateur
 	 * @return JSONObject contenant les informations de la recette
-	 * @throws MyException
-	 * @throws JSONException 
-	 * @throws MongoClientException
-	 * @throws UnknownHostException
+	 * @throws MyException lorsqu'il y a eut une erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
 	 */
 	public static JSONObject afficherRecette(String id, String cle) throws MyException, JSONException {
 		if(id == null)
@@ -171,13 +170,13 @@ public class RecetteFonctions {
 
 	/**
 	 * Permet d'jaouter une recette
-	 * @param titre
-	 * @param cle
-	 * @param ingredients
-	 * @param quantites
-	 * @param mesures
-	 * @param preparation
-	 * @throws MyException
+	 * @param titre le titre de la recette
+	 * @param cle la cle session utilisateur
+	 * @param ingredients la liste des ingredients 
+	 * @param quantites la liste des quantites correspondant aux ingredients de la recette
+	 * @param mesures la liste des mesures utilises pour exprimer les quantites
+	 * @param preparation la liste des etapes de preparation
+	 * @throws MyException lorsqu'il y aeut une erreur
 	 */
 	public static void ajouterRecette(String titre, String cle, 
 			List<String> ingredients, 
@@ -237,9 +236,9 @@ public class RecetteFonctions {
 
 	/**
 	 * Permet de supprimer une recette
-	 * @param idRecette
-	 * @param cle
-	 * @throws MyException
+	 * @param idRecette l'id de la recette a supprimer
+	 * @param cle la cle session utilisateur
+	 * @throws MyException lorsqu'il y a eut une erreur
 	 */
 	public static void supprimerRecette(String idRecette, String cle) throws MyException {
 
@@ -278,12 +277,12 @@ public class RecetteFonctions {
 	}
 
 	/**
-	 * Permete de savoir si l'utilisateur est l'auteur de la recette
-	 * @param id_auteur
-	 * @param login
-	 * @param idRecette
-	 * @param recettesCollection
-	 * @return
+	 * Permet de savoir si un utilisateur est l'auteur d'une recette
+	 * @param id_auteur l'id de l'utilisateur
+	 * @param login le nom d'utilisateur
+	 * @param idRecette l'id de la recette
+	 * @param recettesCollection la collection Mongo contenant les recettes
+	 * @return boolean vrai si l'utilisateur est l'auteur de la recette, faux sinon
 	 */
 	public static boolean estAuteurRecette(int id_auteur, String login, String idRecette
 			, MongoCollection<BasicDBObject> recettesCollection) {
@@ -296,10 +295,10 @@ public class RecetteFonctions {
 
 	/**
 	 * Permet de noter une recette
-	 * @param cle
-	 * @param idRecette
-	 * @param note
-	 * @throws MyException
+	 * @param cle la cle session utilisateur
+	 * @param idRecette l'id de la recette a noter
+	 * @param note la note donne a la recette
+	 * @throws MyException s'il y a eut une erreur
 	 */
 	public static JSONObject noterRecette(String cle, String idRecette, int note) 
 			throws MyException{
@@ -328,14 +327,12 @@ public class RecetteFonctions {
 		}
 		MongoCollection<BasicDBObject> recettesCollection = 
 				database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
-		MongoCollection<BasicDBObject> notesCollection = 
-				database.getCollection(MongoFactory.COLLECTION_UTILISATEUR_NOTES, BasicDBObject.class);
 		if(estAuteurRecette(u.getId(), u.getLogin(), idRecette, recettesCollection))
 			throw new RecetteException("Vous tentez de supprimer une recette qui ne vous appartient pas", ErrorCode.RECETTE_AUTRE_USER);
 
 
 		// Noter la recette
-		BasicDBObject objetNote = noterRecetteParId(u, cle, idRecette, note, recettesCollection, notesCollection);
+		BasicDBObject objetNote = noterRecetteParId(u, cle, idRecette, note, recettesCollection);
 
 		// Dire que l'utilisateur a note la recette (ajout dans collection Mongo)
 		if(objetNote == null)
@@ -347,44 +344,17 @@ public class RecetteFonctions {
 	}
 
 	/**
-	 * Permet de récuperer les recette d'un utilisateur
-	 * @param login
-	 * @return
-	 * @throws MongoDBException
-	 */
-	public static ArrayList<BasicDBObject> getRecettesFromLogin(String login) throws MongoDBException {
-		MongoDatabase database;
-		try {
-			database = DBStatic.getMongoConnection();
-		} catch (Exception e) {
-			throw new MongoDBException(ErrorCode.ERREUR_INTERNE, ErrorCode.MONGO_EXCEPTION);
-		}
-		MongoCollection<BasicDBObject> recettesCollection = 
-				database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
-		BasicDBObject document = new BasicDBObject(MongoFactory.AUTEUR+"."+MongoFactory.LOGIN_AUTEUR, login);
-		ArrayList<BasicDBObject> list = new ArrayList<BasicDBObject>();
-		for(BasicDBObject obj : recettesCollection.find(document)){
-			ObjectId oid = obj.getObjectId("_id");
-			obj.replace("_id", oid.toString());
-			list.add(obj);
-		}
-		return list;
-	}
-
-	/**
 	 * Permet de noter une recette par son id
-	 * @param u
-	 * @param key
-	 * @param idRecette
-	 * @param note
-	 * @param recettesCollection
-	 * @param notesCollection
-	 * @return
-	 * @throws RecetteException
+	 * @param u l'objet correspondant a l'utilisateur (model hibernate)
+	 * @param key la cle session utilisateur
+	 * @param idRecette l'id de la recette a note
+	 * @param note la note donnee a la recette
+	 * @param recettesCollection la collection Mongo contenant toutes les recettes
+	 * @return BasicDBObject contenant les informations relatives a la note de la recette
+	 * @throws RecetteException lorsque la recette n'existe pas
 	 */
 	public static BasicDBObject noterRecetteParId(Utilisateurs u, String key, String idRecette, int note, 
-			MongoCollection<BasicDBObject> recettesCollection,
-			MongoCollection<BasicDBObject> notesCollection ) throws RecetteException {
+			MongoCollection<BasicDBObject> recettesCollection) throws RecetteException {
 
 		/* Notation de la recette */
 
@@ -405,7 +375,7 @@ public class RecetteFonctions {
 		else
 			throw new RecetteException("Cette recette n'existe pas", ErrorCode.RECETTE_INEXISTANTE);
 
-		if(!aDejaNote(notesCollection, u, idRecette)){
+		if(!aDejaNote(recettesCollection, u, idRecette)){
 			// Modifier la recette 
 			BasicDBObject noteDoc = (BasicDBObject) recette.get(MongoFactory.NOTE);
 			double moyenne = noteDoc.getDouble(MongoFactory.NOTE_MOYENNE);
@@ -433,44 +403,11 @@ public class RecetteFonctions {
 	}
 
 	/**
-	 * 
-	 * @param u
-	 * @param idRecette
-	 * @param notesCollection
-	 */
-	/*public static void majNotationRecette(Utilisateurs u, String idRecette,
-			MongoCollection<BasicDBObject> notesCollection) {
-
-		// Dire que l'utilisateur a note la recette
-		BasicDBObject query = new BasicDBObject();
-		query.put(MongoFactory.ID_RECETTE, arg1)
-		query.put(MongoFactory., u.getLogin());
-		MongoCursor<BasicDBObject> cursor = notesCollection.find(query).iterator();
-		BasicDBObject doc;
-		if(cursor.hasNext()){
-			// Si le doc correspondant a l'utilisateur existe, mettre a jour les ids
-			doc = cursor.next();
-			ArrayList<ObjectId> list = (ArrayList<ObjectId>) doc.get(MongoFactory.IDS_RECETTE);
-			list.add(new ObjectId(idRecette));
-			doc.replace(MongoFactory.IDS_RECETTE, list);
-
-			BasicDBObject tmp = new BasicDBObject();
-			tmp.put("$set", doc);
-			notesCollection.updateOne(query, doc);
-		}else{
-			// Si le doc n'existe pas, l'inserer
-			doc = new BasicDBObject(MongoFactory.ID_USER, u.getId());
-			doc.append(MongoFactory.IDS_RECETTE, new ArrayList<>());
-			notesCollection.insertOne(doc);
-		}
-	}*/
-
-	/**
 	 * Permet de savoir si un utilisateur a deja note une recette
-	 * @param recettes
-	 * @param u
-	 * @param idRecette
-	 * @return
+	 * @param recettes la collection Mongo contenant les recettes
+	 * @param u l'objet representant l'utilisateur (model hibernate)
+	 * @param idRecette l'id de la recette
+	 * @return boolean vrai si l'utilisateur a deja note la recette, faux sinon
 	 */
 	public static boolean aDejaNote(MongoCollection<BasicDBObject> recettes, Utilisateurs u, String idRecette){
 		BasicDBObject query = new BasicDBObject();
@@ -490,5 +427,29 @@ public class RecetteFonctions {
 	}
 
 
+	/**
+	 * Permet de récuperer les recettes d'un utilisateur
+	 * @param login le nom d'utilisateur
+	 * @return ArrayList<BasicDBObject> la liste dont chaque element est un objet representant une recette
+	 * @throws MongoDBException s'il y eut une lors de l'acces a la base Mongo
+	 */
+	public static ArrayList<BasicDBObject> getRecettesFromLogin(String login) throws MongoDBException {
+		MongoDatabase database;
+		try {
+			database = DBStatic.getMongoConnection();
+		} catch (Exception e) {
+			throw new MongoDBException(ErrorCode.ERREUR_INTERNE, ErrorCode.MONGO_EXCEPTION);
+		}
+		MongoCollection<BasicDBObject> recettesCollection = 
+				database.getCollection(MongoFactory.COLLECTION_RECETTE, BasicDBObject.class);
+		BasicDBObject document = new BasicDBObject(MongoFactory.AUTEUR+"."+MongoFactory.LOGIN_AUTEUR, login);
+		ArrayList<BasicDBObject> list = new ArrayList<BasicDBObject>();
+		for(BasicDBObject obj : recettesCollection.find(document)){
+			ObjectId oid = obj.getObjectId("_id");
+			obj.replace("_id", oid.toString());
+			list.add(obj);
+		}
+		return list;
+	}
 
 }
