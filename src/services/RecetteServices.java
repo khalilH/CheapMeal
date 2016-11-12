@@ -85,7 +85,6 @@ public class RecetteServices {
 	public static JSONObject noterRecette(String cle, String idRecette, int note) throws JSONException{
 		try {
 			return RecetteFonctions.noterRecette(cle, idRecette, note);
-			//return ServiceTools.serviceAccepted("La recette a ete notee");
 		} catch (MyException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
 		}

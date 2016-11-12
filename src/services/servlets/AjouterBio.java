@@ -14,9 +14,6 @@ import org.json.JSONObject;
 import services.ProfilServices;
 import util.RequestParameter;
 
-/**
- * Servlet implementation class AjouterBio
- */
 public class AjouterBio extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

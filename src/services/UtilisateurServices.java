@@ -104,7 +104,6 @@ public class UtilisateurServices {
 		JSONObject result;
 		try {
 			result = UtilisateurFonctions.connexion(login,mdp);
-			//return ServiceTools.serviceAccepted(result);
 			return result;
 		} catch (MyException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
