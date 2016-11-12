@@ -18,7 +18,6 @@
 	}
 }
 
-
 .contenu-page{
 	margin-left: 10%;
 	margin-right: 10%;
@@ -41,11 +40,8 @@
 	margin-top: 15px;
 }
 
-.contenu-left{
-}
-
 .photo-recette{
-	height: 500px;
+	height: 250px;
 	width: 100%;
 	margin-bottom: 100px;
 	background-color: white;
@@ -105,3 +101,4 @@
 	text-align: center;
 	font-size: 21px;
 }
+

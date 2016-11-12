@@ -178,9 +178,9 @@ function Note(moyenne,nbNotes,usersNotes){
 	this.usersNotes = usersNotes;
 }
 
-function NoteUser(idUser, noteUser){
+function NoteUser(idUser, userNote){
 	this.idUser = idUser;
-	this.noteUser = noteUser;
+	this.userNote = userNote;
 }
 
 Note.revival = function(key, value){
@@ -218,7 +218,7 @@ Recette.revival = function(key, value){
 		var ingr = new Ingredient(value.nomIngredient, value.quantite, value.mesure);
 		return ingr;
 	}else if((isNumber(key)) && value.idUser != undefined){
-		var usrNote = new NoteUser(value.idUser, value.noteUser);
+		var usrNote = new NoteUser(value.idUser, value.userNote);
 		return usrNote;
 	}
 	else if(key == "auteur"){
@@ -252,19 +252,18 @@ Recette.traiteReponseJSON = function(json_text){
 		/* photo recette */
 		$("#photo-recette").html("<center><img class='img-responsive' id='recettePhoto' " +
 				"src='"+"../images/"+obj.photo+".png"+"' alt='Recette Picture'/></center>");
-		console.log("J'AI AJOUTE LA PHOTO RECETTE");
 
 		$("#nom-auteur-recette").html("<a href='profile.html?login="+obj.auteur.loginAuteur+"'>"+obj.auteur.loginAuteur+"</a>");
 
 		/* photo auteur */
 		$("#photo-auteur").html("<center><img class='img-responsive' id='profilPicture' " +
 				"src='"+"../images/profil/"+obj.auteur.loginAuteur+".png"+"' alt='Profil Picture' onerror=\"this.onerror=null;this.src='../images/profil/genericImage.png'\"/></center>");
-		console.log("J'AI AJOUTE LA PHOTO PROFILE");
 
 		$("#note").html("<span>"+obj.note.moyenne.toFixed(2)+"/5"+" ("+obj.note.nbNotes+" votes)</span>");
 
 		/* si l'utilisateur a deja note la recette, afficher le nombre d'etoile attribue */
 		var varUsersNotes = obj.note.usersNotes;
+		
 		var i, aNote = false;
 		var id = getCookie(C_NAME_ID);
 		for(i=0; i<varUsersNotes.length; i++){
@@ -278,23 +277,11 @@ Recette.traiteReponseJSON = function(json_text){
 			if(getCookie(C_NAME_LOGIN) != obj.auteur.loginAuteur){
 				console.log("cookielogin="+getCookie(C_NAME_LOGIN)+" loginAuteur="+obj.auteur.loginAuteur);
 				if(aNote == false){
-					console.log("JE PASSE ICI");
 					$("#notez").html("Notez cette recette:");
 					$("#stars").show();
-//					$("#noter-recette").html(
-//					"<div class='row lead margin-top-20'>"+
-//					"<p>Notez cette recette:</p>"+
-//					"<div id='stars' class='starrr'></div>"+
-//					"</div>"
-//					);
 				}else{
-					console.log("JE PASSE DANS ELSE");
 					$("#stars").hide();
-					$("#notez").html("<p>Vous avez donné"+varUsersNotes[i].noteUser+" étoile(s) à cette recette.</p>");
-//					$("#noter-recette").html("<div class='row lead margin-top-20'>"+
-//					"<p>Vous avez donné"+varUsersNotes[i].noteUser+" étoile(s) à cette recette.</p>"+
-//					"</div>"
-//					);
+					$("#notez").html("<p>Vous avez donné "+varUsersNotes[i].userNote+" étoile(s) à cette recette.</p>");
 				}
 			}else{
 				$("#stars").hide();

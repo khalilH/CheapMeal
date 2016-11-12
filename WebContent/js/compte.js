@@ -137,7 +137,7 @@ $(function() {
 			data: "cle="+getCookie(C_NAME_KEY)+"&mdp="+mdp+"&newMdp="+newMdp+"&confirmationMdp="+confirmationMdp,
 			dataType: "json",
 			success: function(rep){
-				if (rep.erreur != undefined) {
+				if (rep.erreur == undefined) {
 					alert("Succès: votre mot de passe a été modifiée");
 				}else{
 					if(rep.erreur == 40){
@@ -171,7 +171,7 @@ $(function() {
 			data: "cle="+getCookie(C_NAME_KEY)+"&bio="+newBio,
 			dataType: "json",
 			success: function(rep){
-				if (rep.erreur != undefined) {
+				if (rep.erreur == undefined) {
 					alert("Succès: votre bio a été modifiée");
 				}else{
 					if(rep.erreur == 40){
