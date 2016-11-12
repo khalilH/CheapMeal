@@ -41,7 +41,7 @@ public class UploadImage extends HttpServlet {
 			PrintWriter writer = response.getWriter();
 			response.setContentType("application/json");
 			writer.println(res.toString());
-
+			writer.close();
 
 		} catch (MessagingException e) {
 			e.printStackTrace();

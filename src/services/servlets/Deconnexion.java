@@ -31,6 +31,7 @@ public class Deconnexion extends HttpServlet {
 			PrintWriter writer = response.getWriter();
 			response.setContentType("application/json");
 			writer.println(result.toString());
+			writer.close();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

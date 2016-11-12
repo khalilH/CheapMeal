@@ -31,6 +31,7 @@ public class GetIngredients extends HttpServlet {
 			response.setContentType("application/json");
 			PrintWriter printWriter = response.getWriter();
 			printWriter.println(result);
+			printWriter.close();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

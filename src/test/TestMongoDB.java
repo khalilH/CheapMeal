@@ -2,22 +2,12 @@ package test;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-
-import util.RequestParameter;
-import util.bdTools.DBStatic;
-import util.bdTools.MongoFactory;
 
 /**
  * Servlet implementation class Test
@@ -78,6 +68,7 @@ public class TestMongoDB extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter pw = response.getWriter();
 		pw.println("OK");
+		pw.close();
 	}
 
 	/**

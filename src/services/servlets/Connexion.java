@@ -32,6 +32,7 @@ public class Connexion extends HttpServlet {
 			response.setContentType("text/html");
 			PrintWriter writer = response.getWriter();
 			writer.println(jb.toString());
+			writer.close();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

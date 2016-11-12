@@ -51,6 +51,7 @@ public class RecetteFonctions {
 			obj.replace("_id", oid.toString());
 			list.add(obj);
 		}
+		cursor.close();
 		return list;
 	}
 	/**
@@ -69,6 +70,7 @@ public class RecetteFonctions {
 			obj.replace("_id", oid.toString());
 			list.add(obj);
 		}
+		cursor.close();
 		return list;
 	}
 	/**
@@ -142,6 +144,7 @@ public class RecetteFonctions {
 		if(cursor.hasNext())
 			res = cursor.next();
 		res.put("prix", 0.0);
+		cursor.close();
 		return new JSONObject(res);
 	}
 
@@ -179,6 +182,7 @@ public class RecetteFonctions {
 		if(cursor.hasNext())
 			res = cursor.next();
 		
+		cursor.close();
 		ExecutorService executorService = Executors.newFixedThreadPool(10);
 		ArrayList<FutureTask<Double>> listOfResults = new ArrayList<>();
 		double prix = 0.0;
@@ -192,30 +196,22 @@ public class RecetteFonctions {
 					prix += o.getDouble(MongoFactory.QUANTITE)*ref.getDouble(MongoFactory.PRIX_AU_KG)/ref.getDouble(MongoFactory.QUANTITE);
 				}
 				else {
-//					try {
-//						double prixAPI = ExternalAPI.searchMinPrice(ref.getString(MongoFactory.EAN));
-//						prix += o.getDouble(MongoFactory.QUANTITE)*prixAPI/ref.getDouble(MongoFactory.QUANTITE);
 						String ean = ref.getString(MongoFactory.EAN);
 						Double quantiteRef = ref.getDouble(MongoFactory.QUANTITE);
 						Double quantiteProduit = o.getDouble(MongoFactory.QUANTITE);
-
 						FutureTask<Double> future = new FutureTask<>(new MyPriceCallable(ean,quantiteRef,quantiteProduit));
 						executorService.execute(future);
 						listOfResults.add(future);
-//					} catch (UnirestException e) {
-//						throw new MyException("Erreu appel API", 666);
-//					}
 				}
 			}
 				for(FutureTask<Double> task : listOfResults){
 					try {
 						prix += task.get();
 					} catch (InterruptedException | ExecutionException e) {
-						throw new MyException(e.getMessage(), 666);
+						throw new MyException(ErrorCode.ERREUR_INTERNE, 666);
 					}
 				}
-		}
-
+		}	
 		return prix;
 	}
 
@@ -316,17 +312,22 @@ public class RecetteFonctions {
 		BasicDBObject query = new BasicDBObject();
 		query.put(MongoFactory._ID, new ObjectId(idRecette));
 		MongoCursor<BasicDBObject> cursor = recetteCollection.find(query).iterator();
-		if(!cursor.hasNext())
+		if(!cursor.hasNext()) {
+			cursor.close();
 			throw new RecetteException("La recette n'existe pas", ErrorCode.RECETTE_INEXISTANTE);
+		}
 
 
 		//Verifier que c'est bien l'utilisateur qui est le proprietaire de la recette
 		Sessions s = RequeteStatic.obtenirSession(cle);
 		Utilisateurs u = RequeteStatic.obtenirUtilisateur(s.getIdSession(), null);
-		if(!estAuteurRecette(u.getId(), u.getLogin(), idRecette, recetteCollection))
+		if(!estAuteurRecette(u.getId(), u.getLogin(), idRecette, recetteCollection)) {
+			cursor.close();
 			throw new RecetteException("Vous tentez de supprimer une recette qui ne vous appartient pas", ErrorCode.RECETTE_AUTRE_USER);
+		}
 		//Supprime la recette et recupere le deleteresult
 		recetteCollection.deleteOne(query);
+		cursor.close();
 		DBStatic.closeMongoDBConnection();
 	}
 
@@ -344,7 +345,9 @@ public class RecetteFonctions {
 		document.append(MongoFactory.AUTEUR+"."+MongoFactory.ID_AUTEUR, id_auteur);
 		document.put(MongoFactory._ID, new ObjectId(idRecette));
 		MongoCursor<BasicDBObject> cursor = recettesCollection.find(document).iterator();
-		return cursor.hasNext();
+		boolean estAuteurRecette = cursor.hasNext();
+		cursor.close();
+		return estAuteurRecette;
 	}
 
 	/**
@@ -427,8 +430,10 @@ public class RecetteFonctions {
 
 		if(cursor.hasNext())
 			recette = cursor.next();
-		else
+		else {
+			cursor.close();
 			throw new RecetteException("Cette recette n'existe pas", ErrorCode.RECETTE_INEXISTANTE);
+		}
 
 		if(!aDejaNote(recettesCollection, u, idRecette)){
 			// Modifier la recette 
@@ -454,6 +459,7 @@ public class RecetteFonctions {
 		}else{
 			res = null;
 		}
+		cursor.close();
 		return res;
 	}
 
@@ -474,10 +480,13 @@ public class RecetteFonctions {
 			doc = cursor.next();
 			ArrayList<BasicDBObject> list = (ArrayList<BasicDBObject>) doc.get(MongoFactory.USERS_NOTES);
 			for(BasicDBObject bdo : list){
-				if(bdo.getInt(MongoFactory.ID_USER) == id)
+				if(bdo.getInt(MongoFactory.ID_USER) == id) {
+					cursor.close();
 					return true;
+				}
 			}
 		}
+		cursor.close();
 		return false;
 	}
 

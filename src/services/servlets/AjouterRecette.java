@@ -62,14 +62,17 @@ public class AjouterRecette extends HttpServlet {
 			PrintWriter writer = response.getWriter();
 			response.setContentType("application/json");
 			writer.println(res.toString());
+			writer.close();
 		} catch (JSONException e) {
 			PrintWriter writer = response.getWriter();
 			response.setContentType("text/plain");
 			writer.println(e.toString());
+			writer.close();
 		} catch (IOException e) {
 			PrintWriter writer = response.getWriter();
 			response.setContentType("text/plain");
 			writer.println(e.toString());
+			writer.close();
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}

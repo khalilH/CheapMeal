@@ -29,6 +29,7 @@ public class PutIngredients extends HttpServlet {
 			response.setContentType("application/json");
 			PrintWriter printWriter = response.getWriter();
 			printWriter.println(result);
+			printWriter.close();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

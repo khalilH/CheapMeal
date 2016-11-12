@@ -1,7 +1,5 @@
 package test;
 
-import java.util.ArrayList;
-
 import org.json.JSONException;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
