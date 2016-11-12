@@ -18,7 +18,7 @@ public class SearchServices {
 	 * @param cle la cle de session d'un utilisateur connecte
 	 * @return un JSONObject contenant les 20 premieres recettes satisfaisant 
 	 * la requete, ou "error" avec un message d'erreur
-	 * @throws JSONException
+	 * @throws JSONException s'il y a eut une erreur a la creation de l'objet JSON
 	 */
 	public static JSONObject search(String query, String cle) throws JSONException {
 

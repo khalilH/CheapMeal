@@ -9,7 +9,7 @@ public class MyPriceCallable implements Callable<Double> {
 
 	/**
 	 * Construit un callable avec l'ean d'un produit
-	 * @param ean
+	 * @param ean la chaine de caractere correspondant au code barre du produit
 	 */
 	public MyPriceCallable(String ean,Double quantiteRef, Double quantiteProduit) {
 		this.ean = ean;
@@ -18,6 +18,9 @@ public class MyPriceCallable implements Callable<Double> {
 	}
 	
 	@Override
+	/**
+	 * Fonction d'appel a la fonction de recherche dans l'API externe
+	 */
 	public Double call() throws Exception {
 		Double price =  ExternalAPI.searchMinPrice(ean);
 		Double result = (quantiteProduit * price )/ quantiteRef;

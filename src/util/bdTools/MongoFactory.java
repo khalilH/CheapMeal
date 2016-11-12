@@ -57,16 +57,15 @@ public class MongoFactory {
 	public static final String COLLECTION_UTILISATEUR_NOTES = "UtilisateurNotes";
 
 	/**
-	 * Creer une recette l'ajoute dans mongo
-	 * @param titre
-	 * @param idAuteur
-	 * @param loginAuteur
-	 * @param listIng
-	 * @param quantites
-	 * @param mesures
-	 * @param preparation
-	 * @return
-	 * @throws IOException 
+	 * Creer un document contenant les informations relatives a une recette
+	 * @param titre le titre de la recette
+	 * @param cle la cle session utilisateur
+	 * @param ingredients la liste des ingredients 
+	 * @param quantites la liste des quantites correspondant aux ingredients de la recette
+	 * @param mesures la liste des mesures utilises pour exprimer les quantites
+	 * @param preparation la liste des etapes de preparation
+	 * @return BasicDBObject l'objet contenant toutes les informations de la recette
+	 * @throws IOException lorsqu'il y a eut une erreur lors de la lecture ou de l'ecriture du fichier de photo
 	 */
 	public static BasicDBObject creerDocumentRecette(String titre, int idAuteur, String loginAuteur, 
 			List<String> listIng, 
@@ -106,10 +105,10 @@ public class MongoFactory {
 	}
 
 	/**
-	 * Creer un utilisateur en JSON
-	 * @param idAuteur
-	 * @param login
-	 * @return
+	 * Creer un document correspondant a l'auteur d'une recette
+	 * @param idAuteur l'id de l'auteur
+	 * @param login le nom d'utilisateur de l'auteur
+	 * @return BasicDBObject l'objet contenant les informations relatives a l'auteur
 	 */
 	public static BasicDBObject creerDocumentAuteur(int idAuteur, String login){
 		BasicDBObject document = new BasicDBObject(ID_AUTEUR, idAuteur);
@@ -118,10 +117,10 @@ public class MongoFactory {
 	}
 
 	/**
-	 * 
-	 * @param moyenne
-	 * @param nbNotes
-	 * @return
+	 * Creer un document contenant les informations relatives a la note d'une recette 
+	 * @param moyenne la note moyenne de la recette
+	 * @param nbNotes le nombre de notes donne a la recette
+	 * @return BasicDBObject l'objet contenant les informations relatives a la note d'une recette
 	 */
 	public static BasicDBObject creerDocumentNote(double moyenne, int nbNotes){
 		BasicDBObject document = new BasicDBObject(NOTE_MOYENNE, moyenne);
@@ -131,11 +130,11 @@ public class MongoFactory {
 	}
 	
 	/**
-	 * Creer un JSON ingredient
-	 * @param nomIngredient
-	 * @param quantite
-	 * @param mesure
-	 * @return
+	 * Creer un document contenant les informations relatives a un ingredient dans une recette
+	 * @param nomIngredient le nom de l'ingredient
+	 * @param quantite la quantite associee
+	 * @param mesure la mesure associee a la quantite
+	 * @return BasicDBObject l'objet contenant les informations relatives a un ingredient d'une recette
 	 */
 	public static BasicDBObject creerDocumentIngredient(String nomIngredient, double quantite, String mesure){
 		BasicDBObject document = new BasicDBObject(NOM_INGREDIENT, nomIngredient);

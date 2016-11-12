@@ -34,10 +34,10 @@ public class ServiceTools {
 	
 	/**
 	 * Message de refus lorsqu'il ya erreur dans un service
-	 * @param message
-	 * @param codeErreur
-	 * @return
-	 * @throws JSONException
+	 * @param message le message associe a l'erreur
+	 * @param codeErreur le code d'erreur associe
+	 * @return JSONObject contenant les informationss relatives a l'erreur
+	 * @throws JSONException s'il y a eut une erreur lors de la creation ou de la manipulation de l'objet JSON
 	 */
 	public static JSONObject serviceRefused(String message, int codeErreur) throws JSONException{
 		JSONObject res = new JSONObject();
@@ -48,9 +48,9 @@ public class ServiceTools {
 	
 	/**
 	 * Message de validation lorsqu'un service ofnctionne
-	 * @param message
-	 * @return
-	 * @throws JSONException
+	 * @param message le message associe
+	 * @return JSONObject contenant le message de confirmation
+	 * @throws JSONException s'il y a eut une erreur lors de la creation ou de la manipulation de l'objet JSON
 	 */
 	public static JSONObject serviceAccepted(String message) throws JSONException{
 		return new JSONObject().put("success", message);
@@ -58,9 +58,9 @@ public class ServiceTools {
 	
 	/**
 	 * 
-	 * @param json
-	 * @return
-	 * @throws JSONException
+	 * @param json l'objet JSON contenant les informations liees a la conf
+	 * @return JSONObject contenant les informations liees a la confirmation
+	 * @throws JSONException s'il y a eut une erreur lors de la creation ou de la manipulation de l'objet JSON
 	 */
 	public static JSONObject serviceAccepted(JSONObject json) throws JSONException{
 		return new JSONObject().put("success", json);
@@ -68,8 +68,8 @@ public class ServiceTools {
 	
 	/**
 	 * Regex permettant de savoir si le parametre est un mail
-	 * @param email
-	 * @return
+	 * @param email l'adresse email a verifier
+	 * @return boolean true si le format de l'email est valide, false sinon
 	 */
 	public static boolean isEmailValide(String email){
 		Pattern pattern = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9]+.[a-zA-Z]{2,3}$");
@@ -79,12 +79,12 @@ public class ServiceTools {
 	
 	/**
 	 * Permet d'envoyer un email a un utilisateur
-	 * @param body
-	 * @param subject
-	 * @param email
+	 * @param body le corps du mail
+	 * @param subject le sujet du mail
+	 * @param email l'adresse email destinataire
 	 * @throws NamingException
-	 * @throws AddressException
-	 * @throws MessagingException
+	 * @throws AddressException lorsque l'adresse n'est pas valide
+	 * @throws MessagingException lorsqu'il y a eut une erreur d'envoi de mail
 	 */
 	public static void sendEmail(String body, String subject, String email) throws NamingException, AddressException, MessagingException{
 	    Properties properties = new Properties();
@@ -112,11 +112,11 @@ public class ServiceTools {
 
 	/**
 	 * Permet de récupérer les parametre d'un formulaire encode en multipart
-	 * @throws MessagingException 
-	 * @throws IOException 
+	 * @throws MessagingException lorsqu'il y a eut une erreur d'envoi de mail
+	 * @throws IOException lorsqu'il y a eut une erreur a la lecture du fichier
 	 */
 	
-	public static String getValueFromPart(Part p ) throws IOException, MessagingException{
+	public static String getValueFromPart(Part p) throws IOException, MessagingException{
 		Scanner c = new Scanner(p.getInputStream());
 		String ret = c.nextLine();
 		while(c.hasNextLine())
@@ -176,7 +176,7 @@ public class ServiceTools {
 	
 	/**
 	 * Permet d'obtenir la date d'expiration d'une cle
-	 * @param cle
+	 * @param cle la cle session utilisateur
 	 * @return le timestamp de la date d'expiration
 	 */
 	public static Timestamp getDateExpirationAvecCle(String cle)  {

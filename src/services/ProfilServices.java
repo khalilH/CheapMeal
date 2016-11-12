@@ -36,8 +36,8 @@ public class ProfilServices {
 	 *  Permet d'affiche le profil d'un utilisateur
 	 * @param cle de l'utilisateur
 	 * @param login de la personne dont on souhaite afficher le profil
-	 * @return
-	 * @throws JSONException
+	 * @return JSONObject contenant "success" ou "error" avec un message d'erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation ou manipulation du JSONObject 
 	 */
 	public static JSONObject afficherProfil(String cle,String login) throws JSONException{
 		try {
@@ -50,11 +50,11 @@ public class ProfilServices {
 	}
 	/**
 	 * Permet d'ajouter une photo de profil
-	 * @param cle
-	 * @param login
-	 * @param photo
-	 * @return
-	 * @throws JSONException
+	 * @param cle la cle session utilisateur
+	 * @param login le nom d'utilisateur
+	 * @param photo la photo a mettre en ligne
+	 * @return JSONObject contenant "success" ou "error" avec un message d'erreur
+	 * @throws JSONException s'il y a eut une erreur a la creation ou manipulation du JSONObject 
 	 */
 	public static JSONObject uploadImage(String cle ,String login, Part photo) throws JSONException {
 		try {

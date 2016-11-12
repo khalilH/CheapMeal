@@ -6,7 +6,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-import util.hibernate.model.Admins;
 import util.hibernate.model.Profils;
 import util.hibernate.model.Sessions;
 import util.hibernate.model.Utilisateurs;
@@ -27,7 +26,6 @@ public class HibernateUtil {
         	Configuration configuration = new Configuration()
         			.addAnnotatedClass(Sessions.class)
         			.addAnnotatedClass(Profils.class)
-        			.addAnnotatedClass(Admins.class)
         			.addAnnotatedClass(Utilisateurs.class)
         			.configure();
      

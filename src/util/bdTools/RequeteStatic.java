@@ -49,8 +49,8 @@ public class RequeteStatic {
 
 	/**
 	 * Verifie si le couple login/mdp est valide
-	 * @param login 
-	 * @param mdp
+	 * @param login le nom d'utilisateur
+	 * @param mdp le mot de passe de l'utilisateur
 	 * @return true si le couple existe, false sinon
 	 */
 	public static boolean checkIdentifiantsValide(String login,String mdp)  {
@@ -67,7 +67,7 @@ public class RequeteStatic {
 
 	/**
 	 * Verifie si une cle de session pour un utilisateur existe
-	 * @param login
+	 * @param login le nom d'utilisateur
 	 * @return true si une cle de session existe, false sinon 
 	 */
 	public static boolean isSessionCree(String login)  {
@@ -84,7 +84,7 @@ public class RequeteStatic {
 	/**
 	 * Met a jour la date d'expiration de la cle de session d'un
 	 * utilisateur en utilisant son login (pour la connexion)
-	 * @param login
+	 * @param login le nom d'utilisateur
 	 */
 	public static void updateDateExpirationAvecLogin(String login)  {
 		Session s = HibernateUtil.getSessionFactory().openSession();
@@ -101,8 +101,8 @@ public class RequeteStatic {
 	/**
 	 * Permet de recuperer la cle de session d'un utilisateur a partir
 	 * de son login
-	 * @param login
-	 * @return la cle de session associe a login
+	 * @param login le nom d'utilisateur
+	 * @return la cle de session associee a login
 	 */
 	public static String recupererTokenAvecLogin(String login)  {
 		Session s = HibernateUtil.getSessionFactory().openSession();
@@ -140,7 +140,7 @@ public class RequeteStatic {
 	/**
 	 * Met a jour la date d'expiration de la cle de session d'un
 	 * utilisateur a partir de sa cle (utilisation de la cle)
-	 * @param cle
+	 * @param cle la cle session utilisateur
 	 */
 	public static void updateDateExpirationAvecCle(String cle)  {
 		Session s = HibernateUtil.getSessionFactory().openSession();
@@ -155,13 +155,13 @@ public class RequeteStatic {
 	/**
 	 * Permet d'ajouter un utilisateur (creation de compte), cree egalement
 	 * son profil
-	 * @param login le login
+	 * @param login le nom d'utilisateur
 	 * @param mdp le mot de passe
 	 * @param nom le nom
 	 * @param prenom le prenom
 	 * @param email l'adresse mail
 	 * @return l'identifiant id avec lequel l'utilisateur a ete ajoute dans
-	 * dans la base de donnee
+	 * dans la base de donnees
 	 */
 	public static Integer ajoutUtilisateur(String login, String mdp, String nom, String prenom, String email) {
 		Session s = HibernateUtil.getSessionFactory().openSession();
@@ -228,7 +228,7 @@ public class RequeteStatic {
 	/**
 	 * Permet de recuperer le mot de passe d'un utilisateur 
 	 * a partir de son login
-	 * @param login
+	 * @param login le nom d'utilisateur
 	 * @return le mot de passe de l'utilisateur s'il existe
 	 */
 	public static String obtenirMdpAvecLogin(String login) {
@@ -260,7 +260,7 @@ public class RequeteStatic {
 	/**
 	 * Permet d'ajouter une bio à un profil
 	 * @param id de l'utilisateur 
-	 * @param bio 
+	 * @param bio le texte de la bio
 	 */
 	public static void ajouterBioProfil(int id, String bio) {
 		Session s = HibernateUtil.getSessionFactory().openSession();
@@ -314,8 +314,8 @@ public class RequeteStatic {
 	
 	/**
 	 * Permet d'obtenir le login avec le mail d'un utilisateur
-	 * @param email
-	 * @return
+	 * @param email l'adresse email de l'utilisateur
+	 * @return String le nom d'utilisateur
 	 */
 	public static String obtenirLoginAvecMail(String email){
 		Session s = HibernateUtil.getSessionFactory().openSession();
@@ -329,8 +329,8 @@ public class RequeteStatic {
 	}
 	/**
 	 * Permet d'obtenir la Session (correspond a la table SESSION en SQL) à partir de la cle
-	 * @param key
-	 * @return
+	 * @param key la cle session utilisateur
+	 * @return Sessions l'objet Sessions (model Hibernate) correspondant a la session
 	 */
 	public static Sessions obtenirSession(String key){
 		Session s = HibernateUtil.getSessionFactory().openSession();
@@ -344,9 +344,9 @@ public class RequeteStatic {
 	}
 	/**
 	 * Permet d'obtenir un utilisateur avec ses identifiants
-	 * @param id
-	 * @param login
-	 * @return
+	 * @param id l'id de l'utilisateur
+	 * @param login le nom d'utilisateur
+	 * @return Utilisateurs l'objet Utilisateur (model Hibernate) correspondant a l'utilisateur
 	 */
 	public static Utilisateurs obtenirUtilisateur(Integer id, String login){
 		Session s = HibernateUtil.getSessionFactory().openSession();
@@ -374,8 +374,8 @@ public class RequeteStatic {
 
 	/**
 	 * Permet d'obtyenir la bio d'un utilisateur avec son login
-	 * @param login
-	 * @return
+	 * @param login le nom d'utilisateur
+	 * @return String la chaine de caracteres correspondant a la bio de l'utilisateur
 	 */
 	public static String recupBio(String login) {
 		Utilisateurs u = obtenirUtilisateur(null, login);

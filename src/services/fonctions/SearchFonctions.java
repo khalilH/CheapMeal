@@ -30,10 +30,9 @@ public class SearchFonctions {
 	 * @param query requete de la recherche, optionel
 	 * @param cle la cle de session d'un utilisateur connecte
 	 * @return un JSONObject contenant les 20 recettes satisfaisant la requete
-	 * @throws JSONException
+	 * @throws JSONException s'il y a eut une erreur a la creation de l'objet JSON
 	 * @throws UnknownHostException si elasticSearch ne repond pas
-	 * @throws NonValideException 
-	 * @throws SessionExpireeException 
+	 * @throws MyException s'il y a eut une autre erreur
 	 */
 	public static JSONObject search(String query, String cle) throws JSONException, MyException, UnknownHostException {
 		if (cle != null) {

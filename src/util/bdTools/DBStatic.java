@@ -13,8 +13,8 @@ public class DBStatic {
 	private static MongoClient mongoClient;
 	
 	/**
-	 * Creer une connection mongo
-	 * @return
+	 * Creer une connexion Mongo
+	 * @return MongoDatabase l'objet correspondant a la base de donnees Mongo
 	 * @throws UnknownHostException
 	 * @throws MongoClientException
 	 */
@@ -25,7 +25,7 @@ public class DBStatic {
  	}
 	
 	/**
-	 * 
+	 * Fonction permettant de fermer la connexion a la base Mongo
 	 */
 	public static final void closeMongoDBConnection() {
 		try {

@@ -32,12 +32,9 @@ public class ProfilFonctions {
 
 	/**
 	 * Permet de creer ou de mettre a jour la biographie de l'utilisateur
-	 * 
-	 * @param cle
-	 *            la cle de session
-	 * @param bio
-	 *            la biographie
-	 * @throws MyException
+	 * @param cle la cle de session
+	 * @param bio la biographie
+	 * @throws MyException lorsqu'il y a eut une erreur 
 	 */
 	public static void ajouterBio(String cle, String bio) throws MyException {
 		if (cle == null || bio == null || cle.equals("") || bio.equals(""))
@@ -62,11 +59,11 @@ public class ProfilFonctions {
 
 	/**
 	 * Recupere les informations d'un utilisateur
-	 * @param cle
-	 * @param login
-	 * @return
-	 * @throws MyException
-	 * @throws JSONException
+	 * @param cle la cle session utilisateur
+	 * @param login le nom d'utilisateur
+	 * @return JSONObject contenant les information du profil de l'utilisateur
+	 * @throws MyException lorsqu'il y a eut une erreur 
+	 * @throws JSONException lorsqu'il y a eut une erreur a la creation de l'objet JSON
 	 */
 	public static JSONObject afficherProfil(String cle, String login) throws MyException, JSONException {
 		if (login == null || login.equals(""))
@@ -104,16 +101,14 @@ public class ProfilFonctions {
 	}
 	/**
 	 * Permet d'ajouter une photo de profil à un utilisateur
-	 * @param cle
-	 * @param login
-	 * @param photo
-	 * @throws ParametreManquantException
-	 * @throws NonValideException
-	 * @throws SessionExpireeException
-	 * @throws IOException
+	 * @param cle la cle session utilisateur
+	 * @param login le login de l'utilisateur
+	 * @param photo la photo a ajouter
+	 * @throws MyException lorsqu'il y a eut une erreur
+	 * @throws IOException lorsqu'il y a eut une erreur au niveau de la lecture ou de l'ecriture de la photo
 	 */
 	public static void uploadImage(String cle, String login, Part photo)
-			throws ParametreManquantException, NonValideException, SessionExpireeException, IOException {
+			throws MyException, IOException {
 		if (cle == null || photo == null || login == null || login.equals("") || cle.equals(""))
 			throw new ParametreManquantException("Parametres(s) Manquant(s)", ErrorCode.PARAMETRE_MANQUANT);
 

@@ -24,10 +24,10 @@ public class ExternalAPI {
 	
 	/**
 	 * Permet de chercher le prix d'un produit
-	 * @param ean
-	 * @return
+	 * @param ean la chaine de caracteres correspondant au code bar du produit
+	 * @return Double le prix minimum aux alentours pour un produit
 	 * @throws UnirestException
-	 * @throws JSONException
+	 * @throws JSONException lorsqu'il y a eut une erreur a la creation ou la manipulation de l'objet JSON
 	 */
 	public static Double searchMinPrice(String ean) throws UnirestException, JSONException {
 		String urlRequest = BASE_URL+"?ean="+ean+"&zipcode="+ZIPCODE;
