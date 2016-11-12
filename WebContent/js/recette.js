@@ -325,7 +325,7 @@ Recette.traiteReponseJSON = function(json_text){
 		$("#prep").html(p);
 
 	}else{
-		alert(obj.erreur)
+		alert(obj)
 	}
 }
 
