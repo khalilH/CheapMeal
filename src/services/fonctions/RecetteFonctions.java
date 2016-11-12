@@ -39,7 +39,7 @@ public class RecetteFonctions {
 	/**
 	 * Recupere les 9 recette les plus recentes
 	 * @param col la collection Mongo dans laquelle les recettes sont stockees
-	 * @return ArrayList<BasicDBObject> la liste dont chaque element est un objet representant une recette
+	 * @return la liste dont chaque element est un objet representant une recette
 	 */
 	public static ArrayList<BasicDBObject> getRecentRecipes(MongoCollection<BasicDBObject> col){
 		ArrayList<BasicDBObject> list = new ArrayList<>();
@@ -56,7 +56,7 @@ public class RecetteFonctions {
 	/**
 	 * Recupere les 9 recettes les mieux notes
 	 * @param col la collection Mongo dans laquelle les recettes sont stockees 
-	 * @return ArrayList<BasicDBObject> la liste dont chaque element est un objet representant une recette
+	 * @return la liste dont chaque element est un objet representant une recette
 	 */
 	public static ArrayList<BasicDBObject> getBestRecipes(MongoCollection<BasicDBObject> col){
 		ArrayList<BasicDBObject> list = new ArrayList<>();
@@ -147,11 +147,11 @@ public class RecetteFonctions {
 
 	/**
 	 * Permet d'obtenir le prix d'une recette
-	 * @param id
-	 * @param cle
-	 * @return
-	 * @throws MyException
-	 * @throws JSONException
+	 * @param id de la recette
+	 * @param cle la cle de session de l'utilisateur
+	 * @return le prix minimum de la recette
+	 * @throws MyException si il y a une erreur 
+	 * @throws JSONException erreur JSON
 	 */
 	public static double afficherPrixRecette(String id, String cle) throws MyException, JSONException {
 		if(id == null)
@@ -229,7 +229,8 @@ public class RecetteFonctions {
 	 * @param quantites la liste des quantites correspondant aux ingredients de la recette
 	 * @param mesures la liste des mesures utilises pour exprimer les quantites
 	 * @param preparation la liste des etapes de preparation
-	 * @throws MyException lorsqu'il y aeut une erreur
+	 * @param photo la photo de la recette a upload
+	 * @throws MyException lorsqu'il y a eu une erreur
 	 */
 	public static void ajouterRecette(String titre, String cle, 
 			List<String> ingredients, 
@@ -352,6 +353,7 @@ public class RecetteFonctions {
 	 * @param idRecette l'id de la recette a noter
 	 * @param note la note donne a la recette
 	 * @throws MyException s'il y a eut une erreur
+	 * @return resultat du serveur
 	 */
 	public static JSONObject noterRecette(String cle, String idRecette, int note) 
 			throws MyException{
@@ -483,7 +485,7 @@ public class RecetteFonctions {
 	/**
 	 * Permet de récuperer les recettes d'un utilisateur
 	 * @param login le nom d'utilisateur
-	 * @return ArrayList<BasicDBObject> la liste dont chaque element est un objet representant une recette
+	 * @return  la liste dont chaque element est un objet representant une recette
 	 * @throws MongoDBException s'il y eut une lors de l'acces a la base Mongo
 	 */
 	public static ArrayList<BasicDBObject> getRecettesFromLogin(String login) throws MongoDBException {

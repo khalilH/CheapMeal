@@ -19,7 +19,7 @@ public class MyException extends Exception {
 
 	/**
 	 * Permet d'accéder au code d'erreur d'une exception
-	 * @return
+	 * @return le code d'erreur de l'exception
 	 */
 	public int getCode() {
 		return code;

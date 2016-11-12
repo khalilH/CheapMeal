@@ -82,7 +82,7 @@ public class ServiceTools {
 	 * @param body le corps du mail
 	 * @param subject le sujet du mail
 	 * @param email l'adresse email destinataire
-	 * @throws NamingException
+	 * @throws NamingException 
 	 * @throws AddressException lorsque l'adresse n'est pas valide
 	 * @throws MessagingException lorsqu'il y a eut une erreur d'envoi de mail
 	 */
@@ -112,10 +112,11 @@ public class ServiceTools {
 
 	/**
 	 * Permet de récupérer les parametre d'un formulaire encode en multipart
+	 * @param p donne encodee en multipart/data pour l'upload
 	 * @throws MessagingException lorsqu'il y a eut une erreur d'envoi de mail
 	 * @throws IOException lorsqu'il y a eut une erreur a la lecture du fichier
+	 * @return le contenu du fichier sous forme de String
 	 */
-	
 	public static String getValueFromPart(Part p) throws IOException, MessagingException{
 		Scanner c = new Scanner(p.getInputStream());
 		String ret = c.nextLine();

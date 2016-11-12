@@ -38,6 +38,7 @@ public class RecetteServices {
 	 * @param quantites la liste des quantites correspondant aux ingredients de la recette
 	 * @param mesures la liste des mesures utilises pour exprimer les quantites
 	 * @param preparation la liste des etapes de preparation
+	 * @param photo la photo de la recette a upload
 	 * @return JSONObject contenant la reponse formatee ou "error" avec un message d'erreur
 	 * @throws JSONException s'il y a eut une erreur a la creation du JSONObject 
 	 */
@@ -112,7 +113,7 @@ public class RecetteServices {
 	 * @param id l'identifiant de la recette
 	 * @param cle la cle de session d'un utilsateur connecte
 	 * @return {Success: prixEstime}
-	 * @throws JSONException
+	 * @throws JSONException erreur JSON
 	 */
 	public static JSONObject afficherPrixRecette(String id, String cle) throws JSONException {
 		try {
