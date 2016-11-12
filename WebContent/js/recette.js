@@ -255,7 +255,7 @@ Recette.traiteReponseJSON = function(json_text){
 		console.log("J'AI AJOUTE LA PHOTO RECETTE");
 
 		$("#nom-auteur-recette").html("<a href='profile.html?login="+obj.auteur.loginAuteur+"'>"+obj.auteur.loginAuteur+"</a>");
-		
+
 		/* photo auteur */
 		$("#photo-auteur").html("<center><img class='img-responsive' id='profilPicture' " +
 				"src='"+"../images/profil/"+obj.auteur.loginAuteur+".png"+"' alt='Profil Picture' onerror=\"this.onerror=null;this.src='../images/profil/genericImage.png'\"/></center>");
@@ -310,10 +310,12 @@ Recette.traiteReponseJSON = function(json_text){
 		}
 		s+="</ul>";
 		$("#ingr").html(s);
-		$("#prix").html("<span class='txt-size-35'>Prix estimé: </span><span class='txt-size-25'>"+obj.prix+"€</span>");
-		
+//		$("#prix").html("<span class='txt-size-35'>Prix estimé: </span><span class='txt-size-25'>"+obj.prix+"€</span>");
+//		$("#prix").html("<div id=\"loading\"><ul class=\"bokeh\"> <li></li><li></li><li></li></ul></div>");
+		$("#prix").html("<img class=\"loading\" src=\"images/loading_icon.gif\" width=\"110\" height=\"72\">");
+
 		//$("#prep").html("<span class='txt-size-25'>"+obj.preparation+"</span>");
-		
+
 		var p = "<ul>";
 		for(i=0; i<obj.preparation.length; i++){
 			var prep = obj.preparation[i];
@@ -321,7 +323,7 @@ Recette.traiteReponseJSON = function(json_text){
 		}
 		p+="</ul>";
 		$("#prep").html(p);
-		
+
 	}else{
 		alert(obj.erreur)
 	}
@@ -332,9 +334,25 @@ Recette.afficherPrix = function(json_text){
 	console.log(JSON.stringify(json_text));
 
 	var obj = JSON.parse(JSON.stringify(json_text));
-	console.log(obj.success);
-	$("#prix").html("<span class='txt-size-35'>Prix estimé: </span><span class='txt-size-25'>"+obj.success+"€</span>");
-		
+	if (obj.erreur != undefined && obj.erreur == 666) {
+		$.ajax({
+			url : 'recette/prix',
+			type : 'GET',
+			data : 'idRecette='+idRecette+cle,
+			contentType : 'application/x-www-form-urlencoded; charset=utf-8',
+			dataType : 'json',
+			success : Recette.afficherPrix,
+			error : function(resultat, statut, erreur) {
+				console.log("Bug");
+				console.log(resultat);
+			}
+		});
+	}
+	else {
+		console.log(obj.success);
+		$("#prix").html("<span class='txt-size-35'>Prix estimé: </span><span class='txt-size-25'>"+obj.success+"€</span>");
+	}
+
 }
 
 
@@ -420,7 +438,7 @@ $(document).ready(function() {
 			alert("Erreur Ajax");
 		}
 	});
-	
+
 	$.ajax({
 		url : 'recette/prix',
 		type : 'GET',
@@ -431,7 +449,6 @@ $(document).ready(function() {
 		error : function(resultat, statut, erreur) {
 			console.log("Bug");
 			console.log(resultat);
-			alert("Erreur Ajax");
 		}
 	});
 

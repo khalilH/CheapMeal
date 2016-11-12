@@ -107,7 +107,7 @@ $(function() {
 	}
 	function getStars() {
 		if (nbRecettes != 0) {
-			return (sumNote / nbRecettes);
+			return (sumNote / nbRecettes).toFixed(2);
 		}
 		return 0;
 	}

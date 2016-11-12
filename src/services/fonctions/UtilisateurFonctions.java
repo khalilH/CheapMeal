@@ -277,7 +277,7 @@ public class UtilisateurFonctions {
 			} 
 
 		}else{
-			throw new NonDisponibleException("Cette adresse email est deja utilisee", ErrorCode.EMAIL_NON_DISPO);
+			throw new NonDisponibleException("Compte inexistant", ErrorCode.EMAIL_NON_DISPO);
 		}
 		return "Un email a ete envoye a l'adresse indiquee";
 	}
