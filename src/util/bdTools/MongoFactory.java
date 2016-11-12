@@ -59,11 +59,13 @@ public class MongoFactory {
 	/**
 	 * Creer un document contenant les informations relatives a une recette
 	 * @param titre le titre de la recette
-	 * @param cle la cle session utilisateur
-	 * @param ingredients la liste des ingredients 
+	 * @param idAuteur identifiant de l'auteur de la recette
+	 * @param loginAuteur login du l'auteur de la recette
+	 * @param listIng la liste des ingredients 
 	 * @param quantites la liste des quantites correspondant aux ingredients de la recette
 	 * @param mesures la liste des mesures utilises pour exprimer les quantites
 	 * @param preparation la liste des etapes de preparation
+	 * @param photo la phote de la recette
 	 * @return BasicDBObject l'objet contenant toutes les informations de la recette
 	 * @throws IOException lorsqu'il y a eut une erreur lors de la lecture ou de l'ecriture du fichier de photo
 	 */
@@ -163,7 +165,7 @@ public class MongoFactory {
 	 * Cree un document representant un fruit ou un legume, qui sera stocke 
 	 * dans la collection ingredients
 	 * @param nomIngredient le nom du fruit ou legume
-	 * @param le prix au kilo
+	 * @param prixAuKg le prix au kilo
 	 * @param quantite la quantite en g 
 	 * @return Objet JSON representant un fruit ou un legume
 	 */

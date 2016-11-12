@@ -312,7 +312,7 @@ Recette.traiteReponseJSON = function(json_text){
 		$("#prep").html(p);
 
 	}else{
-		alert(obj.erreur)
+		alert(obj)
 	}
 }
 
@@ -364,11 +364,26 @@ $(document).ready(function() {
 		$('#count').html(value);
 	});
 
+	if((bool = isConnected()) === 1){
+        loadNavbarConnected();
+        console.log("connecte")
+    }
+    else if(bool === -1){ //User doesnt have a cookie let him browse
+        loadNavbarDisconnected();
+        console.log("deconnecte")
+    }else{ // User have an expirated key let him reconnect
+        console.log("Invalide")
+        window.location.href="connexion.html";
+        return;
+    }
+	
+	/*
 	if(isConnected() == -1){
 		loadNavbarDisconnected();
 	}else{
 		loadNavbarConnected();
 	}
+	*/
 
 	/* json_text = {
   		"date": 1478640910844,

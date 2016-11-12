@@ -10,6 +10,8 @@ public class MyPriceCallable implements Callable<Double> {
 	/**
 	 * Construit un callable avec l'ean d'un produit
 	 * @param ean la chaine de caractere correspondant au code barre du produit
+	 * @param quantiteRef quantite du produit associe a au code barre ean
+	 * @param quantiteProduit quantite du produit dans la recette
 	 */
 	public MyPriceCallable(String ean,Double quantiteRef, Double quantiteProduit) {
 		this.ean = ean;

@@ -28,7 +28,7 @@ public class IngredientsFonctions {
 	 * sous-chaine de caracteres  
 	 * @param query sous chaine de caracteres
 	 * @return la liste des ingredients (String) utilisables
-	 * @throws MyException 
+	 * @throws MyException si il y a une erreur
 	 */
 	public static ArrayList<String> getListeIngredients(String query) 
 			throws MyException {
@@ -60,7 +60,7 @@ public class IngredientsFonctions {
 	 * Permet de reconstruire la liste des ingredients utilisables et de les stocker
 	 * dans la collection ingredients dans la base MongoDB
 	 * @param fileName le fichier contenant la liste des ingredients
-	 * @throws MyException 
+	 * @throws MyException si il y a une erreur
 	 */
 	public static void putListeIngredients(String fileName) 
 			throws MyException {
@@ -109,8 +109,8 @@ public class IngredientsFonctions {
 	 * Permet d'obtenir le code barre(prix pour un fruit ou un legume) et la quantite d'un produit
 	 * @param nomIngredient le nom du produit/ingredient/fruit 
 	 * @return document ingredient de la collection ingredients
-	 * @throws MyException
-	 * @throws JSONException
+	 * @throws MyException si il y a une erreur
+	 * @throws JSONException erreur JSON
 	 */
 	public static JSONObject getIngredient(String nomIngredient) throws MyException, JSONException {
 		MongoDatabase database;

@@ -118,7 +118,7 @@ public class RequeteStatic {
 	/**
 	 * Permet de creer une creer cle de session pour l'utilisateur donne
 	 * a partir de son login
-	 * @param id le login de l'utilisateur
+	 * @param login le login de l'utilisateur
 	 * @return la cle de session cree
 	 */
 	public static String createSessionFromLogin(String login) {
@@ -299,7 +299,7 @@ public class RequeteStatic {
 	/**
 	 * Permet de changer l'adresse mail d'un utilisateur avec son id
 	 * @param id l'identifiant d'un utilisateur
-	 * @param email la nouvelle adresse mail
+	 * @param mail la nouvelle adresse mail
 	 */
 	public static void changerEmailAvecId(int id, String mail) {
 		Session s = HibernateUtil.getSessionFactory().openSession();

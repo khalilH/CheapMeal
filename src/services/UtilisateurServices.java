@@ -13,6 +13,7 @@ public class UtilisateurServices {
 	 * Permet d'inscrire un utilisateur
 	 * @param login le nom d'utilisateur
 	 * @param mdp le mot de passe de l'utilisateur
+	 * @param confirmationMdp la confirmation de mot de passe
 	 * @param prenom le prenom de l'utilisateur
 	 * @param nom le nom de l'utilisateur
 	 * @param email l'adresse email de l'utilisateur
@@ -103,7 +104,6 @@ public class UtilisateurServices {
 		JSONObject result;
 		try {
 			result = UtilisateurFonctions.connexion(login,mdp);
-			//return ServiceTools.serviceAccepted(result);
 			return result;
 		} catch (MyException e) {
 			return ServiceTools.serviceRefused(e.getMessage(), e.getCode());
