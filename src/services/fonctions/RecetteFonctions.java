@@ -1,6 +1,5 @@
 package services.fonctions;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -15,10 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
-import com.mongodb.MongoClientException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -30,7 +27,6 @@ import exceptions.ParametreManquantException;
 import exceptions.RecetteException;
 import exceptions.SessionExpireeException;
 import util.ErrorCode;
-import util.ExternalAPI;
 import util.MyPriceCallable;
 import util.ServiceTools;
 import util.bdTools.DBStatic;
@@ -215,7 +211,7 @@ public class RecetteFonctions {
 					try {
 						prix += task.get();
 					} catch (InterruptedException | ExecutionException e) {
-						throw new MyException("Erreur futureTask", 666);
+						throw new MyException(e.getMessage(), 666);
 					}
 				}
 		}
