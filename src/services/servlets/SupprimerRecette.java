@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,8 +22,8 @@ public class SupprimerRecette extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		/* Lecture des parametres */
-		String idRecette = request.getParameter(RequestParameter.ID_RECETTE);
-		String cle = request.getParameter(RequestParameter.CLE);
+		String idRecette = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.ID_RECETTE));
+		String cle = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.CLE));
 
 		try {
 			/* Traitement des services */

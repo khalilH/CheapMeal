@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,7 +22,7 @@ public class Deconnexion extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		/* Recuperation des parametres */
-		String cle = request.getParameter(RequestParameter.CLE);
+		String cle = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.CLE));
 		
 		/* Traitement du service */
 		try {

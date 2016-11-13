@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,8 +31,8 @@ public class UploadImage extends HttpServlet {
 			throws ServletException, IOException {
 		/* Lecture des parametres */
 		try {
-			String cle  = ServiceTools.getValueFromPart(request.getPart("cle"));
-			String login  = ServiceTools.getValueFromPart(request.getPart("login"));
+			String cle  = StringEscapeUtils.escapeHtml3(ServiceTools.getValueFromPart(request.getPart("cle")));
+			String login  = StringEscapeUtils.escapeHtml3(ServiceTools.getValueFromPart(request.getPart("login")));
 			Part photo = request.getPart("file");
 			
 		

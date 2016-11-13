@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,8 +21,8 @@ public class AjouterBio extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		/* Lecture des parametres */
-		String cle = request.getParameter(RequestParameter.CLE);
-		String bio = request.getParameter(RequestParameter.BIO);
+		String cle = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.CLE));
+		String bio = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.BIO));
 				
 		try {
 			/* Traitement des services */

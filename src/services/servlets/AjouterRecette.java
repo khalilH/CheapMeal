@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,12 +28,12 @@ public class AjouterRecette extends HttpServlet {
 
 		try {
 			/* Lecture des parametres */
-			String titre = ServiceTools.getValueFromPart(request.getPart(RequestParameter.TITRE));
-			String cle = ServiceTools.getValueFromPart(request.getPart(RequestParameter.CLE));
-			String ingr = ServiceTools.getValueFromPart(request.getPart(RequestParameter.INGREDIENTS));
-			String quant = ServiceTools.getValueFromPart(request.getPart(RequestParameter.QUANTITES));
-			String mesu = ServiceTools.getValueFromPart(request.getPart(RequestParameter.MESURES));
-			String prepa = ServiceTools.getValueFromPart(request.getPart(RequestParameter.PREPARATION));
+			String titre = StringEscapeUtils.escapeHtml3(ServiceTools.getValueFromPart(request.getPart(RequestParameter.TITRE)));
+			String cle = StringEscapeUtils.escapeHtml3(ServiceTools.getValueFromPart(request.getPart(RequestParameter.CLE)));
+			String ingr = StringEscapeUtils.escapeHtml3(ServiceTools.getValueFromPart(request.getPart(RequestParameter.INGREDIENTS)));
+			String quant = StringEscapeUtils.escapeHtml3(ServiceTools.getValueFromPart(request.getPart(RequestParameter.QUANTITES)));
+			String mesu = StringEscapeUtils.escapeHtml3(ServiceTools.getValueFromPart(request.getPart(RequestParameter.MESURES)));
+			String prepa = StringEscapeUtils.escapeHtml3(ServiceTools.getValueFromPart(request.getPart(RequestParameter.PREPARATION)));
 			Part photo = request.getPart(RequestParameter.FILE);
 
 			/* Ici, parser la liste des ingredients et des etapes de preparation */

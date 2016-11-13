@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,8 +28,8 @@ public class ChangerEmail extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		/* lecture des parametres */
-		String cle = request.getParameter(RequestParameter.CLE);
-		String newEmail = request.getParameter(RequestParameter.EMAIL_NEW);
+		String cle = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.CLE));
+		String newEmail = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.EMAIL_NEW));
 		
 		/* Traitement des services */
 		try {

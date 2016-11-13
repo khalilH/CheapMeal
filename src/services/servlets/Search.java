@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,8 +22,8 @@ public class Search extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		/* Lecture des parametres */
-		String query = request.getParameter(RequestParameter.QUERY);
-		String cle = request.getParameter(RequestParameter.CLE);
+		String query = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.QUERY));
+		String cle = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.CLE));
 
 		/* Traitement du service */
 		try {

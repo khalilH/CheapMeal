@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,8 +24,8 @@ public class Connexion extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		String login = request.getParameter(RequestParameter.LOGIN);
-		String mdp = request.getParameter(RequestParameter.MOT_DE_PASSE);
+		String login = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.LOGIN));
+		String mdp = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.MOT_DE_PASSE));
 		
 		try {
 			JSONObject jb = UtilisateurServices.connexion(login, mdp);

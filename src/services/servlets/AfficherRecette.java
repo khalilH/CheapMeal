@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,8 +21,8 @@ public class AfficherRecette extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/* Lecture des parametres */
-		String id = request.getParameter(RequestParameter.ID_RECETTE);
-		String cle = request.getParameter(RequestParameter.CLE);
+		String id = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.ID_RECETTE));
+		String cle = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.CLE));
 
 		try {
 			/* Traitement des services */

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,10 +21,10 @@ public class ChangerMdp extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response){
 
 		/* Lecture des parametres */
-		String cle = request.getParameter(RequestParameter.CLE);
-		String currentMdp = request.getParameter(RequestParameter.MOT_DE_PASSE);
-		String newMdp = request.getParameter(RequestParameter.MOT_DE_PASSE_NEW);
-		String confirmationMdp = request.getParameter(RequestParameter.MOT_DE_PASSE_CONFIRMATION);
+		String cle = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.CLE));
+		String currentMdp = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.MOT_DE_PASSE));
+		String newMdp = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.MOT_DE_PASSE_NEW));
+		String confirmationMdp = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.MOT_DE_PASSE_CONFIRMATION));
 		
 		/* Traitement des services */
 		try {

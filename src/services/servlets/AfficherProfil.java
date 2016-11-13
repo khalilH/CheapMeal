@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,8 +24,8 @@ public class AfficherProfil extends  HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/* Lecture des parametres */
-		String cle = request.getParameter(RequestParameter.CLE);
-		String login = request.getParameter(RequestParameter.LOGIN);
+		String cle = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.CLE));
+		String login = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.LOGIN));
 		try {
 			/* Traitement des services */
 			JSONObject res = ProfilServices.afficherProfil(cle, login);

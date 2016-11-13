@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,7 +24,7 @@ public class RecupererMdp  extends HttpServlet{
 			throws ServletException, IOException {
 			
 			/* Recuperation des parametres */
-			String email = request.getParameter(RequestParameter.EMAIL);
+			String email = StringEscapeUtils.escapeHtml3(request.getParameter(RequestParameter.EMAIL));
 	
 			/* Traitement du service */
 			try {
