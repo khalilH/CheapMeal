@@ -61,7 +61,10 @@ public class RequeteStatic {
 					.uniqueResult();
 		s.getTransaction().commit();
 		s.close();
-		boolean bonmdp = BCrypt.checkpw(mdp, user.getMdp());
+		boolean bonmdp = false;
+		if(user != null)
+			bonmdp = BCrypt.checkpw(mdp, user.getMdp());
+		
 		return (user != null) && bonmdp;
 	}
 
