@@ -98,10 +98,13 @@ public class MongoFactory {
 			jpegParams.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
 			jpegParams.setCompressionQuality(0.6f);
 			final ImageWriter writer = ImageIO.getImageWritersByFormatName("jpg").next();
-			writer.setOutput(new FileImageOutputStream(
-			  new File("/var/lib/tomcat8/webapps/images/"+oid.toString()+".png")));
+			FileImageOutputStream fios = new FileImageOutputStream(
+					  new File("/var/lib/tomcat8/webapps/images/"+oid.toString()+".png"));
+			writer.setOutput(fios);
 			writer.write(null, new IIOImage(image, null, null), jpegParams);
+			fios.close();
 			document.append(PHOTO,oid.toString());
+			inputStream.close();
 		}
 		return document;
 	}

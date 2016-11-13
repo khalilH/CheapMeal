@@ -33,6 +33,7 @@ public class AfficherProfil extends  HttpServlet {
 			PrintWriter writer = response.getWriter();
 			response.setContentType("application/json");
 			writer.println(res.toString());
+			writer.close();
 			
 		} catch (JSONException e) {
 			e.printStackTrace();

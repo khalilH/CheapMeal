@@ -31,6 +31,7 @@ public class AfficherPrixRecette extends HttpServlet {
 			PrintWriter writer = response.getWriter();
 			response.setContentType("application/json");
 			writer.println(res.toString());
+			writer.close();
 			
 		} catch (IOException e) {
 			e.printStackTrace();

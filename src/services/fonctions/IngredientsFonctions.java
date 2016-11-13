@@ -125,7 +125,7 @@ public class IngredientsFonctions {
 		BasicDBObject o = new BasicDBObject(MongoFactory.NOM_INGREDIENT, nomIngredient);
 		MongoCursor<BasicDBObject> cursor = collection.find(o).iterator();
 		BasicDBObject ingredient = cursor.next();
-		
+		cursor.close();
 		JSONObject  ret = new JSONObject(ingredient.toJson());
 		DBStatic.closeMongoDBConnection();
 		return ret;
