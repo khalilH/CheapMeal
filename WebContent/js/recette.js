@@ -349,6 +349,7 @@ function isNumber(s){
 
 /* Permet de recuperer un parametre qu ise trouve dans l'url */
 $.urlParam = function(name){
+	console.log("trying to get val");
 	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 	if (results==null){
 		return null;
@@ -357,7 +358,7 @@ $.urlParam = function(name){
 		return results[1] || 0;
 	}
 }
-
+var idRecette = $.urlParam("idRecette"); 
 $(document).ready(function() {
 
 	$('#hearts').on('starrr:change', function(e, value){
@@ -377,52 +378,6 @@ $(document).ready(function() {
         return;
     }
 	
-	/*
-	if(isConnected() == -1){
-		loadNavbarDisconnected();
-	}else{
-		loadNavbarConnected();
-	}
-	*/
-
-	/* json_text = {
-  		"date": 1478640910844,
-  		"note": {
-    		"moyenne": 4,
-    		"nbNotes": 4,
-    	"usersNotes": [
-      				{
-        				"idUser": 1,
-        				"noteUser": 3
-      				},
-      				{
-        				"idUser": 2,
-        				"noteUser": 5
-      				}
-    			]
-    		},
-  		"titre": "Super Recette",
-  		"ingredients": [
-    				{
-      					"mesure": "g",
-      					"nomIngredient": "pomme",
-      					"quantite": 10
-    				}	
-  			],
-  		"_id": "5822450e96aa58213b3299a7",
-  		"auteur": {
-    		"idAuteur": 10,
-    		"loginAuteur": "patra"
-  		},
-  		"preparation": [
-    		"mettre le toz dans le four"
-  		]
-	}
-
-	console.log(Recette.traiteReponseJSON(json_text));*/
-
-	var idRecette = $.urlParam("idRecette"); 
-
 	var cle = "";
 	if(getCookie(C_NAME_KEY) != undefined)
 		cle = "&cle="+getCookie(C_NAME_KEY);
