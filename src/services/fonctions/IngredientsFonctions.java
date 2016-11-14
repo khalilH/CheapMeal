@@ -33,9 +33,13 @@ public class IngredientsFonctions {
 	public static ArrayList<String> getListeIngredients(String query) 
 			throws MyException {
 
-		if (query == null || query.equals(""))
-			throw new ParametreManquantException("Parametre manquant", ErrorCode.PARAMETRE_MANQUANT);
+//		if (query == null || query.equals(""))
+//			throw new ParametreManquantException("Parametre manquant", ErrorCode.PARAMETRE_MANQUANT);
 
+		if(query == null) {
+			query = "";
+		}
+		
 		MongoDatabase database;
 		try {
 			database = DBStatic.getMongoConnection();
