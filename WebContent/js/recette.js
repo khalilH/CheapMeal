@@ -298,7 +298,6 @@ Recette.traiteReponseJSON = function(json_text){
 		s+="</ul>";
 		$("#ingr").html(s);
 //		$("#prix").html("<span class='txt-size-35'>Prix estimé: </span><span class='txt-size-25'>"+obj.prix+"€</span>");
-//		$("#prix").html("<div id=\"loading\"><ul class=\"bokeh\"> <li></li><li></li><li></li></ul></div>");
 		$("#prix").html("<img class=\"loading\" src=\"images/loading_icon.gif\" width=\"110\" height=\"72\">");
 
 		//$("#prep").html("<span class='txt-size-25'>"+obj.preparation+"</span>");

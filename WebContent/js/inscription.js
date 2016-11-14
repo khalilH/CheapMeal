@@ -104,17 +104,11 @@ $(function() {
 				msg + 
 		"</div>");
 	}
-
-
 	/**************************************** Fonctions utilitaires ****************************************/
-
 	function func_valid(msg){
 		alert("Succès: "+msg)
-
 	}
-
 	function func_erreur(msg) {
 		alert("Erreur: "+msg);
 	}
-
 });

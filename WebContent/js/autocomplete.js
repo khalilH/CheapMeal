@@ -48,12 +48,7 @@ $(function() {
 						$('.autocomplete').autocomplete({
 							serviceUrl : 'ingredients/autocomplete',
 							noCache : true,
-							maxHeight : 100,
-							onSelect : function(suggestion) {
-								// traiter selection ingredients
-								var thing = "<p>" + suggestion.value + "</p>";
-								$('#choix').append(thing);
-							}
+							maxHeight : 100
 						});
 
 					}).on('click', '.btn-remove-ingredient', function(e) {
@@ -101,11 +96,7 @@ $(function() {
 	$('.autocomplete').autocomplete({
 		serviceUrl : 'ingredients/autocomplete',
 		noCache : true,
-		maxHeight : 100,
-		onSelect : function(suggestion) {
-			// traiter selection ingredient
-
-		}
+		maxHeight : 100
 	});
 
 	/* Cote MongoDB les mesures utilise son Rien, g, et cl */
@@ -151,6 +142,35 @@ $(function() {
 			alert("Il manque des informations");
 			return;
 		}
+		
+		var autorises;
+		
+		jQuery.ajax({
+			url : 'ingredients/autocomplete',
+			type : 'GET',
+			async : false,
+			success : function(data) {
+				autorises = data.suggestions;
+			},
+			error : function(resultat, statut, erreur) {
+				console.log("erreur recherche ingredients autorises");
+				console.log(resultat);
+			}
+		});
+		
+		console.log("debut verifier ingredients");
+		
+		for (i = 0; i<tmpI.length; i++) {
+			if (!autorises.includes(tmpI[i].value)) {
+				console.log("pb ingredients");
+				alert("Vous devez selectionner vos ingredients dans la liste");
+				return;
+			}
+		}
+		
+		console.log("fin verifier ingredients");
+		
+		
 		var re = new RegExp("-");
 		if(re.test(quantites)){
 			console.log("no");
