@@ -358,6 +358,7 @@ $.urlParam = function(name){
 	}
 }
 var idRecette = $.urlParam("idRecette"); 
+var cle = "";
 $(document).ready(function() {
 
 	$('#hearts').on('starrr:change', function(e, value){
@@ -377,7 +378,6 @@ $(document).ready(function() {
         return;
     }
 	
-	var cle = "";
 	if(getCookie(C_NAME_KEY) != undefined)
 		cle = "&cle="+getCookie(C_NAME_KEY);
 
