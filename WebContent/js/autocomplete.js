@@ -12,7 +12,7 @@ $(function() {
 			var reader = new FileReader();
 
 			reader.onload = function(e) {
-				 $('#previewImage').attr('src', e.target.result);
+				$('#previewImage').attr('src', e.target.result);
 			}
 
 			reader.readAsDataURL(input.files[0]);
@@ -25,33 +25,33 @@ $(function() {
 	});
 
 	$(document)
-			.on(
-					'click',
-					'.btn-add-ingredient',
-					function(e) {
-						e.preventDefault();
+	.on(
+			'click',
+			'.btn-add-ingredient',
+			function(e) {
+				e.preventDefault();
 
-						var controlForm = $('.controls-ingredient:first'), currentEntry = $(
-								this).parents('.entry-ingredient:first'), newEntry = $(
+				var controlForm = $('.controls-ingredient:first'), currentEntry = $(
+						this).parents('.entry-ingredient:first'), newEntry = $(
 								currentEntry.clone()).appendTo(controlForm);
 
-						newEntry.find('input').val('');
-						controlForm
-								.find(
-										'.entry-ingredient:not(:last) .btn-add-ingredient')
-								.removeClass('btn-add-ingredient')
-								.addClass('btn-remove-ingredient')
-								.removeClass('btn-success')
-								.addClass('btn-danger')
-								.html(
-										'<span class="glyphicon glyphicon-minus"></span>');
-						$('.autocomplete').autocomplete({
-							serviceUrl : 'ingredients/autocomplete',
-							noCache : true,
-							maxHeight : 100
-						});
+				newEntry.find('input').val('');
+				controlForm
+				.find(
+						'.entry-ingredient:not(:last) .btn-add-ingredient')
+						.removeClass('btn-add-ingredient')
+						.addClass('btn-remove-ingredient')
+						.removeClass('btn-success')
+						.addClass('btn-danger')
+						.html(
+						'<span class="glyphicon glyphicon-minus"></span>');
+				$('.autocomplete').autocomplete({
+					serviceUrl : 'ingredients/autocomplete',
+					noCache : true,
+					maxHeight : 100
+				});
 
-					}).on('click', '.btn-remove-ingredient', function(e) {
+			}).on('click', '.btn-remove-ingredient', function(e) {
 				/*
 				 * trouver comment supprimer l'ingredient du input (si il y en a
 				 * un) de la liste des ingredients a envoyer au serveur
@@ -65,27 +65,27 @@ $(function() {
 	/* Code pour la liste des étapes (ca marche) */
 
 	$(document)
-			.on(
-					'click',
-					'.btn-add-etapes',
-					function(e) {
-						e.preventDefault();
+	.on(
+			'click',
+			'.btn-add-etapes',
+			function(e) {
+				e.preventDefault();
 
-						var controlForm = $('.controls-etapes'), currentEntry = $(
-								this).parents('.entry-etapes:first'), newEntry = $(
+				var controlForm = $('.controls-etapes'), currentEntry = $(
+						this).parents('.entry-etapes:first'), newEntry = $(
 								currentEntry.clone()).appendTo(controlForm);
 
-						newEntry.find('textarea').val('');
-						controlForm
-								.find(
-										'.entry-etapes:not(:last) .btn-add-etapes')
-								.removeClass('btn-add-etapes')
-								.addClass('btn-remove-etapes')
-								.removeClass('btn-success')
-								.addClass('btn-danger')
-								.html(
-										'<span class="glyphicon glyphicon-minus"></span>');
-					}).on('click', '.btn-remove-etapes', function(e) {
+				newEntry.find('textarea').val('');
+				controlForm
+				.find(
+						'.entry-etapes:not(:last) .btn-add-etapes')
+						.removeClass('btn-add-etapes')
+						.addClass('btn-remove-etapes')
+						.removeClass('btn-success')
+						.addClass('btn-danger')
+						.html(
+						'<span class="glyphicon glyphicon-minus"></span>');
+			}).on('click', '.btn-remove-etapes', function(e) {
 				$(this).parents('.entry-etapes:first').remove();
 
 				e.preventDefault();
@@ -105,11 +105,12 @@ $(function() {
 	});
 	function publierRecette(form) {
 		var ingredients, quantites, mesures, etapes;
-
+		var oneIngredient = false;
 		if (form.elements["ingredients[]"].length == undefined) {
 			ingredients = form.elements["ingredients[]"].value;
 			quantites = form.elements["quantites[]"].value;
 			mesures = form.elements["mesures[]"].value;
+			oneIngredient = true;
 		} else {
 			tmpI = form.elements["ingredients[]"];
 			tmpQ = form.elements["quantites[]"];
@@ -142,9 +143,9 @@ $(function() {
 			alert("Il manque des informations");
 			return;
 		}
-		
+
 		var autorises;
-		
+
 		jQuery.ajax({
 			url : 'ingredients/autocomplete',
 			type : 'GET',
@@ -157,20 +158,29 @@ $(function() {
 				console.log(resultat);
 			}
 		});
-		
+
 		console.log("debut verifier ingredients");
-		
-		for (i = 0; i<tmpI.length; i++) {
-			if (!autorises.includes(tmpI[i].value)) {
+
+		if (!oneIngredient) {
+			for (i = 0; i<tmpI.length; i++) {
+				if (!autorises.includes(tmpI[i].value)) {
+					console.log("pb ingredients");
+					alert("Vous devez selectionner vos ingredients dans la liste");
+					return;
+				}
+			}
+		}
+		else {
+			if (!autorises.includes(ingredients)) {
 				console.log("pb ingredients");
 				alert("Vous devez selectionner vos ingredients dans la liste");
 				return;
 			}
 		}
-		
+
 		console.log("fin verifier ingredients");
-		
-		
+
+
 		var re = new RegExp("-");
 		if(re.test(quantites)){
 			console.log("no");
@@ -228,7 +238,7 @@ $(function() {
 					window.location.href="accueil.html";
 					return;
 				} else {
-					
+
 					if(data.erreur == 40){
 						alert("Votre session a expiré");
 						/* dans navbnar.js */
@@ -236,7 +246,7 @@ $(function() {
 					}else{
 						alert("Erreur: "+data.message);
 					}
-					
+
 //					console.log("KO");
 //					console.log(data);
 //					alert("Probleme lors de la creation de la recette");
