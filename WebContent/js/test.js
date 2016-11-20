@@ -1,11 +1,13 @@
 	
 var app = angular.module('app', ['ngRoute']);
+
 app.config(function($routeProvider){
 	$routeProvider
 	.when('/',{templateUrl: 'Test2.html'})
 	.when('/comments',{templateUrl : 'Test3.html'})
 	.otherwise({redirectTo : '/'})
 });
+
 app.controller('commentController',function ($scope){
 	console.log($scope);
 	$scope.comments = [

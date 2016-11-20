@@ -1,24 +1,23 @@
  
- <div ng-controller="commentController" ng-init="query=''">
-    <input type="text" ng-model="query" placeholder="Insert text">
-    <select ng-model="order">
-      <option value="firstname">
-        Organiser par name
-      </option>
-      <option value="city">
-        Organiser par city
-      </option>
-    </select>
-
-
-    <div ng-repeat="comment in comments | filter : {firstname : query} | orderBy : order">
-     <div class="panel panel-primary">  
-      <div class="panel-heading">
-        {{comment.firstname}}
-      </div>
-      <div class="panel-body">
-        {{comment.city}}
-        <input type="text" ng-model="queryIn" placeholder="Insert text">
-        {{queryIn}}
-      </div>
+<div ng-controller="commentController" ng-init="query=''">
+  <input type="text" ng-model="query" placeholder="Insert text">
+  <select ng-model="order">
+    <option value="firstname">
+      Organiser par name
+    </option>
+    <option value="city">
+      Organiser par city
+    </option>
+  </select>
+  <div ng-repeat="comment in comments | filter : {firstname : query} | orderBy : order">
+   <div class="panel panel-primary">  
+    <div class="panel-heading">
+      {{comment.firstname}}
     </div>
+    <div class="panel-body">
+      {{comment.city}}
+      <input type="text" ng-model="queryIn" placeholder="Insert text">
+      {{queryIn}}
+    </div>
+    
+  </div>
