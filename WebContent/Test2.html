@@ -4,7 +4,17 @@
 	<title></title>
 </head>
 <body>
-<h1> Error 404 </h1>
-<a href="#/comments">Voir commentaire</a>
+	<h1> Error 404 </h1>
+	<div ng-repeat="company in companies">
+		<hr>
+		<div id="{{company.id}}" class="panel panel-primary">  
+			<div class="panel-heading">
+				{{company.company}}
+			</div>
+			<div class="panel-body">
+			<a href="#/comments/{{company.id}}">{{company.comments.length}} Voir commentaire</a>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
