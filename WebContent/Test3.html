@@ -8,16 +8,15 @@
       Organiser par city
     </option>
   </select>
-  <div ng-repeat="comment in comments | filter:{city: query} | orderBy : order">
+  <h1>{{title}}</h1>
+  <div ng-repeat="comment in comments | filter:{name: query} | orderBy : order">
       <hr>
     <div class="panel panel-primary">  
       <div class="panel-heading">
-        {{comment.firstname}}
+        {{comment.id}}
       </div>
       <div class="panel-body">
-        {{comment.city}}
-        <input type="text" ng-model="queryIn" placeholder="Insert text">
-        {{queryIn}}
+        {{comment.name}}
       </div>
     </div>
   </div>
